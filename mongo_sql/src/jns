@@ -1,0 +1,509 @@
+sonar_agg.c:    priv->a = lappend( priv->a, sonar_make_agg_node( SONAR_AGG_COUNT, e->resno, INT8OID ));
+sonar_agg.c:        sprintf( tn, "%c%s", '$', priv->nm[ v->varattno -1 ].sn  );
+sonar_agg.c:        priv->a = lappend( priv->a, sonar_make_agg_node( SONAR_AGG_MIN, e->resno, agg->aggtype ) );
+sonar_agg.c:        sprintf( tn, "%c%s", '$', priv->nm[ v->varattno - 1].sn );
+sonar_agg.c:        priv->a = lappend( priv->a, sonar_make_agg_node( SONAR_AGG_MAX, e->resno, agg->aggtype ));
+sonar_agg.c:        sprintf( tn, "%c%s", '$', priv->nm[ v->varattno - 1].sn );
+sonar_agg.c:        priv->a = lappend( priv->a, sonar_make_agg_node( SONAR_AGG_AVG, e->resno, agg->aggtype ));
+sonar_agg.c:        sprintf( tn, "%c%s", '$', priv->nm[ v->varattno - 1].sn );
+sonar_agg.c:        priv->a = lappend( priv->a, sonar_make_agg_node( SONAR_AGG_SUM, e->resno, agg->aggtype ));
+sonar_agg.c:        sprintf( tn, "%c%s", '$', priv->nm[ v->varattno - 1].sn );
+sonar_agg.c:        priv->a = lappend( priv->a, sonar_make_agg_node( SONAR_AGG_SUM, e->resno, agg->aggtype ));
+sonar_agg.c:        priv->a = lappend( priv->a, sonar_make_agg_node( SONAR_AGG_PARAM, e->resno, param->paramtype ));
+sonar_agg.c:    if( !priv->g )
+sonar_agg.c:        PlannerInfo *root = priv->root;
+sonar_agg.c:        priv->g = bson_new();
+sonar_agg.c:        rc = bson_append_array_begin( priv->g, "pipeline" , 8, &sbp);
+sonar_agg.c:        if( !bson_empty( priv->q ) )
+sonar_agg.c:            rc = bson_append_document( &sbq, "$match", 6,  priv->q );
+sonar_agg.c:            rc = sb_append_eq2( &sbv, priv->nm[ v->varattno-1].sn, v->vartype, d );
+sonar_agg.c:        if( priv->o )
+sonar_agg.c:            rc = bson_append_document( &sbp, array_index( &au ), 1,  priv->o ); 
+sonar_agg.c:        rc = bson_append_array_end( priv->g, &sbp ); // pipeline
+sonar_agg.c:	if( mongoc_cursor_next( priv->uri->cursor, &r) )
+sonar_agg.c:        foreach( c, priv->a)
+sonar_agg.c:                PlannerInfo *root = priv->root;
+sonar_agg.c://         slot->tts_values[0] = (Datum) priv->a;
+sonar_agg.c:         slot->tts_tupleDescriptor->attrs[0]->attrelid = priv->id;
+sonar_agg.c:    if( priv->uri->cursor == 0 )
+sonar_agg.c:    if( priv->f )
+sonar_agg.c:        bson_destroy( priv->f );
+sonar_distinct.c:    PlannerInfo *root = priv->root;
+sonar_distinct.c:    RelOptInfo *baserel = priv->baserel;
+sonar_distinct.c:    if( !priv->g )
+sonar_distinct.c:        priv->g = bson_new();
+sonar_distinct.c:        rc = bson_append_array_begin( priv->g, "pipeline", -1, &sbp );
+sonar_distinct.c:            rc = sb_append_eq2( &sb, priv->nm[ v->varattno-1].sn,  v->vartype, d );
+sonar_distinct.c:        if( ! bson_empty0( priv->q ) )
+sonar_distinct.c:            su_push_docval_in_array( &sbp, &au, "$match", priv->q );
+sonar_distinct.c:                        rc = BSON_APPEND_UTF8( &id, fs, sonar_prepend( s, priv->nm[ v->varattno - 1].sn,"$"));
+sonar_distinct.c:                            rc = BSON_APPEND_UTF8( &id, fs, sonar_prepend( s, priv->nm[ v->varattno - 1].sn,"$"));
+sonar_distinct.c:                                    rc = BSON_APPEND_UTF8( &id, fs, sonar_prepend( s, priv->nm[ v->varattno - 1].sn,"$"));
+sonar_distinct.c:                foreach( c,  priv->l )
+sonar_distinct.c:                        //sprintf( col_name, "%s", priv->nm[ v->varattno-1].sn );
+sonar_distinct.c:                        sprintf( fn, "$%s", priv->nm[ v->varattno - 1].sn );
+sonar_distinct.c:            foreach( c,  priv->l )
+sonar_distinct.c:                //rc = BSON_APPEND_UTF8( &sb, "_id", sonar_prepend( s, priv->nm[ v->varattno-1].sn, "$" ) );
+sonar_distinct.c:                sprintf( col_name, "%s", priv->nm[ v->varattno-1].sn );
+sonar_distinct.c:                //rc = BSON_APPEND_UTF8( &col, "$first",  sonar_prepend( s, priv->nm[ v->varattno-1].sn, "$" ));
+sonar_distinct.c:                rc = BSON_APPEND_UTF8( &col, "$first",  sonar_prepend( s, priv->nm[ v->varattno-1].sn, "$" ));
+sonar_distinct.c:        if( priv->o )
+sonar_distinct.c:            su_push_doc_in_array( &sbp, &au, priv->o );
+sonar_distinct.c:        if( priv->tuple_offset > 0 )
+sonar_distinct.c:            rc = BSON_APPEND_INT32( &sb, "$skip", priv->tuple_offset );
+sonar_distinct.c:        if( priv->tuple_limit != 0 && priv->tuple_limit != -1 )
+sonar_distinct.c:            BSON_APPEND_INT32( &sb, "$limit", priv->tuple_limit );
+sonar_distinct.c:        rc = bson_append_array_end( priv->g, &sbp ); // pipeline
+sonar_distinct.c:	if( mongoc_cursor_next( priv->uri->cursor, &r) )
+sonar_distinct.c:		foreach( c, priv->l )
+sonar_distinct.c:				pgn = priv->nm[ v->varattno -1 ].pn;
+sonar_distinct.c:				slot->tts_tupleDescriptor->attrs[ci]->attrelid = priv->id; 
+sonar_distinct.c:        priv->js = slot;
+sonar_distinct.c:    if( priv->uri->cursor == 0 )
+sonar_distinct.c:    if( priv->f )
+sonar_distinct.c:        bson_destroy( priv->f );
+sonar_fdw.c:    psc_private priv = ps_priv->scan_priv;
+sonar_fdw.c:    if( priv->g )
+sonar_fdw.c:        sl_log_query( priv->uri->collection_name, priv->g );
+sonar_fdw.c:    if( priv->t == query_sonar_join )
+sonar_fdw.c:        if( priv->f )
+sonar_fdw.c:            sl_log_query( priv->uri->collection_name, priv->f );
+sonar_fdw.c:        projInfo->pi_lastScanVar = priv->l->length;
+sonar_fdw.c:    if( priv->t == query_regular )
+sonar_fdw.c:    else if(  priv->t == query_distinct ) 
+sonar_fdw.c:    else if( priv->t == query_aggregation )
+sonar_fdw.c:    else if( priv->t == query_group )
+sonar_fdw.c:    else if( priv->t == query_sonar_join )
+sonar_fdw.c:    if( priv->t == query_sonar_join )
+sonar_fdw.c:    sl_log_query( priv->uri->collection_name, priv->g );
+sonar_fdw.c:    if( priv->uri->cursor )
+sonar_fdw.c:        mongoc_cursor_destroy( priv->uri->cursor );
+sonar_fdw.c:        priv->uri->cursor = 0;
+sonar_fdw.c:    sm_close_node( priv->uri );
+sonar_fdw.c:    priv->uri = 0;
+sonar_fdw.c:        if( priv->g )
+sonar_fdw.c:            bson_destroy( priv->g );
+sonar_fdw.c:            priv->g = 0;
+sonar_fdw.c:        if( priv->t == query_group_end )
+sonar_fdw.c:        if( priv->jns )
+sonar_fdw.c:            foreach( c, priv->jns )
+sonar_fdw.c:            list_free( priv->jns );
+sonar_fdw.c:            priv->jns = 0;
+sonar_fdw.c:        if( priv->a )
+sonar_fdw.c:            if( priv->o )
+sonar_fdw.c:                bson_destroy( priv->o );
+sonar_fdw.c:            bson_destroy( priv->q );
+sonar_fdw.c:            if( priv->f )
+sonar_fdw.c:                bson_destroy( priv->f );
+sonar_fdw.c:            if( priv->a )
+sonar_fdw.c:                list_free_deep( priv->a );
+sonar_fdw.c:            list_free( priv->l );
+sonar_fdw.c:            list_free( priv->L );
+sonar_fdw.c:            priv->a = 0;
+sonar_group.c:    PlannerInfo *root = priv->root;
+sonar_group.c:    priv->ttsdesc = sonar_create_group_ttsdesc( priv->id, priv->L ); 
+sonar_group.c:    priv->fn = sg_export_tuples;
+sonar_group.c:    if( !priv->g )
+sonar_group.c:        priv->g = bson_new();
+sonar_group.c:        rc = BSON_APPEND_ARRAY_BEGIN( priv->g, "pipeline", &sbp );
+sonar_group.c:                        sprintf( tn, "$%s", priv->nm[ v->varattno -1 ].sn ); 
+sonar_group.c:            if( priv->L )
+sonar_group.c:                if( priv->projs1 )
+sonar_group.c:                    sg_unify_mp2( priv, priv->projs1, priv->projs, &list );
+sonar_group.c:                if( !bson_empty( priv->q) )
+sonar_group.c:                    su_push_docval_in_array( &sbp,  &au, "$match", priv->q );
+sonar_group.c:        if( priv->projs0 )
+sonar_group.c:            sg_unify_mp1( priv, priv->projs0, &list );
+sonar_group.c:            rc = sb_append_eq2( &sb, priv->nm[ v->varattno-1].sn, v->vartype, d );
+sonar_group.c:        if( priv->o )
+sonar_group.c:            su_push_doc_in_array( &sbp, &au, priv->o );
+sonar_group.c:    if( priv->tuple_offset > 0 )
+sonar_group.c:        rc = BSON_APPEND_INT32( &sb, "$skip", priv->tuple_offset );
+sonar_group.c:    if( priv->tuple_limit && priv->tuple_limit != -1 )
+sonar_group.c:        rc = BSON_APPEND_INT32( &sb, "$limit",  priv->tuple_limit );
+sonar_group.c:    rc = bson_append_array_end( priv->g, &sbp ); // pipeline
+sonar_group.c:    if( priv->uri->cursor == 0 )
+sonar_group.c:    if( !priv->uri->cursor )
+sonar_group.c:    if( mongoc_cursor_next( priv->uri->cursor, &r ) )
+sonar_group.c:        PlannerInfo * root = priv->root;
+sonar_group.c:        tts = MakeTupleTableSlot(); ExecSetSlotDescriptor( tts, priv->ttsdesc ); /* new tuple descriptor */
+sonar_group.c:        tts->tts_nvalid = list_length( priv->L );
+sonar_group.c:        foreach( c, priv->L )
+sonar_group.c:            tts->tts_tupleDescriptor->attrs[ci]->attrelid = priv->id; 
+sonar_group.c:        mongoc_cursor_destroy( priv->uri->cursor );
+sonar_group.c:        priv->uri->cursor = 0;
+sonar_group.c:    priv->js = tts;
+sonar_group.c:    PlannerInfo *root = priv->root;
+sonar_group.c:                    foreach( n, priv->L )
+sonar_group.c:                        priv->L = lappend( priv->L, n );
+sonar_group.c:                pgn=  priv->nm[ v->varattno - 1].pn;
+sonar_group.c:                snn=  priv->nm[ v->varattno - 1].sn;
+sonar_group.c:            tlea = sonar_get_alias( priv->L, ag );
+sonar_group.c:    if( priv->f )
+sonar_group.c:        bson_destroy( priv->f );
+sonar_group.c:            //priv->projs1[ org->resno -1 ] = lappend( priv->projs1[ org->resno -1 ], b );
+sonar_group.c:            sprintf( projvar, "$%s", priv->nm[ av->varattno -1 ].sn );
+sonar_group.c:        //sprintf( projvar, "$%s", priv->nm[ av->varattno -1 ].sn );
+sonar_group.c:                    snn=  priv->nm[ v->varattno - 1].sn;
+sonar_group.c:                    snn=  priv->nm[ v->varattno - 1].sn;
+sonar_group.c:                        //BSON_APPEND_UTF8( priv->f, array_index( &au ), t->vl_dat );
+sonar_group.c:           sprintf( projvar, "%s", priv->nm[ ( (Var*)axpr )->varattno -1 ].sn );
+sonar_group.c:       priv->projs0[ org->resno -1 ] = lappend( priv->projs0[ org->resno -1], bs );
+sonar_group.c:    for( idx = 0; idx < priv->L->length; idx++ )
+sonar_group.c:        for( idx = 0; idx < priv->L->length; idx++ )
+sonar_group.c:    for( idx = 0; idx < priv->L->length; idx++ )
+sonar_group.c:    bllen = priv->L->length + ( lp ?  lp->length : 0 );
+sonar_group.c:    for( idx = 0; idx < priv->L->length; idx++ )
+sonar_group.c:    for( idx = 0; idx < priv->L->length; idx++ )
+sonar_group.c:    foreach( c, priv->L )
+sonar_group.c:            priv->projs0[e->resno -1 ] = lappend( priv->projs0[e->resno -1], b );
+sonar_group.c:            priv->projs0[e->resno -1 ] = lappend( priv->projs0[e->resno -1], b );
+sonar_group.c:    foreach( c, priv->l )
+sonar_group.c:        foreach( l, priv->L )
+sonar_group.c:            sprintf( coin_alias, "%s", priv->nm[ v->varattno -1 ].sn );
+sonar_group.c:            rc = BSON_APPEND_UTF8( &vb, "$first", sonar_prepend( tmp, priv->nm[ v->varattno -1 ].sn, "$" ) );
+sonar_join.c:    PlannerInfo *root = priv->root;
+sonar_join.c:    if( priv->g )
+sonar_join.c:    priv->g = bson_new();
+sonar_join.c:    rc = BSON_APPEND_ARRAY_BEGIN( priv->g, "pipeline", &sbp );
+sonar_join.c:            RelOptInfo* baserel = priv->baserel;
+sonar_join.c:                        priv->jpos |= 1;
+sonar_join.c:                        priv->jpos |= 2;
+sonar_join.c:    bson_append_array_end( priv->g, &sbp );
+sonar_join.c:        if( !priv->g )
+sonar_join.c:    priv->ttsdesc = sonar_create_group_ttsdesc( priv->id,  priv->L ); 
+sonar_join.c:    priv->fn = sj_export_tuples;
+sonar_join.c:    if( priv->g )
+sonar_join.c:        sm_query_db( priv->uri,
+sonar_join.c:                    priv->uri->db_name,
+sonar_join.c:                    priv->uri->collection_name,
+sonar_join.c:                    priv->tuple_offset,
+sonar_join.c:                    priv->tuple_limit == -1 ? 0 : priv->tuple_limit,
+sonar_join.c:                    priv->g,
+sonar_join.c:                    priv->f);
+sonar_join.c:    if( priv->jpos != 2 )
+sonar_join.c:    if( mongoc_cursor_next( priv->uri->cursor, &r ) )
+sonar_join.c:        ExecSetSlotDescriptor( tts, priv->ttsdesc ); /* new tuple descriptor */
+sonar_join.c:        tts->tts_nvalid = list_length( priv->L );
+sonar_join.c:        foreach( c, priv->L )
+sonar_join.c:            tts->tts_tupleDescriptor->attrs[ci]->attrelid = priv->id; 
+sonar_join.c:                RelOptInfo *baserel = priv->baserel;
+sonar_join.c:                    sprintf( fn, "%s", priv->nm[ v->varattno -1 ].sn );
+sonar_join.c:                    //sprintf( fn, "%s.%s",  (char*) joinpriv->js, joinpriv->nm[ v->varattno -1 ].sn );
+sonar_join.c:                    sprintf( fn, "%s",  joinpriv->nm[ v->varattno -1 ].sn );
+sonar_join.c:        mongoc_cursor_destroy( priv->uri->cursor );
+sonar_join.c:        priv->uri->cursor = 0;
+sonar_join.c:    if( mongoc_cursor_next( priv->uri->cursor, &r ) )
+sonar_join.c:        tts = MakeTupleTableSlot(); ExecSetSlotDescriptor( tts, priv->ttsdesc ); /* new tuple descriptor */
+sonar_join.c:        tts->tts_nvalid = list_length( priv->L );
+sonar_join.c:        foreach( c, priv->L )
+sonar_join.c:            tts->tts_tupleDescriptor->attrs[ci]->attrelid = priv->id; 
+sonar_join.c:                RelOptInfo *baserel = priv->baserel;
+sonar_join.c:                    sprintf( fn, "%s", priv->nm[ v->varattno -1 ].sn );
+sonar_join.c:                    sprintf( fn, "%s.%s",  (char*) priv->js, joinpriv->nm[ v->varattno -1 ].sn );
+sonar_join.c:        mongoc_cursor_destroy( priv->uri->cursor );
+sonar_join.c:        priv->uri->cursor = 0;
+sonar_join.c:    PlannerInfo *root = priv->root;
+sonar_join.c:    RelOptInfo *baserel = priv->baserel;
+sonar_join.c:    PlannerInfo *root = priv->root;
+sonar_join.c:    RelOptInfo *baserel = priv->baserel;
+sonar_join.c:    PlannerInfo *root = priv->root;
+sonar_join.c:    PlannerInfo *root = priv->root;
+sonar_join.c:    RelOptInfo *baserel = priv->baserel; 
+sonar_join.c:                        priv->jpos |= 1;
+sonar_join.c:            priv->uri->client,
+sonar_join.c:            priv->uri->db_name,
+sonar_join.c:               priv->t = query_sonar_join;
+sonar_join.c:    if( !priv->g )
+sonar_join.c:        PlannerInfo *root = priv->root;
+sonar_join.c:        RelOptInfo *baserel = priv->baserel; 
+sonar_join.c:        priv->g = bson_new();
+sonar_join.c:                       sprintf( join_field, "@%s@%s", joinpriv->uri->collection_name, priv->nm[ vl->varattno -1 ].sn );
+sonar_join.c:                       sf_strdup( join_field, (char**)&priv->js );
+sonar_join.c:                       sprintf( join_field, "$%s.$%s", joinpriv->uri->collection_name, joinpriv->nm[ vr->varattno -1 ].sn );
+sonar_join.c:                       rc = BSON_APPEND_UTF8( priv->g,  priv->nm[ vl->varattno - 1 ].sn , join_field );
+sonar_join.c:    return priv->g;
+sonar_join.c:    RelOptInfo *rel = priv->baserel;
+sonar_join.c:    if( !priv->f )
+sonar_join.c:        priv->f =  bson_new();
+sonar_join.c:        if(  priv->L )
+sonar_join.c:            foreach( c, priv->L )
+sonar_join.c:                        rc = BSON_APPEND_INT32( priv->f, priv->nm[ v->varattno -1 ].sn, 1 );
+sonar_join.c:                       sprintf( joined_field, "%s.%s", (char*) priv->js, jp->nm[ v->varattno -1 ].sn );
+sonar_join.c:                        rc = BSON_APPEND_INT32( priv->f, joined_field, 1 );
+sonar_join.c:    return priv->f;
+sonar_join.c:    PlannerInfo *root = priv->root;
+sonar_join.c:    lpriv->jpos |= 1;
+sonar_join.c:    rpriv->jpos |= 2;
+sonar_join.c:            RelOptInfo *baserel = lpriv->baserel;
+sonar_join.c:               sprintf( join_field, "@%s@%s", lpriv->uri->collection_name, rpriv->nm[ vl->varattno -1 ].sn );
+sonar_join.c:               sf_strdup( join_field, (char**)&priv->js );
+sonar_join.c:               sprintf( join_field, "$%s.$%s", lpriv->uri->collection_name, lpriv->nm[ vr->varattno -1 ].sn );
+sonar_join.c:               rc = BSON_APPEND_UTF8( &jn,  "$joined", lpriv->uri->collection_name );
+sonar_join.c:               rc = BSON_APPEND_UTF8( &jm,  rpriv->nm[ vl->varattno - 1 ].sn , join_field );
+sonar_join.c:    PlannerInfo *root = priv->root;
+sonar_join.c:    RelOptInfo* baserel = priv->baserel;
+sonar_join.c:                priv->jpos |= 1;
+sonar_join.c:                priv->jpos |= 2;
+sonar_join.c:                priv->jpos |= 1;
+sonar_join.c:                priv->jpos |= 2;
+sonar_mis.c:	priv->t = query_invalid;
+sonar_mis.c:      return priv->t;
+sonar_mis.c:        return priv->t = query_regular;
+sonar_mis.c:                    priv->t = query_regular;
+sonar_mis.c:                               priv->t = query_regular;
+sonar_mis.c:            priv->t = query_regular;
+sonar_mis.c:    if( priv->t != query_regular )
+sonar_mis.c:        if( priv->L )
+sonar_mis.c:            foreach( c, priv->L )
+sonar_mis.c:                    priv->t = query_regular;
+sonar_mis.c:                    priv->t = query_regular;
+sonar_mis.c:            ; //priv->t = query_regular;
+sonar_mis.c:            priv->t = query_regular;
+sonar_mis.c:    if( priv->t != query_regular )
+sonar_mis.c:                       return priv->t = query_regular; 
+sonar_mis.c:             return priv->t = query_group; 
+sonar_mis.c:            return priv->t = query_aggregation;
+sonar_mis.c:            return priv->t = query_distinct;
+sonar_mis.c:    return priv->t = query_regular;
+sonar_mis.c:    const char * name = priv->nm[ v->varattno -1 ].sn;
+sonar_mis.c:        const char *n = priv->nm[ node->varattno-1 ].sn;
+sonar_mis.c:                sp_project_concat( b, concat_fld, priv->nm[ v1->varattno - 1].sn, priv->nm[ v2->varattno -1 ].sn );
+sonar_mis.c:                priv->projs0[ org->resno -1 ] = lappend( priv->projs0[ org->resno -1], b );
+sonar_mis.c:                    sp_project_concat( b, concat_fld, fld, priv->nm[ v->varattno -1].sn  ); 
+sonar_mis.c:                    priv->projs0[ org->resno -1 ] = lappend( priv->projs0[ org->resno -1 ], b );
+sonar_mis.c:    PlannerInfo *root = priv->root;
+sonar_mis.c:    RelOptInfo *baserel = priv->baserel;
+sonar_mis.c:                    priv->tuple_limit = -1;
+sonar_mis.c:                    priv->tuple_limit = -1;
+sonar_nm.c:    RelOptInfo *baserel = priv->baserel;
+sonar_nm.c:        su_namecpy( m[i].pn, get_relid_attribute_name( priv->id, i+1 ) );
+sonar_nm.c:	sprintf( db_node, ".%s.%s$", priv->uri->db_name, priv->uri->collection_name );
+sonar_nm.c:	sprintf( db_meta_node, "%s.%s", priv->uri->db_name, META_COLLECTION );
+sonar_nm.c:    sm_query_db( priv->uri, priv->uri->db_name, META_COLLECTION, 0, 0, &q, &f );
+sonar_nm.c:	while( mongoc_cursor_next( priv->uri->cursor, &r) )
+sonar_nm.c:    priv->nm = m;
+sonar_nm.c:    mongoc_cursor_destroy( priv->uri->cursor );
+sonar_nm.c:    priv->uri->cursor = 0;
+sonar_nm.c:    PlannerInfo *root = priv->root;
+sonar_nm.c:    RelOptInfo *baserel = priv->baserel;
+sonar_nm.c:        priv->l = list_copy(baserel->reltargetlist);
+sonar_nm.c:    if( priv->nm )
+sonar_nm.c:        free( priv->nm );
+sonar_nm.c:        priv->nm = 0;
+sonar_nm.c:    PlannerInfo *root = priv->root;
+sonar_nm.c:    RelOptInfo *baserel = priv->baserel;
+sonar_order.c:    PlannerInfo *root = priv->root;
+sonar_order.c:    RelOptInfo *baserel = priv->baserel;
+sonar_order.c:    const char * collection_name = priv->uri->collection_name;
+sonar_order.c:    priv->o = bson_new( );
+sonar_order.c:    bson_init( priv->o );
+sonar_order.c:    BSON_APPEND_DOCUMENT_BEGIN( priv->o, "$sort", &sbd );
+sonar_order.c:    //BSON_APPEND_DOCUMENT_BEGIN( priv->o, "$sort", &sbd );
+sonar_order.c:                    snn= priv->nm[ v->varattno - 1].sn;
+sonar_order.c:                        if( priv->t == query_distinct )
+sonar_order.c:                //tlea = sonar_get_alias( priv->L, agg );
+sonar_order.c:                        //sp_project_substr( b, substr_fld,  priv->nm[ v->varattno -1].sn,  start, len );
+sonar_order.c:                        //priv->projs0 = lappend( priv->projs0, b );
+sonar_order.c:    bson_append_document_end( priv->o, &sbd );
+sonar_order.c:            BSON_APPEND_UTF8( &ba, "0",  sonar_prepend( field, priv->nm[ v1->varattno -1].sn, "$" ) );
+sonar_order.c:            BSON_APPEND_UTF8( &ba, "1",  sonar_prepend( field, priv->nm[ v2->varattno -1].sn, "$" ) );
+sonar_order.c:            priv->projs0 = lappend( priv->projs0, project );
+sonar_outstretch.c:        priv->id = fdw_private->id;
+sonar_outstretch.c:        priv->copy_self = so_copy_self;
+sonar_outstretch.c:        priv->root = root;
+sonar_outstretch.c:        priv->baserel = baserel;
+sonar_outstretch.c:        priv->q = bson_new( );
+sonar_outstretch.c:        priv->o = 0;
+sonar_outstretch.c:        if( !priv->q )
+sonar_outstretch.c:        su_move_copy((void**) &fdw_private->jns, (void**)&priv->jns );
+sonar_outstretch.c:        su_move_copy( (void**)&fdw_private->uri, (void**)&priv->uri );
+sonar_outstretch.c:        priv->L = list_copy(root->parse->targetList);
+sonar_outstretch.c:        priv->t = sm_query_type( root, baserel, priv );
+sonar_outstretch.c:        if( priv->t == query_group && priv->L )
+sonar_outstretch.c:            priv->projs0 = palloc0( priv->L->length * sizeof( List * ) );
+sonar_outstretch.c:            priv->projs1 = palloc0( priv->L->length * sizeof( List * ) );
+sonar_outstretch.c:        if( priv->tuple_limit != -1 && ! (root->parse->groupClause && priv->t == query_regular ) && !sj_is_join( root ) )
+sonar_outstretch.c:        if( priv->t != query_sonar_join && priv->t != query_group )
+sonar_outstretch.c:                bson_destroy( priv->o );
+sonar_outstretch.c:                priv->o = 0;
+sonar_outstretch.c:        bson_init( priv->q );
+sonar_outstretch.c:                 priv->q,
+sonar_outstretch.c:                priv->q,
+sonar_outstretch.c:    switch( priv->t )
+sonar_outstretch.c:    switch( priv->t )
+sonar_outstretch.c:    Var *v = sp_find_var( priv->root, p);
+sonar_outstretch.c:    RelOptInfo *baserel = priv->baserel;
+sonar_outstretch.c:    if( priv->t == query_group || priv->t == query_aggregation  )
+sonar_outstretch.c:    if( priv->t == query_sonar_join )
+sonar_outstretch.c:    const char* usr = sonar_get_usr( ps_priv->id);
+sonar_outstretch.c:    const char *pwd = sonar_get_pwd( ps_priv->id);
+sonar_outstretch.c:    strncpy( ps_priv->uri->db_name, sonar_get_mdb( ps_priv->id ), NAMEDATALEN) ;
+sonar_outstretch.c:    strncpy(ps_priv->uri->collection_name, sonar_get_collection( ps_priv->id ),NAMEDATALEN);
+sonar_outstretch.c:    strncpy( ps_priv->uri->host, sonar_get_host( ps_priv->id),NAMEDATALEN);
+sonar_outstretch.c:        strncpy( ps_priv->uri->usr, usr,NAMEDATALEN);
+sonar_outstretch.c:        strncpy( ps_priv->uri->pwd, pwd, NAMEDATALEN);
+sonar_outstretch.c:    ps_priv->uri->port = sonar_get_port( ps_priv->id );
+sonar_outstretch.c:    if( strcmp( ps_priv->uri->host, "" ) == 0 )
+sonar_outstretch.c:    if( !ps_priv->uri->uri )
+sonar_outstretch.c:        if( strlen( ps_priv->uri->usr ) )
+sonar_outstretch.c:            ps_priv->uri->uri = sm_create_uri_auth( ps_priv->uri->host, ps_priv->uri->port, ps_priv->uri->db_name, ps_priv->uri->usr, ps_priv->uri->pwd );
+sonar_outstretch.c:            ps_priv->uri->uri = sm_create_uri( ps_priv->uri->host, ps_priv->uri->port );
+sonar_outstretch.c:    if( !ps_priv->uri->client )
+sonar_outstretch.c:        ps_priv->uri->client = sm_connect( ps_priv->uri->uri );
+sonar_outstretch.c:    if( !ps_priv->uri->collection )
+sonar_outstretch.c:        ps_priv->uri->collection = mongoc_client_get_collection(ps_priv-> uri->client, ps_priv->uri->db_name, ps_priv->uri->collection_name );
+sonar_outstretch.c:    switch( priv->t )
+sonar_outstretch.c:    PlannerInfo *root = priv->root;
+sonar_outstretch.c:    RelOptInfo *baserel = priv->baserel;
+sonar_outstretch.c:            priv->tuple_offset =  DatumGetInt64( ((Const*)root->parse->limitOffset)->constvalue );
+sonar_outstretch.c:            priv->tuple_offset =  DatumGetInt64( ((Const*)root->parse->limitOffset)->constvalue );
+sonar_outstretch.c:    PlannerInfo *root = priv->root;
+sonar_outstretch.c:    RelOptInfo *baserel = priv->baserel;
+sonar_outstretch.c:        priv->tuple_limit = baserel->tuples; 
+sonar_outstretch.c:            priv->tuple_limit = DatumGetInt64( ((Const*)root->parse->limitCount)->constvalue );
+sonar_outstretch.c:            priv->tuple_limit =  DatumGetInt64( ((Const*)root->parse->limitCount)->constvalue );
+sonar_project.c:    sprintf( projkey, "%s", priv->nm[v->varattno-1].sn );
+sonar_project.c:    foreach( lc, priv->projs )
+sonar_project.c:        priv->projs = lappend( priv->projs, l );
+sonar_project.c:    priv->projs1[ org->resno -1 ] = lappend( priv->projs1[ org->resno -1 ], b );
+sonar_project.c:            sprintf( concat_fld1, "%s", priv->nm[ v1->varattno -1 ].sn );
+sonar_project.c:            sprintf( concat_fld2, "%s", priv->nm[ v2->varattno -1 ].sn );
+sonar_project.c:        priv->projs = lappend( priv->projs, l );
+sonar_project.c:        sprintf( projval, "%s", priv->nm[ v->varattno - 1].sn );
+sonar_project.c:    priv->projs1[ org->resno -1 ] = lappend( priv->projs1[ org->resno -1 ], b );
+sonar_project.c:        sprintf( projval, "%s", priv->nm[ v->varattno - 1].sn );
+sonar_project.c:        priv->projs = lappend( priv->projs, l );
+sonar_project.c:        sprintf( projval, "%s", priv->nm[ v->varattno - 1].sn );
+sonar_project.c:    priv->projs1[ org->resno -1 ] = lappend( priv->projs1[ org->resno -1 ], b );
+sonar_project.c:        sprintf( projval, "%s", priv->nm[ v->varattno - 1].sn );
+sonar_project.c:        priv->projs = lappend( priv->projs, l );
+sonar_project.c:                sprintf( concat_fld1, "%s", priv->nm[ v1->varattno -1 ].sn );
+sonar_project.c:                sprintf( concat_fld2, "%s", priv->nm[ v2->varattno -1 ].sn );
+sonar_project.c:        priv->projs = lappend( priv->projs, l );
+sonar_project.c:        sprintf( projval, "%s", priv->nm[ v->varattno - 1].sn );
+sonar_project.c:        priv->projs = lappend( priv->projs, l );
+sonar_query.c:    if( priv->uri->cursor == 0 )
+sonar_query.c:    priv->uri->cursor = sm_aggregate( priv->uri->collection, priv->g, &sb );
+sonar_query.c:    mongoc_cursor_next( priv->uri->cursor, &r );
+sonar_query.c:    appendStringInfo( es->str, "\n%s query:\n%s\n", priv->uri->collection_name, explain );
+sonar_query.c:    if( !priv->g )
+sonar_query.c:        priv->g = bson_new();
+sonar_query.c:        rc = BSON_APPEND_ARRAY_BEGIN( priv->g, "pipeline",&sbp );
+sonar_query.c:        if( !bson_empty0( priv->f ) )
+sonar_query.c:            bson_t *f = bson_copy( priv->f );
+sonar_query.c:            priv->projs = lappend( priv->projs, l );
+sonar_query.c:        if( priv->projs )
+sonar_query.c:            sq_unify_mp( priv, priv->projs, &ll );
+sonar_query.c:            if( !bson_empty( priv->q ) )
+sonar_query.c:                su_push_docval_in_array( &sbp, &au, "$match", priv->q );
+sonar_query.c:            if( !bson_empty( priv->f ) )
+sonar_query.c:                su_push_docval_in_array( &sbp, &au, "$project", priv->f );
+sonar_query.c:            if( !bson_empty( priv->q ) )
+sonar_query.c:                su_push_docval_in_array( &sbp, &au, "$match", priv->q );
+sonar_query.c:        if( !bson_empty0( priv->o ) )
+sonar_query.c:            su_push_doc_in_array( &sbp, &au, priv->o );
+sonar_query.c:        if( priv->tuple_offset > 0 )
+sonar_query.c:            rc = BSON_APPEND_INT32(&sb, "$skip", priv->tuple_offset );
+sonar_query.c:        if( priv->tuple_limit && priv->tuple_limit != -1 )
+sonar_query.c:            rc = BSON_APPEND_INT32(&sb, "$limit",  priv->tuple_limit );
+sonar_query.c:        rc = bson_append_array_end( priv->g,&sbp ); // pipeline
+sonar_query.c:	if( mongoc_cursor_next( priv->uri->cursor, &r) )
+sonar_query.c:		foreach( c, priv->l )
+sonar_query.c:				snn =  priv->nm[ ci ].sn;
+sonar_query.c:				slot->tts_tupleDescriptor->attrs[ci]->attrelid = priv->id; 
+sonar_query.c:				memcpy( slot->tts_tupleDescriptor->attrs[ci]->attname.data, priv->nm[ ci ].pn, NAMEDATALEN); 
+sonar_query.c:        priv->js = slot;
+sonar_query.c:    bson_reinit( priv->g );
+sonar_query.c:    rc = BSON_APPEND_ARRAY_BEGIN( priv->g, "pipeline",&sbp );
+sonar_query.c:    su_push_docval_in_array( &sbp, &au, "$match", priv->q );
+sonar_query.c:    if( priv->o )
+sonar_query.c:        su_push_doc_in_array( &sbp, &au, priv->o );
+sonar_query.c:    if( priv->tuple_offset > 0 )
+sonar_query.c:        rc = BSON_APPEND_INT32(&sb, "$skip", priv->tuple_offset );
+sonar_query.c:    if( priv->tuple_limit && priv->tuple_limit != -1 )
+sonar_query.c:        rc = BSON_APPEND_INT32(&sb, "$limit",  priv->tuple_limit );
+sonar_query.c:        rc = sb_append_eq2( &sb, priv->nm[ v->varattno-1].sn, v->vartype, d );
+sonar_query.c:    rc = bson_append_array_end( priv->g,&sbp ); // pipeline
+sonar_query.c:    if( !priv->f )
+sonar_query.c:        priv->f =  bson_new();
+sonar_query.c:        if(  priv->l )
+sonar_query.c:            foreach( c, priv->L )
+sonar_query.c:                if( !sm_target_contained( priv, priv->L, e ) )
+sonar_query.c:                    rc = BSON_APPEND_INT32( priv->f, fld, 1 );
+sonar_query.c:    return priv->f;
+sonar_query.c:    if( !priv->f )
+sonar_query.c:        priv->f =  bson_new();
+sonar_query.c:        if(  priv->l )
+sonar_query.c:            foreach( c, priv->l )
+sonar_query.c:                if( ! sm_var_contained( priv, priv->l, v ) )
+sonar_query.c:                    rc = BSON_APPEND_INT32( priv->f, priv->nm[ v->varattno -1 ].sn, 1 );
+sonar_query.c:    return priv->f;
+sonar_query.c:    const char *an = priv->nm[ v->varattno -1 ].ap;
+sonar_query.c:    const char *fld = ((char*) priv->nm[ v->varattno -1 ].sn ) + strlen( an ) + 1;
+sonar_query.c:    if( priv->l )
+sonar_query.c:        foreach( cell, priv->l )
+sonar_query.c:                if( priv->nm[ v->varattno -1].ap )
+sonar_query.c:                            if( strcmp( tmp, priv->nm[ v->varattno -1 ].ap ) == 0 )
+sonar_query.c:                        unwinds = lappend( unwinds, priv->nm[ v->varattno -1].ap );
+sonar_query.c:                        su_push_unwind_in_array( sbp, au, priv->nm[ v->varattno -1].ap );
+sonar_restriction.c:            if( priv->t == query_group )
+sonar_restriction.c:            if( priv->t == query_group &&  sr_groupby_var( priv, v, &te ) )
+sonar_restriction.c:                sprintf( col_name, "%s", priv->nm[ v->varattno - 1].sn );
+sonar_restriction.c:            const char * cn1 = priv->nm[ v1->varattno - 1].sn ;
+sonar_restriction.c:            const char * cn2 = priv->nm[ v2->varattno - 1].sn ;
+sonar_restriction.c:                 sprintf( name, "%s_%s", priv->nm[ v1->varattno -1 ].pn, priv->nm[ v2->varattno -1 ].pn );
+sonar_restriction.c:                 rc = BSON_APPEND_DOCUMENT_BEGIN( priv->f, name, &bs );
+sonar_restriction.c:                 bson_append_document_end( priv->f, &bs );
+sonar_restriction.c:            tlea = sonar_get_alias( priv->L, ag );
+sonar_restriction.c:                    sprintf( col_name, "%s",  priv->nm[ v->varattno - 1].sn);
+sonar_restriction.c:                    TargetEntry* tlea = sonar_get_alias( priv->L, ag );
+sonar_restriction.c:                    const char* col_name = priv->nm[ v->varattno - 1].sn;
+sonar_restriction.c:            const char* col_name = priv->nm[ v->varattno - 1].sn;
+sonar_restriction.c:    PlannerInfo *root = priv->root;
+sonar_restriction.c:                            if( inpriv->uri->cursor )
+sonar_restriction.c:                                rc = BSON_APPEND_DOCUMENT_BEGIN( b, priv->nm[ v->varattno -1 ].sn, &sb ); // in b collections
+sonar_restriction.c:                                while ( mongoc_cursor_next( inpriv->uri->cursor, &r) )
+sonar_restriction.c:                                mongoc_cursor_destroy( inpriv->uri->cursor );
+sonar_restriction.c:                                inpriv->uri->cursor = 0;
+sonar_restriction.c:                                rc = BSON_APPEND_DOCUMENT_BEGIN( b, priv->nm[ v->varattno -1].sn );
+sonar_restriction.c:            if( ss_is_outquery( priv->root, priv->baserel, priv ) )
+sonar_restriction.c:                PlannerInfo *root = priv->root;
+sonar_restriction.c:                                                        const char *fld = priv->nm[ v->varattno -1].sn;
+sonar_restriction.c:        const char * col_name = priv->nm[ v->varattno - 1].sn ;
+sonar_restriction.c:        const char * col_name = priv->nm[ v->varattno - 1].sn ;
+sonar_restriction.c:        sprintf( col_name, "%s", priv->nm[v->varattno -1 ].pn );
+sonar_restriction.c:	const char * col_name =  priv->nm[v->varattno -1 ].pn; 
+sonar_restriction.c:    PlannerInfo *root = priv->root;
+sonar_restriction.c:    RelOptInfo *baserel = priv->baserel; 
+sonar_restriction.c:                                        if( joinpriv->uri->cursor )
+sonar_restriction.c:                                            if( joinpriv->t == query_distinct )
+sonar_restriction.c:                                            else if( joinpriv->t == query_regular )
+sonar_restriction.c:                                                sprintf( fs, "%s", joinpriv->nm[ vr->varattno -1].sn );
+sonar_restriction.c:                                            if( priv->t == query_distinct )
+sonar_restriction.c:                                            else if( priv->t == query_regular )
+sonar_restriction.c:                                                sprintf( fld, "%s", priv->nm[ vl->varattno -1].sn );
+sonar_restriction.c:                                            else if( priv->t == query_group )
+sonar_restriction.c:                                            while ( mongoc_cursor_next( joinpriv->uri->cursor, &r) )
+sonar_restriction.c:                                                //su_push_bsonval_in_array( &sbin, &idx, joinpriv->nm[ vr->varattno -1].sn, r );
+sonar_restriction.c:                                            mongoc_cursor_destroy( joinpriv->uri->cursor );
+sonar_restriction.c:                                            joinpriv->uri->cursor = 0;
+sonar_restriction.c:                                                if( joinpriv->uri->cursor )
+sonar_restriction.c:                                                    if( joinpriv->t == query_distinct )
+sonar_restriction.c:                                                    else if( joinpriv->t == query_regular )
+sonar_restriction.c:                                                        sprintf( fs, "%s", joinpriv->nm[ vr->varattno -1].sn );
+sonar_restriction.c:                                                    if( priv->t == query_distinct )
+sonar_restriction.c:                                                    else if( priv->t == query_regular )
+sonar_restriction.c:                                                        sprintf( fld, "%s", priv->nm[ vl->varattno -1].sn );
+sonar_restriction.c:                                                    else if( priv->t == query_group )
+sonar_restriction.c:                                                    while ( mongoc_cursor_next( joinpriv->uri->cursor, &r) )
+sonar_restriction.c:                                                        //su_push_bsonval_in_array( &sbin, &idx, joinpriv->nm[ vr->varattno -1].sn, r );
+sonar_restriction.c:                                                    mongoc_cursor_destroy( joinpriv->uri->cursor );
+sonar_restriction.c:                                                    joinpriv->uri->cursor = 0;
+sonar_restriction.c:    PlannerInfo *root = priv->root;
+sonar_subquery.c:    PlannerInfo *root = priv->root;
+sonar_utils.c:    priv->uri->cursor = sm_aggregate( priv->uri->collection, priv->g, 0 );
+sonar_utils.c:    sm_query( priv->uri, priv->tuple_offset, priv->tuple_limit == -1 ? 0 : priv->tuple_limit, priv->g, priv->f );
+sonar_utils.c:        sprintf( fld, "%s", priv->nm[v->varattno -1].sn );
+sonar_utils.c:                sprintf( fld, "%s.%s", priv->nm[ v->varattno -1].sn, (( text * )( c->constvalue ))->vl_dat );  
+sonar_utils.c:    PlannerInfo *root = priv->root;

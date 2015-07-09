@@ -1,0 +1,26 @@
+Source: sonar-fdw
+Priority: optional
+Maintainer: Dylan McCall <dylan@jsonar.com>
+Build-Depends: debhelper (>= 8.0.0),
+ sonar-postgresql-9.4,
+ libsasl2-dev
+Standards-Version: 3.9.4
+Section: libs
+Homepage: http://www.jsonar.com
+
+Package: sonar-fdw
+Architecture: any
+Depends: ${shlibs:Depends},
+ sonar-postgresql-9.4,
+ python,
+ python-dateutil,
+ python-pymongo,
+ python-psycopg2,
+ python-pygresql,
+ python-sqlalchemy
+ ${misc:Depends}
+Recommends:
+ python-pymongo (>= 2.4)
+Description: Mongo foreign data wrapper for PostgreSQL
+ (Long description of sonar_fdw goes here)
+

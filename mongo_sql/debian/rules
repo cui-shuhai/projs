@@ -1,0 +1,19 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+export PG_CONFIG ?= /opt/sonar-postgresql/bin/pg_config
+SRC_FILES = extern src util Makefile
+
+%:
+	dh $@ 
+
+override_dh_auto_build:
+	$(MAKE)
+
+override_dh_auto_install:
+	dh_auto_install
+	dh_install $(SRC_FILES) opt/sonar-fdw/src
+

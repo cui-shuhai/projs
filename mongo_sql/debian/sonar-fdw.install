@@ -1,0 +1,5 @@
+../../SonarSQLSync/pyutil/*.py    opt/sonar-fdw/SonarSQLSync/pyutil
+../../SonarSQLSync/*.py           opt/sonar-fdw/SonarSQLSync
+../../SonarSQLSync/*.conf         opt/sonar-fdw/SonarSQLSync
+util/sonar_fdw_sync               usr/bin
+

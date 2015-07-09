@@ -1,0 +1,5 @@
+sonar-fdw (1.0) unstable; urgency=low
+
+  * Initial release
+
+ -- Dylan McCall <dylan@jsonar.com>  Thu, 10 Jul 2014 13:58:01 -0700
