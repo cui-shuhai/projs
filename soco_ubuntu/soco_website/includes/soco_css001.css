@@ -1,0 +1,32 @@
+
+.anchor{
+    text-decoration:none !important;
+    color:#5e5e5e;
+    margin-left:1em;
+}
+
+#body_id{
+	background-color:#e5e5e5;
+	width:70%;
+	margin-left:15%;
+	margin-right: 15%;
+	
+	}
+	
+	#logo{
+		}
+
+p{
+	margin-left:5px;
+	}
+	
+img{
+	margin:1px 28px 1px 1px;
+}
+#footer{
+	position: fixed;
+	bottom: 0;
+	width: 80%;
+	background-color: #c8c8c8;
+	display:inline-block;  
+	}
