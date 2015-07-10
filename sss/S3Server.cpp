@@ -6,15 +6,15 @@ static const unsigned short LISTEN_PORT = 8080;
 S3ServerSocket::S3ServerSocket():port{LISTEN_PORT},epfd{epoll_create1(0)}{
 }
 
-S3ServerSocket::S3ServerSocket(unsigned int p):port{p},epfd{epoll_create1(0)}{
+S3ServerSocket::S3ServerSocket(unsigned short p):port{p},epfd{epoll_create1(0)}{
 }
 
-int
-S3ServerSocket::SetNonBlockMode(bool flag)
-{
+int 
+S3ServerSocket::SetFdNonBlockMode(int f, bool flag){
+
     int flags, s;
 
-    flags = fcntl (sfd, F_GETFL, 0);
+    flags = fcntl (fd, F_GETFL, 0);
     if (flags == -1)
     {
         perror ("fcntl");
@@ -24,7 +24,7 @@ S3ServerSocket::SetNonBlockMode(bool flag)
     if(flag)
     {
         flags |= O_NONBLOCK;
-        s = fcntl (sfd, F_SETFL, flags);
+        s = fcntl (f, F_SETFL, flags);
         if (s == -1)
         {
             perror ("fcntl");
@@ -32,6 +32,10 @@ S3ServerSocket::SetNonBlockMode(bool flag)
         }
     }
     return 0;
+}
+
+int S3ServerSocket::SetNonBlockMode(bool flag) {
+    return SetFdNonBlockMode(fd, flag);
 }
 
 int S3ServerSocket::Init(){
@@ -45,7 +49,8 @@ int S3ServerSocket::Init(){
     hints.ai_socktype = SOCK_STREAM; /* We want a TCP socket */
     hints.ai_flags = AI_PASSIVE;     /* All interfaces */
 
-    s = getaddrinfo (NULL, port, &hints, &result);
+    s = getaddrinfo (NULL, "4000", &hints, &result);
+    //s = getaddrinfo (NULL, port, &hints, &result);
     if (s != 0)
     {
         fprintf (stderr, "getaddrinfo: %s\n", gai_strerror (s));
@@ -75,25 +80,28 @@ int S3ServerSocket::Init(){
     }
 
     freeaddrinfo (result);
+    return 0;
 }
 
-int S3ServerScoket::EpollAdd(int fd, struct epoll_event *event){
-    epoll_ctl(epfd, EPOLL_CTL_ADD, fd, event);
+int S3ServerSocket::EpollAdd(int fd, struct epoll_event *event){
+    return epoll_ctl(epfd, EPOLL_CTL_ADD, fd, event);
 }
 
-int S3ServerScoket::EpollMod(int fd, struct epoll_event *event){
-    epoll_ctl(epfd, EPOLL_CTL_MOD, fd, event);
+int S3ServerSocket::EpollMod(int fd, struct epoll_event *event){
+    return epoll_ctl(epfd, EPOLL_CTL_MOD, fd, event);
 }
 
-int S3ServerScoket::EpollDel(int fd, struct epoll_event *event){
-    epoll_ctl(epfd, EPOLL_CTL_DEL, fd):
+int S3ServerSocket::EpollDel(int fd, struct epoll_event *event){
+    return epoll_ctl(epfd, EPOLL_CTL_DEL, fd, nullptr);
 }
-
+/*
 int S3ServerSocket::Listen(unsigned int bl){
     return listen(fd, bl);
 }
+*/
 
 int S3ServerSocket::Start(){
+    int s;
     struct epoll_event event;
     struct epoll_event *events;
 
@@ -101,12 +109,12 @@ int S3ServerSocket::Start(){
     event.events = EPOLLIN | EPOLLET;
     EpollAdd(fd, &event);
 
-    events = calloc(MAXEVENTS, sizeof event);
+    events = static_cast<epoll_event*>(calloc(MAXEVENTS, sizeof(event)));
 
     while(1){
 
         int n, i;
-        n = epoll_wait(efd, events, MAXEVENTS, -1);
+        n = epoll_wait(epfd, events, MAXEVENTS, -1);
 
         for (i = 0; i < n; i++)
         {
@@ -131,7 +139,7 @@ int S3ServerSocket::Start(){
                     char hbuf[NI_MAXHOST], sbuf[NI_MAXSERV];
 
                     in_len = sizeof in_addr;
-                    infd = accept (sfd, &in_addr, &in_len);
+                    infd = accept (fd, &in_addr, &in_len);
                     if (infd == -1){
                         if ((errno == EAGAIN) || (errno == EWOULDBLOCK)){
                             /* We have processed all incoming
@@ -155,13 +163,13 @@ int S3ServerSocket::Start(){
 
                     /* Make the incoming socket non-blocking and add it to the
                     list of fds to monitor. */
-                    s = make_socket_non_blocking (infd);
+                    s = SetFdNonBlockMode(infd, true);
                     if (s == -1)
                         abort ();
 
                     event.data.fd = infd;
                     event.events = EPOLLIN | EPOLLET;
-                    s = epoll_ctl (efd, EPOLL_CTL_ADD, infd, &event);
+                    s = EpollAdd(infd, &event);
                     if (s == -1)
                     {
                         perror ("epoll_ctl");
@@ -219,5 +227,6 @@ int S3ServerSocket::Start(){
                 close (events[i].data.fd);
             }
         }
+    }
     }
 }

@@ -18,32 +18,17 @@
 * this class defines a server side socket comply with epoll
 */ 
 
-#ifdef __DOC__
-typedef union epoll_data
-{
-    void        *ptr;
-    int          fd;
-    __uint32_t   u32;
-    __uint64_t   u64;
-} epoll_data_t;
 
-struct epoll_event
-{
-    __uint32_t   events; /* Epoll events */
-    epoll_data_t data;   /* User data variable */
-};
-#endif
-
-
-classs S3ServerSocket{
+class S3ServerSocket{
 public:
     S3ServerSocket();
     explicit S3ServerSocket(unsigned short port);
     int SetNonBlockMode(bool flag = true);
+    int SetFdNonBlockMode(int f, bool flag = true);
     inline int EpollAdd(int fd, struct epoll_event *event);
     inline int EpollMod(int fd, struct epoll_event *event);
     inline int EpollDel(int fd, struct epoll_event *event);
-    inline int Listen(unsigned int bl = BACKLOG);
+    inline int Listen(unsigned int bl = BACKLOG){return listen(fd, bl);}
     int Start();
 
 private:
