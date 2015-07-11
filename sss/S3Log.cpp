@@ -1,6 +1,7 @@
 
 #include "S3Log.h"
 
+S3Log log;
 
 template<typename T>
 S3Log& S3Log::operator <<(T data)

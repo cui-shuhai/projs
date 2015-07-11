@@ -13,6 +13,8 @@
 #include <sys/epoll.h>
 #include <errno.h>
 
+#include "S3Socket.h"
+
 #define MAXEVENTS 1024 
 #define BACKLOG  128
 /**
@@ -27,7 +29,7 @@ public:
 
     virtual int Send() override final;
     virtual int Recv() override final;
-    int Process();
+    virtual int Process() override;
 };
 
 

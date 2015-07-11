@@ -3,10 +3,10 @@
 #include "S3Socket.h"
 
 
-S3Socket::S3Socket(){}
+S3Socket::S3Socket():epoll{nullptr}{}
 
 int 
-S3Socket::SetFdNonBlockMode(bool flag){
+S3Socket::SetNonBlockMode(bool flag){
 
     int flags, s;
 
@@ -31,12 +31,16 @@ S3Socket::SetFdNonBlockMode(bool flag){
 }
 
 int S3Socket::Bind(){
+    return 0;
 }
 
-int S3Socket::Listen(){
+
+int S3Socket::Listen( unsigned int bl){
+    return 0;
 }
 
 S3Socket * S3Socket::Accept(){
+    return nullptr;
 }
 
 /* This is for server side, not necessary
@@ -45,9 +49,11 @@ int S3Socket::Connect(const struct sockaddr *address){
 */
 
 int S3Socket::Send(){
+    return 0;
 }
 
 int S3Socket::Recv(){
+    return 0;
 }
 
 unsigned short S3Socket::GetPort(){
@@ -62,7 +68,7 @@ void S3Socket::GetAddr(struct sockaddr_in *inaddr){
     memcpy(inaddr, &addr, sizeof(addr));
 }
 
-void S3Socket::SetAddr(struct sockeaddr_in *inaddr){
+void S3Socket::SetAddr(struct sockaddr_in *inaddr){
     memcpy(&addr, inaddr, sizeof(addr));
 }
 
@@ -74,6 +80,10 @@ void S3Socket::SetDescriptor(int desc){
     fd = desc;
 }
 
-bool S2Socket::IsMe(int desc){
-    return desc == fd;
+int S3Socket::Close(){
+    return close(fd);
+}
+
+void S3Socket::SetEpoll(S3Epoll *ep){
+    epoll = ep;
 }

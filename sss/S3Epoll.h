@@ -13,8 +13,12 @@
 #include <sys/epoll.h>
 #include <errno.h>
 
+#include <memory>
+
 #define MAXEVENTS 1024 
 #define BACKLOG  128
+
+#include "S3Socket.h"
 /**
 * this class defines a server side socket comply with epoll
 */ 
@@ -26,7 +30,7 @@ public:
     int EpollAdd(int fd, struct epoll_event *event);
     int EpollMod(int fd, struct epoll_event *event);
     int EpollDel(int fd, struct epoll_event *event);
-    void SetServer(S2Socket *svr);
+    void SetServer(std::shared_ptr<S3Socket> svr);
     int Start();
 
 private:

@@ -11,8 +11,8 @@ S3ServerTest: S3ServerTest.cpp S3Server.cpp
 	$(CC) ${CPPFLAGS} S3ServerTest.cpp S3Server.cpp -o S2ServerTest 
 
 
-SOURCES=S3Log.cpp S3Server.cpp 
-#SOURCES=S3Log.cpp S3LogTest.cpp S3Server.cpp S3ServerTest.cpp
+
+SOURCES= S3Epoll.cpp S3Log.cpp S3Peer.cpp S3Server.cpp S3ServerTest.cpp S3Socket.cpp
 
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=s3server

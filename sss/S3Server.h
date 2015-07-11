@@ -1,4 +1,5 @@
 
+
 #ifndef __S3SERVER_H__
 #define __S3SERVER_H__
 #include <stdio.h>
@@ -12,32 +13,23 @@
 #include <sys/epoll.h>
 #include <errno.h>
 
+#include "S3Socket.h"
 #define MAXEVENTS 1024 
 #define BACKLOG  128
 /**
-* this class defines a server side socket comply with epoll
+* this class defines a server side socket 
 */ 
 
 
-class S3ServerSocket{
+class S3Server: public S3Socket{
 public:
-    S3ServerSocket();
-    explicit S3ServerSocket(unsigned short port);
-    int SetNonBlockMode(bool flag = true);
-    int SetFdNonBlockMode(int f, bool flag = true);
-    inline int EpollAdd(int fd, struct epoll_event *event);
-    inline int EpollMod(int fd, struct epoll_event *event);
-    inline int EpollDel(int fd, struct epoll_event *event);
-    inline int Listen(unsigned int bl = BACKLOG){return listen(fd, bl);}
-    int Start();
-
+    S3Server();
+    ~S3Server();
+    virtual int Bind();
+    virtual int Listen(unsigned int bl);
+    virtual int Process() override;
+    virtual S3Socket * Accept();
 private:
-    int Init();
-    
-private:
-    unsigned short port;
-    int fd;
-    int epfd;
 };
 
 

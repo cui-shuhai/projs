@@ -15,6 +15,9 @@
 
 #define MAXEVENTS 1024 
 #define BACKLOG  128
+
+
+class S3Epoll;
 /**
 * this class defines a socket either listening port or peer one
 */ 
@@ -31,15 +34,17 @@ public:
     virtual int Send();
     virtual int Recv();
     virtual int Process() = 0;
+    int Close();
     unsigned short GetPort();
     void SetPort(unsigned short pt);
     void GetAddr(struct sockaddr_in *inaddr);
-    void SetAddr(struct sockeaddr_in *inaddr);
+    void SetAddr(struct sockaddr_in *inaddr);
     int GetDescriptor();
     void SetDescriptor(int desc);
-    bool IsMe(int desc);
+    void SetEpoll(S3Epoll *ep);
     
 protected:
+    S3Epoll *epoll;
     struct sockaddr_in addr;
     unsigned short port;
     int fd;
