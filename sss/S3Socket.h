@@ -26,7 +26,7 @@ class S3Socket{
 public:
     S3Socket();
     ~S3Socket();
-    int SetNonBlockMode(bool flag = true);
+    int SetNonBlockMode();
     virtual int Bind();
     virtual int Listen(unsigned int bl);
     virtual S3Socket * Accept();

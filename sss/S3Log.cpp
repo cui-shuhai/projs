@@ -1,8 +1,11 @@
 
 #include "S3Log.h"
 
-S3Log log;
+S3Log::S3Log(){
+}
 
+
+/*
 template<typename T>
 S3Log& S3Log::operator <<(T data)
 {
@@ -10,6 +13,7 @@ S3Log& S3Log::operator <<(T data)
     std::cout << data;
     return *this;
 }
+*/
 
 bool S3Log::SetLogFile(std::string logFile)
 {

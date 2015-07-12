@@ -13,7 +13,7 @@ public:
     static S3Log* Instance();
     bool SetLogFile(std::string logFile);
     template<typename T>
-    S3Log& operator <<(T data);
+    S3Log& operator <<(T data){ std::cout << data; return *this;}
     S3Log(S3Log const&) = delete;             // copy constructor is disabled
     S3Log(S3Log&& ) = delete;             // move constructor is disabled
     S3Log& operator=(S3Log const&) = delete;// assignment operator is disabled

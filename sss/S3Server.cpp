@@ -1,11 +1,11 @@
 
 
 #include "S3Log.h"
+#include "S3Exception.h"
 #include "S3Epoll.h"
 #include "S3Peer.h"
 #include "S3Server.h"
 
-extern S3Log log;
 static const unsigned short LISTEN_PORT = 8080;
 
 S3Server::S3Server(){
@@ -19,11 +19,30 @@ S3Server::~S3Server(){
 }
 
 int S3Server::Bind(){
- return bind(fd, (struct sockaddr *) &addr, sizeof(struct sockaddr_in));
+ fd = socket(addr.sin_family, SOCK_STREAM, 0);
+
+ if(fd < 0)
+    throw S3Exception("create scoket failed"); 
+
+ if (bind(fd, (struct sockaddr *) &addr, sizeof(struct sockaddr_in)) == -1){
+
+    throw S3Exception("socket bind failed"); 
+ }
+
+ SetNonBlockMode();
+ return 0;
 }
 
 int S3Server::Listen(unsigned int bl){
-    return listen(fd, bl);
+
+    try {
+        if (listen(fd, bl) < 0)
+            throw S3Exception("server listen failed"); 
+    }
+    catch (S3Exception &e){
+        return -1;
+    }
+    return 0;
 }
 
 S3Socket* S3Server::Accept()
@@ -80,8 +99,6 @@ int S3Server::Process(){
         if(!sock)
             return 0;
 
-
-
         event.data.ptr = sock;
         event.events = EPOLLIN | EPOLLET;
         s = epoll->EpollAdd(sock->GetDescriptor(), &event);
@@ -92,5 +109,5 @@ int S3Server::Process(){
         }
     }
 
-    return -1;
+    return 0;
 }

@@ -18,6 +18,7 @@
 #define MAXEVENTS 1024 
 #define BACKLOG  128
 
+#include "S3Log.h"
 #include "S3Socket.h"
 /**
 * this class defines a server side socket comply with epoll
@@ -39,6 +40,7 @@ private:
 private:
     int efd;
     std::shared_ptr<S3Socket> server;
+    S3Log log;
 };
 
 

@@ -30,6 +30,7 @@ public:
     virtual int Process() override;
     virtual S3Socket * Accept();
 private:
+    S3Log log;
 };
 
 

@@ -13,19 +13,7 @@ main (int argc, char *argv[])
     epoll->SetServer(server);
 
     server->SetEpoll(epoll.get());
-
-
-    unsigned int backlog = 2000;
-
-    try{
-        server->SetNonBlockMode(false);
-        server->Listen(backlog);
-        epoll->Start();
-    }
-    catch(std::exception &e)
-    {
-        return -1;
-    }
+    epoll->Start();
 
     return EXIT_SUCCESS;
 }
