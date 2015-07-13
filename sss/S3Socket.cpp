@@ -5,8 +5,11 @@
 
 S3Socket::S3Socket():epoll{nullptr}{}
 
+S3Socket::~S3Socket(){
+}
+
 int 
-S3Socket::SetNonBlockMode(bool flag){
+S3Socket::SetNonBlockMode(){
 
     int flags, s;
 
@@ -17,16 +20,14 @@ S3Socket::SetNonBlockMode(bool flag){
         return -1;
     }
 
-    if(flag)
+    flags |= O_NONBLOCK;
+    s = fcntl (fd, F_SETFL, flags);
+    if (s == -1)
     {
-        flags |= O_NONBLOCK;
-        s = fcntl (fd, F_SETFL, flags);
-        if (s == -1)
-        {
-            perror ("fcntl");
-            return -1;
-        }
+        perror ("fcntl");
+        return -1;
     }
+
     return 0;
 }
 
