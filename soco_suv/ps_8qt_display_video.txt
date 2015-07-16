@@ -1,0 +1,334 @@
+#include <stdlib.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+
+#include <GL/glew.h>
+
+#include "camera.h"
+#include "aveasy.h"
+
+#define CAM_DESIRED_WIDTH 640
+#define CAM_DESIRED_HEIGHT 480
+
+AVEasyInputContext *camera_av;
+char const *camera_path = "/dev/video0";
+GLuint camera_texture;
+
+int open_camera(void)
+{
+    glGenTextures(1, &camera_texture);
+
+    AVEasyInputContext *ctx;
+
+    ctx = aveasy_input_open_v4l2(
+        camera_path,
+        CAM_DESIRED_WIDTH,
+        CAM_DESIRED_HEIGHT,
+        CODEC_ID_MJPEG,
+        PIX_FMT_BGR24 );
+    camera_av = ctx;
+
+    if(!ctx) {
+        return 0;
+    }
+
+    /* OpenGL-2 or later is assumed; OpenGL-2 supports NPOT textures. */
+    glBindTexture(GL_TEXTURE_2D, camera_texture[i]);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexImage2D(
+        GL_TEXTURE_2D,
+        0,
+        GL_RGB,
+        aveasy_input_width(ctx),
+        aveasy_input_height(ctx),
+        0,
+        GL_BGR,
+        GL_UNSIGNED_BYTE,
+        NULL );
+
+    return 1;
+}
+
+void update_camera(void)
+{
+    glPixelStorei( GL_UNPACK_SWAP_BYTES, GL_FALSE );
+    glPixelStorei( GL_UNPACK_LSB_FIRST,  GL_TRUE  );
+    glPixelStorei( GL_UNPACK_ROW_LENGTH, 0 );
+    glPixelStorei( GL_UNPACK_SKIP_PIXELS, 0);
+    glPixelStorei( GL_UNPACK_SKIP_ROWS, 0);
+    glPixelStorei( GL_UNPACK_ALIGNMENT, 1);
+
+    AVEasyInputContext *ctx = camera_av;
+    void *buffer;
+
+    if(!ctx)
+        return;
+
+    if( !( buffer = aveasy_input_read_frame(ctx) ) )
+        return;
+
+    glBindTexture(GL_TEXTURE_2D, camera_texture);
+    glTexSubImage2D(
+        GL_TEXTURE_2D,
+        0,
+        0,
+        0,
+        aveasy_input_width(ctx),
+        aveasy_input_height(ctx),
+        GL_BGR,
+        GL_UNSIGNED_BYTE,
+        buffer );
+}
+
+
+void close_cameras(void)
+{
+    aveasy_input_close(camera_av);
+    camera_av=0;
+}
+=========================
+SwsContext *img_convert_ctx = sws_getContext(pCodecCtx->width,
+                pCodecCtx->height, pCodecCtx->pix_fmt, 512,
+                256, PIX_FMT_RGB24, SWS_BICUBIC, NULL,
+                NULL, NULL);
+
+//While still frames to read
+while(av_read_frame(pFormatCtx, &packet)>=0) {
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    //If the packet is from the video stream
+    if(packet.stream_index == videoStream) {
+        //Decode the video
+        avcodec_decode_video2(pCodecCtx, pFrame, &frameFinished, &packet);
+
+        //If we got a frame then convert it and put it into RGB buffer
+        if(frameFinished) {
+            printf("frame finished: %i\n", number);
+            sws_scale(img_convert_ctx, pFrame->data, pFrame->linesize, 0, pCodecCtx->height, pFrameRGB->data, pFrameRGB->linesize);
+
+            glBindTexture(GL_TEXTURE_2D, texture);
+            //gluBuild2DMipmaps(GL_TEXTURE_2D, 3, pCodecCtx->width, pCodecCtx->height, GL_RGB, GL_UNSIGNED_INT, pFrameRGB->data);
+            glTexSubImage2D(GL_TEXTURE_2D, 0, 0,0, 512, 256, GL_RGB, GL_UNSIGNED_BYTE, pFrameRGB->data[0]);
+            SaveFrame(pFrameRGB, pCodecCtx->width, pCodecCtx->height, number);
+            number++;
+        }
+    }
+
+    glColor3f(1,1,1);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glBegin(GL_QUADS);
+        glTexCoord2f(0,1);
+        glVertex3f(0,0,0);
+
+        glTexCoord2f(1,1);
+        glVertex3f(pCodecCtx->width,0,0);
+
+        glTexCoord2f(1,0);
+        glVertex3f(pCodecCtx->width, pCodecCtx->height,0);
+
+        glTexCoord2f(0,0);
+        glVertex3f(0,pCodecCtx->height,0);
+
+    glEnd();
+    EDIT AGAIN
+    Just realised I haven't showed the code for how pFrameRGB is set up:
+    //Allocate video frame for 24bit RGB that we convert to.
+    AVFrame *pFrameRGB;
+    pFrameRGB = avcodec_alloc_frame();
+
+    if(pFrameRGB == NULL) {
+        return -1;
+    }
+
+    //Allocate memory for the raw data we get when converting.
+    uint8_t *buffer;
+    int numBytes;
+    numBytes = avpicture_get_size(PIX_FMT_RGB24, pCodecCtx->width, pCodecCtx->height);
+    buffer = (uint8_t *) av_malloc(numBytes*sizeof(uint8_t));
+
+    //Associate frame with our buffer
+    avpicture_fill((AVPicture *) pFrameRGB, buffer, PIX_FMT_RGB24,
+        pCodecCtx->width, pCodecCtx->height);
+    Now that I ahve changed the PixelFormat in avgpicture_get_size to PIX_FMT_RGB24,
+    I've done that in SwsContext as well and changed GluBuild2DMipmaps to GL_RGB and
+    I get a slightly better image but it looks like I'm still missing lines and it's
+    still a bit stretched:
+
+LAST EDIT
+Working! Okay I have it working now, basically I am not padding out the texture to a power of 2 and just using the resolution the video is.
+I got the texture showing up properly with a lucky guess at the correct glPixelStorei()
+glPixelStorei(GL_UNPACK_ALIGNMENT, 2);
+Also, if anyone else has the subimage() showing blank problem like me, you have to fill the texture at least once with glTexImage2D() and so I use it once in the loop and then use glTexSubImage2D() after that.
+Thanks Macke and datenwolf for all your help.
+
+===========================
+SwsContext *img_convert_ctx = sws_getContext(pCodecCtx->width,
+                pCodecCtx->height, pCodecCtx->pix_fmt, 512,
+                256, PIX_FMT_RGB24, SWS_BICUBIC, NULL,
+                NULL, NULL);
+
+//While still frames to read
+while(av_read_frame(pFormatCtx, &packet)>=0) {
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    //If the packet is from the video stream
+    if(packet.stream_index == videoStream) {
+        //Decode the video
+        avcodec_decode_video2(pCodecCtx, pFrame, &frameFinished, &packet);
+
+        //If we got a frame then convert it and put it into RGB buffer
+        if(frameFinished) {
+            printf("frame finished: %i\n", number);
+            sws_scale(img_convert_ctx, pFrame->data, pFrame->linesize, 0, pCodecCtx->height, pFrameRGB->data, pFrameRGB->linesize);
+
+            glBindTexture(GL_TEXTURE_2D, texture);
+            //gluBuild2DMipmaps(GL_TEXTURE_2D, 3, pCodecCtx->width, pCodecCtx->height, GL_RGB, GL_UNSIGNED_INT, pFrameRGB->data);
+            glTexSubImage2D(GL_TEXTURE_2D, 0, 0,0, 512, 256, GL_RGB, GL_UNSIGNED_BYTE, pFrameRGB->data[0]);
+            SaveFrame(pFrameRGB, pCodecCtx->width, pCodecCtx->height, number);
+            number++;
+        }
+    }
+
+    glColor3f(1,1,1);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glBegin(GL_QUADS);
+        glTexCoord2f(0,1);
+        glVertex3f(0,0,0);
+
+        glTexCoord2f(1,1);
+        glVertex3f(pCodecCtx->width,0,0);
+
+        glTexCoord2f(1,0);
+        glVertex3f(pCodecCtx->width, pCodecCtx->height,0);
+
+        glTexCoord2f(0,0);
+        glVertex3f(0,pCodecCtx->height,0);
+
+    glEnd();
+
+===================================
+AVPicture *pFrameConverted;
+struct SwsContext img_convert_ctx;
+
+void init(){
+    pFrameConverted=(AVPicture *)avcodec_alloc_frame();
+    avpicture_alloc(pFrameConverted, AV_PIX_FMT_RGB565, videoWidth, videoHeight);
+    img_convert_ctx = sws_getCachedContext(&img_convert_ctx,
+                    videoWidth,
+                    videoHeight,
+                    pCodecCtx->pix_fmt,
+                    videoWidth,
+                    videoHeight,
+                    AV_PIX_FMT_RGB565,
+                    SWS_FAST_BILINEAR,
+                    NULL, NULL, NULL );
+    ff_get_unscaled_swscale(img_convert_ctx);
+}
+
+void render(AVFrame* pFrame){
+    sws_scale(img_convert_ctx, (uint8_t const * const *)pFrame->data, pFrame->linesize, 0, pFrame->height, pFrameConverted->data, pFrameConverted->lineSize);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, videoWidth, videoHeight, GL_RGB, GL_UNSIGNED_BYTE, pFrameConverted->data[0]);
+    glDrawTexiOES(0, 0, 0, videoWidth, videoHeight);
+}
+
+==============================
+void MagicCube::PaintFrame(AVFrame *pFrame, int width, int height)
+{
+    QImage image(width, height, QImage::Format_RGB32);
+    int x, y;
+    int *src = (int*)pFrame->data[0];
+
+    for (y = 0; y < height; y++)
+    {
+        for (x = 0; x < width; x++)
+        {
+            image.setPixel(x, y, src[x] & 0x00ffffff);
+        }
+        src += width;
+    }
+
+    QPainter painter(this);
+    painter.drawImage(QRect(10, 37, width, height), image);
+}
+
+--
+in the function that updates the image data from the source
+Qt Code: Switch view
+if(!currImg) {
+                        imgWidth = state->image.width;
+                        imgHeight = state->image.height;
+                        currImg = new unsigned char[4*imgWidth*imgHeight];
+                        for(int i = 0; i < imgWidth*imgHeight; i++) {
+                                currImg[i*4+3] = 0xFF;
+                        }
+                }
+
+                for(int i = 0; i < imgWidth*imgHeight; i++) {
+                        memcpy(currImg+i*4, state->bufferImg.data+i*3, 3);
+                }
+To copy to clipboard, switch view to plain text mode
+
+then in the paintevent
+Qt Code: Switch view
+if(currImg) {
+                QImage tImg(currImg, imgWidth, imgHeight, QImage::Format_RGB32);
+
+                QPainter painter(this);
+                painter.drawImage(0, 0, tImg);
+        }
+       --
+       Qt Code: Switch view
+       imageQt = new QImage(w,h,QImage::Format_RGB32);
+       To copy to clipboard, switch view to plain text mode
+
+       Qt Code: Switch view
+       // Assumes AVFrame is in RGB24 format
+       void AVFrame2QImage(AVFrame *ffFrame, QImage *imageQt, int w, int h)
+       {
+               unsigned char *src = (unsigned char *)ffFrame->data[0];
+               for (int y = 0; y < h; y++)
+               {
+                       QRgb *scanLine = (QRgb *)imageQt->scanLine(y);
+                       for (int x = 0; x < w; x++)
+                       {
+                           scanLine[x] = qRgb(src[3*x], src[3*x+1], src[3*x+2]);
+                       }
+                       src += ffFrame->linesize[0];
+               }
+
+               return;
+       }
+       -------
+void CMoviePlayer::DisplayFrame(BYTE *pFrame, int width, int height, float quadWidth, float quadHeight)
+        {
+        static float sf = 1.0;
+
+        static bool b = true;
+        static int i = 0;
+
+        if (i++%30 == 0)
+                b=!b;
+
+        if (b)
+                glBindTexture(GL_TEXTURE_2D, tex1);    //A texture you have already created with glTexImage2D
+        else
+                glBindTexture(GL_TEXTURE_2D, tex2);    //A texture you have already created with glTexImage2D
+
+
+        glScalef(sf, sf, sf);
+        glBegin(GL_POLYGON);
+        glTexCoord2f(0.0f,1.0f); glVertex3f (-quadWidth, -quadHeight, 0.0);
+        glTexCoord2f(1.0f,1.0f); glVertex3f ( quadWidth, -quadHeight, 0.0);
+        glTexCoord2f(1.0f,0.0f); glVertex3f ( quadWidth,  quadHeight, 0.0);
+        glTexCoord2f(0.0f,0.0f); glVertex3f (-quadWidth,  quadHeight, 0.0);
+        glEnd();
+
+        //sf +=0.0000001f;
+
+        glutSwapBuffers();
+        }
+======================

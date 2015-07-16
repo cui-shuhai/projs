@@ -1,0 +1,62 @@
+**
+cmakelist file is the file for generation platform depentd project file of make file
+The following list how to generat it
+
+example:
+
+{{{{
+
+cmake_minimum_required(VERSION 2.8)
+# 1. name of project
+project(qmake_cmake_files)
+
+#setting variable then, ${varname}
+SET( varname value )
+
+
+# 2. Recurse into the "Hello" and "Demo" subdirectories. This does not actually
+# cause another cmake executable to run. The same process will walk through
+# the project's entire directory structure.
+#adding subdirectory for other source files
+
+add_subdirectory (Hello)
+add_subdirectory (Demo)
+
+
+# 3.Create a library called "Hello" which includes the source file "hello.cxx".
+# The extension is already found. Any number of sources could be listed here.
+
+add_library (Hello hello.cxx)
+
+
+#4.  Make sure the compiler can find include files from our Hello library.
+include_directories (${HELLO_SOURCE_DIR}/Hello)
+
+# Make sure the linker can find the Hello library once it is built.
+link_directories (${HELLO_BINARY_DIR}/Hello)
+
+# 5. Add executable called "helloDemo" that is built from the source files
+# "demo.cxx" and "demo_b.cxx". The extensions are automatically found.
+add_executable (helloDemo demo.cxx demo_b.cxx)
+
+#6.  Link the executable to the Hello library.
+target_link_libraries (helloDemo Hello)
+
+#demo
+# The following line is very important.
+# It specifies the executable name. Here the executable is the first parameter i.e. MyApp and a file MyApp.exe will be created on
+# compilation in windows platform.
+# Followed by the executable name come all your source and header files.
+# All cpp fles will be clubbed into source folder and all .h files will be added to header files folder of the project.
+add_executable (MyApp Local.cpp part.h grab.h interface.h test.cpp test.h)
+
+# There may be some additional dependencies which you may have to specify for the project, which you may do as in following lines.
+# Note that first parameter is the executable name.
+target_link_libraries (MyApp ${PCL_LIBRARIES} libeng.lib libmx.lib libmex.lib libmat.lib Aria.lib winmm.lib wsock32.lib)
+# Add the required libraries for linking:
+TARGET_LINK_LIBRARIES(${sampleName}
+${MRPT_LIBS} # This is filled by FIND_PACKAGE(MRPT ...)
+"" # Optional extra libs...
+)
+
+}}}}

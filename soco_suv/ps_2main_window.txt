@@ -1,0 +1,22 @@
+step 1: one player and control bar
+
+step 2: one player and control embedded in channels
+
+step 3: adding pannel windows to step 2
+
+step 4: implement multiple channels in step 2
+
+step 5: using libav, sdl, instead of QMovie
+
+step 6: combine with MultiDNS creating a team SCRUM and agile product
+
+
+
+** Design skill:
+    try to put elements together, then it is easy to implement communiction
+    between them.
+
+    using polymophism to support deifferent rending skills in case
+
+****
+

@@ -1,0 +1,79 @@
+Step 3: Set the Environment variables
+
+We recommend creating a desktop link that opens a command prompt with the environment set up similar to
+the Command Prompt menu entries provided by the Windows SDKs. This is done by creating an application link
+passing a .cmd file setting up the environment and the command line option /k (remain open) to cmd.exe.
+Assuming the file is called qt5vars.cmd and the Qt folder is called qt-5 and located under C:\qt:
+REM Set up Windows SDK for 64bit
+
+CALL "mingwvars.bat" amd64
+set PATH=c:\qt\qt-5\qtbase\bin;c:\qt\qt-5\qtrepotools\bin;c:\qt\qt-5\gnuwin32\bin;%PATH%
+set QMAKESPEC=win32-g++
+
+
+A desktop link can then be created by specifying the
+command %SystemRoot%\system32\cmd.exe /E:ON /V:ON /k c:\qt\qt5vars.cmd as application and c:\qt\qt-5 as working directory.
+Note: Setups for MinGW are similar; they differ only in that the bin folder of the installation should be added to the path
+instead of calling the Windows SDK setup script.
+
+For MinGW, please make sure that no sh.exe can be found in the path, as it affects mingw32-make.
+Settings required by the additional libraries (see Qt for Windows Requirements)
+should also go this file below the call to the Windows SDK setup script.
+
+Step 4: Build the Qt Library
+The default behavior of configure is to create an in-source build of Qt
+
+5. If you want to install Qt 5 to a separate location, you need to specify the command line option -prefix <location>.
+Alternatively, the command line option -developer-build creates an in-source build for developer usage.
+To configure the Qt library for a debug build for your machine, type the following command in the command prompt:
+
+configure -debug -nomake examples -opensource
+Type configure -help to get a list of all available options.
+To build Qt using jom, type:
+jom
+If you do not have jom installed, type:
+nmake
+For MinGW, type:
+mingw32-make
+If an installation prefix was given, type jom install, nmake install or mingw32-make install.
+Note: If you later need to reconfigure and rebuild Qt from the same location, ensure that all traces of the previous configuration are removed by entering the build directory and typing nmake distclean before running configure again.
+That's all. Qt is now installed.
+
+
+c:\Qt>configure.exe -fast -opensource -confirm-license -platform win32-g++-4.6 -release
+
+configure -platform win32-g++ -debug-and-release -opensource -developer-build -static  -no-phonon -no-phonon-backend -qt-libtiff -openssl -I C:\OpenSSL-Win32\include -L c:\OpenSSL-Win32\lib\MinGW
+
+
+then:
+mingw32-make
+
+======================= scratch ====================
+#ifdef SDL12
+    if (vp->bmp) {
+#else
+    if (vp->pFrameRGB) {
+#endif
+        if (vp->sample_aspect_ratio.num ==0)
+            aspect_ratio = 0;
+        else
+            aspect_ratio =av_q2d(vp->sample_aspect_ratio);
+
+        if (aspect_ratio <= 0.0)
+            aspect_ratio = 1.0;
+        aspect_ratio *= (float) vp->width /(float) vp->height;
+
+        /* XXX: we suppose the screen has a 1.0pixel ratio */
+        height = is->height;
+        width = ((int) rint(height *aspect_ratio)) & ~1;
+        if (width > is->width) {
+            width = is->width;
+            height = ((int) rint(width /aspect_ratio)) & ~1;
+        }
+        x= (is->width - width) / 2;
+        y = (is->height - height) / 2;
+        is->no_background = 0;
+        rect.x = is->xleft + x;
+        rect.y = is->ytop + y;
+        rect.w = FFMAX(width, 1);
+        rect.h = FFMAX(height, 1);

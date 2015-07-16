@@ -1,0 +1,19 @@
+playlist = new QMediaPlaylist;
+playlist->addMedia(QUrl("http://example.com/movie1.mp4"));
+playlist->addMedia(QUrl("http://example.com/movie2.mp4"));
+playlist->addMedia(QUrl("http://example.com/movie3.mp4"));
+playlist->setCurrentIndex(1);
+
+player = new QMediaPlayer;
+player->setPlaylist(playlist);
+
+videoWidget = new QVideoWidget;
+player->setVideoOutput(videoWidget);
+videoWidget->show();
+
+player->play();
+
+======
+avcodecode
+====::
+

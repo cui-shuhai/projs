@@ -1,0 +1,112 @@
+To associate SDL_Window with Qt widget,
+1. Get Qt widget native window handle
+ QWidget::effectiveWinId ()
+ WId	effectiveWinId() const
+ or QWidget::WinId()
+
+WId	QWidget::winId() const
+ 2. Create SDL_Window from the about Handle
+ SDL_Window* SDL_CreateWindowFrom(const void* data)
+  *heare data it he windows handle  (HANDLE)(data)
+====
+
+
+#include <SDL.h>
+
+#include "sc_sdl_player.h"
+#include "sc_exception.h"
+#include "contrlbar.h"
+
+void sc_sdl_player::InitOnce( )
+{
+    static bool b = false;
+    if( !b )
+    {
+        b = !b;
+        int rc = SDL_Init(SDL_INIT_AUDIO|SDL_INIT_VIDEO|SDL_INIT_NOPARACHUTE);
+
+        if( rc < 0 )
+            log( rc );
+    }
+}
+
+sc_sdl_player::sc_sdl_player(QWidget *parent)
+    :  QWidget(parent)
+    , pvl( new QVBoxLayout)
+    , ctrlbar( new ContrlBar )
+{
+    setAttribute(Qt::WA_PaintOnScreen);
+    setAttribute(Qt::WA_PaintOnScreen);
+
+    // attach this widget window with SDL_Window
+    pSdlWnd = SDL_CreateWindowFrom( reinterpret_cast< void* >( winId()));
+
+    log( pSdlWnd );
+
+    sc_sdl_player::InitOnce();
+
+
+    if ( !SDL_WasInit(SDL_INIT_VIDEO)) {
+        throw( sc_exception( subsystem_init ));
+    }
+}
+
+/* needs update */
+
+void* sc_sdl_player::prepare_render_vf( void **p_pixels )
+{
+    int pitch;
+    SDL_LockMutex( mutex );
+    SDL_LockTexture( texture, NULL, p_pixels, &pitch );
+
+    return NULL;
+}
+
+void sc_sdl_player::post_render_vf( void * const *p_pixels )
+{
+    uint16_t *pixels = (uint16_t *)*p_pixels;
+    // We can also render stuff.
+     int x, y;
+     for(y = 10; y < 40; y++) {
+         for(x = 10; x < 40; x++) {
+             if(x < 13 || y < 13 || x > 36 || y > 36) {
+                 pixels[y * VIDEOWIDTH + x] = 0xffff;
+             } else {
+                 // RV16 = 5+6+5 pixels per color, BGR.
+                 pixels[y * VIDEOWIDTH + x] = 0x02ff;
+             }
+         }
+     }
+
+     SDL_UnlockTexture(texture);
+     SDL_UnlockMutex(mutex);
+}
+
+
+int sc_sdl_player::play()
+{
+
+    renderer = SDL_CreateRenderer(window, -1, 0);
+    if (!renderer) {
+        throw sc_exception( (int) renderer );
+    }
+
+    texture = SDL_CreateTexture(
+            context.renderer,
+            SDL_PIXELFORMAT_BGR565, SDL_TEXTUREACCESS_STREAMING,
+            VIDEOWIDTH, VIDEOHEIGHT);
+    if (!texture) {
+        throw sc_exception( (int) texture );
+    }
+    mutex = SDL_CreateMutex();
+
+    SDL_Rect rect;
+    rect.w = VIDEOWIDTH;
+    rect.h = VIDEOHEIGHT;
+    rect.x = (int)((1. + .5 * sin(0.03 * c->n)) * (WIDTH - VIDEOWIDTH) / 2);
+    rect.y = (int)((1. + .5 * cos(0.03 * c->n)) * (HEIGHT - VIDEOHEIGHT) / 2);
+    SDL_SetRenderDrawColor(renderer, 0, 80, 0, 255);
+    SDL_RenderClear(renderer);
+    SDL_RenderCopy(renderer,texture, NULL, &rect);
+    SDL_RenderPresent(renderer);
+}

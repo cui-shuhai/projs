@@ -1,0 +1,5 @@
+#include "soco_avcode.h"
+
+soco_avcode::soco_avcode()
+{
+}

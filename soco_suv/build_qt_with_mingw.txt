@@ -1,0 +1,73 @@
+Qt works on windows with a bunch of compilers, msvcxx , mingw etc.
+To use Qt libraries, it is necessary to build Qt with the
+corresponding toolchains. The following is steps about how to build
+Qt on windows with Mingw
+
+
+
+=================
+
+My successful steps towards a working Qwt plugin
+Here's the protocol of my steps:
+
+(I am using a fully updated Windows XP Professional SP3, German.
+The following is all done with administrator rights, fwiw.)
+
+Download qt-sdk-win-opensource-2010.05.exe from
+http://qt.nokia.com/downloads/sdk-windows-cpp.
+This contains mingw, the Qt libraries version 4.7.0 and
+Qt Creator IDE version 2.0.1.
+
+Install this to D:\Programme\Qt\2010.05\
+Download qt-creator-2.0.1-src.zip from
+http://qt.nokia.com/downloads/qt-creator-source-package
+
+Unpack this to D:\Programme\qt-creator-2.0.1-src\
+Add the line "CONFIG += release" to qtcreator.pro
+(after "CONFIG += ordered"), just to be sure .
+
+Create a new folder D:\Programme\qt-creator-2.0.1-build\
+Enter the "Qt Command Prompt" via the Start menu and type:
+ C:\Windows\System32\cmd.exe /A /Q /K
+ <path to sdk>\Desktop\Qt\4.7.4\mingw\bin\qtenv2.bat
+ *** there is no propritery  QT prompt com
+
+Source code
+1. D:\Programme\Qt\2010.05\qt>cd \Programme\qt-creator-2.0.1-build
+2. D:\Programme\qt-creator-2.0.1-build>qmake ..\qt-creator-2.0.1-src\qtcreator.pro
+3. D:\Programme\qt-creator-2.0.1-build>mingw32-make release
+
+Now copy all non-debug dlls (i.e. *4.dll, but not *d4.dll)
+from D:\Programme\Qt\2010.05\qt\bin\
+to D:\Programme\qt-creator-2.0.1-build\bin\
+
+(You might want to add the former folder to the PATH instead.)
+Successfully start D:\Programme\Qt\2010.05\qt\bin\qtcreator.exe
+from Windows Explorer :thumbup:
+
+
+================
+A nice table of contents so that you can see what you’re getting into:
+* optional
+1.
+Download the latest Qt source code and put it in its own directory.
+ --you can get the entire SDK or  just the source code.
+2.
+*Modify the compiler flags for use when building Qt.
+----the file is “C:\Qt\mkspecs\COMPILER\make.conf”, where COMPILER is :
+“win32-g++” for GCC
+
+3.
+Open a command-line window for your compiler.
+--- from startup run, run “mingwvars.bat”
+
+4.
+Configure.
+
+--- configure -release  -nomake examples -nomake demos -no-exceptions -no-stl -no-rtti -no-qt3support -no-scripttools -no-openssl -no-opengl -no-webkit -no-phonon -no-style-motif -no-style-cde -no-style-cleanlooks -no-style-plastique -no-sql-sqlite
+Add “-platform win32-???” for your compiler
+
+5.
+Compile.
+*If you want to use static linking, modify your Qt project.
+-- you will be informed of which command starts the actual compile (usually mingw32-make or

@@ -1,0 +1,70 @@
+This is the first step design file:
+
+1. the first step implements a GUI for control the media player.
+    this player should be able to dynalmically display 1 - 9 channels
+
+    this layout will be designed like this
+
+
+
+    ---------------------------------------------------------------------
+    |         |                  |                    |                 |
+    |         |       v1         |         v2         |      v3         |
+    |         |                  |                    |                 |
+    |         |                  |                    |                 |
+              -----------------------------------------------------------
+    |         |                  |                    |                 |
+    | contorl |                  |                    |                 |
+    |         |       v4         |         v5         |      v6         |
+    |         |                  |                    |                 |
+    |         |----------------------------------------------------------
+    |         |                  |                    |                 |
+    |         |       v7         |                    |                 |
+    |         |                  |         v8         |       v9        |
+    |         |                  |                    |                 |
+    ---------------------------------------------------------------------
+
+
+    since there is no need for menu, all these are implemented as widgets
+    Also there is an auto hide contorl bar there is one view got focus. It disappear
+    Either ESC pressed or control got focus or there is 5 seconds idle
+
+Relationships:
+
+main_window
+    |
+    |---Panel_window( control )
+    |        |
+    |        |------TreeWidget ( list of sites includes past...
+    |        |
+    |        |------Label ( provide tooltips for focused site )
+    |
+    |
+    |
+    |
+    |---Channels
+        |
+        |----------players
+        |
+        |----------Control
+
+
+2. This step should make a final decision what technology to use for rendering imagle,
+    Qt media player or SDL
+
+3. This step also decides is using pure SDL, will it use pure libav or with ( vlc or ffmpeg )
+
+===============================
+There is unkonwn issue using SDL overlay QT, chnage uisng QT alone
+
+1. Change av decoded AVFrame ->QVideoFrame
+aFrame = new QVideoFrame( QVideoFrame::Format_YUV420P,
+                                        QSize( d->pCodecCtx->width, d->pCodecCtx->height ),
+                                        pY, pU, pV, d->pFrame->linesize[0],
+                                        d->pFrame->linesize[1],
+                                        d->pFrame->linesize[2]);
+** here d->pFrame is AVFrame
+
+2. display QVideoFrame
+
+videoWidget->present(aFrame);

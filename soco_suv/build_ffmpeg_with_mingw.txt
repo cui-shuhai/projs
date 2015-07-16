@@ -1,0 +1,33 @@
+
+since QT is for C++ and this is C, to include the libraries, you'll need the following in the the #include area
+
+CODE: SELECT ALL
+extern "C" { // how to include C code in C++ code, fucking-a this is rough.
+// FFMPEG is written in C, this is here before the FFMPEG includes to prevent errors
+#ifndef INT64_C // Macro - sort of like an inline function
+#define INT64_C(c) (c ## LL) //whenever the macro INT64_C(n) is encountered, it will replace (n) for (c ## LL), i do not know what c ## LL does, just pulled it off the web as a solution
+#define UINT64_C(c) (c ## ULL)
+#endif
+
+#include "libavcodec/avcodec.h"
+#include "libavformat/avformat.h"
+}
+=====================*********************========================== the following really works on linux
+
+#under proj: mkdir { src, include, lib, bin }
+check ffmpeg to src/
+svn checkout svn://svn.ffmpeg.org/ffmpeg/trunk ffmpeg
+
+cd ffmpeg
+# Delete references to -Wmissing-prototypes, a GCC warning that fails when cross-compiling
+sed -i"" -e '/missing-prototypes/d' configure
+./configure \
+    --target-os=mingw32 --cross-prefix=i586-mingw32msvc- --arch=x86 --prefix=../.. \
+    --enable-memalign-hack --enable-gpl --enable-avisynth --enable-postproc --enable-runtime-cpudetect \
+    --disable-encoders --disable-muxers --disable-network --disable-devices  --enable-shared  --enable-static
+make
+make install
+
+
+*** change the following configuration from config.h
+//XXX #define CONFIG_AVFILTER 1 to 0
