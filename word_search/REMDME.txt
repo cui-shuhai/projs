@@ -1,0 +1,14 @@
+
+This disign simply implements print all possible US-English words in a search term. 
+
+The Dictionary was abstracted in Dictionary class
+EngDict class was a concret class implements US-English dictionary.
+For other language dictionary, we can extend from Dictinary and implements language specific operatons
+
+For algorithm to find all items, There maybe some more similar algorithm. Then we can use algorithm design pattern
+but currently similar use case.
+
+Permuation was just implemented in a funciton. 
+
+
+
