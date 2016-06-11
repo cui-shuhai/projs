@@ -1,0 +1,3 @@
+/home/scui/projs/Simple-Web-Server/CMakeFiles/http_examples.dir
+/home/scui/projs/Simple-Web-Server/CMakeFiles/https_examples.dir
+/home/scui/projs/Simple-Web-Server/test/CMakeFiles/parse_test.dir
