@@ -1,0 +1,9 @@
+Plan
+
+1. using libcurl to development a http client
+
+2. design data structure for input fields
+
+3. design input data verifiers
+
+
