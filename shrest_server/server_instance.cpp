@@ -7,11 +7,13 @@
 #include <boost/property_tree/json_parser.hpp>
 
 //Added for the default_resource example
+#include <iostream>
 #include <fstream>
 #include <boost/filesystem.hpp>
 #include <vector>
 #include <algorithm>
 
+#include "shrest_log.h"
 #include "RequestResponseFactory.h"
 
 using namespace std;
@@ -28,8 +30,10 @@ int main() {
     //HTTP-server at port 8080 using 4 threads
     HttpServer server(8080, 4);
     
+    LOG("server listening on ", 8080, "thread pool : ", 4);
+
     //Add resources using path-regex and method-string, and an anonymous function
-    //POST-example for the path /string, responds the posted string
+    //POST-example for the path /string, responds the posted string	
     server.resource["^/string$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
         //Retrieve string:
         auto content=request->content.string();
@@ -40,6 +44,7 @@ int main() {
         
         response << "HTTP/1.1 200 OK\r\nContent-Length: " << content.length() << "\r\n\r\n" << content;
     };
+	LOG("Adding [string, POST] API");
     
     //POST-example for the path /json, responds firstName+" "+lastName from the posted json
     //Responds with an appropriate error message if the posted json is not valid, or if firstName or lastName is missing
@@ -54,9 +59,18 @@ int main() {
 	auto processor = RequestResponseFactory::CreateProcessor("JsonPost", response, request);	
 	processor->Process();        
     };
+	LOG("Adding [json$ POST] API");
 
-     //pieget to test java script
-     server.resource["^/pieget$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+     //AddCustomerGet to test Template
+     server.resource["^/addcustomer$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("AddCustomerGet", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [addcustomer, GET] API");
+	
+      //pieget to test java script
+     server.resource["^/pie$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
 
 	auto processor = RequestResponseFactory::CreateProcessor("PieGet", response, request);	
 	processor->Process();        
