@@ -54,6 +54,13 @@ int main() {
 	auto processor = RequestResponseFactory::CreateProcessor("JsonPost", response, request);	
 	processor->Process();        
     };
+
+     //pieget to test java script
+     server.resource["^/pieget$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("PieGet", response, request);	
+	processor->Process();        
+    };
     
     //GET-example for the path /info
     //Responds with request-information
