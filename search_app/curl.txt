@@ -1,0 +1,54 @@
+20:17:12.920919 IP ubuntu.local.52659 > sandiego.ar01.host29.scalematrix.net.http: Flags [S], seq 2507468807, win 29200, options [mss 1460,sackOK,TS val 98454567 ecr 0,nop,wscale 7], length 0
+E..<. @.@.l............P.t........r............
+..L'........
+20:17:12.979852 IP sandiego.ar01.host29.scalematrix.net.http > ubuntu.local.52659: Flags [S.], seq 1904242489, ack 2507468808, win 64240, options [mss 1460], length 0
+E..,.................P..q.o9.t..`...V]........
+20:17:12.979892 IP ubuntu.local.52659 > sandiego.ar01.host29.scalematrix.net.http: Flags [.], ack 1, win 29200, length 0
+E..(.!@.@.l!...........P.t..q.o:P.r.....
+20:17:12.980028 IP ubuntu.local.52659 > sandiego.ar01.host29.scalematrix.net.http: Flags [P.], seq 1:222, ack 1, win 29200, length 221
+E...."@.@.kC...........P.t..q.o:P.r.....GET /json/events/search?...&keywords=Music&location=SUITE 5A-1024 799 E DRAGRAM TUCSON AZ 85705 USA&within=2.0&units=km&date=2016061200-2016062800&app_key=ZzrGZ28Kx4sscPHz HTTP/1.1
+Host: api.eventful.com
+Accept: */*
+
+
+20:17:12.980204 IP sandiego.ar01.host29.scalematrix.net.http > ubuntu.local.52659: Flags [.], ack 222, win 64240, length 0
+E..(.................P..q.o:.t..P...m=........
+20:17:13.038347 IP sandiego.ar01.host29.scalematrix.net.http > ubuntu.local.52659: Flags [FP.], seq 1:498, ack 222, win 64240, length 497
+E....................P..q.o:.t..P...+p..HTTP/1.0 400 Bad Request
+Content-Type: text/html
+Content-Length: 349
+Connection: close
+Date: Wed, 22 Jun 2016 03:17:13 GMT
+Server: lighttpd
+
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+ <head>
+  <title>400 - Bad Request</title>
+ </head>
+ <body>
+  <h1>400 - Bad Request</h1>
+ </body>
+</html>
+
+20:17:13.038487 IP ubuntu.local.52659 > sandiego.ar01.host29.scalematrix.net.http: Flags [F.], seq 222, ack 499, win 30016, length 0
+E..(.#@.@.l............P.t..q.q,P.u@....
+20:17:13.038934 IP sandiego.ar01.host29.scalematrix.net.http > ubuntu.local.52659: Flags [.], ack 223, win 64239, length 0
+E..(.................P..q.q,.t..P...kK........
+20:17:38.041598 IP ubuntu.local.52654 > sandiego.ar01.host29.scalematrix.net.http: Flags [.], ack 2139245602, win 61320, length 0
+E..(o?@.@..............P
+:K...L"P.......
+20:17:38.041737 IP sandiego.ar01.host29.scalematrix.net.http > ubuntu.local.52654: Flags [.], ack 1, win 64240, length 0
+E..(.................P....L"
+:K.P....u........
+20:17:42.074202 IP ubuntu.local.52655 > sandiego.ar01.host29.scalematrix.net.http: Flags [.], ack 1904628700, win 29200, length 0
+E..(..@.@.w............P...Oq.S.P.r.....
+20:17:42.074433 IP sandiego.ar01.host29.scalematrix.net.http > ubuntu.local.52655: Flags [.], ack 1, win 64240, length 0
+E..(.................P..q.S....PP.............
+20:17:42.201753 IP ubuntu.local.52656 > sandiego.ar01.host29.scalematrix.net.http: Flags [.], ack 411531387, win 29200, length 0
+E..(..@.@..-...........P..=...x{P.r.....
+20:17:42.201888 IP sandiego.ar01.host29.scalematrix.net.http > ubuntu.local.52656: Flags [.], ack 1, win 64240, length 0
+E..(.................P....x{..=.P...#.........
+

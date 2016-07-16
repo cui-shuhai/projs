@@ -1,0 +1,101 @@
+
+#include <regex>
+#include <string>
+#include <map>
+
+using namespace std;
+
+#include "MisUtils.hpp"
+
+
+const std::map<std::string, string> monthsMap
+{
+        { "Jan", "01" },
+        { "Feb", "02" },
+        { "Mar", "03" },
+        { "Apr", "04" },
+        { "May", "05" },
+        { "Jun", "06" },
+        { "Jul", "07" },
+        { "Aug", "08" },
+        { "Sep", "09" },
+        { "Oct", "10" },
+        { "Nov", "11" },
+        { "Dec", "12" }
+};
+
+vector<string> AppMisUtils::split(const string& str, int delimiter){
+	vector<string> result;
+  	auto e=str.end();
+  	auto i=str.begin();
+  	
+	while(i!=e){
+    		i=find_if_not(i,e, [delimiter](int c){ return c == delimiter;});
+    		
+	if(i==e) break;
+    	auto j=find_if(i,e, [delimiter](int c){ return c == delimiter;});
+    	result.push_back(string(i,j));
+    		i=j;
+  	}
+  	return result;
+}
+
+
+bool AppMisUtils::str_to_date(const string& str, date &d)
+{
+
+	regex re{R"(\d{2})"};
+
+	smatch match;
+
+	regex_match(str, match, re);
+
+	if( str[2] != '/' && str[5] != '/' && str.length() != 10)
+		return false;
+
+	try
+	{
+		auto dd = stoi(str.substr(0,2));
+		auto mm = stoi(str.substr(3,2));
+		auto yy = stoi(str.substr(6,4));
+		date d = date(yy, mm, dd);
+		return true;
+	}
+	catch( const std::exception& e )
+	{
+	    std::cerr << "*** error: " << e.what() << '\n' ;
+		return false;
+	}
+	
+	return false;
+}
+
+string AppMisUtils::date_to_str(date &dt)
+{
+	std::ostringstream mos;
+	mos << dt.month();
+	auto ms = mos.str();
+
+	for(auto &v : monthsMap)
+	{
+		if(ms == v.first)
+		{
+			ms = v.second;
+			break;
+		}
+	}
+
+	std::ostringstream os;
+
+	os << dt.day() << "/" << ms << "/" << dt.year();
+
+	return os.str();
+}
+
+string AppMisUtils::to_event_api_str(string ds)
+{
+	ostringstream os;
+	os << ds.substr(6,4) << ds.substr(3,2) << ds.substr(0,2) << "00";
+	return os.str();
+}
+

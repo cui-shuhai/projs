@@ -1,0 +1,29 @@
+
+#include "InputEmptyChecker.hpp"
+#include "InputValidityChecker.hpp"
+#include "AddressInput.hpp"
+
+
+AddressInput::AddressInput() = default;
+AddressInput::~AddressInput() = default;
+
+
+bool AddressInput::Accept(shared_ptr<InputVerifier> verifier)const
+{
+	verifier->Validate(*this);
+}
+
+void AddressInput::SetValue(const string rhs)
+{
+	address = rhs;
+}
+const string& AddressInput::GetValue()const
+{
+	return address;
+}
+
+void AddressInput::Show()const
+{
+	cout << "Address:\t" << address << endl;
+} 
+
