@@ -21,5 +21,7 @@ public:
 
 protected:
 	HttpServer::Response &rs_;
+	//rq_: path contains the whole path information. like /customers/john
+	//XXX we can hook  ^/customers$ to function to get all customers $/customers/.\+/$ to get specific customers
 	ShRequest rq_;
 };
