@@ -68,6 +68,22 @@ int main() {
 	processor->Process();        
     };
 	LOG("Adding [addcustomer, GET] API");
+
+    //NewCustomerPost to connecting to mysql
+     server.resource["^/newcustomer$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("NewCustomerPost", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [newcustomer, POST] API");
+	
+      //List all customers
+     server.resource["^/listcustomer$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("ListCustomerGet", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [listcustomer, GET] API");
 	
       //pieget to test java script
      server.resource["^/pie$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {

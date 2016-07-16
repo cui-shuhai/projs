@@ -4,6 +4,7 @@
 #include "JsonPostRequest.h"
 #include "PieGetRequest.h"
 #include "AddCustomerGetRequest.h"
+#include "NewCustomerPost.h"
 
 class RequestResponseFactory{
 
@@ -15,6 +16,8 @@ public:
 			return unique_ptr<PieGetRequest>( new PieGetRequest(rs, rq));
 		if(name == "AddCustomerGet")
 			return unique_ptr<AddCustomerGetRequest>( new AddCustomerGetRequest(rs, rq));
+		if(name == "NewCustomerPost")
+			return unique_ptr<NewCustomerPost>( new NewCustomerPost(rs, rq));
 		
 		return nullptr;
 	}
