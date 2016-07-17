@@ -8,7 +8,6 @@
 #include <boost/property_tree/json_parser.hpp>
 
 #include "shrest_log.h"
-#include "shrest_db/mysqlcpp.h"
 
 Msqlcpp::Msqlcpp()
 {
@@ -25,6 +24,7 @@ Msqlcpp::Msqlcpp()
 	auto password = pt.get<std::string>("database.pwd");
 
 	auto url = "tcp://" + host + ":" + port;
+/*
 	try{
 		driver = get_driver_instance();
 		con.reset(driver->connect(url, user, password));
@@ -37,33 +37,13 @@ Msqlcpp::Msqlcpp()
 	}
 	stmt.reset(nullptr);
 	pstmt = nullptr;
-	res.reset(nullptr);		
+	res.reset(nullptr);	
+*/	
 }
 
 Msqlcpp::~Msqlcpp(){
 }
 
-	
-void Msqlcpp::SetStatement(string statement){
-	stmt.reset(con->createStatement());
-  	res.reset(stmt->executeQuery(statement));
-}
-
-void Msqlcpp::PrepareStatement(string statement){
-	pstmt = con->prepareStatement(statement);
-}
-
-sql::PreparedStatement*  Msqlcpp::GetPreparedStatement(){
-	 return pstmt;
-}
-
-/*prepared statement should be manually executed
-	 //res.reset(pstmt->executeQuery());
-*/
-
-unique_ptr<sql::ResultSet>& Msqlcpp::GetResultset(){
-	 return res;
-}
 
 #if 0
  sql::Connection *con;

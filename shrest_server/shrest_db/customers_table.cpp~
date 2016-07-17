@@ -15,7 +15,7 @@ Customer::Customer()
 }
 
 Customer::Customer(int id, string firstName, string lastName, int age, string phone, string address):
-	Mysqlcpp(),
+	Msqlcpp(),
 	id_{id},
 	firstName_{firstName},
 	lastName_{lastName},

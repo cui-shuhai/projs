@@ -5,10 +5,8 @@
 #include <iostream>
 
 
-#include "mysqlcpp.h"
-
 using namespace std;
-class Customer{
+class Customer : public Msqlcpp{
 
 public:
 	Customer();

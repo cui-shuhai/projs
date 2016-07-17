@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <iostream>
 
-
 #include "mysqlcpp.h"
 
 using namespace std;

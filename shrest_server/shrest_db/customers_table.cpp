@@ -29,6 +29,7 @@ Customer::~Customer(){
 }
 
 void Customer::AddCustomer(){
+/*
 	unique_ptr<sql::PreparedStatement> pstmt(con->prepareStatement("INSER INTO crm_template(customer_id, first_name, last_name, age, phone, address) VALUES(?, ?, ?, ?, ?, ?)"));
 
 	pstmt->setInt(1, id_);
@@ -38,6 +39,6 @@ void Customer::AddCustomer(){
 	pstmt->setString(5, phone_);
 	pstmt->setString(6, address_);
 
-	pstmt->execute();
+	pstmt->execute();*/
 }
 

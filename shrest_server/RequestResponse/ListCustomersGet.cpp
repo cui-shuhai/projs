@@ -29,10 +29,10 @@ void ListCustomersGet::Process(){
 		
 		Customer c;
 
-		c.SetStatement("SELECT * FROM crm_template");
-		
-		auto& res = c.GetResultset();
 		stringstream cs;
+	#if 0	
+		c.SetStatement("SELECT * FROM crm_template");
+		auto& res = c.GetResultset();
 		cs << "Customer List\n";
 
 		while (res->next()) {
@@ -47,7 +47,7 @@ void ListCustomersGet::Process(){
 			/* Access column fata by numeric offset, 1 is the first column */
 			cs << "------\n" << endl;
 		}
-		
+		#endif
 		
 		cs.seekp(0, ios::end);
 		rs_ <<  cs.rdbuf();
