@@ -20,16 +20,13 @@ void AddCustomerGetRequest::Process(){
      try {
 
         	stringstream content_stream;
-/*		
-		content_stream << "ksjfkdjf" << endl;
-*/
 		LoaderFile loader; // Let's use the default loader that loads files from disk.
 
 		Template t( loader );
 
 		t.load( "web/test.html" );
            
-		t.set( "text", "Hello, world" ); 
+		//t.set( "text", "Hello, world" ); 
 
 		t.render( content_stream ); // Render the template with the variables we've set above
  

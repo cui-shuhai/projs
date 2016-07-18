@@ -1,0 +1,24 @@
+{% include web/header.html %}
+
+{% block meat %}
+<form action="newcustomer" method="post">
+	  <fieldset>
+	    <legend>Personal information:</legend>
+	    First name:<br>
+	    <input type="text" name="firstname" value="Mickey"><br>
+	    Last name:<br>
+	    <input type="text" name="lastname" value="Mouse"><br><br>
+	    Age:<br>
+	    <input type="text" name="age" value=""><br><br>
+	    Phone:<br>
+	    <input type="text" name="phone" value=""><br><br>
+	    Address:<br>
+	    <input type="text" name="address" value=""><br><br>	
+	    <input type="submit" value="Submit">
+	  </fieldset>
+</form>
+{% endblock %}
+
+
+{% include web/footer.html %}
+   

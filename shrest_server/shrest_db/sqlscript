@@ -8,6 +8,12 @@
 	pstmt->setString(6, address_);
 
 
-CREATE TABLE customer('id_' int, 'firstName' char(20), 'lastName' char(20), 'age' int, 'phone' char(20), 'address' varchar(100));
+CREATE TABLE customer('id_' INTEGER PRIMARY KEY, 'firstName' char(20), 'lastName' char(20), 'age' int, 'phone' char(20), 'address' varchar(100));
 
 INSERT INTO 'customer'(id_, firstName, lastName, age, phone, address) VALUES(1, "SHUHAI", "CUI", 50, "6666666666", "van ash");
+
+
+CREATE TABLE customer_contact_history('contact_id' INTEGER PRIMARY KEY, 'customer_id' int, 'contact_type' char(60), 'description' varchar(200));
+
+CREATE TABLE customer_transactions('transact_id' INTEGER PRIMARY KEY, 'customer_id' int, 'buying' bool, 'prodcut' varchar(60), 'amonut' float, 'description' varchar(200));
+

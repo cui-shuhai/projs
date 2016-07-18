@@ -6,6 +6,7 @@
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/regex.hpp>//g++4.8 regex implementation has some errors but fixed fin 4.9
 
+#include <sqlite/transaction.hpp>
 #include <sqlite/connection.hpp>
 #include <sqlite/query.hpp>
 #include <sqlite/result.hpp>
@@ -38,25 +39,39 @@ void ListCustomersGet::Process(){
 		
 		auto sql = "SELECT id_, firstName, lastName, age, phone, address FROM customer";
 
+	//there is an error from sqlite library, query get_row_count fails (return 0)
+		auto count_sql = "SELECT count(*) FROM customer";
+		auto count_query = c.BuildQuery(count_sql);
+		auto count_res = count_query->emit_result();
+		auto rows = count_res->get_int(0);
+
 		auto customer_query = c.BuildQuery(sql);
 
 		result_type res =  customer_query->emit_result();
-	
+		
+		LoaderFile loader; // Let's use the default loader that loads files from disk.
+		Template t( loader );
+		t.load( "web/listcustomers.html" );
 
-		cs << "Customer List\n";
+		
+		t.block("meat").repeat(rows);
 
-		do {
-			cs << "customer_id: " << res->get_int(0) << endl;
-				
-			/* Access column data by alias or column name */
-			cs << "first_name: " << res->get_string(1) << endl;
-			cs << "last_name: " << res->get_string(2) << endl;
-			cs << "age: " << res->get_int(3) << endl;
-			cs << "phone: " << res->get_string(4) << endl;
-			cs << "addres: " << res->get_string(5) << endl;
-			/* Access column fata by numeric offset, 1 is the first column */
-			cs << "------\n" << endl;
-		}while (res->next_row());
+		//all fields must be string
+ 		for ( int i=0; i < rows; i++, res->next_row() ) {
+			t.block("meat")[i].set("customerId", to_string(res->get_int(0)));
+			t.block("meat")[i].set("firstname", res->get_string(1));
+			t.block("meat")[i].set("lastname", res->get_string(2));
+			t.block("meat")[i].set("age", to_string(res->get_int(3)));
+			t.block("meat")[i].set("phone", res->get_string(4));
+			t.block("meat")[i].set("address", res->get_string(5));
+			t.block("meat")[i].set("activities", to_string(res->get_int(0)));
+			t.block("meat")[i].set("transactions", to_string(res->get_int(0)));
+
+		}
+
+
+		t.render( cs ); // Render the template with the variables we've set above
+ 
 		
 		cs.seekp(0, ios::end);
 		rs_ <<  cs.rdbuf();

@@ -15,7 +15,7 @@ public:
 	~Customer();
 	
 	void AddCustomer();
-	query BuildQuery(const string &sql);
+	unique_ptr<query> BuildQuery(const string &sql);
 
 private:
 	int id_;

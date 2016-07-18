@@ -1,8 +1,18 @@
-<html>
-    <head>
-        <title><h1>Simple-Web-Server html-file</h1></title>
-    </head>
-    <body>
-        <h1>This is the content of index.html</h1>
-    </body>
-</html>
+{% include web/header.html %}
+
+{% block meat %}
+	<p> Alerts: </p>
+	3:PM  meet Mr. W.J<br>
+	4:30 PM conference
+
+	<p> Recent Events </p>
+
+	<p>New contacts: </p>
+	
+	<p>Recent transactions</p>
+	Jun 12, Custome buy product 1 $55005
+{% endblock %}
+
+
+{% include web/footer.html %}
+   

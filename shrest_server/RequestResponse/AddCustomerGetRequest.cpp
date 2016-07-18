@@ -24,9 +24,9 @@ void AddCustomerGetRequest::Process(){
 
 		Template t( loader );
 
-		t.load( "web/test.html" );
+		t.load( "web/addcustomer.html" );
            
-		t.set( "text", "Hello, world" ); 
+		//t.set( "text", "Hello, world" ); 
 
 		t.render( content_stream ); // Render the template with the variables we've set above
  

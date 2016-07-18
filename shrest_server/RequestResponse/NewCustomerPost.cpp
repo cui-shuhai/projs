@@ -29,26 +29,32 @@ void NewCustomerPost::Process(){
 		auto content=rq_->content.string();
 		std::map<std::string, std::string> m;
 		utils::parse_kye_value(content, m);
-		static int id = 10;
-		Customer c( id++, m["firstname"], m["lastname"],stoi( m["age"] ), m["phone"], m["address"]);
+		int id = 10;
+		Customer c( id, m["firstname"], m["lastname"],stoi( m["age"] ), m["phone"], m["address"]);
 		c.AddCustomer();
 
-/*
-		boost::regex re("([^=&]+)=([^&]+)");        // Create the reg exp
-		boost::sregex_iterator pos(content.begin(), content.end(), re);
-		boost::sregex_iterator end;
-*/
+		id = c.GetCustomerId();
 
-		stringstream cs;
+		stringstream cs;		
+
+		LoaderFile loader; // Let's use the default loader that loads files from disk.
+
+		Template t( loader );
+
+		t.load( "web/customeraddingecho.html" );
+
+		t.block("meat").repeat(1);
+		t.block("meat")[0].set("customerId", to_string(id));
+		t.block("meat")[0].set("firstname", m["firstname"]);
+		t.block("meat")[0].set("lastname", m["lastname"]);
+		t.block("meat")[0].set("age", m["age"]);
+		t.block("meat")[0].set("phone", m["phone"]);
+		t.block("meat")[0].set("address", m["address"]);
+
+		t.render( cs ); // Render the template with the variables we've set above
+ 
+		//find length of content_stream (length received using content_stream.tellp())
 		
-		cs << "Information:\n";
-
-		for ( auto &c : m ) {
-			cs << c.first << " = " << c.second << endl;
-		}
-
-		cs << "saved into database";
-
 		cs.seekp(0, ios::end);
 		rs_ <<  cs.rdbuf();
 		rs_.flush();

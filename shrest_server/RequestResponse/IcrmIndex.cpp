@@ -25,7 +25,7 @@ void IcrmIndex::Process(){
 
 		Template t( loader );
 
-		t.load( "web/test.html" );
+		t.load( "web/index.html" );
 
 		t.render( content_stream ); // Render the template with the variables we've set above
  

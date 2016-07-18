@@ -1,0 +1,17 @@
+{% include web/header.html %}
+
+{% block meat %}
+<p>Customer ID: {{ customerId }} </p>
+
+First name: {{ firstname }} <br>
+Last name: {{ lastname }} <br>
+Age: {{ age }}<br>
+Phone: {{ phone }}
+Address: {{ address }}
+
+{% endblock %}
+
+
+{% include web/footer.html %}
+   		Customer c( id++, m["firstname"], m["lastname"],stoi( m["age"] ), m["phone"], m["address"]);
+
