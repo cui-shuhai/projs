@@ -49,10 +49,19 @@ article {
   
 <nav>
   <ul>
-    <li><a href="/">Home</a></li>
+    <li><a href="#">Home</a></li>
     <li><a href="addcustomer">Add Customer</a></li>
     <li><a href="listcustomer">List Customer</a></li>
   </ul>
 </nav>
 
 <article>
+ {% block meat %}{% endblock %}
+</article>
+
+<footer>Copyright © iCRM.com</footer>
+
+</div>
+  
+</body>
+</html>

@@ -49,10 +49,38 @@ article {
   
 <nav>
   <ul>
-    <li><a href="/">Home</a></li>
+    <li><a href="#">Home</a></li>
     <li><a href="addcustomer">Add Customer</a></li>
     <li><a href="listcustomer">List Customer</a></li>
   </ul>
 </nav>
 
 <article>
+ {% block meat %}{% endblock %}
+</article>
+
+<footer>Copyright © iCRM.com</footer>
+
+</div>
+  
+</body>
+</html>
+
+
+
+	<form action="newcustomer" method="post">
+	  <fieldset>
+	    <legend>Personal information:</legend>
+	    First name:<br>
+	    <input type="text" name="firstname" value="Mickey"><br>
+	    Last name:<br>
+	    <input type="text" name="lastname" value="Mouse"><br><br>
+	    Age:<br>
+	    <input type="text" name="age" value=""><br><br>
+	    Phone:<br>
+	    <input type="text" name="phone" value=""><br><br>
+	    Address:<br>
+	    <input type="text" name="address" value=""><br><br>	
+	    <input type="submit" value="Submit">
+	  </fieldset>
+	</form>
