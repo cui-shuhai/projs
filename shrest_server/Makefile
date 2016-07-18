@@ -1,14 +1,16 @@
 SOURCE=server_instance.cpp \
 	NLTemplate/NLTemplate.cpp \
+	RequestResponse/RequestResponseFactory.cpp \
 	RequestResponse/RequestResponse.cpp \
 	RequestResponse/AddCustomerGetRequest.cpp \
 	RequestResponse/JsonPostRequest.cpp \
 	RequestResponse/ListCustomersGet.cpp \
 	RequestResponse/NewCustomerPost.cpp \
 	RequestResponse/PieGetRequest.cpp \
+	RequestResponse/IcrmIndex.cpp \
 	utils/shrest_utils.cpp \
 	shrest_db/customers_table.cpp \
-	shrest_db/mysqlcpp.cpp
+	shrest_db/mysqlite.cpp
 	
 
 MYPROGRAM=crm_server
@@ -20,7 +22,7 @@ OPTIONS=-std=c++11 -g
 LIBRARYPATH=-L/usr/lib/x86_64-linux-gnu 
 #debuge modules
 MYLIBRARIES= -lpthread  -lboost_date_time -lboost_filesystem -lboost_thread \
--lboost_regex -lboost_system  -lboost_coroutine -lboost_context  
+-lboost_regex -lboost_system  -lboost_coroutine -lboost_context  -lvsqlitepp
 
 
 CC=g++
