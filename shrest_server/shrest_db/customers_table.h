@@ -4,10 +4,10 @@
 #include <stdlib.h>
 #include <iostream>
 
-#include "mysqlcpp.h"
+#include "mysqlite.h"
 
 using namespace std;
-class Customer : public Msqlcpp{
+class Customer : public mysqlite{
 
 public:
 	Customer();
@@ -15,6 +15,7 @@ public:
 	~Customer();
 	
 	void AddCustomer();
+	unique_ptr<query> BuildQuery(const string &sql);
 
 private:
 	int id_;

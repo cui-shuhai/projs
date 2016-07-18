@@ -10,4 +10,4 @@
 
 CREATE TABLE customer('id_' int, 'firstName' char(20), 'lastName' char(20), 'age' int, 'phone' char(20), 'address' varchar(100));
 
-INSERT INTO 'customer'(id_, firstName, lastName, age, phone, address) VALUES(1, "SHUHAI", "CUI", 50, "6666666666", "van ash");
+INSERT TABLE customer(id_, firstName, lastName, age, phone, address) VALUES(1, "SHUHAI", "CUI", 50, "6666666666", "van ash");
