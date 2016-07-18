@@ -3,6 +3,6 @@
         <title><h1>Simple-Web-Server html-file</h1></title>
     </head>
     <body>
-        <h1>This is the content of index.html</h1>
+        This is the content of index.html
     </body>
 </html>

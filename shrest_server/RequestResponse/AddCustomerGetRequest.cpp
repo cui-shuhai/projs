@@ -20,9 +20,6 @@ void AddCustomerGetRequest::Process(){
      try {
 
         	stringstream content_stream;
-/*		
-		content_stream << "ksjfkdjf" << endl;
-*/
 		LoaderFile loader; // Let's use the default loader that loads files from disk.
 
 		Template t( loader );
