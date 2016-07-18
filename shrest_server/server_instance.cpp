@@ -80,7 +80,7 @@ int main() {
       //List all customers
      server.resource["^/listcustomer$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
 
-	auto processor = RequestResponseFactory::CreateProcessor("ListCustomerGet", response, request);	
+	auto processor = RequestResponseFactory::CreateProcessor("ListCustomersGet", response, request);	
 	processor->Process();        
     };
 	LOG("Adding [listcustomer, GET] API");
@@ -91,6 +91,8 @@ int main() {
 	auto processor = RequestResponseFactory::CreateProcessor("PieGet", response, request);	
 	processor->Process();        
     };
+
+	LOG("Adding [pie, GET] API");
     
     //GET-example for the path /info
     //Responds with request-information
@@ -107,6 +109,7 @@ int main() {
         
         response <<  "HTTP/1.1 200 OK\r\nContent-Length: " << content_stream.tellp() << "\r\n\r\n" << content_stream.rdbuf();
     };
+	LOG("Adding [info, GET] API");
     
     //GET-example for the path /match/[number], responds with the matched string in path (number)
     //For instance a request GET /match/123 will receive: 123
@@ -120,51 +123,10 @@ int main() {
     //Default file: index.html
     //Can for instance be used to retrieve an HTML 5 client that uses REST-resources on this server
     server.default_resource["GET"]=[](HttpServer::Response& response, ShRequest request) {
-        const auto web_root_path=boost::filesystem::canonical("web");
-        boost::filesystem::path path=web_root_path;
-        path/=request->path;
-        if(boost::filesystem::exists(path)) {
-            path=boost::filesystem::canonical(path);
-            //Check if path is within web_root_path
-            if(distance(web_root_path.begin(), web_root_path.end())<=distance(path.begin(), path.end()) &&
-               equal(web_root_path.begin(), web_root_path.end(), path.begin())) {
-                if(boost::filesystem::is_directory(path))
-                    path/="index.html";
-                if(boost::filesystem::exists(path) && boost::filesystem::is_regular_file(path)) {
-                    ifstream ifs;
-                    ifs.open(path.string(), ifstream::in | ios::binary);
-                    
-                    if(ifs) {
-                        ifs.seekg(0, ios::end);
-                        auto length=ifs.tellg();
-                        
-                        ifs.seekg(0, ios::beg);
-                        
-                        response << "HTTP/1.1 200 OK\r\nContent-Length: " << length << "\r\n\r\n";
-                        
-                        //read and send 128 KB at a time
-                        const size_t buffer_size=131072;
-                        vector<char> buffer(buffer_size);
-                        streamsize read_length;
-                        try {
-                            while((read_length=ifs.read(&buffer[0], buffer_size).gcount())>0) {
-                                response.write(&buffer[0], read_length);
-                                response.flush();
-                            }
-                        }
-                        catch(const exception &) {
-                            cerr << "Connection interrupted, closing file" << endl;
-                        }
-
-                        ifs.close();
-                        return;
-                    }
-                }
-            }
-        }
-        string content="Could not open path "+request->path;
-        response << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << content.length() << "\r\n\r\n" << content;
+	auto processor = RequestResponseFactory::CreateProcessor("IcrmIndex", response, request);	
+	processor->Process();
     };
+	LOG("Adding home index [GET] API");
     
     thread server_thread([&server](){
         //Start server
