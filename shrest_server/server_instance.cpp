@@ -84,7 +84,65 @@ int main() {
 	processor->Process();        
     };
 	LOG("Adding [listcustomer, GET] API");
-	
+
+     //Search customer interface
+     server.resource["^/searchcustomer$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("SearchCustomerInterface", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [searchcustomer, GET] API");
+
+     //Search customers request
+     server.resource["^/searchcustomerrequest$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("SearchCustomerRequest", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [searchcustomerrequest, POST] API");
+
+
+     //Add customer activity event interface
+     server.resource["^/addevent$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("AddEventInterface", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [addevent, GET] API");
+
+     //Add customer activity request
+     server.resource["^/addeventrequest$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("AddEventRequest", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [addeventrequest, POST] API");
+
+
+     //Add transaction interface
+     server.resource["^/addtransaction$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("AddTransactionInterface", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [addtransaction, GET] API");
+  	//Add transaction request
+     server.resource["^/addtransactionrequest$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("AddTransactionRequest", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [addtransactionrequest, POST] API");
+
+
+     //Search Contact activities
+     server.resource["^/activity/[0-9]+$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("SearchContactActivity", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [activity[0-9]+, GET] API");
+
       //pieget to test java script
      server.resource["^/pie$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
 
