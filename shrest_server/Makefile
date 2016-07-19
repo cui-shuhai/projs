@@ -8,6 +8,12 @@ SOURCE=server_instance.cpp \
 	RequestResponse/NewCustomerPost.cpp \
 	RequestResponse/PieGetRequest.cpp \
 	RequestResponse/IcrmIndex.cpp \
+	RequestResponse/SearchCustomerInterface.cpp \
+	RequestResponse/SearchCustomerRequest.cpp \
+	RequestResponse/AddEventInterface.cpp \
+	RequestResponse/AddEventRequest.cpp \
+	RequestResponse/AddTransactionInterface.cpp \
+	RequestResponse/AddTransactionRequest.cpp \
 	utils/shrest_utils.cpp \
 	shrest_db/customers_table.cpp \
 	shrest_db/mysqlite.cpp

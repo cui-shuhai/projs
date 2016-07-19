@@ -6,6 +6,12 @@
 #include "NewCustomerPost.h"
 #include "ListCustomersGet.h"
 #include "IcrmIndex.h"
+#include "AddEventInterface.h"
+#include "AddEventRequest.h"
+#include "SearchCustomerInterface.h"
+#include "SearchCustomerRequest.h"
+#include "AddTransactionInterface.h"
+#include "AddTransactionRequest.h"
 #include "RequestResponseFactory.h"
 
 unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name, HttpServer::Response &rs, ShRequest rq){
@@ -21,6 +27,18 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 		return unique_ptr<ListCustomersGet>( new ListCustomersGet(rs, rq));
 	if(name == "IcrmIndex")
 		return unique_ptr<IcrmIndex>( new IcrmIndex(rs, rq));
+	if(name == "SearchCustomerInterface")
+		return unique_ptr<SearchCustomerInterface>( new SearchCustomerInterface(rs, rq));
+	if(name == "SearchCustomerRequest")
+		return unique_ptr<SearchCustomerRequest>( new SearchCustomerRequest(rs, rq));
+	if(name == "AddEventInterface")
+		return unique_ptr<AddEventInterface>( new AddEventInterface(rs, rq));
+	if(name == "AddEventRequest")
+		return unique_ptr<AddEventRequest>( new AddEventRequest(rs, rq));
+	if(name == "AddTransactionInterface")
+		return unique_ptr<AddTransactionInterface>( new AddTransactionInterface(rs, rq));
+	if(name == "AddTransactionRequest")
+		return unique_ptr<AddTransactionRequest>( new AddTransactionRequest(rs, rq));
 	
 	return nullptr;
 	}
