@@ -55,7 +55,7 @@ article {
     <li><a href="listcustomer">List Customer</a></li>
     <li><a href="searchcustomer">Search Customer</a></li>
     <li><a href="addevent">Add Contact Event</a></li>
-    <li><a href="addtranasction">Add Transaction</a></li>
+    <li><a href="addtranasction">Add Transact Event</a></li>
   </ul>
 </nav>
 

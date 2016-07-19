@@ -1,19 +1,67 @@
+CREATE TABLE company(
+	company_id INT PRIMARY KEY,
+	name	varchar(100), 
+	address	varchar(100), 
+	phone	varchar(20), 
+	fax	varchar(20)
+	parent_company INT,
+	industry_type	INT, 
+	who_referred INT, 
+	annual-revenue float, 
+	currency_id INT, 
+	credit_limit	float, 
+	credit_rating	INT, 
+	time_zone	INT, 
+	payment_terms	INT);
+
+CREATE TABLE employee(
+	employee_ID IDENTITY(1,1) PRIMARY KEY,
+	Name nvarchar(100),
+	Gender tinyint,
+	Department_ID int,
+	Workphone char(11),
+	Email nvarchar(100),
+	Reports_to  nvarchar(100)
+);
 
 
-	pstmt->setInt(1, id_);
-	pstmt->setString(2, firstName_);
-	pstmt->setString(3, lastName_);
-	pstmt->setInt(4, age_);
-	pstmt->setString(5, phone_);
-	pstmt->setString(6, address_);
+CREATE TABLE contact(
+	'contact_id' INTEGER PRIMARY KEY,
+	'firstName' char(20), 
+	'lastName' char(20), 
+	'age' int, 
+	'address' varchar(100)
+	'phone' char(20), 
+	'fax' char(20),
+	'email' varchar(32),
+	'job_title' varchar(32),
+	'company_id' int FOREIGN KEY REFERENCES company(company_id),
+	'when_met' Date,
+	'where_met' varchar(100),
+	'birthday' Data,
+	'married' BOOL,
+	'children' int,
+	'time_zone' int FOREIGN KEY REFERENCES time_zone(zone_id)
+);
 
+CREATE TABLE activity_code(
+	'activity_id' INT PRIMARY KEY,
+	'description' nvarchar(100)
+);
 
-CREATE TABLE customer('id_' INTEGER PRIMARY KEY, 'firstName' char(20), 'lastName' char(20), 'age' int, 'phone' char(20), 'address' varchar(100));
+CREATE TABLE activity_event(
+	'event_id'  INT  PRIMARY KEY,
+	'activity'  INT FOREIGN KEY REFERENCES activity_code(activity_id),
+	'contact_id' INT FOREIGN KEY REFERENCES contact(contact_id),
+	'who_contacts' INT FOREIGN KEY REFERENCES employee(employee_id),
+
+);
+
 
 INSERT INTO 'customer'(id_, firstName, lastName, age, phone, address) VALUES(1, "SHUHAI", "CUI", 50, "6666666666", "van ash");
 
 
-CREATE TABLE customer_contact_history('contact_id' int PRIMARY KEY, customer_id' int, 'contact_type' char(60), 'description' varchar(200));
+CREATE TABLE customer_contact_history('contact_id' INTEGER PRIMARY KEY, 'customer_id' int, 'contact_type' char(60), 'description' varchar(200));
 
-CREATE TABLE customer_transactions('transact_id' int PRIMARY KEY, customer_id' int, 'buying' bool, 'prodct' varchar(60), 'amonut' float, 'description' varchar(200));
+CREATE TABLE customer_transactions('transact_id' INTEGER PRIMARY KEY, 'customer_id' int, 'buying' bool, 'prodcut' varchar(60), 'amonut' float, 'description' varchar(200));
 

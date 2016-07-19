@@ -14,6 +14,7 @@ SOURCE=server_instance.cpp \
 	RequestResponse/AddEventRequest.cpp \
 	RequestResponse/AddTransactionInterface.cpp \
 	RequestResponse/AddTransactionRequest.cpp \
+	RequestResponse/SearchContactActivity.cpp \
 	utils/shrest_utils.cpp \
 	shrest_db/customers_table.cpp \
 	shrest_db/mysqlite.cpp

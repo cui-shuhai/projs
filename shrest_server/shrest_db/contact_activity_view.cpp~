@@ -16,11 +16,11 @@
 #include "shrest_log.h"
 #include "shrest_db/customers_table.h"
 
-Customer::Customer():mysqlite()
+contact_activity_view::contact_activity_view():mysqlite()
 {
 }
 
-Customer::Customer(int id, string firstName, string lastName, int age, string phone, string address):
+contact_activity_view::contact_activity_view(int id, string firstName, string lastName, int age, string phone, string address):
 	mysqlite(),
 	id_{id},
 	firstName_{firstName},
@@ -31,10 +31,10 @@ Customer::Customer(int id, string firstName, string lastName, int age, string ph
 {
 }
 
-Customer::~Customer(){
+contact_activity_view::~contact_activity_view(){
 }
 
-void Customer::AddCustomer(){
+void contact_activity_view::Addcontact_activity_view(){
 
 	//auto sql = "INSERT INTO 'customer'(id_, firstName, lastName, age, phone, address) VALUES(?, ?, ?, ?, ?, ?)";
 	auto sql = "INSERT INTO 'customer'(firstName, lastName, age, phone, address) VALUES(?, ?, ?, ?, ?)";
@@ -69,11 +69,7 @@ void Customer::AddCustomer(){
 	//t.commit();
 }
 
-int Customer::GetCustomerId()
+int contact_activity_view::Getcontact_activity_viewId()
 {	
 	return id_;
-}
-
-unique_ptr<query> Customer::BuildQuery(const string &sql){
-	return unique_ptr<query>(new query(*conn, sql));
 }

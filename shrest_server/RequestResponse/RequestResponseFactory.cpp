@@ -12,6 +12,7 @@
 #include "SearchCustomerRequest.h"
 #include "AddTransactionInterface.h"
 #include "AddTransactionRequest.h"
+#include "SearchContactActivity.h"
 #include "RequestResponseFactory.h"
 
 unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name, HttpServer::Response &rs, ShRequest rq){
@@ -39,6 +40,8 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 		return unique_ptr<AddTransactionInterface>( new AddTransactionInterface(rs, rq));
 	if(name == "AddTransactionRequest")
 		return unique_ptr<AddTransactionRequest>( new AddTransactionRequest(rs, rq));
+	if(name == "SearchContactActivity")
+		return unique_ptr<SearchContactActivity>( new SearchContactActivity(rs, rq));
 	
 	return nullptr;
 	}

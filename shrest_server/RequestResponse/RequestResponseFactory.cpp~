@@ -28,7 +28,7 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 	if(name == "IcrmIndex")
 		return unique_ptr<IcrmIndex>( new IcrmIndex(rs, rq));
 	if(name == "SearchCustomerInterface")
-		return unique_ptr<SearchCustomersInterface>( new SearchCustomerInterface(rs, rq));
+		return unique_ptr<SearchCustomerInterface>( new SearchCustomerInterface(rs, rq));
 	if(name == "SearchCustomerRequest")
 		return unique_ptr<SearchCustomerRequest>( new SearchCustomerRequest(rs, rq));
 	if(name == "AddEventInterface")

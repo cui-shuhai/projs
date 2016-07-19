@@ -5,6 +5,8 @@
 #include <iostream>
 
 #include <sqlite/connection.hpp>
+#include <sqlite/query.hpp>
+#include <sqlite/result.hpp>
 using namespace sqlite;
 
 using namespace std;

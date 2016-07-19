@@ -8,8 +8,8 @@ Last name: {{ lastname }} <br>
 Age: {{ age }}<br>
 Phone: {{ phone }}<br>
 Address: {{ address }}<br>
-<a href = activity/{{ activities }}> << "Activities </a><br>
-<a href = transactions/{{ transactions }}> << "Transactions </a>
+<a href = /activity/{{ activities }}> Activities </a><br>
+<a href = /transactions/{{ transactions }}> Transactions </a>
 
 <br>
 ---------

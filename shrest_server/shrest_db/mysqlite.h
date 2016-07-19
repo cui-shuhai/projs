@@ -15,6 +15,7 @@ class mysqlite{
 public:
 	mysqlite();
 	virtual ~mysqlite();
+	unique_ptr<query> BuildQuery(const string &sql);
 protected:
 	connection* conn;
 };

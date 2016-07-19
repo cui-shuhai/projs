@@ -73,7 +73,3 @@ int Customer::GetCustomerId()
 {	
 	return id_;
 }
-
-unique_ptr<query> Customer::BuildQuery(const string &sql){
-	return unique_ptr<query>(new query(*conn, sql));
-}
