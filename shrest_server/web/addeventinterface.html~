@@ -1,21 +1,23 @@
 {% include web/header.html %}
 
 {% block meat %}
-<p>Customer ID: {{ customerId }} </p>
-
-First name: {{ firstname }} <br>
-Last name: {{ lastname }} <br>
-Age: {{ age }}<br>
-Phone: {{ phone }}<br>
-Address: {{ address }}<br>
-<a href = activity/{{ activities }}> Activities </a><br>
-<a href = transactions/{{ transactions }}> Transactions </a>
-
-<br>
----------
-
+<form action="addeventrequest" method="post">
+	  <fieldset>
+	    <legend>Event:</legend>
+	    Contact type:<br>
+	    <input type="text" name="contact_type" value="Mickey"><br>
+	    Person to contact:<br>
+	    <input type="text" name="contactee" value="-1"><br><br>
+	    Person contacts:<br>
+	    <input type="text" name="contactor" value=""><br><br>
+	    Date:<br>
+	    <input type="text" name="create_date" value=""><br><br>
+	    Note:<br>
+	    <input type="text" name="note" value=""><br><br>	
+	    <input type="submit" value="Submit">
+	  </fieldset>
+</form>
 {% endblock %}
 
 
 {% include web/footer.html %}
- 

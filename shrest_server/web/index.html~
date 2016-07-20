@@ -42,34 +42,26 @@ Workflow automation lets you streamline the sales, marketing, and support proces
 </p>
 <p>
 
-These are Lead Status pick-list values that we use as a blueprint on our engagements – see if this makes sense:
-
-Not Attempted – you haven’t tried to reach the lead
-Attempted – you have tried (person-to-person) to reach the lead
-Contacted – you have had a person-to-person dialog with the lead
-New Opportunity – new opportunity identified (convert lead)
-Additional Contact – new contact at existing opportunity (convert lead)
-Disqualified – never going to be a prospect for your product or service because this lead is the incorrect industry, company, contact or data
-
+<p>
 Lead management is an important business process that combines tools with techniques to enable effective leads generation, management and tracking of new sales opportunities. In Zoho CRM, leads are considered the raw details of a company, person or business opportunity.
+</p>
 
-========
-
-So, what is the difference between a CRM lead and an opportunity?
-A Lead – is a contact or an account with very little information. It could be just a person who you might have met at a conference. You will need to retrieve more information regarding this lead in order to create (qualify) an opportunity in your sales pipeline. A old sales rule says: “If you have never contacted your contact, it’s a lead.”
-
-An Opportunity – is a contact or an account which has been qualified. This person has entered into your buying cycle and is committed to working with you. You have already contacted, called or met him and know their needs or requirements. The old sales rule says: “The opportunity is a deal that you have the possibility to close!”
-
-“Think about the difference between a lead and an opportunity as an evolving process i.e. each lead needs to be qualified to an opportunity. There will always be plenty of leads in your sales territory, but only few of them will qualify to become real sales opportunity.”
-====
-Taking our earlier example, once the conversation has been completed, we would change the Lead Status to “Contacted”. If the conversation was inconclusive, you may decide a further conversation in 3 months is the appropriate is the next step, then we would leave the Lead Status as “Contacted”.
-
+<p>
 Once you have a solid (and unambiguous) lead management process you can start to tackle activity management. This is what drives what we do next, when and why. Working in harmony, the lead and activity management processes can dramatically improve the productivity of your sales team, and increase executive management visibility into projected revenue. Remember that activity is the leading indicator of pipeline, and pipeline is the leading indicator of revenue.
+</p>
 
 So do your Lead Status pick-list values describe a ‘state’ that cannot be undone, or are they ambiguous descriptions understood and used differently across your organization?
 
-PS For sake of clarity we have excluded lead status values that are set automatically by systems (e.g. marketing automation), third-party vendors (e.g. appointment setters) and other data sources (e.g. trade show uploads). In particular, this excludes how a lead is treated as a member of a campaign, or ‘Campaign Member Status’.
 </p>
+<p>
+Integrate
+Use the Gmail API to add Gmail features to your app. RESTful access to threads, messages, labels, drafts and history. Easy to use from modern web languages.
+
+
+</p>
+
+
+
 {% endblock %}
 
 

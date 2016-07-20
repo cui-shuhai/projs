@@ -51,11 +51,13 @@ article {
 <nav>
   <ul>
     <li><a href="/">Home</a></li>
-    <li><a href="/addcustomer">Add Customer</a></li>
-    <li><a href="/listcustomer">List Customer</a></li>
-    <li><a href="/searchcustomer">Search Customer</a></li>
-    <li><a href="/addevent">Add Contact Event</a></li>
-    <li><a href="/addtranasction">Add Transact Event</a></li>
+    <li><a href="/addcustomer">Add Contact</a></li>
+    <li><a href="/listcustomer">List Contact</a></li>
+    <li><a href="/searchcustomer">Search Contact</a></li>
+    <li><a href="/addevent">Add Activity</a></li>
+    <li><a href="/addtask">Add Task</a></li>
+    <li><a href="/addtransaction">Add Order</a></li>
+    <li><a href="/currenttask">Current Tasks</a></li>	
   </ul>
 </nav>
 

@@ -2,16 +2,6 @@
 
 {% block meat %}
 
-Event ID: {{ event_id }} <br>
-Contact Ttype: {{ contact_type }} <br>
-Contact ID: {{ contact_id }}<br>
-Contacter: {{ who_contacts }}<br>
-Create date: {{ when_created }}<br>
-Note: {{ note }}
-
-{% endblock %}
-
-<!--
 <form action="addtaskrequest" method="post">
 	  <fieldset>
 	    <legend></legend>
@@ -32,7 +22,9 @@ Note: {{ note }}
 	    <input type="submit" value="Submit">
 	  </fieldset>
 </form>
--->
+
+{% endblock %}
+
 
 {% include web/footer.html %}
-
+   

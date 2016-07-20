@@ -41,7 +41,7 @@ void NewCustomerPost::Process(){
 
 		Template t( loader );
 
-		t.load( "web/customeraddingecho.html" );
+		t.load( "web/addcontactresponse.html" );
 
 		t.block("meat").repeat(1);
 		t.block("meat")[0].set("customerId", to_string(id));

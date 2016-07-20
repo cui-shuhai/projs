@@ -1,0 +1,28 @@
+{% include web/header.html %}
+
+{% block meat %}
+	Task ID : {{ di }} <br>
+	Task name:  {{ task_name }} <br>
+	Due : {{ due_date }} <br>
+	Description : {{ description }} <br>
+	Status: {{ status }} <br>
+	Task performer {{ assignee }} <br>
+	Assigned by {{ assigner }} <br>
+	Created by {{ creator }}<br>
+	---------------
+{% endblock %}
+
+
+{% include web/footer.html %}
+   
+
+CREATE TABLE task( 
+	'task_id' INTEGER PRIMARY KEY,
+	'task_name' varchar(60), 
+	'due_date' Date,
+	'description' varchar(200), 
+	'status' int,
+	'assignee' int, 
+	'assigner' int, 
+	'creator' int
+);

@@ -1,0 +1,9 @@
+{% include web/header.html %}
+
+{% block meat %}
+	task_id : {{ di }} | description: {{ detail }} | status: {{ status }}
+{% endblock %}
+
+
+{% include web/footer.html %}
+   

@@ -126,6 +126,7 @@ int main() {
 	processor->Process();        
     };
 	LOG("Adding [addtransaction, GET] API");
+
   	//Add transaction request
      server.resource["^/addtransactionrequest$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
 
@@ -133,6 +134,30 @@ int main() {
 	processor->Process();        
     };
 	LOG("Adding [addtransactionrequest, POST] API");
+
+     //Add transaction interface
+     server.resource["^/addtask$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("AddTaskInterface", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [addtask, GET] API");
+
+ 	//Add transaction request
+     server.resource["^/addtaskrequest$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("AddTaskRequest", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [addtaskrequest, POST] API");
+
+ 	//Add transaction request
+     server.resource["^/listtask$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("ListTaskRequest", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [ListTaskrequest, POST] API");
 
 
      //Search Contact activities
@@ -181,6 +206,9 @@ int main() {
     //Default file: index.html
     //Can for instance be used to retrieve an HTML 5 client that uses REST-resources on this server
     server.default_resource["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	response << "HTTP/1.1 200 OK\r\nContent-Length: unkonwd " << "Set-Cookie: theme=light";
+
 	auto processor = RequestResponseFactory::CreateProcessor("IcrmIndex", response, request);	
 	processor->Process();
     };

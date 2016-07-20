@@ -12,6 +12,9 @@
 #include "SearchCustomerRequest.h"
 #include "AddTransactionInterface.h"
 #include "AddTransactionRequest.h"
+#include "AddTaskInterface.h"
+#include "AddTaskRequest.h"
+#include "ListTaskRequest.h"
 #include "SearchContactActivity.h"
 #include "RequestResponseFactory.h"
 
@@ -41,7 +44,13 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 	if(name == "AddTransactionRequest")
 		return unique_ptr<AddTransactionRequest>( new AddTransactionRequest(rs, rq));
 	if(name == "SearchContactActivity")
-		return unique_ptr<SearchContactActivity>( new SearchContactActivity(rs, rq));
+		return unique_ptr<SearchContactActivity>( new SearchContactActivity(rs, rq));	
+	if(name == "AddTaskInterface")
+		return unique_ptr<AddTaskInterface>( new AddTaskInterface(rs, rq));	
+	if(name == "AddTaskRequest")
+		return unique_ptr<AddTaskRequest>( new AddTaskRequest(rs, rq));	
+	if(name == "ListTaskRequest")
+		return unique_ptr<ListTaskRequest>( new ListTaskRequest(rs, rq));
 	
 	return nullptr;
 	}

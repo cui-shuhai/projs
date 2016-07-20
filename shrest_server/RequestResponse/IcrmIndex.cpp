@@ -2,6 +2,9 @@
 
 #include <iostream>
 #include <fstream>
+#include <map>
+#include <string>
+#include <boost/regex.hpp>
 #include <boost/filesystem.hpp>
 
 #include "NLTemplate.h"
@@ -18,7 +21,25 @@ IcrmIndex::IcrmIndex(HttpServer::Response &rs, ShRequest rq): RequestResponse(rs
 IcrmIndex::~IcrmIndex(){}
 
 void IcrmIndex::Process(){
+LOG(rq_->method, rq_->path);
      try {
+		auto content=rq_->content.string();
+
+	   	boost::regex re("Cookie\s* ([^=&]+)=([^&]+)", boost::regex::icase);        // Create the reg exp
+	
+		if (regex_match(content, re)){
+			//has cookie and check cookie
+			std::string> &m;
+
+		   	boost::sregex_iterator pos(content.begin(), content.end(), re);
+		      	boost::sregex_iterator end;
+			for ( ; pos!=end ; ++pos ) {
+					m[pos->str(1)] = pos->str(2);
+				}
+		}
+		else {
+			//no like load login interface other loading user's dashboard
+		}
 
         	stringstream content_stream;
 		LoaderFile loader; // Let's use the default loader that loads files from disk.

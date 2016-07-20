@@ -44,7 +44,7 @@ void AddEventRequest::Process(){
 
 		Template t( loader );
 
-		t.load( "web/addeventresponse.html" );
+		t.load( "web/addcontactresponse.html" );
 
 		t.block("meat").repeat(1);
 		t.block("meat")[0].set("event_id", to_string(id));

@@ -1,21 +1,23 @@
 {% include web/header.html %}
 
 {% block meat %}
-<p>Customer ID: {{ customerId }} </p>
-
-First name: {{ firstname }} <br>
-Last name: {{ lastname }} <br>
-Age: {{ age }}<br>
-Phone: {{ phone }}<br>
-Address: {{ address }}<br>
-<a href = activity/{{ activities }}> Activities </a><br>
-<a href = transactions/{{ transactions }}> Transactions </a>
-
-<br>
----------
-
+<form action="addtransactionrequest" method="post">
+	  <fieldset>
+	    <legend>Order Information:</legend>
+	    Customer ID:<br>
+	    <input type="text" name="customer_id" value=""><br>
+	    Product ID:<br>
+	    <input type="text" name="product_id" value=""><br><br>
+	    Order amount:<br>
+	    <input type="text" name="order_amount" value=""><br><br>
+	    Date:<br>
+	    <input type="text" name="date" value=""><br><br>
+	    Order status:<br>
+	    <input type="text" name="order_status" value=""><br><br>	
+	    <input type="submit" value="Submit">
+	  </fieldset>
+</form>
 {% endblock %}
 
 
 {% include web/footer.html %}
- 

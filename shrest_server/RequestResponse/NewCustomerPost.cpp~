@@ -29,9 +29,11 @@ void NewCustomerPost::Process(){
 		auto content=rq_->content.string();
 		std::map<std::string, std::string> m;
 		utils::parse_kye_value(content, m);
-		static int id = 10;
-		Customer c( id++, m["firstname"], m["lastname"],stoi( m["age"] ), m["phone"], m["address"]);
+		int id = 10;
+		Customer c( id, m["firstname"], m["lastname"],stoi( m["age"] ), m["phone"], m["address"]);
 		c.AddCustomer();
+
+		id = c.GetCustomerId();
 
 		stringstream cs;		
 
