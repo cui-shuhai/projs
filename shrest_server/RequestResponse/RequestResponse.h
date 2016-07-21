@@ -15,6 +15,8 @@ class RequestResponse{
 public:
 	RequestResponse(HttpServer::Response &rs, ShRequest rq);
 	~RequestResponse();
+	
+	void CreateDashboard(const string & username, const string password);
 
 	virtual void Process() = 0;
 

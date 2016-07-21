@@ -1,0 +1,33 @@
+
+#pragma once
+/* Standard C++ includes */
+#include <stdlib.h>
+#include <iostream>
+
+#include "mysqlite.h"
+
+using namespace std;
+class exist_task : public mysqlite{
+
+public:
+	exist_task();
+	exist_task(int id, string firstName, string lastName, int age, string phone, string address);
+	~exist_task();
+	
+	void add_exist_task();
+	int get_exist_taskId();
+
+private:
+/*
+	
+		t.block("meat")[0].set("task_id", to_string(id));
+		t.block("meat")[0].set("task_name", m["task_name"]);
+		t.block("meat")[0].set("due_date", m["due_date"]);
+		t.block("meat")[0].set("status", m["status"]);
+		t.block("meat")[0].set("description", m["description"]);
+		t.block("meat")[0].set("assignee", m["assignee"]);
+		t.block("meat")[0].set("assigner", m["assigner"]);
+		t.block("meat")[0].set("creator", m["creator"]);
+*/
+};
+

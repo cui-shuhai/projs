@@ -1,67 +1,167 @@
-CREATE TABLE company(
-	company_id INT PRIMARY KEY,
-	name	varchar(100), 
-	address	varchar(100), 
-	phone	varchar(20), 
-	fax	varchar(20)
-	parent_company INT,
-	industry_type	INT, 
-	who_referred INT, 
-	annual-revenue float, 
-	currency_id INT, 
-	credit_limit	float, 
-	credit_rating	INT, 
-	time_zone	INT, 
-	payment_terms	INT);
+CREATE TABLE 'company'(
+	'company_id' INTEGER PRIMARY KEY,
+	'name'	varchar(100), 
+	'address'	varchar(100), 
+	'phone'	varchar(20), 
+	'fax'	varchar(20),
+	'parent_company' INT,
+	'industry_type'	INT, 
+	'who_referred' INT, 
+	'annual_revenue' float, 
+	'currency_id' char(3),
+	'credit_limit'	float, 
+	'credit_rating'	INT, 
+	'time_zone'	INT, 
+	'payment_terms'	INT);
 
 CREATE TABLE employee(
-	employee_ID IDENTITY(1,1) PRIMARY KEY,
-	Name nvarchar(100),
-	Gender tinyint,
-	Department_ID int,
-	Workphone char(11),
-	Email nvarchar(100),
-	Reports_to  nvarchar(100)
+	'employee_id' int PRIMARY KEY,
+	'firstName' char(20), 
+	'lastName' char(20), 
+	'age' int, 
+	'address' varchar(100),
+	'mobile_phone' char(20), 
+	'office_phone' char(20),  
+	'home_phone' char(20), 
+	'email' varchar(32),
+	'job_title' varchar(32),
+	'department_id' int,
+	'reports_to' int  nvarchar(100)
 );
 
 
 CREATE TABLE contact(
 	'contact_id' INTEGER PRIMARY KEY,
+	'status' int DEFAULT 1,
 	'firstName' char(20), 
 	'lastName' char(20), 
 	'age' int, 
-	'address' varchar(100)
-	'phone' char(20), 
+	'address' varchar(100),
+	'mobile_phone' char(20), 
+	'office_phone' char(20),  
+	'home_phone' char(20), 
 	'fax' char(20),
 	'email' varchar(32),
 	'job_title' varchar(32),
-	'company_id' int FOREIGN KEY REFERENCES company(company_id),
+	'company_id' int ,
 	'when_met' Date,
 	'where_met' varchar(100),
 	'birthday' Data,
 	'married' BOOL,
 	'children' int,
-	'time_zone' int FOREIGN KEY REFERENCES time_zone(zone_id)
+	'time_zone' char(3),
+	'extra_info' varchar(100),
+	FOREIGN KEY(status) REFERENCES contact_status(status),
+	FOREIGN KEY(company_id) REFERENCES company(company_id)
 );
 
+CREATE TABLE contact(
+	'contact_id' INTEGER PRIMARY KEY,
+	'status' int DEFAULT 1,
+	'firstName' char(20), 
+	'lastName' char(20), 
+	'age' int, 
+	'address' varchar(100),
+	'mobile_phone' char(20), 
+	'office_phone' char(20),  
+	'home_phone' char(20), 
+	'fax' char(20),
+	'email' varchar(32),
+	'job_title' varchar(32),
+	'company_id' int,
+	'when_met' Date,
+	'where_met' varchar(100),
+	'birthday' Data,
+	'married' BOOL,
+	'children' int,
+	'time_zone' char(3),
+	'extra_info' varchar(100)
+);
+
+#activities 
 CREATE TABLE activity_code(
 	'activity_id' INT PRIMARY KEY,
 	'description' nvarchar(100)
 );
+INSERT INTO 'activity_code'(activity_id, description) VAlUES
+	(1, "email"),
+	(2, "phone call"),
+	(3, "fax"),
+	(4, "in person"),	
+	(5, "contact_buy"),
+	(6, "contact_sell"),
+	(7, "support_contact");
+
+
 
 CREATE TABLE activity_event(
-	'event_id'  INT  PRIMARY KEY,
-	'activity'  INT FOREIGN KEY REFERENCES activity_code(activity_id),
-	'contact_id' INT FOREIGN KEY REFERENCES contact(contact_id),
-	'who_contacts' INT FOREIGN KEY REFERENCES employee(employee_id),
-
+	'event_id'  INTEGER  PRIMARY KEY,
+	'contact_type'  INT,
+	'contact_id' INT,
+	'who_contacts' INT,
+	'when_created' Date,
+	'note'	varchar(100),
+	FOREIGN KEY (contact_type)REFERENCES activity_code(activity_id),
+	FOREIGN KEY (contact_id) REFERENCES contact(contact_id),
+	FOREIGN KEY (who_contacts)REFERENCES employee(employee_id)
 );
 
+#lead management status
+CREATE TABLE contact_status(
+	'status' int PRIMARY KEY,
+	'description' varchar(20),
+	'detail'  varchar(100)
+};
 
-INSERT INTO 'customer'(id_, firstName, lastName, age, phone, address) VALUES(1, "SHUHAI", "CUI", 50, "6666666666", "van ash");
+INSERT INTO 'contact_status'(status, description, detail)
+	 VALUES(1, "Not Attempted", "you haven’t tried to reach the lead"),
+	 (2, "Attempted", "you have tried (person-to-person) to reach the lead"),
+	 (3, "Contacted", "you have had a person-to-person dialog with the lead"),
+	 (4, "New Opportunity", "new opportunity identified (convert lead)"),
+	 (5, "Additional Contact", "new contact at existing opportunity (convert lead)"),
+	 (6, "Disqualified", "never going to be a prospect for your product or service because this lead is the incorrect industry, company, contact or data");
 
+CREATE TABLE task( 
+	'task_id' INTEGER PRIMARY KEY,
+	'task_name' varchar(60), 
+	'due_date' Date,
+	'description' varchar(200), 
+	'status' int,
+	'assignee' int, 
+	'assigner' int, 
+	'creator' int
+);
 
-CREATE TABLE customer_contact_history('contact_id' INTEGER PRIMARY KEY, 'customer_id' int, 'contact_type' char(60), 'description' varchar(200));
+CREATE TABLE task_status( 
+	'status_id' int PRIMARY KEY,
+	'description' varchar(20)
+);
 
-CREATE TABLE customer_transactions('transact_id' INTEGER PRIMARY KEY, 'customer_id' int, 'buying' bool, 'prodcut' varchar(60), 'amonut' float, 'description' varchar(200));
+INSERT INTO 'task_status'(status_id, description) 
+	VALUES( 1, "Not Assigned"),(2, "Assigned"), (3, "Finished"), (4, "Revoked");
+
+CREATE TABLE 'product'( 
+	'product_id' INTEGER PRIMARY KEY,
+	'name' varchar(32),
+	'price' decimal(6,2),
+	'limit' int,
+	'product_id' int,
+	'active_for_sale' bool
+);
+
+CREATE TABLE 'order'( 
+	'order_id' INTEGER PRIMARY KEY,
+	'customer_id' int,
+	'product_id' int,
+	'order_amount' decimal(8,2),
+	'date' date,
+	'order_status' int
+);
+
+CREATE TABLE 'cookie'( 
+	'session_id' char(36) PRIMARY KEY,
+	'user_name' varchar(20),
+	'password' varchar(32)
+);
+
 

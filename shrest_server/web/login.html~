@@ -1,0 +1,18 @@
+{% include web/header.html %}
+
+{% block meat %}
+<form action="newcustomer" method="post">
+	  <fieldset>
+	    <legend>Login</legend>
+	    User Name:<br>
+	    <input type="text" name="username" value=""><br>
+	    Pass Word:<br>	
+	    <input type="text" name="password" value=""><br>
+	    <input type="submit" value="Submit">
+	  </fieldset>
+</form>
+{% endblock %}
+
+
+{% include web/footer.html %}
+   

@@ -14,6 +14,7 @@
 #include "AddTransactionRequest.h"
 #include "AddTaskInterface.h"
 #include "AddTaskRequest.h"
+#include "ListTaskRequest.h"
 #include "SearchContactActivity.h"
 #include "RequestResponseFactory.h"
 
@@ -49,7 +50,9 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 	if(name == "AddTaskRequest")
 		return unique_ptr<AddTaskRequest>( new AddTaskRequest(rs, rq));	
 	if(name == "ListTaskRequest")
-		return unique_ptr<ListTaskRequest>( new ListTaskRequest(rs, rq));
+		return unique_ptr<ListTaskRequest>( new ListTaskRequest(rs, rq));	
+	if(name == "LoginRequest")
+		return unique_ptr<LoginRequest>( new LoginRequest(rs, rq));	
 	
 	return nullptr;
 	}
