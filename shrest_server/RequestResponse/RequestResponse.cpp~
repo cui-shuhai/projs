@@ -60,7 +60,7 @@ LOG(rq_->method, rq_->path);
 		cookie_table ckt(key);
 		auto user_id = ckt.get_user_id();
 
-		string compaign_sql = "SELECT compaign_name, status, start_date, close_date, description FROM compaign WHERE assign_to = ";
+		string compaign_sql = "SELECT compaingn_name, status, start_date, close_date, description FROM compaign WHERE assign_to = ";
 		compaign_sql.append(to_string(user_id)).append(" ORDER BY status");
 		
 		compaign_table ct;
