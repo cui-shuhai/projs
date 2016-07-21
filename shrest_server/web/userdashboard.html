@@ -24,7 +24,7 @@
 <br>
 
 
-	<h2> Opportinties </h2>
+	<h2> {{ opportunity_num }} Opportinties </h2>
 <table style="width:100%">
   <tr>
     <th>Opportinity</th>
@@ -36,16 +36,17 @@
   </tr>
 {% block opportunity_block %}
   <tr>
-    <td> {{ opportinuty }} </td> 
+    <td> {{ opportunity }} </td> 
     <td> <a herf =/contact/{{ id }}> {{ contactee }} </a> </td> 
     <td> {{ pipeline }} </td> 
-    <td> {{ probability }} </td> 
+    <td> {{ amount }} </td> 
+    <td> {{ probablity }} </td> 
     <td> {{ close_date }} </td> 
   </tr>  
 {% endblock %}
 </table>
 
-	<h2> Activities </h2>
+	<h2> {{ activity_num }} Activities </h2>
 <table style="width:100%">
   <tr>
     <th>Activity</th>
@@ -64,7 +65,7 @@
 	<h2> Tasks </h2>
 <table style="width:100%">
   <tr>
-    <th>Task</th>
+    <th> {{ task_num }} Taskes:</th>
     <th>Description</th> 
     <th>Status</th>
     <th>Due Date</th>

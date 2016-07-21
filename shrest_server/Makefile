@@ -30,6 +30,7 @@ SOURCE=server_instance.cpp \
 	shrest_db/cookie_table.cpp \
 	shrest_db/user_table.cpp \
 	shrest_db/compaign_table.cpp \
+	shrest_db/opportunity_table.cpp \
 	shrest_db/SqlAccessor.cpp \
 	shrest_db/SqlAccessorFactory.cpp
 
