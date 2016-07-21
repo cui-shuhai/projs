@@ -158,6 +158,13 @@ int main() {
 	processor->Process();        
     };
 	LOG("Adding [ListTaskrequest, POST] API");
+	//Add transaction request
+     server.resource["^/loginrequest$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("LoginRequest", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [ListTaskrequest, POST] API");
 
 
      //Search Contact activities
@@ -206,9 +213,7 @@ int main() {
     //Default file: index.html
     //Can for instance be used to retrieve an HTML 5 client that uses REST-resources on this server
     server.default_resource["GET"]=[](HttpServer::Response& response, ShRequest request) {
-
-	response << "HTTP/1.1 200 OK\r\nContent-Length: unkonwd " << "Set-Cookie: theme=light";
-
+	
 	auto processor = RequestResponseFactory::CreateProcessor("IcrmIndex", response, request);	
 	processor->Process();
     };

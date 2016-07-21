@@ -17,6 +17,7 @@ public:
 	~RequestResponse();
 	
 	void CreateDashboard(const string & username, const string password);
+	bool GetSession(std::string& session);
 
 	virtual void Process() = 0;
 

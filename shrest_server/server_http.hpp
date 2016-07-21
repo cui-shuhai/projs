@@ -12,6 +12,7 @@
 #include <functional>
 #include <iostream>
 #include <sstream>
+#include "shrest_log.h"
 
 namespace SimpleWeb {
     template <class socket_type>
@@ -80,7 +81,7 @@ namespace SimpleWeb {
               }
             };
         public:
-            std::string method, path, http_version;
+            std::string method, path, http_version, cookies;
 
             Content content;
 
@@ -298,6 +299,7 @@ namespace SimpleWeb {
         bool parse_request(std::shared_ptr<Request> request, std::istream& stream) const {
             std::string line;
             getline(stream, line);
+		LOG("request 1:", line);
             size_t method_end;
             if((method_end=line.find(' '))!=std::string::npos) {
                 size_t path_end;
@@ -315,6 +317,7 @@ namespace SimpleWeb {
                         return false;
 
                     getline(stream, line);
+			LOG("request 2:", line);
                     size_t param_end;
                     while((param_end=line.find(':'))!=std::string::npos) {
                         size_t value_start=param_end+1;
@@ -324,8 +327,13 @@ namespace SimpleWeb {
                             if(value_start<line.size())
                                 request->header.insert(std::make_pair(line.substr(0, param_end), line.substr(value_start, line.size()-value_start-1)));
                         }
-    
+
                         getline(stream, line);
+
+			if( (line.find("Cookie")) != std::string::npos){
+				request->cookies = line;
+				LOG("find cookie:", line);
+			}
                     }
                 }
                 else

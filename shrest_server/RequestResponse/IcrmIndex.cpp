@@ -25,32 +25,31 @@ IcrmIndex::IcrmIndex(HttpServer::Response &rs, ShRequest rq): RequestResponse(rs
 IcrmIndex::~IcrmIndex(){}
 
 void IcrmIndex::Process(){
-LOG(rq_->method, rq_->path);
+	LOG(rq_->method, rq_->path);
      try {
 
 		auto content=rq_->content.string();
-
-		if(content.find("Cookie") != string::npos)
-		{	
+		auto cookies = rq_->cookies;
 		
-			std::map<std::string, std::string> m;
-			utils::parse_kye_value(content, m);
-			if(m.find("secret_key") != m.end()){
+		if(!cookies.empty()){
+			string key;
+			if(GetSession(key)){
 				cookie_table ct;
-				const string key = m["secret_key"];
 				string user{};
 				string password{};
 				ct.get_cookie_user(key, user, password);
 				CreateDashboard(user, password);
+				LOG("find key for user", user);
 				return;
 			}
+			else{
+				LOG("cookie corrupted\n");
+				rs_ << "cookie corrupted, please clear cookie and relogin\n";
+				rs_.flush();
+				return;	
+			}	   	
 		}
-		else if(!content.empty()){
-			LOG("cookie corrupted\n");
-			rs_ << "cookie corrupted, please clear cookie and relogin\n";
-			rs_.flush();
-			return;	
-		}	   	
+		
 		
 		stringstream content_stream;
 		LoaderFile loader; // Let's use the default loader that loads files from disk.

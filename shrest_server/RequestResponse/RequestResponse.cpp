@@ -28,6 +28,21 @@ RequestResponse::RequestResponse(HttpServer::Response &rs, ShRequest rq):
 
 RequestResponse::~RequestResponse(){}
 
+bool RequestResponse::GetSession(std::string& session){
+	auto cookies = rq_->cookies;
+		
+	if(!cookies.empty()){
+
+		boost::regex re("Cookie:\\s* secret_key=([^&; ]+)", boost::regex::icase); 
+		boost::smatch what; 
+		if (regex_match(cookies, what, re)){
+			session = what[1].str();
+			return true;
+		}   	
+	}
+	return false;
+}
+
 void RequestResponse::CreateDashboard(const string & username, const string password){
 
 LOG(rq_->method, rq_->path);

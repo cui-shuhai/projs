@@ -42,8 +42,9 @@ void LoginRequest::Process(){
 
 		ct.add_cookie_table();
 
-		string cookie = "HTTP/1.1 200 OK\r\nContent-type: text/html\r\nSet-Cookie: secret_key=";
-		rs_<< cookie << sessionId <<"\r\n\r\n";
+		string cookie = "HTTP/1.1 200 OK\r\nSet-Cookie: secret_key=";
+		cookie.append(sessionId).append("\r\n\r\n");
+		rs_<< cookie;
 
 		CreateDashboard(m["username"], m["password"]);		
 	}
