@@ -13,7 +13,7 @@
 	    <input type="text" name="employee_id" value="Mouse"><br><br>
 	    Status:<br>
 	    <input type="text" name="role" value="1"><br><br>
-	    Description:<br>
+	    Profile:<br>
 	    <input type="text" name="profile" value=""><br><br>
 	    <input type="submit" value="Submit">
 	  </fieldset>

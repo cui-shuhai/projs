@@ -15,7 +15,7 @@
 #include "shrest_utils.h"
 #include "NLTemplate/NLTemplate.h"
 
-#include "exist_task.h"
+#include "task_table.h"
 #include "ListTaskRequest.h"
 
 using namespace sqlite;
@@ -33,7 +33,7 @@ void ListTaskRequest::Process(){
 
 	try {
 		
-		exist_task c;
+		task_table c;
 
 		stringstream cs;
 		

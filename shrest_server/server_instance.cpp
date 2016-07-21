@@ -174,6 +174,14 @@ int main() {
 	processor->Process();        
     };
 	LOG("Adding [ListTaskrequest, POST] API");
+
+ 	//Add transaction request
+     server.resource["^/listcompaign$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("ListCompaignRequest", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [listcompaignrequest, POST] API");
 	//Add transaction request
      server.resource["^/loginrequest$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
 

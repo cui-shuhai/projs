@@ -60,7 +60,7 @@ bool cookie_table::get_cookie_user()
 }
 	
 int cookie_table::get_user_id(){	
-	string sql = "SELECT employee_id  FROM user WHERE cookie.user_name = user.login_name AND cookie.password = user.pass_word AND cookie.session_id = ?";
+	string sql = "SELECT employee_id  FROM user  INNER JOIN cookie ON cookie.user_name = user.login_name AND cookie.password = user.pass_word WHERE cookie.session_id = ?";
 	//sql.append(session_id);
 
 	query id_query(*conn, sql);

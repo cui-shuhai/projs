@@ -16,7 +16,7 @@
 #include "NLTemplate/NLTemplate.h"
 
 #include "RequestResponseFactory.h"
-#include "customers_table.h"
+#include "customer_table.h"
 #include "SearchCustomerRequest.h"
 
 using namespace sqlite;

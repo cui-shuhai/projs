@@ -47,12 +47,12 @@ void cookie_table::add_cookie_table(){
 bool cookie_table::get_cookie_user()
 {
 		
-	string sql = "SELECT user_name, password FROM cookie where session_id = \'?\'";
+	string sql = "SELECT user_name, password FROM cookie where session_id = '";
 	//string sql = "SELECT user_name, password FROM cookie where session_id = '";
-	//sql.append(session_id).append('\'');
+	sql.append(session_id).append("'");
 
 	query cookie_query(*conn, sql);
-	cookie_query.bind(1, session_id);
+	//cookie_query.bind(1, session_id);
 
 	auto res = cookie_query.emit_result();
 	user_name = res->get_string(0);
@@ -60,7 +60,7 @@ bool cookie_table::get_cookie_user()
 }
 	
 int cookie_table::get_user_id(){	
-	string sql = "SELECT employee_id  FROM user WHERE cookie.user_name = user.login_name AND cookie.password = user.pass_word AND cookie.session_id = ?";
+	string sql = "SELECT employee_id  FROM user  INNER JOIN ON cookie.user_name = user.login_name AND cookie.password = user.pass_word WHERE cookie.session_id = ?";
 	//sql.append(session_id);
 
 	query id_query(*conn, sql);

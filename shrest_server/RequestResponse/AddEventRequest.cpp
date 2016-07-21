@@ -15,7 +15,7 @@
 #include "shrest_utils.h"
 #include "NLTemplate/NLTemplate.h"
 
-#include "contact_activity.h"
+#include "activity_table.h"
 #include "AddEventRequest.h"
 
 using namespace sqlite;
@@ -36,10 +36,10 @@ void AddEventRequest::Process(){
 		std::map<std::string, std::string> m;
 		utils::parse_kye_value(content, m);
 
-		contact_activity c( -1, stoi(m["contact_type"]),stoi( m["contactee"]),stoi( m["contactor"] ), m["create_date"], m["note"]);
-		c.add_contact_activity();
+		activity_table c( -1, stoi(m["contact_type"]),stoi( m["contactee"]),stoi( m["contactor"] ), m["create_date"], m["note"]);
+		c.add_activity_table();
 
-		auto id = c.get_contact_activityId();
+		auto id = c.get_activity_tableId();
 		LoaderFile loader; // Let's use the default loader that loads files from disk.
 
 		Template t( loader );

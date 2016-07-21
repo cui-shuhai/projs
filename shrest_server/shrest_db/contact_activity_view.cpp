@@ -14,7 +14,7 @@
 #include <sqlite/execute.hpp>
 
 #include "shrest_log.h"
-#include "shrest_db/customers_table.h"
+#include "shrest_db/customer_table.h"
 
 contact_activity_view::contact_activity_view():SqlAccessor()
 {

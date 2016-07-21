@@ -10,7 +10,7 @@
 #include "shrest_utils.h"
 #include "NLTemplate/NLTemplate.h"
 
-#include "customers_table.h"
+#include "customer_table.h"
 #include "NewCustomerPost.h"
 
 using namespace std;

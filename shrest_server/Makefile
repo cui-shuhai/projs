@@ -17,14 +17,16 @@ SOURCE=server_instance.cpp \
 	RequestResponse/AddTaskInterface.cpp \
 	RequestResponse/AddTaskRequest.cpp \
 	RequestResponse/ListTaskRequest.cpp \
+	RequestResponse/ListCompaignRequest.cpp \
+	RequestResponse/ListActivityRequest.cpp \
 	RequestResponse/AddUserInterface.cpp \
 	RequestResponse/AddUserRequest.cpp \
 	RequestResponse/LoginRequest.cpp \
 	RequestResponse/SearchContactActivity.cpp \
 	utils/shrest_utils.cpp \
-	shrest_db/customers_table.cpp \
-	shrest_db/contact_activity.cpp \
-	shrest_db/exist_task.cpp \
+	shrest_db/customer_table.cpp \
+	shrest_db/activity_table.cpp \
+	shrest_db/task_table.cpp \
 	shrest_db/cookie_table.cpp \
 	shrest_db/user_table.cpp \
 	shrest_db/compaign_table.cpp \

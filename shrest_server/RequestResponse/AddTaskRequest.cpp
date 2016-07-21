@@ -15,7 +15,7 @@
 #include "shrest_utils.h"
 #include "NLTemplate/NLTemplate.h"
 
-#include "exist_task.h"
+#include "task_table.h"
 #include "AddTaskRequest.h"
 
 using namespace sqlite;
@@ -36,9 +36,9 @@ void AddTaskRequest::Process(){
 		auto content=rq_->content.string();
 		std::map<std::string, std::string> m;
 		utils::parse_kye_value(content, m);
-		exist_task c( 0, m["task_name"], m["due_date"],stoi( m["status"] ), m["description"], stoi(m["assignee"]), stoi(m["assigner"]), stoi(m["creator"]));
-		c.add_exist_task();
-		auto id = c.get_exist_taskId();
+		task_table c( 0, m["task_name"], m["due_date"],stoi( m["status"] ), m["description"], stoi(m["assignee"]), stoi(m["assigner"]), stoi(m["creator"]));
+		c.add_task_table();
+		auto id = c.get_task_tableId();
 
 		LoaderFile loader; // Let's use the default loader that loads files from disk.
 

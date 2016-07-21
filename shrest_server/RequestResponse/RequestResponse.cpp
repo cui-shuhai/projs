@@ -14,7 +14,7 @@
 #include "shrest_utils.h"
 #include "NLTemplate/NLTemplate.h"
 
-#include "customers_table.h"
+#include "customer_table.h"
 #include "user_table.h"
 #include "cookie_table.h"
 #include "compaign_table.h"
