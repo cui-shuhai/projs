@@ -218,8 +218,8 @@ CREATE TABLE 'oppotunity'(
  );
 
 CREATE TABLE 'compaign'(
-	'compaign_id' INTEGER PRIMARY KEY,
-	'compaign_name' varchar(50),
+	'compainge_id' INTEGER PRIMARY KEY,
+	'compainge_name' varchar(50),
 	'assign_to'  INT,
 	'status' varchar(20),
 	'creator_id' INT,

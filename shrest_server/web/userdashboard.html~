@@ -19,7 +19,7 @@
     <td> {{ start_date }} </td> 
     <td> {{ close_date }} </td> 
   </tr>  
-{% endblock compaign_block %}
+{% endblock %}
 </table>
 <br>
 
@@ -42,7 +42,7 @@
     <td> {{ probability }} </td> 
     <td> {{ close_date }} </td> 
   </tr>  
-{% endblock opportinity_block %}
+{% endblock %}
 </table>
 
 	<h2> Activities </h2>
@@ -58,7 +58,7 @@
     <td><a herf =/contact/{{ id }}> {{ contactee }} </a></td> 
     <td> {{ note }} </td> 
   </tr>  
-{% endblock activity_block %}
+{% endblock %}
 </table>
 
 	<h2> Tasks </h2>
@@ -76,7 +76,7 @@
     <td> {{ status }} </td> 
     <td> {{ due_date }} </td> 
   </tr>  
-{% endblock task_block %}
+{% endblock %}
 </table>
 
 {% endblock %}
@@ -84,13 +84,3 @@
 
 {% include web/footer.html %}
  
-CREATE TABLE task( 
-	'task_id' INTEGER PRIMARY KEY,
-	'task_name' varchar(60), 
-	'due_date' Date,
-	'description' varchar(200), 
-	'status' int,
-	'assignee' int, 
-	'assigner' int, 
-	'creator' int
-);
