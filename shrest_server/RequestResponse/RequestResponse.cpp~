@@ -18,6 +18,9 @@
 #include "user_table.h"
 #include "cookie_table.h"
 #include "compaign_table.h"
+#include "task_table.h"
+#include "activity_table.h"
+#include "opportunity_table.h"
 #include "RequestResponse.h"
 
 using namespace sqlite;
@@ -63,8 +66,8 @@ LOG(rq_->method, rq_->path);
 
 		LoaderFile loader; // Let's use the default loader that loads files from disk.
 		Template t( loader );
-		t.load( "web/userdashboard.html"
-		t.block("meat").repeat(1); );
+		t.load( "web/userdashboard.html");
+		t.block("meat").repeat(1); 
 
 		//Compaigns
 		if(true){
@@ -104,14 +107,14 @@ LOG(rq_->method, rq_->path);
 			string opportunity_sql = "SELECT opportunity_name, firstName, lastName, opportunity.contact_id, pipeline, amount, probility, close_date FROM opportunity JOIN contact ON opportunity.contact_id = contact.contact_id WHERE assign_to = ";
 			opportunity_sql.append(to_string(user_id)).append(" ORDER BY piepline");
 		
-			opportunity_table ot;
-			auto ot_query = ot.BuildQuery(compaign_sql);
+			activity_table ot;
+			auto ot_query = ot.BuildQuery(opportunity_sql);
 			auto res = ot_query->emit_result();
 
 			string count_sql = "SELECT count(1) FROM opportunity JOIN contact ON opportunity.contact_id = contact.contact_id WHERE assign_to = ";
 			count_sql.append(to_string(user_id));
 
-			auto count_query = ct.BuildQuery(count_sql);
+			auto count_query = ot.BuildQuery(count_sql);
 			auto count_res = count_query->emit_result();
 			auto rows = count_res->get_int(0);	
 			
@@ -123,12 +126,12 @@ LOG(rq_->method, rq_->path);
 			//all fields must be string
 	 		for ( int i=0; i < rows; i++, res->next_row() ) {
 				block.set("opportunity", res->get_string(0));
-				block.set("id", to_string(res->get_int(4)));
-				block.set("contactee", res->get_string(2) + " " + res->get_string(3));
-				block.set("pipeline", res->get_string(5)); 
-				block.set("amount", to_string(res->get_double(6))); 
-				block.set("probablity", to_string(res->get_int(7)); 
-				block.set("close_date", res->get_string(8));
+				block.set("id", to_string(res->get_int(3)));
+				block.set("contactee", res->get_string(1) + " " + res->get_string(2));
+				block.set("pipeline", res->get_string(4)); 
+				block.set("amount", to_string(res->get_double(5))); 
+				block.set("probablity", to_string(res->get_int(6))); 
+				block.set("close_date", res->get_string(7));
 			}
 		}
 	
@@ -145,7 +148,7 @@ LOG(rq_->method, rq_->path);
 			string count_sql = "SELECT count(1) FROM activity INNER JOIN activity_code ON activity_code.activity_id = activity.contact_type IN JOIN contact ON activity.contact_id = contact.contact_id WHERE activity.who_contacts = ";
 			count_sql.append(to_string(user_id));
 
-			auto count_query = ct.BuildQuery(count_sql);
+			auto count_query = at.BuildQuery(count_sql);
 			auto count_res = count_query->emit_result();
 			auto rows = count_res->get_int(0);	
 			
@@ -157,64 +160,40 @@ LOG(rq_->method, rq_->path);
 			//all fields must be string
 	 		for ( int i=0; i < rows; i++, res->next_row() ) {
 				block.set("activity", res->get_string(0));
-				block.set("id", to_string(res->get_int(4)));
-				block.set("contactee", res->get_string(2) + " " + res->get_string(3));
-				block.set("note", res->get_string(5)); 
+				block.set("id", to_string(res->get_int(3)));
+				block.set("contactee", res->get_string(1) + " " + res->get_string(2));
+				block.set("note", res->get_string(4)); 
 			}
 		}
 
 		//tasks
-
-CREATE TABLE task( 
-	'task_id' INTEGER PRIMARY KEY,
-	'task_name' varchar(60), 
-	'due_date' Date,
-	'description' varchar(200), 
-	'status' int,
-	'assignee' int, 
-	'assigner' int, 
-	'creator' int
-);
-
-CREATE TABLE task_status( 
-	'status_id' int PRIMARY KEY,
-	'description' varchar(20)
-);
-
-{% block task_block %}
-  <tr>
-    <td> {{ task }} </td> 
-    <td> {{ description }} </td> 
-    <td> {{ status }} </td> 
-    <td> {{ due_date }} </td> 
-  </tr>  
 		if(true){
 			string task_sql = "SELECT task_name, task.description, task_status.description, due_date  " 
 " FROM task INNER JOIN task_status ON task.status = task_status.status_id WHERE task.assignee = ";
 			task_sql.append(to_string(user_id)).append("ORDER BY due_date");
 		
-			activity_table at;
-			auto at_query = at.BuildQuery(activity_sql);
-			auto res = at_query->emit_result();
+			task_table tt;
+			auto tt_query = tt.BuildQuery(task_sql);
+			auto res = tt_query->emit_result();
 
-			string count_sql = "SELECT count(1) FROM activity INNER JOIN activity_code ON activity_code.activity_id = activity.contact_type IN JOIN contact ON activity.contact_id = contact.contact_id WHERE activity.who_contacts = ";
+			string count_sql = "SELECT count(1)  FROM task INNER JOIN task_status ON task.status = task_status.status_id WHERE task.assignee = ";
 			count_sql.append(to_string(user_id));
 
-			auto count_query = ct.BuildQuery(count_sql);
+			auto count_query = tt.BuildQuery(count_sql);
 			auto count_res = count_query->emit_result();
 			auto rows = count_res->get_int(0);	
 			
-			t.block("meat")[0].set("activity_num", to_string(rows));
+			t.block("meat")[0].set("task_num", to_string(rows));
 
-			Block & block = t.block( "meat" )[ 0 ].block( "activity_block" );
+			Block & block = t.block( "meat" )[ 0 ].block( "task_block" );
 
 			block.repeat(rows);
 			//all fields must be string
 	 		for ( int i=0; i < rows; i++, res->next_row() ) {
-				block.set("activity", res->get_string(0));
-				block.set("id", to_string(res->get_int(4)));
-				block.set("contactee", res->get_string(2) + " " + res->get_string(3));
-				block.set("note", res->get_string(5)); 
+				block.set("task", res->get_string(0));
+				block.set("description", to_string(1));
+				block.set("status", res->get_string(2));
+				block.set("due_date", res->get_string(3)); 
 			}
 		}
 

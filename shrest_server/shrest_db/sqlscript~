@@ -12,12 +12,15 @@ CREATE TABLE 'user'(
 	'login_name' varchar(32) PRIMARY KEY,
 	'pass_word' char(32),
 	'employee_id'	INT,
-	'role'	char(10),
-	'profile' INT,
+	'role'	char(10) DEFAULT "normal",
+	'profile' char(20) DEFAULT "view",
 	'creator_id' INT,
-	'when' DATE,
+	'when' DATE NOT NULL,
 	FOREIGN KEY(creator_id) REFERENCES employee(employee_id),
-	FOREIGN KEY(employee_id) REFERENCES employee(employee_id));
+	FOREIGN KEY(employee_id) REFERENCES employee(employee_id),
+	CHECK (role IN ("normal", "administor")),
+	CHECK (profile IN ("view", "change"))
+);
 
 CREATE TABLE 'company'(
 	'company_id' INTEGER PRIMARY KEY,
@@ -65,7 +68,7 @@ CREATE TABLE contact(
 	'email' varchar(32),
 	'job_title' varchar(32),
 	'company_id' int ,
-	'when_met' Date,
+	'when_met' Date NOT NULL,
 	'where_met' varchar(100),
 	'birthday' Data,
 	'married' BOOL,
@@ -78,7 +81,7 @@ CREATE TABLE contact(
 
 CREATE TABLE contact(
 	'contact_id' INTEGER PRIMARY KEY,
-	'status' int DEFAULT 1,
+	'status' varchar(20),
 	'firstName' char(20), 
 	'lastName' char(20), 
 	'age' int, 
@@ -96,8 +99,10 @@ CREATE TABLE contact(
 	'married' BOOL,
 	'children' int,
 	'time_zone' char(3),
-	'extra_info' varchar(100)
+	'extra_info' varchar(100),
+	CHECK ( status IN ("Not Attempted", "Attempted", "Contacted", "New Opportunity", "Additional Contact", "Disqualified"))
 );
+
 
 #activities 
 CREATE TABLE activity_code(
@@ -120,14 +125,14 @@ CREATE TABLE activity(
 	'contact_type'  INT,
 	'contact_id' INT,
 	'who_contacts' INT,
-	'when_created' Date,
+	'when_created' Date NOT NULL,
 	'note'	varchar(100),
 	FOREIGN KEY (contact_type)REFERENCES activity_code(activity_id),
 	FOREIGN KEY (contact_id) REFERENCES contact(contact_id),
 	FOREIGN KEY (who_contacts)REFERENCES employee(employee_id)
 );
 
-#lead management status
+/*lead management status*/
 CREATE TABLE contact_status(
 	'status' int PRIMARY KEY,
 	'description' varchar(20),
@@ -145,12 +150,13 @@ INSERT INTO 'contact_status'(status, description, detail)
 CREATE TABLE task( 
 	'task_id' INTEGER PRIMARY KEY,
 	'task_name' varchar(60), 
-	'due_date' Date,
+	'due_date' Date NOT NULL,
 	'description' varchar(200), 
-	'status' int,
+	'status' varchar(20),
 	'assignee' int, 
 	'assigner' int, 
-	'creator' int
+	'creator' int,
+	CHECK( description IN ("Not Assigned", "Assigned", "Finished", "Revoked"))
 );
 
 CREATE TABLE task_status( 
@@ -175,7 +181,7 @@ CREATE TABLE 'order'(
 	'customer_id' int,
 	'product_id' int,
 	'order_amount' decimal(8,2),
-	'date' date,
+	'date' date NOT NULL,
 	'order_status' int
 );
 
@@ -201,25 +207,26 @@ INSERT INTO 'opportunity_pipeline'(pipeline_id, name, description) VALUES
 (8, "Negotiation / Review", " This stage happens towards the end of a pipeline; by the negotiation and review stage you should be hammering out the final details of the deal."),
 (9, "Closed" , "either Closed Won or Closed Lost");
 
-CREATE TABLE 'oppotunity'(
+CREATE TABLE 'opportunity'(
 	'opportunity' INTEGER PRIMARY KEY,
 	'opportunity_name' varchar(50),
 	'assign_to'  INT,
 	'contact_id' INT,
 	'creator_id' INT,
 	'close_date' DATE,
-	'pipeline' INT,
+	'pipeline' varchar(20),
 	'amount' decimal(8,2),
 	'probability' INT,
 	FOREIGN KEY(assign_to) REFERENCES employee(employee_id),
 	FOREIGN KEY(contact_id) REFERENCES contact(contact_id),
 	FOREIGN KEY(creator_id) REFERENCES employee(employee_id),
-	FOREIGN KEY(pipeline) REFERENCES opportunity_pipeline(pipeline_id)
+	FOREIGN KEY(pipeline) REFERENCES opportunity_pipeline(pipeline_id),
+	CHECK (pipeline IN ("Prospecting","Qualification", "Needs Analysis","Value Proposition","Identify Decision Makers","Perception Analysis","Proposal / Price Quote","Negotiation / Review", "Closed"))
  );
 
 CREATE TABLE 'compaign'(
-	'compainge_id' INTEGER PRIMARY KEY,
-	'compainge_name' varchar(50),
+	'compaign_id' INTEGER PRIMARY KEY,
+	'compaign_name' varchar(50),
 	'assign_to'  INT,
 	'status' varchar(20),
 	'creator_id' INT,
@@ -230,4 +237,26 @@ CREATE TABLE 'compaign'(
 	FOREIGN KEY(creator_id) REFERENCES employee(employee_id)
 );
 	
-
+CREATE TABLE 'case'(
+	'case_id' INTEGER PRIMARY KEY,
+	'assign_to' INT,
+	'contactee' INT,
+	'subject' varchar(100),
+	'priority' char(10),
+	'last_activity' DATE,
+	'next_activity' DATE,
+	FOREIGN KEY(assign_to) REFERENCES employee(employee_id),
+	FOREIGN KEY(contactee) REFERENCES contact(contact_id),
+ 	CHECK( priority IN ("low", "medium", "high")
+);
+/*
+Case #: This number is automatically generated in an ascending order each time you create a case in Method. You can search and order the grid using these numbers.
+Created date: The date a case was created.
+Assigned to/Origin/Status: This three-part grid header will identify which Method user a case was assigned to, where the case originated, and the status of the case (see New case for more details on all of this).
+Contact/Name/Company: This section will list the contact, name, and company associated with this case based in the information that was provided in the case information.
+Subject: This will detail the subject line that was filled in when the case was created.
+Priority: Priorities, much like in activities, can be set to three levels out-of-the-box in Method: low, medium, and high.
+Internal comments: This will display any pertinent comments you have included regarding this case.
+Last activity: This will identify the date the last activity was due to for this case.
+Next activity: This will identify the date the next activity is due for this case.
+*/

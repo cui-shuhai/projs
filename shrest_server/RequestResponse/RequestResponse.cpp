@@ -104,7 +104,7 @@ LOG(rq_->method, rq_->path);
 	
 		//Opportunities
 		if(true){
-			string opportunity_sql = "SELECT opportunity_name, firstName, lastName, opportunity.contact_id, pipeline, amount, probility, close_date FROM opportunity JOIN contact ON opportunity.contact_id = contact.contact_id WHERE assign_to = ";
+			string opportunity_sql = "SELECT opportunity_name, firstName, lastName, opportunity.contact_id, pipeline, amount, probability, close_date FROM opportunity JOIN contact ON opportunity.contact_id = contact.contact_id WHERE assign_to = ";
 			opportunity_sql.append(to_string(user_id)).append(" ORDER BY piepline");
 		
 			activity_table ot;
