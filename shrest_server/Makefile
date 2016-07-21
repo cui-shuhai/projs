@@ -17,6 +17,8 @@ SOURCE=server_instance.cpp \
 	RequestResponse/AddTaskInterface.cpp \
 	RequestResponse/AddTaskRequest.cpp \
 	RequestResponse/ListTaskRequest.cpp \
+	RequestResponse/AddUserInterface.cpp \
+	RequestResponse/AddUserRequest.cpp \
 	RequestResponse/LoginRequest.cpp \
 	RequestResponse/SearchContactActivity.cpp \
 	utils/shrest_utils.cpp \
@@ -24,7 +26,9 @@ SOURCE=server_instance.cpp \
 	shrest_db/contact_activity.cpp \
 	shrest_db/exist_task.cpp \
 	shrest_db/cookie_table.cpp \
-	shrest_db/mysqlite.cpp
+	shrest_db/user_table.cpp \
+	shrest_db/SqlAccessor.cpp \
+	shrest_db/SqlAccessorFactory.cpp
 
 MYPROGRAM=crm_server
 

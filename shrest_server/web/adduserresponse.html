@@ -1,0 +1,18 @@
+{% include web/header.html %}
+
+{% block meat %}
+
+Task ID: {{ task_id }} <br>
+Task: {{ task_name }} <br>
+Due: {{ due_date }} <br>
+Status: {{ status }}<br>
+Description: {{ description }} <br>
+Assign to: {{ assignee }} <br>
+Assigned by: {{ assigner }} <br>
+Created by: {{ creator }} <br>
+
+{% endblock %}
+
+
+{% include web/footer.html %}
+ 

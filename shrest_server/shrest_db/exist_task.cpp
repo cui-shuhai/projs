@@ -16,12 +16,12 @@
 #include "shrest_log.h"
 #include "shrest_db/exist_task.h"
 
-exist_task::exist_task():mysqlite()
+exist_task::exist_task():SqlAccessor()
 {
 }
 
 exist_task::exist_task(int task_id_, string task_name_, string due_date_, int status_, string description_, int assignee_, int assigner_, int creator_):
-	mysqlite(),
+	SqlAccessor(),
 	 task_id{task_id_},
 	 task_name{task_name_},
 	 due_date{due_date_},

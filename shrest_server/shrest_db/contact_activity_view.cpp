@@ -16,7 +16,7 @@
 #include "shrest_log.h"
 #include "shrest_db/customers_table.h"
 
-contact_activity_view::contact_activity_view():mysqlite()
+contact_activity_view::contact_activity_view():SqlAccessor()
 {
 }
 

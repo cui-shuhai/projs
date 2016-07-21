@@ -46,7 +46,7 @@ void SearchContactActivity::Process(){
 	
 		stringstream cs;
 
-		mysqlite c;
+		SqlAccessor c;
 
 
 	//there is an error from sqlite library, query get_row_count fails (return 0)

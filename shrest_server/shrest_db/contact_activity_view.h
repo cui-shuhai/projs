@@ -4,10 +4,10 @@
 #include <stdlib.h>
 #include <iostream>
 
-#include "mysqlite.h"
+#include "SqlAccessor.h"
 
 using namespace std;
-class contact_activity_view : public mysqlite{
+class contact_activity_view : public SqlAccessor{
 
 public:
 	typedef struct{

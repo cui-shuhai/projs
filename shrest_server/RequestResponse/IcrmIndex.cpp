@@ -34,10 +34,10 @@ void IcrmIndex::Process(){
 		if(!cookies.empty()){
 			string key;
 			if(GetSession(key)){
-				cookie_table ct;
-				string user{};
-				string password{};
-				ct.get_cookie_user(key, user, password);
+				cookie_table ct{key};
+				ct.get_cookie_user();
+				string user = ct.get_user_name();
+				string password = ct.get_pass_word();
 				CreateDashboard(user, password);
 				LOG("find key for user", user);
 				return;

@@ -15,6 +15,7 @@
 #include "AddTaskInterface.h"
 #include "AddTaskRequest.h"
 #include "ListTaskRequest.h"
+#include "LoginRequest.h"
 #include "SearchContactActivity.h"
 #include "RequestResponseFactory.h"
 

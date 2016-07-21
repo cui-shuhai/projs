@@ -23,7 +23,6 @@ using namespace std;
 using namespace NL::Template;
 
 using namespace boost::property_tree;
-
 LoginRequest::LoginRequest(HttpServer::Response &rs, ShRequest rq): RequestResponse(rs, rq){
 }
 /*parse customer information and put into database*/
@@ -36,6 +35,16 @@ void LoginRequest::Process(){
 		std::map<std::string, std::string> m;
 		utils::parse_kye_value(content, m);
 
+		//check if existing user
+		user_table ut(m["username"]);
+		ut.set_pass_word(m["password"]);
+		if(!ut.check_login_exist()){
+
+			rs_<< "User: " <<  m["username"] << " not exist" << endl;
+			rs_.flush();
+			return;
+		}
+
 		auto sessionId = utils::create_uuid();
 
 		cookie_table ct(sessionId, m["username"], m["password"]);
@@ -46,7 +55,7 @@ void LoginRequest::Process(){
 		cookie.append(sessionId).append("\r\n\r\n");
 		rs_<< cookie;
 
-		//XXX CreateDashboard(m["username"], m["password"]);		
+		CreateDashboard(m["username"], m["password"]);		
 	}
 	catch(exception& e) {
 		rs_ << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n" << e.what();

@@ -4,10 +4,10 @@
 #include <stdlib.h>
 #include <iostream>
 
-#include "mysqlite.h"
+#include "SqlAccessor.h"
 
 using namespace std;
-class Customer : public mysqlite{
+class Customer : public SqlAccessor{
 
 public:
 	Customer();

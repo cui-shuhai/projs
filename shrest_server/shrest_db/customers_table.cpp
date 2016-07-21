@@ -16,12 +16,12 @@
 #include "shrest_log.h"
 #include "shrest_db/customers_table.h"
 
-Customer::Customer():mysqlite()
+Customer::Customer():SqlAccessor()
 {
 }
 
 Customer::Customer(int id, string firstName, string lastName, int age, string phone, string address):
-	mysqlite(),
+	SqlAccessor(),
 	id_{id},
 	firstName_{firstName},
 	lastName_{lastName},

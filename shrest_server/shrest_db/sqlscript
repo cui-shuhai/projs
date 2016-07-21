@@ -1,3 +1,24 @@
+/*In the Add New User page, enter the following details:
+First Name & Last Name - It is mandatory to enter the Last Name.
+Email - Enter the user's valid email address that is not already used to create a Zoho CRM account.
+An invitation will be sent to this email address.
+Role- Choose the role of the user in your organization.
+Profile - Choose a profile that defines the access rights in CRM account for the user.
+You can add other details like phone numbers, address, photo, fax, website, date of birth, language, etc. after adding the user.
+user must be employee, if not, give it a dumy id like customer department, verdor part etc
+
+*/
+CREATE TABLE 'user'(
+	'login_name' varchar(32) PRIMARY KEY,
+	'pass_word' char(32),
+	'employee_id'	INT,
+	'role'	char(10),
+	'profile' INT,
+	'creator_id' INT,
+	'when' DATE,
+	FOREIGN KEY(creator_id) REFERENCES employee(employee_id),
+	FOREIGN KEY(employee_id) REFERENCES employee(employee_id));
+
 CREATE TABLE 'company'(
 	'company_id' INTEGER PRIMARY KEY,
 	'name'	varchar(100), 
@@ -15,7 +36,7 @@ CREATE TABLE 'company'(
 	'payment_terms'	INT);
 
 CREATE TABLE employee(
-	'employee_id' int PRIMARY KEY,
+	'employee_id' INTEGER PRIMARY KEY,
 	'firstName' char(20), 
 	'lastName' char(20), 
 	'age' int, 
@@ -94,7 +115,7 @@ INSERT INTO 'activity_code'(activity_id, description) VAlUES
 
 
 
-CREATE TABLE activity_event(
+CREATE TABLE activity(
 	'event_id'  INTEGER  PRIMARY KEY,
 	'contact_type'  INT,
 	'contact_id' INT,
@@ -164,4 +185,49 @@ CREATE TABLE 'cookie'(
 	'password' varchar(32)
 );
 
+CREATE TABLE 'opportunity_pipeline'(
+	'pipeline_id' INT PRIMARY KEY,
+	'name'  varchar(20),
+	'description' varchar(100));
+
+INSERT INTO 'opportunity_pipeline'(pipeline_id, name, description) VALUES
+(1, "Prospecting", "The first step in locating new opportunities, prospecting means \“testing the waters\” with a potential customer and measuring a level of interest."),
+(2, "Qualification", " This involves evaluating the lead or customer based on a variety of criteria, including how interested they are, how likely they are to purchase, and how long the process might take."),
+(3, "Needs Analysis", " Analyzing needs means determining what the need is in a target company and deciding whether or not your company can fulfill those needs using your product or service."),
+(4, "Value Proposition", " This step involves understanding the relationship between the value of your product or service and the value it represents to a potential or current customer."),
+(5, "Identify Decision Makers", " Identifying decision makers means determining who at a company is the person with the power to make purchasing decisions, and beginning to develop a relationship with them."),
+(6, "Perception Analysis", " This stage involves determining how a customer perceives the services or products you offer; what they expect from your company and the product or service you offer."),
+(7, "Proposal / Price Quote", " This happens later on in the pipeline - quoting a price and creating a proposal happens once the lead is interested enough to pursue this potential, but may want to confirm pricing and compare quotes with other companies."),
+(8, "Negotiation / Review", " This stage happens towards the end of a pipeline; by the negotiation and review stage you should be hammering out the final details of the deal."),
+(9, "Closed" , "either Closed Won or Closed Lost");
+
+CREATE TABLE 'oppotunity'(
+	'opportunity' INTEGER PRIMARY KEY,
+	'opportunity_name' varchar(50),
+	'assign_to'  INT,
+	'contact_id' INT,
+	'creator_id' INT,
+	'close_date' DATE,
+	'pipeline' INT,
+	'amount' decimal(8,2),
+	'probability' INT,
+	FOREIGN KEY(assign_to) REFERENCES employee(employee_id),
+	FOREIGN KEY(contact_id) REFERENCES contact(contact_id),
+	FOREIGN KEY(creator_id) REFERENCES employee(employee_id),
+	FOREIGN KEY(pipeline) REFERENCES opportunity_pipeline(pipeline_id)
+ );
+
+CREATE TABLE 'compaign'(
+	'compainge_id' INTEGER PRIMARY KEY,
+	'compainge_name' varchar(50),
+	'assign_to'  INT,
+	'status' varchar(20),
+	'creator_id' INT,
+	'start_date' DATE,
+	'close_date' DATE,
+	'description' varchar(100),
+	FOREIGN KEY(assign_to) REFERENCES employee(employee_id),
+	FOREIGN KEY(creator_id) REFERENCES employee(employee_id)
+);
+	
 

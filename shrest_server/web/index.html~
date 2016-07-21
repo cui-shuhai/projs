@@ -15,8 +15,13 @@
 	    <li><a href="/">customization</a></li>
 	    <li><a href="/">smart automation</a></li>
 	    <li><a href="/">intelligent help</a></li>
+	    <li><a href="/">createuser</a>Create User</li>
 	  </ul>
 
+1. User Login --<br>
+2. Check existing user --<br>
+3. Create DashBoard --<br>
+4. Go to working page --<br>
 
 Analytics<br><p>
 Data is only valuable if you have the ability to refine it into something actionable. Your CRM needs to be able to do more than simply gather and store massive amounts of information; it needs to be able to mine that information, analyze it, and quickly present clear and understandable conclusions that can be used to inform future business decisions.</p>
@@ -59,7 +64,15 @@ Use the Gmail API to add Gmail features to your app. RESTful access to threads, 
 
 
 </p>
-
+<p>Users of crm <br>
+In the Add New User page, enter the following details:
+First Name & Last Name - It is mandatory to enter the Last Name.
+Email - Enter the user's valid email address that is not already used to create a Zoho CRM account.
+An invitation will be sent to this email address.
+Role- Choose the role of the user in your organization.
+Profile - Choose a profile that defines the access rights in Zoho CRM account for the user.
+You can add other details like phone numbers, address, photo, fax, website, date of birth, language, etc. after adding the user.
+</p>
 
 
 {% endblock %}

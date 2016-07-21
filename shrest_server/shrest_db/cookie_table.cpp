@@ -16,20 +16,22 @@
 #include "shrest_log.h"
 #include "shrest_db/cookie_table.h"
 
-cookie_table::cookie_table():mysqlite()
-{
-}
+cookie_table::cookie_table():SqlAccessor()
+{}
 
-cookie_table::cookie_table(string sessionId, string username, string password):
-	mysqlite(),
+cookie_table::cookie_table(const string& sessionId):
+	SqlAccessor(),
+	 session_id{sessionId}
+{}
+
+cookie_table::cookie_table(const string& sessionId, const string& username, const string& password):
+	SqlAccessor(),
 	 session_id{sessionId},
 	 user_name{username},
 	 pass_word{password}
-{
-}
+{}
 
-cookie_table::~cookie_table(){
-}
+cookie_table::~cookie_table(){}
 
 void cookie_table::add_cookie_table(){
 
@@ -42,15 +44,29 @@ void cookie_table::add_cookie_table(){
 	c.emit();
 }
 
-bool cookie_table::get_cookie_user(const string & session, string &user, string &password)
-{	
+bool cookie_table::get_cookie_user()
+{
 		
-	string sql = "user_name, password FROM cookie where session_id == ";
-	sql.append(session);
+	string sql = "SELECT user_name, password FROM cookie where session_id = '";
+	//string sql = "SELECT user_name, password FROM cookie where session_id = '";
+	sql.append(session_id).append("'");
 
 	query cookie_query(*conn, sql);
+	//cookie_query.bind(1, session_id);
 
 	auto res = cookie_query.emit_result();
-	user = res->get_string(0);
-	password = res->get_string(1);		
+	user_name = res->get_string(0);
+	pass_word = res->get_string(1);		
 }
+	
+int cookie_table::get_user_id(){	
+	string sql = "SELECT employee_id  FROM user WHERE cookie.user_name = user.login_name AND cookie.password = user.pass_word AND cookie.session_id = ?";
+	//sql.append(session_id);
+
+	query id_query(*conn, sql);
+	id_query.bind(1, session_id);
+
+	auto res = id_query.emit_result();
+	return res->get_int(0);
+}
+

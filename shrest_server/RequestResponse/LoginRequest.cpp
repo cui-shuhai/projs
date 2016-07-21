@@ -16,6 +16,7 @@
 #include "NLTemplate/NLTemplate.h"
 
 #include "cookie_table.h"
+#include "user_table.h"
 #include "LoginRequest.h"
 
 using namespace sqlite;
@@ -23,7 +24,6 @@ using namespace std;
 using namespace NL::Template;
 
 using namespace boost::property_tree;
-
 LoginRequest::LoginRequest(HttpServer::Response &rs, ShRequest rq): RequestResponse(rs, rq){
 }
 /*parse customer information and put into database*/
@@ -35,6 +35,16 @@ void LoginRequest::Process(){
 		auto content=rq_->content.string();
 		std::map<std::string, std::string> m;
 		utils::parse_kye_value(content, m);
+
+		//check if existing user
+		user_table ut(m["username"]);
+		ut.set_pass_word(m["password"]);
+		if(!ut.check_login_exist()){
+
+			rs_<< "User: " <<  m["username"] << " not exist" << endl;
+			rs_.flush();
+			return;
+		}
 
 		auto sessionId = utils::create_uuid();
 

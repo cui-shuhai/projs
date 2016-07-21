@@ -16,12 +16,12 @@
 #include "shrest_log.h"
 #include "shrest_db/contact_activity.h"
 
-contact_activity::contact_activity():mysqlite()
+contact_activity::contact_activity():SqlAccessor()
 {
 }
 
 contact_activity::contact_activity(int id, int contactType, int contactId, int contacter, const string& date, const string& content):
-	mysqlite(),
+	SqlAccessor(),
 	event_id{id},
 	contact_type{contactType},
 	contact_id{contactId},

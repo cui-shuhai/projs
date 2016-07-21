@@ -14,6 +14,8 @@
 #include "AddTransactionRequest.h"
 #include "AddTaskInterface.h"
 #include "AddTaskRequest.h"
+#include "AddUserInterface.h"
+#include "AddUserRequest.h"
 #include "ListTaskRequest.h"
 #include "LoginRequest.h"
 #include "SearchContactActivity.h"

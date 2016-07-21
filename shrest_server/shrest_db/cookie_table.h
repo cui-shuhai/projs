@@ -4,18 +4,24 @@
 #include <stdlib.h>
 #include <iostream>
 
-#include "mysqlite.h"
+#include "SqlAccessor.h"
 
 using namespace std;
-class cookie_table : public mysqlite{
+class cookie_table : public SqlAccessor{
 
 public:
 	cookie_table();
-	cookie_table(string sessionId, string username, string password);
+	cookie_table(const string& sessionId);
+	cookie_table(const string& sessionId, const string& username, const string& password);
 	~cookie_table();
 	
 	void add_cookie_table();
-	bool get_cookie_user(const string & session, string &user, string &password);
+	bool get_cookie_user();
+	int get_user_id();
+
+	string  get_session_id() { return session_id;}
+	string  get_user_name() { return user_name;}
+	string  get_pass_word() { return pass_word;}
 
 private:
 	string session_id;

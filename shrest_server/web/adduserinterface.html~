@@ -1,0 +1,26 @@
+{% include web/header.html %}
+
+{% block meat %}
+
+<form action="adduserrequest" method="post">
+	  <fieldset>
+	    <legend></legend>
+	    New User:<br>
+	    <input type="text" name="login_name" value=""><br>
+	    Password:<br>
+	    <input type="text" name="pass_word" value=""><br>
+	    User ID:<br>
+	    <input type="text" name="employee_id" value="Mouse"><br><br>
+	    Status:<br>
+	    <input type="text" name="role" value="1"><br><br>
+	    Description:<br>
+	    <input type="text" name="profile" value=""><br><br>
+	    <input type="submit" value="Submit">
+	  </fieldset>
+</form>
+
+{% endblock %}
+
+
+{% include web/footer.html %}
+  

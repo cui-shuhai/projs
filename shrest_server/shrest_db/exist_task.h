@@ -4,10 +4,10 @@
 #include <stdlib.h>
 #include <iostream>
 
-#include "mysqlite.h"
+#include "SqlAccessor.h"
 
 using namespace std;
-class exist_task : public mysqlite{
+class exist_task : public SqlAccessor{
 
 public:
 	exist_task();
