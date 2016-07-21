@@ -1,9 +1,9 @@
 
-
+#include <string>
 #define BOOST_SPIRIT_THREADSAFE
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
-#include <boost/regex.hpp>//g++4.8 regex implementation has some errors but fixed fin 4.9
+#include <boost/regex.hpp>//g++4.8 regex implementation has some errors but fixed in 4.9
 
 #include <sqlite/transaction.hpp>
 #include <sqlite/connection.hpp>
@@ -16,6 +16,8 @@
 
 #include "customers_table.h"
 #include "user_table.h"
+#include "cookie_table.h"
+#include "compaign_table.h"
 #include "RequestResponse.h"
 
 using namespace sqlite;
@@ -44,7 +46,6 @@ bool RequestResponse::GetSession(std::string& session){
 	return false;
 }
 
-
 void RequestResponse::CreateDashboard(const string & username, const string password){
 
 LOG(rq_->method, rq_->path);
@@ -52,29 +53,30 @@ LOG(rq_->method, rq_->path);
 	try {
 		
 		//check list of tables to show progress, what to do
-		//compaings, opportunities, activities, 
+		//compaigns, opportunities, activities, 
+		string key;
+		GetSession(key);
+
+		cookie_table ckt(key);
+		auto user_id = ckt.get_user_id();
+
+		string compaign_sql = "SELECT compaingn_name, status, start_date, close_date, description FRROM compaign WHERE assign_to = ";
+		compaign_sql.append(to_string(user_id)).append(" ORDER BY sttus");
 		
-		Customer c;
+		compaign_table ct;
+		auto cp_query = ct.BuildQuery(compaign_sql);
+		auto cp_result = cp_query->emit_result();
 
-		stringstream cs;
-		
-		auto sql = "SELECT id_, firstName, lastName, age, phone, address FROM customer";
+		auto rows = cp_result->get_row_count();
 
-	//there is an error from sqlite library, query get_row_count fails (return 0)
-		auto count_sql = "SELECT count(*) FROM customer";
-		auto count_query = c.BuildQuery(count_sql);
-		auto count_res = count_query->emit_result();
-		auto rows = count_res->get_int(0);
-
-		auto customer_query = c.BuildQuery(sql);
-
-		result_type res =  customer_query->emit_result();
-		
 		LoaderFile loader; // Let's use the default loader that loads files from disk.
 		Template t( loader );
 		t.load( "web/userdashboard.html" );
 
+
+		stringstream cs;
 		
+		/*
 		t.block("meat").repeat(rows);
 
 		//all fields must be string
@@ -90,7 +92,7 @@ LOG(rq_->method, rq_->path);
 
 		}
 
-
+*/
 		t.render( cs ); // Render the template with the variables we've set above
  
 		

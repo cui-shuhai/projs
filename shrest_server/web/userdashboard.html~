@@ -84,3 +84,13 @@
 
 {% include web/footer.html %}
  
+CREATE TABLE task( 
+	'task_id' INTEGER PRIMARY KEY,
+	'task_name' varchar(60), 
+	'due_date' Date,
+	'description' varchar(200), 
+	'status' int,
+	'assignee' int, 
+	'assigner' int, 
+	'creator' int
+);

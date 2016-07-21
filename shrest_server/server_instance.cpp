@@ -77,6 +77,22 @@ int main() {
     };
 	LOG("Adding [newcustomer, POST] API");
 	
+    //AddCustomerGet to test Template
+     server.resource["^/adduser$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("AddUserInterface", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [adduser, GET] API");
+
+    //NewCustomerPost to connecting to mysql
+     server.resource["^/adduserrequest$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("AddUserRequest", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [adduserrequest, POST] API");
+	
       //List all customers
      server.resource["^/listcustomer$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
 
