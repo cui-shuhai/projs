@@ -51,8 +51,11 @@ CREATE TABLE employee(
 	'job_title' int,
 	'department_id' int,
 	'reports_to' int,
+	'create_date' DATE,
+	'created_by' int,
 	FOREIGN KEY(job_title) REFERENCES employee_title(title_id),
-	FOREIGN KEY(department_id) REFERENCES employee_title(department_id)
+	FOREIGN KEY(department_id) REFERENCES employee_title(department_id),
+	FOREIGN KEY(created_by) REFERENCES employee(employee_id)
 );
 
 CREATE TABLE employee_title(

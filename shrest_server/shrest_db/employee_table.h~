@@ -15,7 +15,7 @@ public:
 	employee_table(int employee_id, string firstName, string lastName, 
 			int age, string address, string mobile_phone,
 			string office_phone, string home_phone, string email, 
-			int job_title, int department_id, int reports_to, string create_date, int created_by);
+			int job_title, int department_id, int reports_to);
 
 	~employee_table();
 	
@@ -36,7 +36,6 @@ private:
 	int job_title;
 	int department_id;
 	int reports_to;
-	string create_date;
-	int created_by;
 };
+
 

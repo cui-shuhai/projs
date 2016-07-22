@@ -105,12 +105,14 @@ void AddEmployeeInterface::Process(){
 			Block & block = t.block( "meat" )[ 0 ].block( "ages" );
 
 			block.repeat(80 - 16);
+			const int count = 60;
+			block.repeat(count);
 
 			int i = 0;
 
-			for(int i = 16; i< 80; ++i){
-				block[i].set("age_value", to_string(i));
-				block[i].set("age_show", to_string(i));
+			for(int i = 0; i< count; ++i){
+				block[i].set("age_value", to_string(i + 16));
+				block[i].set("age_show", to_string(i + 16));
 			}
 		}
 		t.render( cs ); // Render the template with the variables we've set above

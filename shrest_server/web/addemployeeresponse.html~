@@ -1,0 +1,25 @@
+{% include web/header.html %}
+
+<h3>Created Employee:</h3>
+{% block meat %}
+
+Employee ID : {{ task_id }} <br>
+First Name: {{ task_id }} <br>
+Last Name: {{ task_name }} <br>
+Title: {{ due_date }} <br>
+Department: {{ status }}<br>
+Report to: {{ description }} <br>
+Age: {{ assignee }} <br>
+Address: {{ assigner }} <br>
+Mobile: {{ assigner }} <br>
+Office Phone: {{ assigner }} <br>
+Home Phone: {{ assigner }} <br>
+Email: {{ assigner }} <br>
+Created by: {{ creator }} <br>
+
+{% endblock %}
+
+
+{% include web/footer.html %}
+ 
+

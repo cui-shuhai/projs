@@ -52,8 +52,9 @@ void AddEmployeeInterface::Process(){
 			int i = 0;
 
 			for(const auto & v : titles){
-				block.set("title_value", to_string(v.first));
-				block.set("title_show", v.second);
+				block[i].set("title_value", to_string(v.first));
+				block[i].set("title_show", v.second);
+				++i;
 			}
 		}
 
@@ -70,8 +71,9 @@ void AddEmployeeInterface::Process(){
 			int i = 0;
 
 			for(const auto & v : departments){
-				block.set("department_value", to_string(v.first));
-				block.set("department_show", v.second);
+				block[i].set("department_value", to_string(v.first));
+				block[i].set("department_show", v.second);
+				++i;
 			}
 		}
 
@@ -89,9 +91,11 @@ void AddEmployeeInterface::Process(){
 			int i = 0;
 
 			for(const auto & v : report_tos){
-				block.set("report_to_value", to_string(v.first));
-				block.set("report_to_show", v.second);
+				block[i].set("report_to_value", to_string(v.first));
+				block[i].set("report_to_show", v.second);
+				++i;
 			}
+
 		}
 
 
@@ -101,12 +105,14 @@ void AddEmployeeInterface::Process(){
 			Block & block = t.block( "meat" )[ 0 ].block( "ages" );
 
 			block.repeat(80 - 16);
+			const int count = 60;
+			block.repeat(count);
 
 			int i = 0;
 
-			for(int i = 16; i< 80; ++i){
-				block.set("age_value", to_string(i));
-				block.set("age_show", to_string(i));
+			for(int i = 0; i< count; ++i){
+				block[i].set("age_value", to_string(i + 16));
+				block[i].set("age_show", to_string(i + 16));
 			}
 		}
 		t.render( cs ); // Render the template with the variables we've set above

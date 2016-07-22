@@ -54,7 +54,7 @@ void AddEmployeeRequest::Process(){
 		employee_table e( -1, m["first_name"], m["last_name"],
 				 stoi( m["age"] ), m["address"], m["mobile_phone"],
 				 m["office_phone"], m["home_phone"], m["email"], 
-				 stoi(m["job_title"]), stoi(m["department"]), stoi(m["report_to"]), utils::get_date(), uid);
+				 stoi(m["job_title"]), stoi(m["department"]), stoi(m["report_to"]), utils::get_date(), uid,);
 		
 		e.add_employee_table();
 

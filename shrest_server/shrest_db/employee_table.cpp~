@@ -35,7 +35,7 @@ employee_table::employee_table(int employee_id_, string firstName_, string lastN
 	department_id{department_id_},
 	reports_to{reports_to_},
 	create_date{create_date_},
-	created_by{created_by_}
+	created{by_created_by_}
 {
 }
 
