@@ -76,7 +76,7 @@ void ListActivityRequest::Process(){
  
 		
 		cs.seekp(0, ios::end);
-		rs_ <<  cs.rdbuf();
+			rs_ <<  cs.rdbuf();
 		rs_.flush();
 		
 	}

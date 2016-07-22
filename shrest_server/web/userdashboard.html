@@ -2,7 +2,7 @@
 
 {% block meat %}
 
-	<h2> There are {{ compaign_num }}  compaigns </h2>
+	<h3> There are {{ compaign_num }}  compaigns </h3>
 <table style="width:100%">
   <tr>
     <th>Compaign</th>
@@ -24,7 +24,7 @@
 <br>
 
 
-	<h2> {{ opportunity_num }} Opportinties </h2>
+	<h3> {{ opportunity_num }} Opportinties </h3>
 <table style="width:100%">
   <tr>
     <th>Opportinity</th>
@@ -46,7 +46,7 @@
 {% endblock %}
 </table>
 
-	<h2> {{ activity_num }} Activities </h2>
+	<h3> {{ activity_num }} Activities </h3>
 <table style="width:100%">
   <tr>
     <th>Activity</th>
@@ -62,10 +62,10 @@
 {% endblock %}
 </table>
 
-	<h2> Tasks </h2>
+	<h3> {{ task_num }} Tasks </h3>
 <table style="width:100%">
   <tr>
-    <th> {{ task_num }} Taskes:</th>
+    <th> Taske</th>
     <th>Description</th> 
     <th>Status</th>
     <th>Due Date</th>
@@ -81,7 +81,6 @@
 </table>
 
 {% endblock %}
-
 
 {% include web/footer.html %}
  

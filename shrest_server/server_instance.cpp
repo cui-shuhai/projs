@@ -93,6 +93,22 @@ int main() {
     };
 	LOG("Adding [adduserrequest, POST] API");
 	
+    //AddCustomerGet to test Template
+     server.resource["^/addemployee$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("AddEmployeeInterface", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [addemployee, GET] API");
+
+    //NewCustomerPost to connecting to mysql
+     server.resource["^/addemployeerequest$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("AddEmployeeRequest", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [addemployeerequest, POST] API");
+	
       //List all customers
      server.resource["^/listcustomer$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
 

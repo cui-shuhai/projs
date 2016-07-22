@@ -48,11 +48,34 @@ CREATE TABLE employee(
 	'office_phone' char(20),  
 	'home_phone' char(20), 
 	'email' varchar(32),
-	'job_title' varchar(32),
+	'job_title' int,
 	'department_id' int,
-	'reports_to' int  nvarchar(100)
+	'reports_to' int,
+	FOREIGN KEY(job_title) REFERENCES employee_title(title_id),
+	FOREIGN KEY(department_id) REFERENCES employee_title(department_id)
 );
 
+CREATE TABLE employee_title(
+	'title_id' INT PRIMARY KEY,
+	'name' char(20) NOT NULL, 
+	'description' char(20) NOT NULL
+);
+
+INSERT INTO 'employee_title'( title_id, name, description ) VALUES
+(1, "regular", "without stuff management reponsibilities"),
+(2, "manager", "manages other people");
+
+
+CREATE TABLE employee_department(
+	'department_id' INT PRIMARY KEY,
+	'name' char(20), 
+	'description' char(20)
+);
+
+INSERT INTO 'employee_department'( department_id, name, description ) VALUES
+(1, "sales", "selling prodcts"),
+(2, "marketing", "markegint products"),
+(3, "development", "development products");
 
 CREATE TABLE contact(
 	'contact_id' INTEGER PRIMARY KEY,
@@ -118,8 +141,6 @@ INSERT INTO 'activity_code'(activity_id, description) VAlUES
 	(6, "contact_sell"),
 	(7, "support_contact");
 
-
-
 CREATE TABLE activity(
 	'event_id'  INTEGER  PRIMARY KEY,
 	'contact_type'  INT,
@@ -130,6 +151,7 @@ CREATE TABLE activity(
 	FOREIGN KEY (contact_type)REFERENCES activity_code(activity_id),
 	FOREIGN KEY (contact_id) REFERENCES contact(contact_id),
 	FOREIGN KEY (who_contacts)REFERENCES employee(employee_id)
+
 );
 
 /*lead management status*/
@@ -224,6 +246,12 @@ CREATE TABLE 'opportunity'(
 	CHECK (pipeline IN ("Prospecting","Qualification", "Needs Analysis","Value Proposition","Identify Decision Makers","Perception Analysis","Proposal / Price Quote","Negotiation / Review", "Closed"))
  );
 
+CREATE TABLE 'compaign_status'(
+	'status_id' INTEGER,
+	'status_name' varchar(20),
+	'description'  varchar(50)
+);
+	
 CREATE TABLE 'compaign'(
 	'compaign_id' INTEGER PRIMARY KEY,
 	'compaign_name' varchar(50),
@@ -234,7 +262,8 @@ CREATE TABLE 'compaign'(
 	'close_date' DATE,
 	'description' varchar(100),
 	FOREIGN KEY(assign_to) REFERENCES employee(employee_id),
-	FOREIGN KEY(creator_id) REFERENCES employee(employee_id)
+	FOREIGN KEY(creator_id) REFERENCES employee(employee_id),
+	CHECK (status IN ("XXX", "YYY" ))
 );
 	
 CREATE TABLE 'case'(

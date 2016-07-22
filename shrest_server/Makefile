@@ -21,6 +21,8 @@ SOURCE=server_instance.cpp \
 	RequestResponse/ListActivityRequest.cpp \
 	RequestResponse/AddUserInterface.cpp \
 	RequestResponse/AddUserRequest.cpp \
+	RequestResponse/AddEmployeeInterface.cpp \
+	RequestResponse/AddEmployeeRequest.cpp \
 	RequestResponse/LoginRequest.cpp \
 	RequestResponse/SearchContactActivity.cpp \
 	utils/shrest_utils.cpp \
@@ -29,6 +31,9 @@ SOURCE=server_instance.cpp \
 	shrest_db/task_table.cpp \
 	shrest_db/cookie_table.cpp \
 	shrest_db/user_table.cpp \
+	shrest_db/employee_table.cpp \
+	shrest_db/employee_title.cpp \
+	shrest_db/employee_department.cpp \
 	shrest_db/compaign_table.cpp \
 	shrest_db/opportunity_table.cpp \
 	shrest_db/SqlAccessor.cpp \

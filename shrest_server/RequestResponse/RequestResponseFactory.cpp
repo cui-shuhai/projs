@@ -16,6 +16,8 @@
 #include "AddTaskRequest.h"
 #include "AddUserInterface.h"
 #include "AddUserRequest.h"
+#include "AddEmployeeInterface.h"
+#include "AddEmployeeRequest.h"
 #include "ListTaskRequest.h"
 #include "ListCompaignRequest.h"
 #include "ListActivityRequest.h"
@@ -54,6 +56,14 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 		return unique_ptr<AddTaskInterface>( new AddTaskInterface(rs, rq));	
 	if(name == "AddTaskRequest")
 		return unique_ptr<AddTaskRequest>( new AddTaskRequest(rs, rq));	
+	if(name == "AddUserInterface")
+		return unique_ptr<AddUserInterface>( new AddUserInterface(rs, rq));	
+	if(name == "AddUserRequest")
+		return unique_ptr<AddUserRequest>( new AddUserRequest(rs, rq));	
+	if(name == "AddEmployeeInterface")
+		return unique_ptr<AddEmployeeInterface>( new AddEmployeeInterface(rs, rq));	
+	if(name == "AddEmployeeRequest")
+		return unique_ptr<AddEmployeeRequest>( new AddEmployeeRequest(rs, rq));	
 	if(name == "ListTaskRequest")
 		return unique_ptr<ListTaskRequest>( new ListTaskRequest(rs, rq));	
 	if(name == "ListCompaignRequest")
