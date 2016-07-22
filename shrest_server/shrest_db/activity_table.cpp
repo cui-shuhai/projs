@@ -20,14 +20,16 @@ activity_table::activity_table():SqlAccessor()
 {
 }
 
-activity_table::activity_table(int id, int contactType, int contactId, int contacter, const string& date, const string& content):
+activity_table::activity_table( int activity_id_, string activity_name_, int activity_type_, int activity_status_, int activity_priority_, int who_preside_, int when_created_, string note_):
 	SqlAccessor(),
-	event_id{id},
-	contact_type{contactType},
-	contact_id{contactId},
-	who_contacts{contacter},
-	when_created{date},
-	note{content}
+	activity_id{ activity_id_ },
+	activity_name{ note_ },
+	activity_type{ activity_type_ },
+	activity_status{ activity_status_ },
+	activity_priority{ activity_priority_ },
+	who_preside{ who_preside_ },
+	when_created{ when_created_ },
+	note{ note_ }
 {
 }
 
@@ -36,23 +38,29 @@ activity_table::~activity_table(){
 
 void activity_table::add_activity_table(){
 
-	auto sql = "INSERT INTO 'activity_event'(contact_type, contact_id, who_contacts, when_created, note) VALUES(?, ?, ?, ?, ?)";
+	auto sql = "INSERT INTO 'activity_event'( activity_name "
+		"activity_type,  activity_status,  activity_priority,  "
+		"who_preside,  when_created,  note "
+		"VALUES(? ?, ? ?, ?, ?, ?)";
 
 	command c(*conn, sql);
-	c.bind(1, contact_type);
-	c.bind(2, contact_id);
-	c.bind(2, who_contacts);
-	c.bind(4, when_created);
-	c.bind(5, note);
+
+	c.bind(1, activity_name);
+	c.bind(2, activity_type);
+	c.bind(3, activity_status);
+	c.bind(4, activity_priority);
+	c.bind(5, who_preside);
+	c.bind(6, when_created);
+	c.bind(7, note);
 
 	c.emit();
 	auto id_sql = "SELECT last_insert_rowid()";
 	query id_query(*conn, id_sql);
 	auto id_res = id_query.emit_result();
-	event_id = id_res->get_int(0);
+	activity_id = id_res->get_int(0);
 }
 
 int activity_table::get_activity_tableId()
 {	
-	return event_id;
+	return activity_id;
 }

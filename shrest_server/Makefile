@@ -10,8 +10,8 @@ SOURCE=server_instance.cpp \
 	RequestResponse/IcrmIndex.cpp \
 	RequestResponse/SearchCustomerInterface.cpp \
 	RequestResponse/SearchCustomerRequest.cpp \
-	RequestResponse/AddEventInterface.cpp \
-	RequestResponse/AddEventRequest.cpp \
+	RequestResponse/AddActivityInterface.cpp \
+	RequestResponse/AddActivityRequest.cpp \
 	RequestResponse/AddTransactionInterface.cpp \
 	RequestResponse/AddTransactionRequest.cpp \
 	RequestResponse/AddTaskInterface.cpp \
@@ -28,6 +28,7 @@ SOURCE=server_instance.cpp \
 	utils/shrest_utils.cpp \
 	shrest_db/customer_table.cpp \
 	shrest_db/activity_table.cpp \
+	shrest_db/activity_status.cpp \
 	shrest_db/task_table.cpp \
 	shrest_db/cookie_table.cpp \
 	shrest_db/user_table.cpp \

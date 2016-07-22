@@ -1,0 +1,30 @@
+{% include web/header.html %}
+
+Current avtivities list:
+{% block meat %}
+
+	Customer Id {{ customer_id }} <br><br>
+	Company Name {{ company_name }} <br><br>
+	Contact Name {{ contact_name }} <br><br>
+	Personal Title {{ personal_title }} <br><br>
+	First Name {{ first_name }} <br><br>
+	Last Name {{ last_name }} <br><br>
+	Phone {{ phone }} <br><br>
+	Email {{ email }} <br><br>
+	Street Addr {{ street_addr }} <br><br>
+	City {{ city }} <br><br>
+	State {{ state }} <br><br>
+	Post Code {{ post_code }} <br><br>
+	Country {{ country }} <br><br>
+	Bill Addr {{ bill_addr }} <br><br>
+	Ship Addr {{ ship_addr }} <br><br>
+
+<br>
+---------
+
+{% endblock %}
+
+
+{% include web/footer.html %}
+ 
+

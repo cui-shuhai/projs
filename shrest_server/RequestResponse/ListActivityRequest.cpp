@@ -39,10 +39,16 @@ void ListActivityRequest::Process(){
 		
 		//XXX it should be filtered by requester's id.
 
-		auto sql = "SELECT task_id, task_name, due_date, status, description, assignee, assigner, creator FROM task";
+		auto sql = "SELECT activity_id, activity_name, activity_type.name, activity_status.name,"
+			" activity_priority.name, who_preside, when_created, note "
+			" FROM activity INNER JOIN activity_type ON activity_type.activity_type = activity.activity_type INNER JOIN "
+			" activity_status  ON activity_status.activity_status = activity.activity_status INNER JOIN "
+			" activity_priority ON activity_priority.activity_priority = activity.activity_priority ";
+
+			
 
 	//there is an error from sqlite library, query get_row_count fails (return 0)
-		auto count_sql = "SELECT count(*) FROM task";
+		auto count_sql = "SELECT count(1) FROM activity";
 		auto count_query = c.BuildQuery(count_sql);
 		auto count_res = count_query->emit_result();
 		auto rows = count_res->get_int(0);
@@ -57,7 +63,7 @@ void ListActivityRequest::Process(){
 
 		
 		t.block("meat").repeat(rows);
-
+/*
 		//all fields must be string
  		for ( int i=0; i < rows; i++, res->next_row() ) {
 			t.block("meat")[i].set("task_id", to_string(res->get_int(0)));
@@ -70,6 +76,7 @@ void ListActivityRequest::Process(){
 			t.block("meat")[i].set("creator", to_string(res->get_int(0)));
 
 		}
+*/
 
 
 		t.render( cs ); // Render the template with the variables we've set above

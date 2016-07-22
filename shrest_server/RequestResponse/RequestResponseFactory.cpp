@@ -6,8 +6,8 @@
 #include "NewCustomerPost.h"
 #include "ListCustomersGet.h"
 #include "IcrmIndex.h"
-#include "AddEventInterface.h"
-#include "AddEventRequest.h"
+#include "AddActivityInterface.h"
+#include "AddActivityRequest.h"
 #include "SearchCustomerInterface.h"
 #include "SearchCustomerRequest.h"
 #include "AddTransactionInterface.h"
@@ -42,10 +42,10 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 		return unique_ptr<SearchCustomerInterface>( new SearchCustomerInterface(rs, rq));
 	if(name == "SearchCustomerRequest")
 		return unique_ptr<SearchCustomerRequest>( new SearchCustomerRequest(rs, rq));
-	if(name == "AddEventInterface")
-		return unique_ptr<AddEventInterface>( new AddEventInterface(rs, rq));
-	if(name == "AddEventRequest")
-		return unique_ptr<AddEventRequest>( new AddEventRequest(rs, rq));
+	if(name == "AddActivityInterface")
+		return unique_ptr<AddActivityInterface>( new AddActivityInterface(rs, rq));
+	if(name == "AddActivityRequest")
+		return unique_ptr<AddActivityRequest>( new AddActivityRequest(rs, rq));
 	if(name == "AddTransactionInterface")
 		return unique_ptr<AddTransactionInterface>( new AddTransactionInterface(rs, rq));
 	if(name == "AddTransactionRequest")

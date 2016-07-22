@@ -135,20 +135,20 @@ int main() {
 
 
      //Add customer activity event interface
-     server.resource["^/addevent$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+     server.resource["^/addactivity$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
 
-	auto processor = RequestResponseFactory::CreateProcessor("AddEventInterface", response, request);	
+	auto processor = RequestResponseFactory::CreateProcessor("AddActivityInterface", response, request);	
 	processor->Process();        
     };
-	LOG("Adding [addevent, GET] API");
+	LOG("Adding [addactivity, GET] API");
 
      //Add customer activity request
-     server.resource["^/addeventrequest$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
+     server.resource["^/addactivityrequest$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
 
-	auto processor = RequestResponseFactory::CreateProcessor("AddEventRequest", response, request);	
+	auto processor = RequestResponseFactory::CreateProcessor("AddActivityRequest", response, request);	
 	processor->Process();        
     };
-	LOG("Adding [addeventrequest, POST] API");
+	LOG("Adding [addactivityrequest, POST] API");
 
 
      //Add transaction interface

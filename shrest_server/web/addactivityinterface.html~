@@ -1,0 +1,47 @@
+{% include web/header.html %}
+
+{% block meat %}
+<form action="addactivityrequest" method="post">
+	  <fieldset>
+	    <legend>Adding activity:</legend>
+	    Name:<br>
+	    <input type="text" name="contact_type" value="1"><br> 
+
+	    Type:
+	    <select name ="activity_type" style="width: 150px;">
+	{% block titles %}
+		<option value="{{ type_value }}"> {{ type_show }}</option>
+	{% endblock %}
+ 	    </select><br><br>
+
+	    Status:
+	    <select name ="activity_status" style="width: 150px;">
+	{% block titles %}
+		<option value="{{ status_value }}"> {{ status_show }}</option>
+	{% endblock %}
+ 	    </select><br><br>
+
+	    Priority:
+	    <select name ="activity_priority" style="width: 150px;">
+	{% block titles %}
+		<option value="{{ priority_value }}"> {{ priority_show }}</option>
+	{% endblock %}
+ 	    </select><br><br>
+
+	    Presider:
+	    <select name ="activity_presider" style="width: 150px;">
+	{% block titles %}
+		<option value="{{ presider_value }}"> {{ presider_show }}</option>
+	{% endblock %}
+ 	    </select><br><br>
+
+	    Note:		
+	    <TEXTAREA NAME="note" COLS=50 ROWS=6></TEXTAREA><br><br>	
+	    <input type="submit" value="Submit">
+	  </fieldset>
+</form>
+{% endblock %}
+
+
+{% include web/footer.html %}
+
