@@ -22,6 +22,7 @@ public:
 	void add_employee_table();
 	int get_employee_tableId();
 	void get_department_managers(std::map<int, string> &managers);
+	void get_employee_list(std::map<int, string> &employees);
 
 private:
 	int employee_id;

@@ -5,22 +5,39 @@
 <form action="adduserrequest" method="post">
 	  <fieldset>
 	    <legend></legend>
-	    New User:<br>
-	    <input type="text" name="login_name" value=""><br>
-	    Password:<br>
-	    <input type="text" name="pass_word" value=""><br>
-	    User ID:<br>
-	    <input type="text" name="employee_id" value="Mouse"><br><br>
-	    Status:<br>
-	    <input type="text" name="role" value="1"><br><br>
-	    Profile:<br>
-	    <input type="text" name="profile" value=""><br><br>
-	    <input type="submit" value="Submit">
+  	Select User:
+	    <select name ="new_user" style="width: 150px;">
+	{% block user_block %}
+		<option value="{{ user_value }}"> {{ user_show }}</option>
+	{% endblock %}
+ 	    </select><br><br>
+	    Login ID:
+	    <input type="text" name="login_name" value=""><br><br>
+	    Password:
+	    <input type="text" name="pass_word" value=""><br><br>
+	    Repeat Passord:
+	    <input type="text" name="pass_word" value=""><br><br>
+	    Role:
+	    <select name = "roles" style="width: 150px;">
+	{% block role_block %}
+	    <option value="{{ role_value }}"> {{ role_show }}</option> <br><br>
+	{% endblock %}
+	    </select><br><br>
+	    Profile:
+	    <select name = "profile" style="width: 150px;">
+	{% block profile_block %}
+	    <option name="profile" value="{{ profile_value }}"> {{ profile_show }} </option><br><br>
+	{% endblock %}
+	    </select><br><br>
+	    <input type="submit" value="Add">
 	  </fieldset>
-</form>
+</form><br>
+
+git ls-files --deleted -z | xargs -0 git rm 
 
 {% endblock %}
 
 
 {% include web/footer.html %}
   
+

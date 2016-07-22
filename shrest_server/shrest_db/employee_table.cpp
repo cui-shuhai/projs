@@ -44,7 +44,7 @@ employee_table::~employee_table(){
 
 void employee_table::add_employee_table(){
 
-	auto sql = "INSERT INTO 'employee_table'"
+	auto sql = "INSERT INTO 'employee'"
 		"( firstName, lastName, age, address, mobile_phone, office_phone, home_phone, email, job_title, department_id, reports_to, create_date, created_by )" 
 		" VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -75,8 +75,42 @@ int employee_table::get_employee_tableId(){
 	return employee_id;
 }
 
+void employee_table::get_employee_list(std::map<int, string> &employees){
+	auto count_sql = "SELECT count(1) FROM employee";
+
+	query count_query(*conn, count_sql);
+	auto count_res = count_query.emit_result();
+	auto rows = count_res->get_int(0);
+
+	if(rows == 0)
+		return;
+
+	string sql = "SELECT employee_id, firstName, lastName, employee_department.name "
+			"FROM employee INNER JOIN employee_department ON employee.department_id = employee_department.department_id  ";
+	
+	query q(*conn, sql);
+	auto res = q.emit_result();
+
+	do{
+		string employee_item = res->get_string(1) + " " + res->get_string(2) +":" + res->get_string(3);
+		employees[res->get_int(0)] = employee_item;
+	} while(res->next_row());
+}
+
 void employee_table::get_department_managers(std::map<int , string> &managers)
 {	
+	auto count_sql = "SELECT count(1) "
+			"FROM employee INNER JOIN employee_title ON employee.job_title = employee_title.title_id "
+			"INNER JOIN employee_department ON employee.department_id = employee_department.department_id  "
+			"where employee.job_title = 'manager'";
+
+	query count_query(*conn, count_sql);
+	auto count_res = count_query.emit_result();
+	auto rows = count_res->get_int(0);
+
+	if(rows == 0)
+		return;
+
 	string sql = "SELECT employee_id, firstName, lastName, employee_department.name "
 			"FROM employee INNER JOIN employee_title ON employee.job_title = employee_title.title_id "
 			"INNER JOIN employee_department ON employee.department_id = employee_department.department_id  "

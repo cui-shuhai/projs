@@ -2,6 +2,7 @@
 #include <string>
 
 #define BOOST_SPIRIT_THREADSAFE
+#include <boost/regex.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/regex.hpp>//g++4.8 regex implementation has some errors but fixed fin 4.9
@@ -51,14 +52,25 @@ void AddEmployeeRequest::Process(){
 		std::map<std::string, std::string> m;
 		utils::parse_kye_value(content, m);
 
-		employee_table e( -1, m["first_name"], m["last_name"],
-				 stoi( m["age"] ), m["address"], m["mobile_phone"],
-				 m["office_phone"], m["home_phone"], m["email"], 
-				 stoi(m["job_title"]), stoi(m["department"]), stoi(m["report_to"]), utils::get_date(), uid);
-		
-		e.add_employee_table();
+		int id =0;
+		{
+			boost::regex re("%40");
+			
+			auto s = m["email"];
 
-		auto id = e.get_employee_tableId();
+			boost::regex_replace( m["email"], re, "@");
+			
+			s = m["email"];
+
+			employee_table e( -1, m["first_name"], m["last_name"],
+					 stoi( m["age"] ), m["address"], m["mobile_phone"],
+					 m["office_phone"], m["home_phone"], m["email"], 
+					 stoi(m["job_title"]), stoi(m["department"]), stoi(m["report_to"]), utils::get_date(), uid);
+		
+			e.add_employee_table();
+
+			id = e.get_employee_tableId();
+		}
 		LoaderFile loader; // Let's use the default loader that loads files from disk.
 
 		Template t( loader );
@@ -76,7 +88,7 @@ void AddEmployeeRequest::Process(){
 		t.block("meat")[0].set("report_to", m["report_to"]);
 		t.block("meat")[0].set("age",  m["age"]);
 		t.block("meat")[0].set("address", m["address"]);
-		t.block("meat")[0].set("email", m["eamil"]);
+		t.block("meat")[0].set("email", m["email"]);
 		t.block("meat")[0].set("mobile_phone", m["mobile_phone"]);
 		t.block("meat")[0].set("office_phone", m["office_phone"]);
 		t.block("meat")[0].set("creator", creator);

@@ -37,12 +37,10 @@ void IcrmIndex::Process(){
 				cookie_table ct{key};
 				ct.get_cookie_user();
 				string user = ct.get_user_name();
-				if(user != "NULL"){
-					string password = ct.get_pass_word();
-					CreateDashboard(user, password);
-					LOG("find key for user", user);
-					return;
-				}
+				string password = ct.get_pass_word();
+				CreateDashboard(user, password);
+				LOG("find key for user", user);
+				return;
 			}
 			else{
 				LOG("cookie corrupted\n");

@@ -34,6 +34,8 @@ SOURCE=server_instance.cpp \
 	shrest_db/employee_table.cpp \
 	shrest_db/employee_title.cpp \
 	shrest_db/employee_department.cpp \
+	shrest_db/employee_role.cpp \
+	shrest_db/employee_profile.cpp \
 	shrest_db/compaign_table.cpp \
 	shrest_db/opportunity_table.cpp \
 	shrest_db/SqlAccessor.cpp \

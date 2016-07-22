@@ -15,9 +15,7 @@
 #include "shrest_utils.h"
 #include "NLTemplate/NLTemplate.h"
 
-#include "employee_table.h"
-#include "employee_profile.h"
-#include "employee_role.h"
+#include "customer_table.h"
 #include "AddUserInterface.h"
 
 using namespace sqlite;
@@ -47,7 +45,7 @@ void AddUserInterface::Process(){
 			et.get_employee_list(employees);
 			auto rows = employees.size();
 
-			Block & block = t.block( "meat" )[ 0 ].block( "user_block" );
+			Block & block = t.block( "meat" )[ 0 ].block( "new_user" );
 			block.repeat(rows);
 			int i = 0;
 			for(const auto & v : employees){
@@ -57,36 +55,18 @@ void AddUserInterface::Process(){
 			}
 		}
 
-		//role
 		if(true){
-			employee_role rt;
-			std::map<int, string> roles;
-			rt.get_employee_roles(roles);
-			auto rows = roles.size();
+			employee_table et;
+			std::map<int, string> employees;
+			et.get_employee_list(employees);
+			auto rows = employees.size();
 
-			Block & block = t.block( "meat" )[ 0 ].block( "role_block" );
+			Block & block = t.block( "meat" )[ 0 ].block( "new_user" );
 			block.repeat(rows);
 			int i = 0;
-			for(const auto & v : roles){
-				block[i].set("role_value", to_string(v.first));
-				block[i].set("role_show", v.second);
-				++i;
-			}
-		}
-
-		//profile
-		if(true){
-			employee_profile pt;
-			std::map<int, string> profiles;
-			pt.get_employee_profiles(profiles);
-			auto rows = profiles.size();
-
-			Block & block = t.block( "meat" )[ 0 ].block( "profile_block" );
-			block.repeat(rows);
-			int i = 0;
-			for(const auto & v : profiles){
-				block[i].set("profile_value", to_string(v.first));
-				block[i].set("profile_show", v.second);
+			for(const auto & v : employees){
+				block[i].set("user_value", to_string(v.first));
+				block[i].set("user_show", v.second);
 				++i;
 			}
 		}

@@ -10,7 +10,7 @@
 	    Last Name:
 	    <input type="text" name="last_name" value=""><br><br>
 	Title:
-	    <select name ="title" style="width: 150px;">
+	    <select name ="job_title" style="width: 150px;">
 	{% block titles %}
 		<option value="{{ title_value }}"> {{ title_show }}</option>
 	{% endblock %}

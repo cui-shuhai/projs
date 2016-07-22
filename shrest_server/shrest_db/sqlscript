@@ -12,15 +12,33 @@ CREATE TABLE 'user'(
 	'login_name' varchar(32) PRIMARY KEY,
 	'pass_word' char(32),
 	'employee_id'	INT,
-	'role'	char(10) DEFAULT "normal",
-	'profile' char(20) DEFAULT "view",
+	'role_id'	int,
+	'profile_id' int,
 	'creator_id' INT,
-	'when' DATE NOT NULL,
+	'create_date' DATE NOT NULL,
 	FOREIGN KEY(creator_id) REFERENCES employee(employee_id),
-	FOREIGN KEY(employee_id) REFERENCES employee(employee_id),
-	CHECK (role IN ("normal", "administor")),
-	CHECK (profile IN ("view", "change"))
+	FOREIGN KEY(employee_id) REFERENCES employee(employee_id)
 );
+INSERT INTO 'user'(login_name, pass_word, employee_id, role_id, profile_id, creator_id, create_date) 
+	VALUES("root", "magic", 0, 0, 0, 0, "2016/11/21");
+
+CREATE TABLE employee_role(
+	'role_id' INT PRIMARY KEY,
+	'name' char(20), 
+	'description' char(20)
+);
+INSERT INTO 'employee_role'(role_id, name, description) 
+	VALUES(0, "CEO", "Manages the whole company");
+	
+
+CREATE TABLE employee_profile(
+	'profile_id' INT PRIMARY KEY,
+	'name' char(20), 
+	'description' char(20)
+);
+INSERT INTO 'employee_profile'(profile_id, name, description) 
+	VALUES(0, "database manager", "Manages database daily maintainence");
+
 
 CREATE TABLE 'company'(
 	'company_id' INTEGER PRIMARY KEY,

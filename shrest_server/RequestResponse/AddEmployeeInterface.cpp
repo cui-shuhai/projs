@@ -81,11 +81,18 @@ void AddEmployeeInterface::Process(){
 		//fill report to
 		if(true){
 			std::map<int, string> report_tos;
+			auto rows = report_tos.size();
 			employee_table et;
 			et.get_department_managers(report_tos);
+
 			Block & block = t.block( "meat" )[ 0 ].block( "report_to" );
 
-			auto rows = report_tos.size();
+			rows = report_tos.size();
+			
+			if(rows == 0){
+				report_tos[0] = "A B : C";
+				++rows;
+			}
 			block.repeat(rows);
 
 			int i = 0;
