@@ -11,7 +11,9 @@ class activity_table : public SqlAccessor{
 
 public:
 	activity_table();
-	activity_table( int activity_id, string activity_name, int activity_type, int activity_status, int activity_priority, int who_preside, int when_created, string note);
+	activity_table( int activity_id, string activity_name, 
+		int activity_type, int activity_status, int activity_priority, 
+		int who_preside, string when_created, string note);
 	~activity_table();
 	
 	void add_activity_table();
@@ -24,7 +26,7 @@ private:
 	int activity_status;
 	int activity_priority;
 	int who_preside;
-	int when_created;
+	string when_created;
 	string note;
 };
 

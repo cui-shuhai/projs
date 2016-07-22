@@ -134,18 +134,28 @@ LOG(rq_->method, rq_->path);
 				block.set("close_date", res->get_string(7));
 			}
 		}
-	
+
+
 		//activities
 		if(true){
-			string activity_sql = "SELECT activity_code.description, firstName, lastName, activity.contact_id, note " 
-" FROM activity INNER JOIN activity_code ON activity_code.activity_id = activity.contact_type INNER JOIN contact ON activity.contact_id = contact.contact_id WHERE activity.who_contacts = ";
+			string activity_sql = "SELECT  firstName, lastName,  activity.activity_name, activity_type.description, "
+						"activity_status.description, activity_priority.description, note, when_created " 
+						" FROM activity INNER JOIN activity_type ON activity_type.activity_type = activity.activity_type "
+						"INNER JOIN activity_status ON activity.activity_status = activity_status.activity_status "
+						"INNER JOIN activity_priority ON activity_priority.activity_priority = activity.activity_priority "
+						"INNER JOIN employee ON employee.employee_id = activity.who_preside" 
+						"  WHERE activity.who_preside = ";
 			activity_sql.append(to_string(user_id)).append(" ORDER BY activity.when_created");
 		
 			activity_table at;
 			auto at_query = at.BuildQuery(activity_sql);
 			auto res = at_query->emit_result();
 
-			string count_sql = "SELECT count(1) FROM activity INNER JOIN activity_code ON activity_code.activity_id = activity.contact_type INNER JOIN contact ON activity.contact_id = contact.contact_id WHERE activity.who_contacts = ";
+			string count_sql = "SELECT count(1) FROM activity INNER JOIN activity_type ON activity_type.activity_type = activity.activity_type "
+						"INNER JOIN activity_status ON activity.activity_status = activity_status.activity_status "
+						"INNER JOIN activity_priority ON activity_priority.activity_priority = activity.activity_priority "
+						"INNER JOIN employee ON employee.employee_id = activity.who_preside" 
+						"  WHERE activity.who_preside = ";
 			count_sql.append(to_string(user_id));
 
 			auto count_query = at.BuildQuery(count_sql);
@@ -159,10 +169,13 @@ LOG(rq_->method, rq_->path);
 			block.repeat(rows);
 			//all fields must be string
 	 		for ( int i=0; i < rows; i++, res->next_row() ) {
-				block.set("activity", res->get_string(0));
-				block.set("id", to_string(res->get_int(3)));
-				block.set("contactee", res->get_string(1) + " " + res->get_string(2));
-				block.set("note", res->get_string(4)); 
+				block.set("activity_name", res->get_string(2 ));
+				block.set("activity_type", res->get_string(3));
+				block.set("activity_status", res->get_string(4));
+				block.set("activity_priority", res->get_string(5)); 
+				block.set("who_preside", res->get_string(0) + " " + res->get_string(1)  ); 
+				block.set("when_created", res->get_string(7)); 
+				block.set("note", res->get_string(6)); 
 			}
 		}
 
@@ -209,9 +222,9 @@ LOG(rq_->method, rq_->path);
 	catch(exception& e) {
 		rs_ << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n" << e.what();
 	}
-
-
 }
+
+
 int RequestResponse::GetUserId(){
 
 	auto cookies = rq_->cookies;

@@ -20,7 +20,7 @@ activity_table::activity_table():SqlAccessor()
 {
 }
 
-activity_table::activity_table( int activity_id_, string activity_name_, int activity_type_, int activity_status_, int activity_priority_, int who_preside_, int when_created_, string note_):
+activity_table::activity_table( int activity_id_, string activity_name_, int activity_type_, int activity_status_, int activity_priority_, int who_preside_, string when_created_, string note_):
 	SqlAccessor(),
 	activity_id{ activity_id_ },
 	activity_name{ note_ },
@@ -28,8 +28,8 @@ activity_table::activity_table( int activity_id_, string activity_name_, int act
 	activity_status{ activity_status_ },
 	activity_priority{ activity_priority_ },
 	who_preside{ who_preside_ },
-	when_created{ when_created_ },
-	note{ note_ }
+	when_created( when_created_ ),
+	note( note_ )
 {
 }
 

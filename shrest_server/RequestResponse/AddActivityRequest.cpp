@@ -35,7 +35,10 @@ void AddActivityRequest::Process(){
 		std::map<std::string, std::string> m;
 		utils::parse_kye_value(content, m);
 
-		activity_table c( -1, m["activity_name"], stoi( m["activity_type"] ), stoi( m["activity_status"] ), stoi( m["activity_priority"] ), stoi( m["who_preside"] ), utils::get_date(), m["note"]);
+		activity_table c( -1, m["activity_name"], 
+			stoi( m["activity_type"] ), stoi( m["activity_status"] ), stoi( m["activity_priority"] ), 
+			stoi( m["who_preside"] ), utils::get_date(), m["note"]);
+
 		c.add_activity_table();
 
 		auto id = c.get_activity_tableId();

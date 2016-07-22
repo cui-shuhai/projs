@@ -2,7 +2,7 @@
 
 {% block meat %}
 
-	<h3> There are {{ compaign_num }}  compaigns </h3>
+	<h3>  {{ compaign_num }}  Compaigns </h3>
 <table style="width:100%">
   <tr>
     <th>Compaign</th>
@@ -45,19 +45,27 @@
   </tr>  
 {% endblock %}
 </table>
-
+ 
 	<h3> {{ activity_num }} Activities </h3>
 <table style="width:100%">
   <tr>
     <th>Activity</th>
-    <th>Who to Contact</th> 
-    <th>Note</th>
+    <th>Type</th> 
+    <th>Priority</th> 
+    <th>Status</th> 
+    <th>Presider</th> 
+    <th>Note</th> 
+    <th>Setup date</th>
   </tr>
 {% block activity_block %}
   <tr>
-    <td> {{ activity }} </td> 
-    <td><a herf =/contact/{{ id }}> {{ contactee }} </a></td> 
+    <td> {{ activity_name }} </td> 
+    <td> {{ activity_type }} </td> 
+    <td> {{ activity_status }} </td> 
+    <td> {{ activity_priority }} </td> 
+    <td> {{ who_preside }} </td> 
     <td> {{ note }} </td> 
+    <td> {{ when_created }} </td> 
   </tr>  
 {% endblock %}
 </table>
@@ -65,7 +73,7 @@
 	<h3> {{ task_num }} Tasks </h3>
 <table style="width:100%">
   <tr>
-    <th> Taske</th>
+    <th> Task</th>
     <th>Description</th> 
     <th>Status</th>
     <th>Due Date</th>
@@ -81,12 +89,6 @@
 </table>
 
 {% endblock %}
-<select name="cars">
-  <option value="volvo">Volvo</option>
-  <option value="saab">Saab</option>
-  <option value="fiat">Fiat</option>
-  <option value="audi">Audi</option>
-</select>
 
 {% include web/footer.html %}
  
