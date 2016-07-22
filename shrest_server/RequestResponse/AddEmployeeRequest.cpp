@@ -36,18 +36,9 @@ void AddEmployeeRequest::Process(){
 	try {
 		string creator;
 		int uid = 0;
-		auto content=rq_->content.string();
-		auto cookies = rq_->cookies;
+		GetUser(uid, creator);
 
-		if(!cookies.empty()){
-			string key;
-			if(GetSession(key)){
-				cookie_table ct{key};
-				ct.get_cookie_user();
-				creator = ct.get_user_name();
-				uid = ct.get_user_id();
-			}
-		}
+		auto content=rq_->content.string();
 	
 		std::map<std::string, std::string> m;
 		utils::parse_kye_value(content, m);

@@ -12,15 +12,33 @@ CREATE TABLE 'user'(
 	'login_name' varchar(32) PRIMARY KEY,
 	'pass_word' char(32),
 	'employee_id'	INT,
-	'role'	char(10) DEFAULT "normal",
-	'profile' char(20) DEFAULT "view",
+	'role_id'	int,
+	'profile_id' int,
 	'creator_id' INT,
-	'when' DATE NOT NULL,
+	'create_date' DATE NOT NULL,
 	FOREIGN KEY(creator_id) REFERENCES employee(employee_id),
-	FOREIGN KEY(employee_id) REFERENCES employee(employee_id),
-	CHECK (role IN ("normal", "administor")),
-	CHECK (profile IN ("view", "change"))
+	FOREIGN KEY(employee_id) REFERENCES employee(employee_id)
 );
+INSERT INTO 'user'(login_name, pass_word, employee_id, role_id, profile_id, creator_id, create_date) 
+	VALUES("root", "magic", 0, 0, 0, 0, "2016/11/21");
+
+CREATE TABLE employee_role(
+	'role_id' INT PRIMARY KEY,
+	'name' char(20), 
+	'description' char(20)
+);
+INSERT INTO 'employee_role'(role_id, name, description) 
+	VALUES(0, "CEO", "Manages the whole company");
+	
+
+CREATE TABLE employee_profile(
+	'profile_id' INT PRIMARY KEY,
+	'name' char(20), 
+	'description' char(20)
+);
+INSERT INTO 'employee_profile'(profile_id, name, description) 
+	VALUES(0, "database manager", "Manages database daily maintainence");
+
 
 CREATE TABLE 'company'(
 	'company_id' INTEGER PRIMARY KEY,
@@ -51,7 +69,7 @@ CREATE TABLE employee(
 	'job_title' int,
 	'department_id' int,
 	'reports_to' int,
-	'create_date DATE,
+	'create_date' DATE,
 	'created_by' int,
 	FOREIGN KEY(job_title) REFERENCES employee_title(title_id),
 	FOREIGN KEY(department_id) REFERENCES employee_title(department_id),
@@ -79,6 +97,85 @@ INSERT INTO 'employee_department'( department_id, name, description ) VALUES
 (1, "sales", "selling prodcts"),
 (2, "marketing", "markegint products"),
 (3, "development", "development products");
+/*
+
+First Name/Last Name are the first and last names of the contact
+Name is the contact's full name, pulled from the first and last name fields
+Title refers to the contact's title within the company (e.g. CEO or Accountant)
+Phone is usually the contact's primary phone number
+Alt phone should be a reliable alternative phone number for the contact
+Mobile refers to the contact's cell phone
+Pager refers to the contact's pager number, should they have one
+Email is the contact's primary email address
+Twitter user name can refer to the company Twitter account or the individual contact's account if appropriate (displayed as @username)
+
+Facebook user name can refer to the company Facebook page or the individual contact's profile if appropriate (displayed as facebook.com/username)
+
+LinkedIn public user name can refer to the company's LinkedIn profile or the individual contact's profile if appropriate
+
+Website address usually refers to the website of the contact's company
+
+Notes allows you to take down any pertinent notes about this contact – what you put in that field is up to you!
+Contact type refers to whether this is:
+the main customer contact (the one associated with a QuickBooks file),
+
+an alternate contact (one associated only with Method), or
+
+a QB contact (one associated with QuickBooks). 
+If the contact type field is blank, that means the contact is only associated with Method and can be deleted by using theDelete contact option under More action.
+
+
+*/
+
+CREATE TABLE customer(
+	customer_id  INTEGER PRIMARY KEY,
+	company_name varchar(100) NOT NULL,
+	contact_name varchar(100),
+	personal_title char(5),
+	first_name char(10),
+	last_name char(10),
+	phone char(16),
+	email char(20),
+	street_addr varchar(20),
+	city char(20),
+	state char(20),
+	post_code char(10),
+	country char(20),
+	bill_addr varchar(50),
+	ship_addr varchar(50)
+);
+
+
+
+CREATE TABLE lead(
+	lead_id  INTEGER PRIMARY KEY,
+	company_name varchar(100) NOT NULL,
+	contact_name varchar(100),
+	personal_title char(5),
+	first_name char(10),
+	last_name char(10),
+	phone char(16),
+	email char(20),
+	street_addr varchar(20),
+	city char(20),
+	state char(20),
+	post_code char(10),
+	country char(20),
+	bill_addr varchar(50),
+	ship_addr varchar(50),
+	lead_source int, /*meeting, compaign, etc*/
+	lead_status int, /*open, unqualified, qualified*/
+	lead_ratig int, /*cold, warm, hot*/
+);
+
+/*
+Contact type refers to whether this is:
+the main customer contact (the one associated),
+an alternate contact
+
+Opt out of marketing means the contact will be flagged to not receive marketing mail, emails, or phone calls
+Opt out of billing means the contact will be flagged to not receive billing mail, emails, or phone calls
+*/
 
 CREATE TABLE contact(
 	'contact_id' INTEGER PRIMARY KEY,
@@ -87,11 +184,14 @@ CREATE TABLE contact(
 	'lastName' char(20), 
 	'age' int, 
 	'address' varchar(100),
+	'primary_phone' char(20), 
+	'alt_phone' char(20),  
 	'mobile_phone' char(20), 
-	'office_phone' char(20),  
-	'home_phone' char(20), 
 	'fax' char(20),
 	'email' varchar(32),
+	'twitter' varchar(32),
+	'linkedin' varchar(32),
+	'faceboot' varchar(32),
 	'job_title' varchar(32),
 	'company_id' int ,
 	'when_met' Date NOT NULL,
@@ -100,33 +200,12 @@ CREATE TABLE contact(
 	'married' BOOL,
 	'children' int,
 	'time_zone' char(3),
-	'extra_info' varchar(100),
+	'main_contact' int,
+	'out_of_marketing' int,
+	'out_of_billing' bool,
+	'extra_info' varchar(200),
 	FOREIGN KEY(status) REFERENCES contact_status(status),
 	FOREIGN KEY(company_id) REFERENCES company(company_id)
-);
-
-CREATE TABLE contact(
-	'contact_id' INTEGER PRIMARY KEY,
-	'status' varchar(20),
-	'firstName' char(20), 
-	'lastName' char(20), 
-	'age' int, 
-	'address' varchar(100),
-	'mobile_phone' char(20), 
-	'office_phone' char(20),  
-	'home_phone' char(20), 
-	'fax' char(20),
-	'email' varchar(32),
-	'job_title' varchar(32),
-	'company_id' int,
-	'when_met' Date,
-	'where_met' varchar(100),
-	'birthday' Data,
-	'married' BOOL,
-	'children' int,
-	'time_zone' char(3),
-	'extra_info' varchar(100),
-	CHECK ( status IN ("Not Attempted", "Attempted", "Contacted", "New Opportunity", "Additional Contact", "Disqualified"))
 );
 
 
@@ -145,8 +224,10 @@ INSERT INTO 'activity_code'(activity_id, description) VAlUES
 	(7, "support_contact");
 
 CREATE TABLE activity(
-	'event_id'  INTEGER  PRIMARY KEY,
-	'contact_type'  INT,
+	'activity_id'  INTEGER  PRIMARY KEY,
+	'activity_type'  INT, /*metting, to-do, Phone call incoming*/
+	'activity_status' INT, /**/
+	'activity_priority' INT,	
 	'contact_id' INT,
 	'who_contacts' INT,
 	'when_created' Date NOT NULL,
@@ -154,8 +235,53 @@ CREATE TABLE activity(
 	FOREIGN KEY (contact_type)REFERENCES activity_code(activity_id),
 	FOREIGN KEY (contact_id) REFERENCES contact(contact_id),
 	FOREIGN KEY (who_contacts)REFERENCES employee(employee_id)
-
 );
+/*the three most common activities to be assigning tasks, logging calls, and creating appointments.
+The New Appointment tab link opens the screen with the Type field automatically set to "Meeting".
+
+The New Task tab link opens the screen with the Type field automatically set to "To-do".
+
+The Log Call tab link opens the screen with the Type field automatically set to "Phone call incoming".
+--
+Email Incoming: Log when you receive an email.
+
+Email Incoming & Outgoing: Use this type when you've received an email and immediately responded.
+
+Email Outgoing: Log when you send an email.
+
+Meeting: Log the duration and minutes of a meeting.
+
+Other: We've included this option to encompass anything the rest of our preloaded options don't, but since you're free to create your own activity types, you may or may not have use for this one.
+
+Phone Call Incoming: Log when you receive a phone call.
+
+Phone Call Outgoing: Log when you place a call to someone else.
+
+To-do: Unlike the other activity types, this type is used not to log a task, but when you want to remind yourself (or another user) to complete a task.
+
+Web Comment: When comments are introduced to your cases through a customer portal, or are introduced via a web-to-lead submission, they are called "Web Comments". Log when you receive a web comment.
+---
+Activity statuses
+
+When you are choosing your activity status, it is helpful to know what the pre-loaded status types refer to. Let's take a look at them here.
+
+Not Started: An activity that is active but has not yet been started. This could be because it's planned for a later date, or because you simply haven't gotten to it yet.
+
+Cancelled: Sometimes it becomes necessary to cancel an activity (for example, if a client unexpectedly can't make a meeting). "Cancelled" means the activity is no longer active, but it will still exist in your Method CRM.
+
+Completed: When an activity comes to a successful conclusion (for example, you hang up the phone after your scheduled conference call) you can switch the activity's status to "Completed": it will no longer be active but it will still exist in your Method CRM.
+
+Deferred: An activity that has been deferred is still considered active but has been put on hold.
+
+In progress: An activity that takes some time to complete. It means the activity is in progress toward completion.
+
+Waiting on someone else: An activity that is in progress but is waiting for input from another user, or a client, or someone else connected to the activity.
+The ellipses button to the right of the drop down menu will open the New/Edit Activity Status screen, which you can learn more about in the screen overview below!
+---
+Activity priority types which can tell a user immediately what activities deserve their immediate attention, and which can be safely scheduled later. The stock priority types (high, medium, and low) are often enough for most businesses, but sometimes it can be helpful to create custom priority types to impart information specific to your business
+
+
+*/
 
 /*lead management status*/
 CREATE TABLE contact_status(

@@ -15,7 +15,7 @@
 #include "shrest_utils.h"
 #include "NLTemplate/NLTemplate.h"
 
-#include "task_table.h"
+#include "activity_table.h"
 #include "ListActivityRequest.h"
 
 using namespace sqlite;
@@ -33,7 +33,7 @@ void ListActivityRequest::Process(){
 
 	try {
 		
-		task_table c;
+		activity_table c;
 
 		stringstream cs;
 		
@@ -53,7 +53,7 @@ void ListActivityRequest::Process(){
 		
 		LoaderFile loader; // Let's use the default loader that loads files from disk.
 		Template t( loader );
-		t.load( "web/listtask.html" );
+		t.load( "web/listactivity.html" );
 
 		
 		t.block("meat").repeat(rows);

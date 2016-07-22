@@ -37,7 +37,7 @@ void ListCustomersGet::Process(){
 
 		stringstream cs;
 		
-		auto sql = "SELECT id_, firstName, lastName, age, phone, address FROM customer";
+		auto sql = "SELECT customer_id, company_name, first_name, last_name, "				" phone, email, street_addr, city, state, country, bill_addr, ship_addr FROM customer";
 
 	//there is an error from sqlite library, query get_row_count fails (return 0)
 		auto count_sql = "SELECT count(*) FROM customer";
@@ -58,6 +58,7 @@ void ListCustomersGet::Process(){
 
 		//all fields must be string
  		for ( int i=0; i < rows; i++, res->next_row() ) {
+/*
 			t.block("meat")[i].set("customerId", to_string(res->get_int(0)));
 			t.block("meat")[i].set("firstname", res->get_string(1));
 			t.block("meat")[i].set("lastname", res->get_string(2));
@@ -67,6 +68,7 @@ void ListCustomersGet::Process(){
 			t.block("meat")[i].set("activities", to_string(res->get_int(0)));
 			t.block("meat")[i].set("transactions", to_string(res->get_int(0)));
 
+*/
 		}
 
 

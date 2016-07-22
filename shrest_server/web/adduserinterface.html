@@ -18,18 +18,18 @@
 	    Repeat Passord:
 	    <input type="text" name="pass_word" value=""><br><br>
 	    Role:
-	    <select name = "roles" style="width: 150px;">
+	    <select name = "role_id" style="width: 150px;">
 	{% block role_block %}
 	    <option value="{{ role_value }}"> {{ role_show }}</option> <br><br>
 	{% endblock %}
 	    </select><br><br>
 	    Profile:
-	    <select name = "profile" style="width: 150px;">
+	    <select name = "profile_id" style="width: 150px;">
 	{% block profile_block %}
-	    <option name="profile" value="{{ profile_value }}"> {{ profile_show }} </option><br><br>
+	    <option value="{{ profile_value }}"> {{ profile_show }} </option><br><br>
 	{% endblock %}
 	    </select><br><br>
-	    <input type="submit" value="Add" style="width: 150px;>
+	    <input type="submit" value="  Add  " >
 	  </fieldset>
 </form><br>
 

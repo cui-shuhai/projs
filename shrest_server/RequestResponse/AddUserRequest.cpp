@@ -15,7 +15,7 @@
 #include "shrest_utils.h"
 #include "NLTemplate/NLTemplate.h"
 
-#include "activity_table.h"
+#include "user_table.h"
 #include "AddUserRequest.h"
 
 using namespace sqlite;
@@ -36,23 +36,26 @@ void AddUserRequest::Process(){
 		std::map<std::string, std::string> m;
 		utils::parse_kye_value(content, m);
 
-		activity_table c( -1, stoi(m["contact_type"]),stoi( m["contactee"]),stoi( m["contactor"] ), m["create_date"], m["note"]);
-		c.add_activity_table();
 
-		auto id = c.get_activity_tableId();
 		LoaderFile loader; // Let's use the default loader that loads files from disk.
 
 		Template t( loader );
 
-		t.load( "web/addeventresponse.html" );
+		user_table u(m["login_name"], m["pass_word"],stoi( m["new_user"] ), stoi(m["role_id"]), stoi(m["profile_id"]), utils::get_date(), GetUserId());
+
+		if(!u.check_user_exist())
+		{
+			u.add_user_table();
+
+			t.load( "web/adduserresponse.html" );
+		}
+		else
+		{
+			t.load( "web/adduserexistwarning.html" );
+		}
 
 		t.block("meat").repeat(1);
-		t.block("meat")[0].set("event_id", to_string(id));
-		t.block("meat")[0].set("contact_type",m["contact_type"]);
-		t.block("meat")[0].set("contact_id",  m["contactee"]);
-		t.block("meat")[0].set("who_contacts", m["contactor"]);
-		t.block("meat")[0].set("when_created", m["create_date"]);
-		t.block("meat")[0].set("note", m["note"]);
+		t.block("meat")[0].set("login_name",m["login_name"]);
 
 
 		stringstream cs;

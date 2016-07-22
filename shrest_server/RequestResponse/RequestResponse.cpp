@@ -212,3 +212,31 @@ LOG(rq_->method, rq_->path);
 
 
 }
+int RequestResponse::GetUserId(){
+
+	auto cookies = rq_->cookies;
+	if(!cookies.empty()){
+		string key;
+		if(GetSession(key)){
+			cookie_table ct{key};
+			ct.get_cookie_user();
+			return ct.get_user_id();
+		}
+	}
+
+	return -1;
+}
+
+void  RequestResponse::GetUser(int &uid, string& name){
+
+	auto cookies = rq_->cookies;
+	if(!cookies.empty()){
+		string key;
+		if(GetSession(key)){
+			cookie_table ct{key};
+			ct.get_cookie_user();
+			name = ct.get_user_name();
+			uid = ct.get_user_id();
+		}
+	}
+}

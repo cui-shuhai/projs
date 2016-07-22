@@ -29,10 +29,13 @@ void NewCustomerPost::Process(){
 		auto content=rq_->content.string();
 		std::map<std::string, std::string> m;
 		utils::parse_kye_value(content, m);
-		int id = 10;
-		Customer c( id, m["firstname"], m["lastname"],stoi( m["age"] ), m["phone"], m["address"]);
-		c.AddCustomer();
 
+		int id = 10;
+		Customer c(id,  m["company_name"], m["contact_name"], m["personal_title"], 
+			m["first_name"], m["last_name"], m["phone"], m["email"], 
+			m["street_addr"], m["city"], m["state"], m["post_code"], m["country"], 
+			m["bill_addr"], m["ship_addr"]);
+		c.AddCustomer();
 		id = c.GetCustomerId();
 
 		stringstream cs;		
@@ -41,15 +44,8 @@ void NewCustomerPost::Process(){
 
 		Template t( loader );
 
-		t.load( "web/addcontactresponse.html" );
+		t.load( "web/addcustomerrequest.html" );
 
-		t.block("meat").repeat(1);
-		t.block("meat")[0].set("customerId", to_string(id));
-		t.block("meat")[0].set("firstname", m["firstname"]);
-		t.block("meat")[0].set("lastname", m["lastname"]);
-		t.block("meat")[0].set("age", m["age"]);
-		t.block("meat")[0].set("phone", m["phone"]);
-		t.block("meat")[0].set("address", m["address"]);
 
 		t.render( cs ); // Render the template with the variables we've set above
  

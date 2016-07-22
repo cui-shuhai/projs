@@ -24,12 +24,17 @@ user_table::user_table(const string& loginName):
 	 login_name{loginName}
 { }
 
-user_table::user_table(const string& loginName, const string &pass, int employeeId, string& rl, int p):
+user_table::user_table(const string& loginName, const string &pass,
+	 int employeeId, int rl, int p,
+	 string w, int c_id):
 	SqlAccessor(),
 	 login_name{loginName},
+	 pass_word{pass},
 	 employee_id{employeeId},
-	 role{rl},
-	profile{p}
+	 role_id{rl},
+  	 profile_id{p},
+  	 create_date{w},
+  	 creator_id{c_id}
 { }
 
 user_table::~user_table(){
@@ -43,7 +48,7 @@ bool user_table::check_user_exist()
 	q.bind(1, login_name);
 	auto res = q.emit_result();
 
-	return res->get_row_count() == 0;
+	return res->get_int(0) == 1;
 }
 
 bool user_table::check_login_exist()
@@ -54,19 +59,21 @@ bool user_table::check_login_exist()
 	q.bind(2, pass_word);
 	auto res = q.emit_result();
 
-	return res->get_row_count() == 0;
+	return res->get_int(0) == 1;
 }
 
 void user_table::add_user_table(){
 
-	string sql = "INSERT INTO 'user'(login_name, pass_word, employee_id, role, profile) VALUES(?, ?, ?, ?, ?)";
+	string sql = "INSERT INTO 'user'(login_name, pass_word, employee_id, role_id, profile_id, create_date, creator_id) VALUES(?, ?, ?, ?, ?, ?, ?)";
 
 	command c(*conn, sql);
 	c.bind(1, login_name);
 	c.bind(2, pass_word);
 	c.bind(3, employee_id);
-	c.bind(4, role);
-	c.bind(5, profile);
+	c.bind(4, role_id);
+	c.bind(5, profile_id);
+	c.bind(6, create_date);
+	c.bind(7, creator_id);
 	c.emit();
 }
 
@@ -82,15 +89,15 @@ bool user_table::change_user_password(const string & loginName, const string &pa
 }
 
 
-bool user_table::update_user(const string& loginName, const string &pass, int employeeId, string& rl, int p){
+bool user_table::update_user(const string& loginName, const string &pass, int employeeId, int rl, int p){
 	
-	string sql = "UPDATE 'user' SET  pass_word = ?, employee_id = ?, role = ?, profile = ? WHERE login_name = ?";
+	string sql = "UPDATE 'user' SET  pass_word = ?, employee_id = ?, role_id = ?, profile_id = ? WHERE login_name = ?";
 
 	command c(*conn, sql);
 	c.bind(1, pass_word);
 	c.bind(2, employee_id);
-	c.bind(3, role);
-	c.bind(4, profile);
+	c.bind(3, role_id);
+	c.bind(4, profile_id);
 	c.bind(5, login_name);
 	c.emit();
 	return true;
