@@ -45,6 +45,7 @@ article {
 <div class="container">
 
 <header>
+	<h5><a href="/logout">logout</a>
    <h1>iCRM Customer Management System</h1>
 </header>
   
@@ -52,17 +53,18 @@ article {
   <ul>
     <li><a href="/">Home</a></li>
     <li><a href="/listcustomer">Customers</a></li>
-    <li><a href="/listactivity">Activities--</a></li>
-    <li><a href="/listopportunity">Opportunities--</a></li>
+    <li><a href="/listactivity">Activities</a></li>
+    <li><a href="/listopportunity">Opportunities</a></li>
     <li><a href="/listcampaign">Campaigns</a></li>
     <li><a href="/listcase">Cases--</a></li>
     <li><a href="/listsolutions">Solutions--</a></li>
     <li><a href="/addcustomer">Add Contact</a></li>
-    <li><a href="/addevent">Add Activity</a></li>
+    <li><a href="/addactivity">Add Activity</a></li>
     <li><a href="/searchcustomer">Search Contact</a></li>
     <li><a href="/addtask">Add Task</a></li>
     <li><a href="/adduser">Add User</a></li>
     <li><a href="/addtransaction">Add Order</a></li>
+    <li><a href="/addemployee">Add Employee</a></li>
     <li><a href="/customize">Customize--</a></li>	
   </ul>
 </nav>

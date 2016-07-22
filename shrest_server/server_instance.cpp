@@ -150,6 +150,22 @@ int main() {
     };
 	LOG("Adding [addactivityrequest, POST] API");
 
+ 	//listactivity 
+     server.resource["^/listactivity$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("ListActivityRequest", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [ListActivityrequest, GET] API");
+
+ 	//listopportunity 
+     server.resource["^/listopportunity$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("ListOpportunityRequest", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [ListOpportunityrequest, GET] API");
+
 
      //Add transaction interface
      server.resource["^/addtransaction$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {

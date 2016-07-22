@@ -19,6 +19,7 @@ SOURCE=server_instance.cpp \
 	RequestResponse/ListTaskRequest.cpp \
 	RequestResponse/ListCompaignRequest.cpp \
 	RequestResponse/ListActivityRequest.cpp \
+	RequestResponse/ListOpportunityRequest.cpp \
 	RequestResponse/AddUserInterface.cpp \
 	RequestResponse/AddUserRequest.cpp \
 	RequestResponse/AddEmployeeInterface.cpp \

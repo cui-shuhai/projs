@@ -346,34 +346,37 @@ CREATE TABLE 'opportunity'(
 	'contact_id' INT,
 	'creator_id' INT,
 	'close_date' DATE,
-	'pipeline' varchar(20),
+	'pipeline' int,
 	'amount' decimal(8,2),
 	'probability' INT,
 	FOREIGN KEY(assign_to) REFERENCES employee(employee_id),
 	FOREIGN KEY(contact_id) REFERENCES contact(contact_id),
 	FOREIGN KEY(creator_id) REFERENCES employee(employee_id),
-	FOREIGN KEY(pipeline) REFERENCES opportunity_pipeline(pipeline_id),
-	CHECK (pipeline IN ("Prospecting","Qualification", "Needs Analysis","Value Proposition","Identify Decision Makers","Perception Analysis","Proposal / Price Quote","Negotiation / Review", "Closed"))
+	FOREIGN KEY(pipeline) REFERENCES opportunity_pipeline(pipeline_id)
  );
+
 
 CREATE TABLE 'compaign_status'(
 	'status_id' INTEGER,
 	'status_name' varchar(20),
 	'description'  varchar(50)
 );
+
+INSERT INTO 'compaign_status'(status_id, status_name, description)
+VALUES( 1, "xx", "XXXX"),
+	( 2, "xx", "XXXX")
 	
 CREATE TABLE 'compaign'(
 	'compaign_id' INTEGER PRIMARY KEY,
 	'compaign_name' varchar(50),
 	'assign_to'  INT,
-	'status' varchar(20),
+	'status' int,
 	'creator_id' INT,
 	'start_date' DATE,
 	'close_date' DATE,
 	'description' varchar(100),
 	FOREIGN KEY(assign_to) REFERENCES employee(employee_id),
-	FOREIGN KEY(creator_id) REFERENCES employee(employee_id),
-	CHECK (status IN ("XXX", "YYY" ))
+	FOREIGN KEY(creator_id) REFERENCES employee(employee_id)
 );
 	
 CREATE TABLE 'case'(

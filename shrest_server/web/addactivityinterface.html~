@@ -4,7 +4,7 @@
 <form action="addactivityrequest" method="post">
 	  <fieldset>
 	    <legend>Adding activity:</legend>
-	    Name:<br>
+	    Name:
 	    <input type="text" name="contact_type" value="1"><br> 
 
 	    Type:
@@ -29,13 +29,13 @@
  	    </select><br><br>
 
 	    Presider:
-	    <select name ="activity_presider" style="width: 150px;">
+	    <select name ="who_preside" style="width: 150px;">
 	{% block titles %}
 		<option value="{{ presider_value }}"> {{ presider_show }}</option>
 	{% endblock %}
  	    </select><br><br>
 
-	    Note:		
+	    Note:<br>		
 	    <TEXTAREA NAME="note" COLS=50 ROWS=6></TEXTAREA><br><br>	
 	    <input type="submit" value="Submit">
 	  </fieldset>

@@ -15,8 +15,8 @@
 #include "shrest_utils.h"
 #include "NLTemplate/NLTemplate.h"
 
-#include "activity_table.h"
-#include "ListActivityRequest.h"
+#include "opportunity_table.h"
+#include "ListOpportunityRequest.h"
 
 using namespace sqlite;
 using namespace std;
@@ -24,34 +24,42 @@ using namespace NL::Template;
 
 using namespace boost::property_tree;
 
-ListActivityRequest::ListActivityRequest(HttpServer::Response &rs, ShRequest rq): RequestResponse(rs, rq){
+ListOpportunityRequest::ListOpportunityRequest(HttpServer::Response &rs, ShRequest rq): RequestResponse(rs, rq){
 }
 /*parse customer information and put into database*/
 
-void ListActivityRequest::Process(){
+void ListOpportunityRequest::Process(){
 	LOG(rq_->method, rq_->path);
 
 	try {
 		
-		activity_table c;
+		opportunity_table c;
 
 		stringstream cs;
 		
 		//XXX it should be filtered by requester's id.
 
-		auto sql = "SELECT activity_id, activity_name, activity_type.description, activity_status.description,"
-			" activity_priority.description, who_preside, when_created, note "
-			" FROM activity INNER JOIN activity_type ON activity_type.activity_type = activity.activity_type INNER JOIN "
-			" activity_status  ON activity_status.activity_status = activity.activity_status INNER JOIN "
-			" activity_priority ON activity_priority.activity_priority = activity.activity_priority ";
-
-			
-
+		auto uid = to_string(GetUserId());
 	//there is an error from sqlite library, query get_row_count fails (return 0)
-		auto count_sql = "SELECT count(1) FROM activity";
+		string count_sql = "SELECT count(1) "
+			" FROM opportunity INNER JOIN opportunity_pipeline ON opportunity_pipeline.pipeline_id = opportunity.opportunity "
+			" WHERE assign_to = ";
+
+		count_sql.append( uid );
+
 		auto count_query = c.BuildQuery(count_sql);
 		auto count_res = count_query->emit_result();
 		auto rows = count_res->get_int(0);
+
+		//if(rows == 0)
+
+		string sql = "SELECT opportunity, opportunity_name, close_date, amount, opportunity_pipeline.name "
+			" FROM opportunity INNER JOIN opportunity_pipeline ON opportunity_pipeline.pipeline_id = opportunity.opportunity "
+			" WHERE assign_to = ";
+
+		sql.append( uid );
+
+			
 
 		auto task_query = c.BuildQuery(sql);
 
@@ -59,20 +67,18 @@ void ListActivityRequest::Process(){
 		
 		LoaderFile loader; // Let's use the default loader that loads files from disk.
 		Template t( loader );
-		t.load( "web/listactivity.html" );
+		t.load( "web/listopportunity.html" );
 
 		
 		t.block("meat").repeat(rows);
 
 		//all fields must be string
  		for ( int i=0; i < rows; i++, res->next_row() ) {
-			t.block("meat")[i].set("activity_name", res->get_string(1));
-			t.block("meat")[i].set("activity_type", res->get_string(2));
-			t.block("meat")[i].set("activity_status", res->get_string(3));
-			t.block("meat")[i].set("activity_priority", res->get_string(4));
-			t.block("meat")[i].set("who_preside", res->get_string(5));
-			t.block("meat")[i].set("when_created", res->get_string(6));
-			t.block("meat")[i].set("note", res->get_string(7));
+			t.block("meat")[i].set("opportunity", res->get_string(0));
+			t.block("meat")[i].set("opportunity_name", res->get_string(1));
+			t.block("meat")[i].set("close_date", res->get_string(2));
+			t.block("meat")[i].set("amount", res->get_string(3));
+			t.block("meat")[i].set("pipeline", res->get_string(4));
 		}
 
 

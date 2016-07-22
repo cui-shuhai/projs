@@ -249,6 +249,7 @@ INSERT INTO 'activity_priority'(activity_priority, description) VAlUES
 
 CREATE TABLE activity(
 	'activity_id'  INTEGER  PRIMARY KEY,
+	'activity_name' varchar(30),
 	'activity_type'  INT, 
 	'activity_status' INT, /**/
 	'activity_priority' INT,	
@@ -345,15 +346,15 @@ CREATE TABLE 'opportunity'(
 	'contact_id' INT,
 	'creator_id' INT,
 	'close_date' DATE,
-	'pipeline' varchar(20),
+	'pipeline' int,
 	'amount' decimal(8,2),
 	'probability' INT,
 	FOREIGN KEY(assign_to) REFERENCES employee(employee_id),
 	FOREIGN KEY(contact_id) REFERENCES contact(contact_id),
 	FOREIGN KEY(creator_id) REFERENCES employee(employee_id),
-	FOREIGN KEY(pipeline) REFERENCES opportunity_pipeline(pipeline_id),
-	CHECK (pipeline IN ("Prospecting","Qualification", "Needs Analysis","Value Proposition","Identify Decision Makers","Perception Analysis","Proposal / Price Quote","Negotiation / Review", "Closed"))
+	FOREIGN KEY(pipeline) REFERENCES opportunity_pipeline(pipeline_id)
  );
+
 
 CREATE TABLE 'compaign_status'(
 	'status_id' INTEGER,

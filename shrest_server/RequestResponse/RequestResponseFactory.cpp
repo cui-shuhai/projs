@@ -21,6 +21,7 @@
 #include "ListTaskRequest.h"
 #include "ListCompaignRequest.h"
 #include "ListActivityRequest.h"
+#include "ListOpportunityRequest.h"
 #include "LoginRequest.h"
 #include "SearchContactActivity.h"
 #include "RequestResponseFactory.h"
@@ -70,6 +71,8 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 		return unique_ptr<ListCompaignRequest>( new ListCompaignRequest(rs, rq));	
 	if(name == "ListActivityRequest")
 		return unique_ptr<ListActivityRequest>( new ListActivityRequest(rs, rq));	
+	if(name == "ListOpportunityRequest")
+		return unique_ptr<ListOpportunityRequest>( new ListOpportunityRequest(rs, rq));	
 	if(name == "LoginRequest")
 		return unique_ptr<LoginRequest>( new LoginRequest(rs, rq));	
 	
