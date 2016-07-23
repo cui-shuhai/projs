@@ -21,6 +21,9 @@ public:
 	void add_lead_table();
 	int get_lead_table_count();
 	void get_lead_table_profile(std::map<int, string> &m);
+	void get_lead_status(std::map<int, string> &m);
+	void get_lead_source(std::map<int, string> &m);
+	void get_lead_rating(std::map<int, string> &m);
 
 	int get_lead_id(){ return lead_id; }
 	string get_company_name(){ return company_name; }

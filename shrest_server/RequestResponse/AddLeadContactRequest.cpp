@@ -16,7 +16,7 @@
 #include "NLTemplate/NLTemplate.h"
 
 #include "user_table.h"
-#include "AddCustomerRequest.h"
+#include "AddLeadContactRequest.h"
 
 using namespace sqlite;
 using namespace std;
@@ -24,11 +24,11 @@ using namespace NL::Template;
 
 using namespace boost::property_tree;
 
-AddCustomerRequest::AddCustomerRequest(HttpServer::Response &rs, ShRequest rq): RequestResponse(rs, rq){
+AddLeadContactRequest::AddLeadContactRequest(HttpServer::Response &rs, ShRequest rq): RequestResponse(rs, rq){
 }
   
 
-void AddCustomerRequest::Process(){
+void AddLeadContactRequest::Process(){
 	LOG(rq_->method, rq_->path);
 
 	try {
@@ -47,7 +47,7 @@ void AddCustomerRequest::Process(){
 		{
 			u.add_user_table();
 
-			t.load( "web/addcustomerresponse.html" );
+			t.load( "web/adduserresponse.html" );
 		}
 		else
 		{

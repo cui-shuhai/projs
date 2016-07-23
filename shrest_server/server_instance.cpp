@@ -69,6 +69,13 @@ int main() {
     };
 	LOG("Adding [addcustomer, GET] API");
 
+     //AddVendorInterface to test Template
+     server.resource["^/addvendor$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("AddVendorInterface", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [addvendorinterface, GET] API");
      //AddLeadInterface to test Template
      server.resource["^/addlead$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
 
@@ -76,6 +83,13 @@ int main() {
 	processor->Process();        
     };
 	LOG("Adding [addleadinterface, GET] API");
+     //AddLeadRequest to test Template
+     server.resource["^/addleadrequest$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("AddLeadRequest", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [addleadinterface, POST] API");
 
      //AddCustomerContactInterface to test Template
      server.resource["^/addcustomercontact$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
@@ -116,6 +130,20 @@ int main() {
 	processor->Process();        
     };
 	LOG("Adding [adduserrequest, POST] API");
+    //-----------
+     server.resource["^/uploaddocument$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("UploadDocumentInterface", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [adduser, GET] API");
+    //-------------
+     server.resource["^/uploaddocumentrequest$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("UploadDocumentRequest", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [uploaddocumentrequest, POST] API");
 	
     //AddCustomerGet to test Template
      server.resource["^/addemployee$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {

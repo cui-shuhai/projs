@@ -1,20 +1,30 @@
 {% include web/header.html %}
 
 Current avtivities list:
+<table style="width:100%"  border="1">
+<tr>
+	<th>Name</th>
+	<th>Type</th>
+	<th>Status</th>
+	<th>Priority </th>
+	<th>Manager</th>
+	<th>Date planed</th>
+	<th>Note</th>
+</tr>
 {% block meat %}
-
-	Name:  {{ activity_name }} <br><br>
-	Type: {{ activity_type }} <br><br>
-	Status: {{ activity_status }} <br><br>
-	Priority : {{ activity_priority }} <br><br>
-	Manager: {{ who_preside }} <br><br>
-	Date planed: {{ when_created }} <br><br>
-	Note: {{ note }} <br><br>
-<br>
----------
+<tr>
+<td>{{ activity_name }}</td>
+<td>{{ activity_type }}</td>
+<td>{{ activity_status }}</td>
+<td>{{ activity_priority }}</td>
+<td>{{ who_preside }}</td>
+<td>{{ when_created }}</td>
+<td>{{ note }}</td>
+</tr>
 
 {% endblock %}
 
+</table>
 
 {% include web/footer.html %}
  

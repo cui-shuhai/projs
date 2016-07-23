@@ -1,18 +1,27 @@
 {% include web/header.html %}
 
 Current opportunities list:<br><br>
+<table style="width:100%"  border="1">
+<tr>
+	<th>Name</th>
+	<th>Pipeline</th>
+	<th>Amount </th>
+	<th>Close date</th>
+	<th>Detail</th>
+</tr>
+
 {% block meat %}
 
-	Name:  {{ opportunity_name }} <br><br>
-	Pipeline: {{ pipeline }} <br><br>
-	Amount : {{ "amount" }} <br><br>
-	Close date: {{ close_date }} <br>
-	<a href="/ativity/{{ opportunity }}">View detail...</a>
-<br>
----------
-
+<tr>
+<td>{{ opportunity_name }}</td>
+<td>{{ pipeline }}</td>
+<td>{{ amount }}</td>
+<td>{{ close_date }}</td>
+<td>	<a href="/ativity/{{ opportunity }}">View detail...</a></td>
+</tr>
 {% endblock %}
 
+</table>
 
 {% include web/footer.html %}
  

@@ -110,3 +110,40 @@ void lead_table::get_lead_table_profile(std::map<int, string> &m)
 		m[res->get_int(0)] = res->get_string(1);
 	} while(res->next_row());
 }
+
+void lead_table::get_lead_status(std::map<int, string> &m)
+{
+	string sql = "SELECT status, description FROM lead_status";
+
+	query q(*conn, sql);
+	auto res = q.emit_result();
+
+	do{
+		m[res->get_int(0)] = res->get_string(1);
+	} while(res->next_row());
+}
+
+void lead_table::get_lead_source(std::map<int, string> &m)
+{
+	string sql = "SELECT source, description FROM lead_source";
+
+	query q(*conn, sql);
+	auto res = q.emit_result();
+
+	do{
+		m[res->get_int(0)] = res->get_string(1);
+	} while(res->next_row());
+}
+
+void lead_table::get_lead_rating(std::map<int, string> &m)
+{
+	string sql = "SELECT rating, description FROM lead_rating";
+
+	query q(*conn, sql);
+	auto res = q.emit_result();
+
+	do{
+		m[res->get_int(0)] = res->get_string(1);
+	} while(res->next_row());
+}
+

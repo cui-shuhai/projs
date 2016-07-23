@@ -1,0 +1,12 @@
+{% include web/header.html %}
+
+{% block meat %}
+
+{% endblock %}
+
+
+{% include web/footer.html %}
+  
+
+
+

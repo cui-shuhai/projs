@@ -3,8 +3,8 @@
 
 #include "RequestResponse.h"
 
-class AddUserRequest : public RequestResponse{
+class AddCustomerRequest : public RequestResponse{
 public:
-	AddUserRequest(HttpServer::Response &rs, ShRequest rq);
+	AddCustomerRequest(HttpServer::Response &rs, ShRequest rq);
 	void Process() override;
 }; 

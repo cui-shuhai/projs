@@ -1,30 +1,46 @@
 {% include web/header.html %}
 
 Customer List:
+<table style="width:100%"  border="1">
+<tr>
+	<th>Customer</th>
+	<th>Company</th>
+	<th>Contact</th>
+	<th>Personal</th>
+	<th>First</th>
+	<th>Last</th>
+	<th>Phone</th>
+	<th>Email</th>
+	<th>Street</th>
+	<th>City</th>
+	<th>State</th>
+	<th>Post</th>
+	<th>Country</th>
+	<th>Bill</th>
+	<th>Ship</th>
+</tr>
 {% block meat %}
 
-	Customer Id {{ customer_id }} <br><br>
-	Company Name {{ company_name }} <br><br>
-	Contact Name {{ contact_name }} <br><br>
-	Personal Title {{ personal_title }} <br><br>
-	First Name {{ first_name }} <br><br>
-	Last Name {{ last_name }} <br><br>
-	Phone {{ phone }} <br><br>
-	Email {{ email }} <br><br>
-	Street Addr {{ street_addr }} <br><br>
-	City {{ city }} <br><br>
-	State {{ state }} <br><br>
-	Post Code {{ post_code }} <br><br>
-	Country {{ country }} <br><br>
-	Bill Addr {{ bill_addr }} <br><br>
-	Ship Addr {{ ship_addr }} <br><br>
-
-<br>
----------
+<tr>
+<td> {{ customer_id }} </td>
+<td> {{ company_name }} </td>
+<td> {{ contact_name }} </td>
+<td> {{ personal_title }} </td>
+<td> {{ first_name }} </td>
+<td> {{ last_name }} </td>
+<td> {{ phone }} </td>
+<td> {{ email }} </td>
+<td> {{ street_addr }} </td>
+<td> {{ city }} </td>
+<td> {{ state }} </td>
+<td> {{ post_code }} </td>
+<td> {{ country }} </td>
+<td> {{ bill_addr }} </td>
+<td> {{ ship_addr }} </td>
+</tr>
 
 {% endblock %}
-
+</table>
 
 {% include web/footer.html %}
  
-

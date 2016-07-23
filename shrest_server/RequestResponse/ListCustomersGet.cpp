@@ -37,7 +37,8 @@ void ListCustomersGet::Process(){
 
 		stringstream cs;
 		
-		auto sql = "SELECT customer_id, company_name, first_name, last_name, "				" phone, email, street_addr, city, state, country, bill_addr, ship_addr FROM customer";
+		auto sql = "SELECT customer_id, company_name, first_name, last_name, "
+				" phone, email, street_addr, city, state, country, bill_addr, ship_addr, personal_title , post_code   FROM customer";
 
 	//there is an error from sqlite library, query get_row_count fails (return 0)
 		auto count_sql = "SELECT count(*) FROM customer";
@@ -56,19 +57,26 @@ void ListCustomersGet::Process(){
 		
 		t.block("meat").repeat(rows);
 
-		//all fields must be string
- 		for ( int i=0; i < rows; i++, res->next_row() ) {
-/*
-			t.block("meat")[i].set("customerId", to_string(res->get_int(0)));
-			t.block("meat")[i].set("firstname", res->get_string(1));
-			t.block("meat")[i].set("lastname", res->get_string(2));
-			t.block("meat")[i].set("age", to_string(res->get_int(3)));
-			t.block("meat")[i].set("phone", res->get_string(4));
-			t.block("meat")[i].set("address", res->get_string(5));
-			t.block("meat")[i].set("activities", to_string(res->get_int(0)));
-			t.block("meat")[i].set("transactions", to_string(res->get_int(0)));
+		//all fields must be strings
 
-*/
+ 		for ( int i=0; i < rows; i++, res->next_row() ) {
+ 
+			t.block("meat")[i].set("customer_id",to_string( res->get_int(0)));
+			t.block("meat")[i].set("company_name", res->get_string(1));
+			t.block("meat")[i].set("contact_name", res->get_string(2) + " " + res->get_string(3));
+			t.block("meat")[i].set("personal_title", res->get_string(12));
+			t.block("meat")[i].set("first_name", res->get_string(2));
+			t.block("meat")[i].set("last_name", res->get_string(3));
+			t.block("meat")[i].set("phone", res->get_string(4));
+			t.block("meat")[i].set("email", res->get_string(5));
+			t.block("meat")[i].set("street_addr", res->get_string(6));
+			t.block("meat")[i].set("city", res->get_string(7));
+			t.block("meat")[i].set("state", res->get_string(8));
+			t.block("meat")[i].set("country", res->get_string(9));
+			t.block("meat")[i].set("bill_addr", res->get_string(10));
+			t.block("meat")[i].set("ship_addr", res->get_string(11));
+			t.block("meat")[i].set("post_code", res->get_string(13));
+
 		}
 
 

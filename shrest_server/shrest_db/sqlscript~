@@ -146,6 +146,23 @@ CREATE TABLE customer(
 );
 
 
+CREATE TABLE lead_status(
+	'status' int PRIMARY KEY,
+	'description' varchar(20),
+	'detail'  varchar(100)
+);
+
+CREATE TABLE lead_source(
+	'source' int PRIMARY KEY,
+	'description' varchar(20),
+	'detail'  varchar(100)
+);
+
+CREATE TABLE lead_rating(
+	'rating' int PRIMARY KEY,
+	'description' varchar(20),
+	'detail'  varchar(100)
+);
 
 CREATE TABLE lead(
 	lead_id  INTEGER PRIMARY KEY,
@@ -165,7 +182,7 @@ CREATE TABLE lead(
 	ship_addr varchar(50),
 	lead_source int, /*meeting, campaign, etc*/
 	lead_status int, /*open, unqualified, qualified*/
-	lead_rating int, /*cold, warm, hot*/
+	lead_rating int /*cold, warm, hot*/
 );
 
 /*
@@ -436,3 +453,28 @@ Internal comments: This will display any pertinent comments you have included re
 Last activity: This will identify the date the last activity was due to for this case.
 Next activity: This will identify the date the next activity is due for this case.
 */
+
+CREATE TABLE 'vendor'(
+'vendor_id' INTEGER PRIMARY KEY,
+'account_num' varchar(20),
+'contact' int,
+'company_name' varchar(20),
+'credit_rating' int,
+'vendor_status' int, 
+'active_flag' int,
+'web_service_url' varchar(20),
+'last_update' varchar(20),
+FOREIGN KEY(credit_rating) REFERENCES vendor_rate(rate)
+);
+
+CREATE TABLE 'vendor_rate'(
+rate int PRIMARY KEY,
+description varchar(20)
+);
+
+INSERT INTO 'vendor_rate'(rate, description) VALUES
+(1, "Superior"),
+(2, "Excellent"),
+(3, "Above average"),
+(4, "Average"),
+(5, "Below average")

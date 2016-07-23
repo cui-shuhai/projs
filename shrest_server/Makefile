@@ -3,7 +3,9 @@ SOURCE=server_instance.cpp \
 	RequestResponse/RequestResponseFactory.cpp \
 	RequestResponse/RequestResponse.cpp \
 	RequestResponse/AddCustomerGetRequest.cpp \
+	RequestResponse/AddVendorInterface.cpp \
 	RequestResponse/AddLeadInterface.cpp \
+	RequestResponse/AddLeadRequest.cpp \
 	RequestResponse/AddCustomerContactInterface.cpp \
 	RequestResponse/AddLeadContactInterface.cpp \
 	RequestResponse/JsonPostRequest.cpp \
@@ -26,6 +28,8 @@ SOURCE=server_instance.cpp \
 	RequestResponse/ListOpportunityRequest.cpp \
 	RequestResponse/AddUserInterface.cpp \
 	RequestResponse/AddUserRequest.cpp \
+	RequestResponse/UploadDocumentInterface.cpp \
+	RequestResponse/UploadDocumentRequest.cpp \
 	RequestResponse/AddEmployeeInterface.cpp \
 	RequestResponse/AddEmployeeRequest.cpp \
 	RequestResponse/LoginRequest.cpp \
@@ -40,6 +44,7 @@ SOURCE=server_instance.cpp \
 	shrest_db/task_table.cpp \
 	shrest_db/cookie_table.cpp \
 	shrest_db/user_table.cpp \
+	shrest_db/vendor_table.cpp \
 	shrest_db/employee_table.cpp \
 	shrest_db/employee_title.cpp \
 	shrest_db/employee_department.cpp \

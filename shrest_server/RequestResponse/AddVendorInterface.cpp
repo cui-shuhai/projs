@@ -1,5 +1,5 @@
 
-#include <string>
+
 
 #define BOOST_SPIRIT_THREADSAFE
 #include <boost/property_tree/ptree.hpp>
@@ -15,9 +15,8 @@
 #include "shrest_utils.h"
 #include "NLTemplate/NLTemplate.h"
 
-#include "customer_table.h"
-#include "contact_table.h"
-#include "AddCustomerContactInterface.h"
+#include "vendor_table.h"
+#include "AddVendorInterface.h"
 
 using namespace sqlite;
 using namespace std;
@@ -25,45 +24,42 @@ using namespace NL::Template;
 
 using namespace boost::property_tree;
 
-AddCustomerContactInterface::AddCustomerContactInterface(HttpServer::Response &rs, ShRequest rq): RequestResponse(rs, rq){
+AddVendorInterface::AddVendorInterface(HttpServer::Response &rs, ShRequest rq): RequestResponse(rs, rq){
 }
-  
 
-void AddCustomerContactInterface::Process(){
+/*parse customer information and put into database*/
+void AddVendorInterface::Process(){
 	LOG(rq_->method, rq_->path);
-
-	try {
-
+	
+	try {		
+		stringstream cs;
+				
 		LoaderFile loader; // Let's use the default loader that loads files from disk.
 		Template t( loader );
-
-		t.load( "web/addcontactinterface.html" );
-
-		t.block("meat").repeat(1);
-
-		t.block("meat")[0].set("Information_id", "New customer contact:");
-
-		t.block("meat")[0].set("newcontactaction", "addcustomercontactrequest");
-		t.block("meat")[0].set("contact_source", "to add contact");
-
-		Block &block =t.block("meat")[0].block("from_block");
-
-		Customer ct;
-		std::map<int, string> m;
-		ct.GetCustomerProfile(m); 
+		t.load( "web/addsupplierinterface.html" );
+		t.block("meat").repeat(1); 
 		
-		auto rows = m.size();
 
-		block.repeat(rows);
+		//profile
+		if(true){
+			vendor_table pt;
+			std::map<int, string> ratings;
+			pt.get_vendor_rating(ratings);
+			auto rows = ratings.size();
 
-		int i = 0;
-		for(const auto & v : m){
-			block[i].set("from_value", to_string(v.first));
-			block[i].set("from_show", v.second);
+			Block & block = t.block( "meat" )[ 0 ].block( "credit_rating_block" );
+			if(rows > 0)
+				block.repeat(rows);
+			int i = 0;
+			for(const auto & v : ratings){
+				block[i].set("credit_rating_value", to_string(v.first));
+				block[i].set("credit_rating_show", v.second);
+				++i;
+			}
 		}
 
-		stringstream cs;
 		t.render( cs ); // Render the template with the variables we've set above
+ 
 		
 		cs.seekp(0, ios::end);
 		rs_ <<  cs.rdbuf();
@@ -74,6 +70,3 @@ void AddCustomerContactInterface::Process(){
 		rs_ << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n" << e.what();
 	}
 }
-
-
-

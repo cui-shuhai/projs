@@ -40,6 +40,7 @@ void AddLeadContactInterface::Process(){
 		t.load( "web/addcontactinterface.html" );
 
 		t.block("meat").repeat(1);
+		t.block("meat")[0].set("Information_id", "New lead contact:");
 
 		t.block("meat")[0].set("newcontactaction", "addleadcontactrequest");
 		t.block("meat")[0].set("contact_source", "to add contact");

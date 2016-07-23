@@ -1,0 +1,39 @@
+{% include web/header.html %}
+
+{% block meat %}
+<form action="addvendorrequest" method="post">
+	  <fieldset>
+	    <legend></legend>
+account num:
+ <input type="text" name="{{ account_num }}" value=""><br><br>
+contact:
+ <input type="text" name="{{ contact }}" value=""><br><br>
+company name:
+ <input type="text" name="{{ company_name }}" value=""><br><br>
+<td>credit rating: 
+    <select name ="credit_rating" style="width: 150px;">
+{% block credit_rating_block %}
+	<option value="{{ credit_rating_value }}"> {{ credit_rating_show }}</option>
+{% endblock %}
+    </select>
+<br><br>
+vendor status:
+ <input type="text" name="{{ vendor_status }}" value=""><br><br>
+active flag:
+ <input type="text" name="{{ active_flag }}" value=""><br><br>
+web service url:
+ <input type="text" name="{{ web_service_url }}" value=""><br><br>
+last update:
+ <input type="text" name="{{ last_update }}" value=""><br><br>
+	    <input type="submit" value="  Add  " >
+	  </fieldset>
+</form><br>
+
+{% endblock %}
+
+
+{% include web/footer.html %}
+  
+
+
+

@@ -1,18 +1,28 @@
 {% include web/header.html %}
 
-Current opportunities list:
+Current cases list:
+<table style="width:100%"  border="1">
+<tr>
+	<th>Subject</th>
+	<th>Status </th>
+	<th>Priority</th>
+	<th>Last act</th>
+	<th>Next act</th>
+	<th>View detail</th>
+</tr>
 {% block meat %}
+<tr>
 
-	Subject:  {{ subject }} <br><br>
-	Status : {{ status }} <br><br>
-	Priority: {{ priority }} <br>
-	Last act: {{ last_activity }} <br>
-	Next act: {{ next_activity }} <br>
-	<a href="/case/{{ case_id }}">View detail...</a>
-<br>
----------
+<td>{{ subject }}</td>
+<td>{{ status }}</td>
+<td>{{ priority }}</td>
+<td>{{ last_activity }}</td>
+<td>{{ next_activity }}</td>
+<td>	<a href="/case/{{ case_id }}">View detail...</a></td>
+</tr>
 
 {% endblock %}
+</table>
 
 {% include web/footer.html %}
  

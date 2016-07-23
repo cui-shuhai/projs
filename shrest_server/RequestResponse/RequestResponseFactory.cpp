@@ -3,7 +3,9 @@
 #include "JsonPostRequest.h"
 #include "PieGetRequest.h"
 #include "AddCustomerGetRequest.h"
+#include "AddVendorInterface.h"
 #include "AddLeadInterface.h"
+#include "AddLeadRequest.h"
 #include "AddCustomerContactInterface.h"
 #include "AddLeadContactInterface.h"
 #include "NewCustomerPost.h"
@@ -19,6 +21,8 @@
 #include "AddTaskRequest.h"
 #include "AddUserInterface.h"
 #include "AddUserRequest.h"
+#include "UploadDocumentInterface.h"
+#include "UploadDocumentRequest.h"
 #include "AddEmployeeInterface.h"
 #include "AddEmployeeRequest.h"
 #include "ListTaskRequest.h"
@@ -38,8 +42,12 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 		return unique_ptr<PieGetRequest>( new PieGetRequest(rs, rq));
 	if(name == "AddCustomerGet")
 		return unique_ptr<AddCustomerGetRequest>( new AddCustomerGetRequest(rs, rq));
+	if(name == "AddVendorInterface")
+		return unique_ptr<AddVendorInterface>( new AddVendorInterface(rs, rq));
 	if(name == "AddLeadInterface")
 		return unique_ptr<AddLeadInterface>( new AddLeadInterface(rs, rq));
+	if(name == "AddLeadRequest")
+		return unique_ptr<AddLeadRequest>( new AddLeadRequest(rs, rq));
 	if(name == "AddCustomerContactInterface")
 		return unique_ptr<AddCustomerContactInterface>( new AddCustomerContactInterface(rs, rq));
 	if(name == "AddLeadContactInterface")
@@ -72,6 +80,10 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 		return unique_ptr<AddUserInterface>( new AddUserInterface(rs, rq));	
 	if(name == "AddUserRequest")
 		return unique_ptr<AddUserRequest>( new AddUserRequest(rs, rq));	
+	if(name == "UploadDocumentInterface")
+		return unique_ptr<UploadDocumentInterface>( new UploadDocumentInterface(rs, rq));	
+	if(name == "UploadDocumentRequest")
+		return unique_ptr<UploadDocumentRequest>( new UploadDocumentRequest(rs, rq));	
 	if(name == "AddEmployeeInterface")
 		return unique_ptr<AddEmployeeInterface>( new AddEmployeeInterface(rs, rq));	
 	if(name == "AddEmployeeRequest")

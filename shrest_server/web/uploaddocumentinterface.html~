@@ -1,0 +1,19 @@
+{% include web/header.html %}
+
+{% block meat %}
+
+<form action="uploaddocumentrequest" method="post" name="file_name" enctype="text/plain" >
+<input type="file" name="fileField"><br /><br />
+<input type="submit" name="submit" value="Submit">
+</form>
+
+
+git ls-files --deleted -z | xargs -0 git rm 
+enctype="multipart/form-data"
+
+{% endblock %}
+
+
+{% include web/footer.html %}
+  
+
