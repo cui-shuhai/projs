@@ -1,0 +1,18 @@
+{% include web/header.html %}
+
+Current opportunities list:
+{% block meat %}
+
+	Name:  {{ campaign_name }} <br><br>
+	Status : {{ "status" }} <br><br>
+	Description: {{ description }} <br>
+	Start: {{ start_date }} <br>
+	<a href="/campaign/{{ campaign_id }}">View detail...</a>
+<br>
+---------
+
+{% endblock %}
+
+
+{% include web/footer.html %}
+ 

@@ -16,6 +16,7 @@ public:
 	~cookie_table();
 	
 	void add_cookie_table();
+	void delete_cookie_table();
 	bool get_cookie_user();
 	int get_user_id();
 

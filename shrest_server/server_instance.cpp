@@ -207,20 +207,29 @@ int main() {
     };
 	LOG("Adding [ListTaskrequest, POST] API");
 
- 	//Add transaction request
-     server.resource["^/listcompaign$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+ 	//Add listcampaignrequest request
+     server.resource["^/listcampaign$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
 
-	auto processor = RequestResponseFactory::CreateProcessor("ListCompaignRequest", response, request);	
+	auto processor = RequestResponseFactory::CreateProcessor("ListCampaignRequest", response, request);	
 	processor->Process();        
     };
-	LOG("Adding [listcompaignrequest, POST] API");
-	//Add transaction request
+	LOG("Adding [listcampaignrequest, POST] API");
+
+	//Add login request
      server.resource["^/loginrequest$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
 
 	auto processor = RequestResponseFactory::CreateProcessor("LoginRequest", response, request);	
 	processor->Process();        
     };
-	LOG("Adding [ListTaskrequest, POST] API");
+	LOG("Adding [listloginrequest, POST] API");
+
+	//Add logout request
+     server.resource["^/logout$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("LogoutRequest", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding Logout  GET] API");
 
 
      //Search Contact activities

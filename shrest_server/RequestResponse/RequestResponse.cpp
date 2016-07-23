@@ -17,7 +17,7 @@
 #include "customer_table.h"
 #include "user_table.h"
 #include "cookie_table.h"
-#include "compaign_table.h"
+#include "campaign_table.h"
 #include "task_table.h"
 #include "activity_table.h"
 #include "opportunity_table.h"
@@ -56,7 +56,7 @@ LOG(rq_->method, rq_->path);
 	try {
 		
 		//check list of tables to show progress, what to do
-		//compaigns, opportunities, activities, 
+		//campaigns, opportunities, activities, 
 		string key;
 		GetSession(key);
 
@@ -69,16 +69,16 @@ LOG(rq_->method, rq_->path);
 		t.load( "web/userdashboard.html");
 		t.block("meat").repeat(1); 
 
-		//Compaigns
+		//Campaigns
 		if(true){
-			string compaign_sql = "SELECT compaign_name, status, start_date, close_date, description FROM compaign WHERE assign_to = ";
-			compaign_sql.append(to_string(user_id)).append(" ORDER BY status");
+			string campaign_sql = "SELECT campaign_name, status, start_date, close_date, description FROM campaign WHERE assign_to = ";
+			campaign_sql.append(to_string(user_id)).append(" ORDER BY status");
 		
-			compaign_table ct;
-			auto cp_query = ct.BuildQuery(compaign_sql);
+			campaign_table ct;
+			auto cp_query = ct.BuildQuery(campaign_sql);
 			auto res = cp_query->emit_result();
 
-			string count_sql = "SELECT count(*) FROM compaign WHERE assign_to = ";
+			string count_sql = "SELECT count(*) FROM campaign WHERE assign_to = ";
 			count_sql.append(to_string(user_id));
 
 			auto count_query = ct.BuildQuery(count_sql);
@@ -87,9 +87,9 @@ LOG(rq_->method, rq_->path);
 
 	
 
-			t.block("meat")[0].set("compaign_num", to_string(rows));
+			t.block("meat")[0].set("campaign_num", to_string(rows));
 
-			Block & block = t.block( "meat" )[ 0 ].block( "compaign_block" );
+			Block & block = t.block( "meat" )[ 0 ].block( "campaign_block" );
 
 			block.repeat(rows);
 			//all fields must be string

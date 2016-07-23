@@ -17,7 +17,7 @@ SOURCE=server_instance.cpp \
 	RequestResponse/AddTaskInterface.cpp \
 	RequestResponse/AddTaskRequest.cpp \
 	RequestResponse/ListTaskRequest.cpp \
-	RequestResponse/ListCompaignRequest.cpp \
+	RequestResponse/ListCampaignRequest.cpp \
 	RequestResponse/ListActivityRequest.cpp \
 	RequestResponse/ListOpportunityRequest.cpp \
 	RequestResponse/AddUserInterface.cpp \
@@ -25,6 +25,7 @@ SOURCE=server_instance.cpp \
 	RequestResponse/AddEmployeeInterface.cpp \
 	RequestResponse/AddEmployeeRequest.cpp \
 	RequestResponse/LoginRequest.cpp \
+	RequestResponse/LogoutRequest.cpp \
 	RequestResponse/SearchContactActivity.cpp \
 	utils/shrest_utils.cpp \
 	shrest_db/customer_table.cpp \
@@ -38,7 +39,11 @@ SOURCE=server_instance.cpp \
 	shrest_db/employee_department.cpp \
 	shrest_db/employee_role.cpp \
 	shrest_db/employee_profile.cpp \
-	shrest_db/compaign_table.cpp \
+	shrest_db/campaign_table.cpp \
+	shrest_db/case_status.cpp \
+	shrest_db/case_priority.cpp \
+	shrest_db/case_type.cpp \
+	shrest_db/case_reason.cpp \
 	shrest_db/opportunity_table.cpp \
 	shrest_db/SqlAccessor.cpp \
 	shrest_db/SqlAccessorFactory.cpp

@@ -45,10 +45,7 @@ void IcrmIndex::Process(){
 				}
 			}
 			else{
-				LOG("cookie corrupted\n");
-				rs_ << "cookie corrupted, please clear cookie and relogin\n";
-				rs_.flush();
-				return;	
+				LOG("cookie key empry (reset), redirect login\n");
 			}	   	
 		}
 		

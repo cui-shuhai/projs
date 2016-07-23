@@ -33,6 +33,14 @@ cookie_table::cookie_table(const string& sessionId, const string& username, cons
 
 cookie_table::~cookie_table(){}
 
+void cookie_table::delete_cookie_table()
+{
+	string sql = "DELETE FROM cookie WHERE session_id = '";
+	sql.append(session_id).append("'");
+
+	command c(*conn, sql);
+	c.emit();
+}
 void cookie_table::add_cookie_table(){
 
 	string sql = "INSERT INTO 'cookie'(session_id, user_name, password) VALUES(?, ?, ?)";
