@@ -199,7 +199,7 @@ CREATE TABLE contact(
 	'email' varchar(32),
 	'twitter' varchar(32),
 	'linkedin' varchar(32),
-	'faceboot' varchar(32),
+	'facebook' varchar(32),
 	'job_title' varchar(32),
 	'company_id' int ,
 	'when_met' Date NOT NULL,
@@ -212,6 +212,7 @@ CREATE TABLE contact(
 	FOREIGN KEY(status) REFERENCES contact_status(status),
 	FOREIGN KEY(company_id) REFERENCES company(company_id)
 );
+
 
 
 #activities 
@@ -367,14 +368,14 @@ CREATE TABLE 'campaign_status'(
 	'description'  varchar(50)
 );
 
-INSERT INTO 'campaign_status'(status_id, status_name, description)
+INSERT INTO 'campaign_status'(status_id, status_name, description) VALUES
 	(0, "Proposed", "Active"),
-	(1, "Ready", "Active"), To Launch
+	(1, "Ready", "Active"),
 	(2, "Launched", "Active"),
 	(3, "Completed", "Active"),
 	(4, "Canceled", "Active"),
 	(5, "Suspended", "Active"),
-	(6, "Inactive", "Inactive")
+	(6, "Inactive", "Inactive");
 	
 CREATE TABLE 'campaign'(
 	'campaign_id' INTEGER PRIMARY KEY,
@@ -393,24 +394,24 @@ CREATE TABLE 'campaign'(
 CREATE TABLE 'case_status'(
 	'status' INT PRIMARY KEY,
 	'description' varchar(20)
-};
+);
 
 CREATE TABLE 'case_priority'(
 	'priority' INT PRIMARY KEY,
 	'description' varchar(20)
-};
+);
 
 CREATE TABLE 'case_type'(
 	'type' INT PRIMARY KEY,
 	'description' varchar(20)
-};
+);
 
 CREATE TABLE 'case_reason'(
 	'reason' INT PRIMARY KEY,
 	'description' varchar(20)
-};
+);
 
-CREATE TABLE 'case'(
+CREATE TABLE 'case_tbl'(
 	'case_id' INTEGER PRIMARY KEY,
 	'assign_to' INT,
 	'contact' INT,

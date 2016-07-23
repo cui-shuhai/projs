@@ -32,6 +32,8 @@ void LoginRequest::Process(){
 	LOG(rq_->method, rq_->path);
 	try {
 
+		stringstream cs;
+
 		auto content=rq_->content.string();
 		std::map<std::string, std::string> m;
 		utils::parse_kye_value(content, m);
@@ -40,8 +42,15 @@ void LoginRequest::Process(){
 		user_table ut(m["username"]);
 		ut.set_pass_word(m["password"]);
 		if(!ut.check_login_exist()){
+			LoaderFile loader; // Let's use the default loader that loads files from disk.
+			Template t( loader );
+			t.load( "web/loginfailure.html" );
 
-			rs_<< "User: " <<  m["username"] << " not exist" << endl;
+			t.render( cs ); // Render the template with the variables we've set above
+	 
+			
+			cs.seekp(0, ios::end);
+			rs_ <<  cs.rdbuf();
 			rs_.flush();
 			return;
 		}

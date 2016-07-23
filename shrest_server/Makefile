@@ -3,6 +3,7 @@ SOURCE=server_instance.cpp \
 	RequestResponse/RequestResponseFactory.cpp \
 	RequestResponse/RequestResponse.cpp \
 	RequestResponse/AddCustomerGetRequest.cpp \
+	RequestResponse/AddCustomerContactInterface.cpp \
 	RequestResponse/JsonPostRequest.cpp \
 	RequestResponse/ListCustomersGet.cpp \
 	RequestResponse/NewCustomerPost.cpp \
@@ -18,6 +19,7 @@ SOURCE=server_instance.cpp \
 	RequestResponse/AddTaskRequest.cpp \
 	RequestResponse/ListTaskRequest.cpp \
 	RequestResponse/ListCampaignRequest.cpp \
+	RequestResponse/ListCaseRequest.cpp \
 	RequestResponse/ListActivityRequest.cpp \
 	RequestResponse/ListOpportunityRequest.cpp \
 	RequestResponse/AddUserInterface.cpp \
@@ -29,6 +31,7 @@ SOURCE=server_instance.cpp \
 	RequestResponse/SearchContactActivity.cpp \
 	utils/shrest_utils.cpp \
 	shrest_db/customer_table.cpp \
+	shrest_db/contact_table.cpp \
 	shrest_db/activity_table.cpp \
 	shrest_db/activity_status.cpp \
 	shrest_db/task_table.cpp \
@@ -40,6 +43,7 @@ SOURCE=server_instance.cpp \
 	shrest_db/employee_role.cpp \
 	shrest_db/employee_profile.cpp \
 	shrest_db/campaign_table.cpp \
+	shrest_db/case_table.cpp \
 	shrest_db/case_status.cpp \
 	shrest_db/case_priority.cpp \
 	shrest_db/case_type.cpp \

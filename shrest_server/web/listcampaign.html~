@@ -13,6 +13,5 @@ Current opportunities list:
 
 {% endblock %}
 
-
 {% include web/footer.html %}
  

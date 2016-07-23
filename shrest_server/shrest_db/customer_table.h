@@ -52,6 +52,8 @@ public:
 
 	void AddCustomer();
 	int GetCustomerId();
+	int GetCustomerCount();
+	void GetCustomerProfile(std::map<int, string> &m);
 
 private:
 	int customer_id;

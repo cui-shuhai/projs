@@ -1,12 +1,12 @@
 {% include web/header.html %}
 
-Current opportunities list:
+Current campaign list:<br><br>
 {% block meat %}
 
 	Name:  {{ campaign_name }} <br><br>
-	Status : {{ "status" }} <br><br>
-	Description: {{ description }} <br>
-	Start: {{ start_date }} <br>
+	Status : {{ status }} <br><br>
+	Description: {{ description }} <br><br>
+	Start: {{ start_date }} <br><br>
 	<a href="/campaign/{{ campaign_id }}">View detail...</a>
 <br>
 ---------

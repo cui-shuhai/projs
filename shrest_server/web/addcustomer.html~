@@ -6,7 +6,7 @@
 	    <legend>Customer Information:</legend>
 	Company Name: <input type="text" name="company_name" value=""> <br><br>
 	Contact Name: <input type="text" name="contact_name" value=""> <br><br>
-	Mr/Ms: <input type="text" name="personal_title" value=""> <br><br>
+	Personal Title: <input type="text" name="personal_title" value=""> <br><br>
 	First Name: <input type="text" name="first_name" value=""> <br><br>
 	Last Name: <input type="text" name="last_name" value=""> <br><br>
 	Phone: <input type="text" name="phone" value=""> <br><br>

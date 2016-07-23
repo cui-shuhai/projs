@@ -25,35 +25,35 @@ case_table::case_table(int id):SqlAccessor(),
 
 case_table::case_table( int case_id_, int assign_to_, int contact_, string subject_, int priority_, int status_, int type_, int reason_, string last_activity_, string next_activity_):
 	SqlAccessor(),
-	case_id,{ case_id,_ },
-	assign_to,{ assign_to,_ },
-	contact,{ contact,_ },
-	subject,{ subject,_ },
-	priority,{ priority,_ },
-	status,{ status,_ },
-	type,{ type,_ },
-	reason,{ reason,_ },
-	string last_activity,
-	string next_activity
+	case_id{ case_id_ },
+	assign_to{ assign_to_ },
+	contact{ contact_ },
+	subject{ subject_ },
+	priority{ priority_ },
+	status{ status_ },
+	type{ type_ },
+	reason{ reason_ },
+	last_activity{ last_activity_},
+	next_activity{ next_activity_}
 { }
 
 case_table::~case_table(){}
 
 void case_table::add_case_table(){
 
-	string sql = "INSERT INTO 'case'( assign_to, contact, subject, priority, status, type, reason, last_activity, next_activity )"
+	string sql = "INSERT INTO 'case_tbl'( assign_to, contact, subject, priority, status, type, reason, last_activity, next_activity )"
 			 "VALUES(?,?, ? ?, ?,?, ?, ?, ? )";
 
 	command c(*conn, sql);
-	c.bing(1, assign_to);
-	c.bing(2, contact);
-	c.bing(3, subject);
-	c.bing(4, priority);
-	c.bing(5, status);
-	c.bing(6, type);
-	c.bing(7, reason);
-	c.bing(8, last_activity);
-	c.bing(9, next_activity);
+	c.bind(1, assign_to);
+	c.bind(2, contact);
+	c.bind(3, subject);
+	c.bind(4, priority);
+	c.bind(5, status);
+	c.bind(6, type);
+	c.bind(7, reason);
+	c.bind(8, last_activity);
+	c.bind(9, next_activity);
 
 	c.emit();
 

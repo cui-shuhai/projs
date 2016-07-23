@@ -69,6 +69,14 @@ int main() {
     };
 	LOG("Adding [addcustomer, GET] API");
 
+     //AddCustomerContactInterface to test Template
+     server.resource["^/addcustomercontact$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("AddCustomerContactInterface", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [addcustomercontact, GET] API");
+
     //NewCustomerPost to connecting to mysql
      server.resource["^/newcustomer$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
 
@@ -213,7 +221,15 @@ int main() {
 	auto processor = RequestResponseFactory::CreateProcessor("ListCampaignRequest", response, request);	
 	processor->Process();        
     };
-	LOG("Adding [listcampaignrequest, POST] API");
+	LOG("Adding [listcampaignrequest, GET] API");
+
+ 	//Add listcaserequest request
+     server.resource["^/listcase$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("ListCaseRequest", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [listcaserequest, GET] API");
 
 	//Add login request
      server.resource["^/loginrequest$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {

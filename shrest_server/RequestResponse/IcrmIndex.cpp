@@ -45,7 +45,7 @@ void IcrmIndex::Process(){
 				}
 			}
 			else{
-				LOG("cookie key empry (reset), redirect login\n");
+				LOG("cookie key empty (reset), redirect login\n");
 			}	   	
 		}
 		

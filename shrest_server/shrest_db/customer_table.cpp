@@ -84,3 +84,24 @@ int Customer::GetCustomerId()
 {	
 	return customer_id;
 }
+
+int Customer::GetCustomerCount(){
+	auto count_sql = "SELECT count(1) FROM customer";
+
+	query count_query(*conn, count_sql);
+	auto count_res = count_query.emit_result();
+	return count_res->get_int(0);
+}
+
+void Customer::GetCustomerProfile(std::map<int, string> &m)
+{
+
+	string sql = "SELECT customer_id, company_name FROM customer";
+
+	query q(*conn, sql);
+	auto res = q.emit_result();
+
+	do{
+		m[res->get_int(0)] = res->get_string(1);
+	} while(res->next_row());
+}

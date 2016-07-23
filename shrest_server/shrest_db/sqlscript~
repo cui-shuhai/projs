@@ -163,7 +163,7 @@ CREATE TABLE lead(
 	country char(20),
 	bill_addr varchar(50),
 	ship_addr varchar(50),
-	lead_source int, /*meeting, compaign, etc*/
+	lead_source int, /*meeting, campaign, etc*/
 	lead_status int, /*open, unqualified, qualified*/
 	lead_ratig int, /*cold, warm, hot*/
 );
@@ -177,12 +177,20 @@ Opt out of marketing means the contact will be flagged to not receive marketing 
 Opt out of billing means the contact will be flagged to not receive billing mail, emails, or phone calls
 */
 
+CREATE TABLE 'contact_from'(
+	'from' INT PRIMARY KEY,
+	'description' varchar(20)
+};
+
+INSERT INTO 'contact_from'(from, description)
+VALUES(1, "Lead"), (2, "Customer"), (3, "Vendor"), (4, "Employee"), (5, "Other")
+
 CREATE TABLE contact(
 	'contact_id' INTEGER PRIMARY KEY,
 	'status' int DEFAULT 1,
 	'firstName' char(20), 
 	'lastName' char(20), 
-	'age' int, 
+	'contact_from' int,
 	'address' varchar(100),
 	'primary_phone' char(20), 
 	'alt_phone' char(20),  
@@ -196,9 +204,6 @@ CREATE TABLE contact(
 	'company_id' int ,
 	'when_met' Date NOT NULL,
 	'where_met' varchar(100),
-	'birthday' Data,
-	'married' BOOL,
-	'children' int,
 	'time_zone' char(3),
 	'main_contact' int,
 	'out_of_marketing' int,
@@ -356,37 +361,68 @@ CREATE TABLE 'opportunity'(
  );
 
 
-CREATE TABLE 'compaign_status'(
+CREATE TABLE 'campaign_status'(
 	'status_id' INTEGER,
 	'status_name' varchar(20),
 	'description'  varchar(50)
 );
+
+INSERT INTO 'campaign_status'(status_id, status_name, description) VALUES
+	(0, "Proposed", "Active"),
+	(1, "Ready", "Active"),
+	(2, "Launched", "Active"),
+	(3, "Completed", "Active"),
+	(4, "Canceled", "Active"),
+	(5, "Suspended", "Active"),
+	(6, "Inactive", "Inactive");
 	
-CREATE TABLE 'compaign'(
-	'compaign_id' INTEGER PRIMARY KEY,
-	'compaign_name' varchar(50),
+CREATE TABLE 'campaign'(
+	'campaign_id' INTEGER PRIMARY KEY,
+	'campaign_name' varchar(50),
 	'assign_to'  INT,
-	'status' varchar(20),
+	'status' int,
 	'creator_id' INT,
 	'start_date' DATE,
 	'close_date' DATE,
 	'description' varchar(100),
 	FOREIGN KEY(assign_to) REFERENCES employee(employee_id),
-	FOREIGN KEY(creator_id) REFERENCES employee(employee_id),
-	CHECK (status IN ("XXX", "YYY" ))
+	FOREIGN KEY(creator_id) REFERENCES employee(employee_id)
 );
 	
-CREATE TABLE 'case'(
+
+CREATE TABLE 'case_status'(
+	'status' INT PRIMARY KEY,
+	'description' varchar(20)
+);
+
+CREATE TABLE 'case_priority'(
+	'priority' INT PRIMARY KEY,
+	'description' varchar(20)
+);
+
+CREATE TABLE 'case_type'(
+	'type' INT PRIMARY KEY,
+	'description' varchar(20)
+);
+
+CREATE TABLE 'case_reason'(
+	'reason' INT PRIMARY KEY,
+	'description' varchar(20)
+);
+
+CREATE TABLE 'case_tbl'(
 	'case_id' INTEGER PRIMARY KEY,
 	'assign_to' INT,
-	'contactee' INT,
+	'contact' INT,
 	'subject' varchar(100),
-	'priority' char(10),
+	'priority' int,
+	'status' int,
+	'type' int,
+	'reason' int,
 	'last_activity' DATE,
 	'next_activity' DATE,
 	FOREIGN KEY(assign_to) REFERENCES employee(employee_id),
-	FOREIGN KEY(contactee) REFERENCES contact(contact_id),
- 	CHECK( priority IN ("low", "medium", "high"))
+	FOREIGN KEY(contact) REFERENCES contact(contact_id)
 );
 /*
 Case #: This number is automatically generated in an ascending order each time you create a case in Method. You can search and order the grid using these numbers.

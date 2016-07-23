@@ -52,8 +52,8 @@ void ListCaseRequest::Process(){
 
 		//string count_sql = "SELECT count(*) FROM case WHERE assign_to = ";
 		//count_sql.append(to_string(user_id));
-		string count_sql = "SELECT count(*) FROM case INNER JOIN case_status ON case.status = case_status.status "
-				"INNER JOIN case_priority ON case.priority = case_priority.priority ";
+		string count_sql = "SELECT count(*) FROM case_tbl INNER JOIN case_status ON case_tbl.status = case_status.status "
+				"INNER JOIN case_priority ON case_tbl.priority = case_priority.priority ";
 
 		auto count_query = ct.BuildQuery(count_sql);
 		auto count_res = count_query->emit_result();
@@ -62,9 +62,9 @@ void ListCaseRequest::Process(){
 		if(rows > 0){
 		
 			string case_sql = "SELECT case_id, subject, case_status.description, case_priority.description, last_activity, next_activity "
-				"FROM case INNER JOIN case_status ON case.status = case_status.status "
-				"INNER JOIN case_priority ON case.priority = case_priority.priority "
-				"ORDER By case.priority";
+				"FROM case_tbl INNER JOIN case_status ON case_tbl.status = case_status.status "
+				"INNER JOIN case_priority ON case_tbl.priority = case_priority.priority "
+				"ORDER By case_tbl.priority";
 
 			case_table ct;
 			auto cp_query = ct.BuildQuery(case_sql);
@@ -73,7 +73,7 @@ void ListCaseRequest::Process(){
 			t.block("meat").repeat(rows);
 			//all fields must be string
 	 		for ( int i=0; i < rows; i++, res->next_row() ) {
-				t.block("meat")[i].set("case_id", to_string(res->get_string(0)));
+				t.block("meat")[i].set("case_id", to_string(res->get_int(0)));
 				t.block("meat")[i].set("subject", res->get_string(1));
 				t.block("meat")[i].set("status", res->get_string(2));
 				t.block("meat")[i].set("priority", res->get_string(3));

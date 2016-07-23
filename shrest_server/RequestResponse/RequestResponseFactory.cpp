@@ -3,6 +3,7 @@
 #include "JsonPostRequest.h"
 #include "PieGetRequest.h"
 #include "AddCustomerGetRequest.h"
+#include "AddCustomerContactInterface.h"
 #include "NewCustomerPost.h"
 #include "ListCustomersGet.h"
 #include "IcrmIndex.h"
@@ -20,6 +21,7 @@
 #include "AddEmployeeRequest.h"
 #include "ListTaskRequest.h"
 #include "ListCampaignRequest.h"
+#include "ListCaseRequest.h"
 #include "ListActivityRequest.h"
 #include "ListOpportunityRequest.h"
 #include "LoginRequest.h"
@@ -34,6 +36,8 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 		return unique_ptr<PieGetRequest>( new PieGetRequest(rs, rq));
 	if(name == "AddCustomerGet")
 		return unique_ptr<AddCustomerGetRequest>( new AddCustomerGetRequest(rs, rq));
+	if(name == "AddCustomerContactInterface")
+		return unique_ptr<AddCustomerContactInterface>( new AddCustomerContactInterface(rs, rq));
 	if(name == "NewCustomerPost")
 		return unique_ptr<NewCustomerPost>( new NewCustomerPost(rs, rq));
 	if(name == "ListCustomersGet")
@@ -70,6 +74,8 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 		return unique_ptr<ListTaskRequest>( new ListTaskRequest(rs, rq));	
 	if(name == "ListCampaignRequest")
 		return unique_ptr<ListCampaignRequest>( new ListCampaignRequest(rs, rq));	
+	if(name == "ListCaseRequest")
+		return unique_ptr<ListCaseRequest>( new ListCaseRequest(rs, rq));	
 	if(name == "ListActivityRequest")
 		return unique_ptr<ListActivityRequest>( new ListActivityRequest(rs, rq));	
 	if(name == "ListOpportunityRequest")

@@ -1,0 +1,41 @@
+{% include web/header.html %}
+
+{% block meat %}
+<form action="{{ newcontact }}" method="post">
+	  <fieldset>
+	    <legend>Customer Information:</legend>
+	Choose Customer {{ contact_source }}:
+	    <select name ="contact_source" style="width: 150px;">
+	{% block from_block %}
+		<option value="{{ from_value }}"> {{ from_show }}</option>
+	{% endblock %} <br><br>
+	Status: <input type="text" name="status" value=""><br><br>
+	FirstName: <input type="text" name="firstName" value=""><br><br>
+	LastName: <input type="text" name="lastName" value=""><br><br>
+	Address: <input type="text" name="address" value=""><br><br>
+	Primary phone: <input type="text" name="primary_phone" value=""><br><br>
+	Alt phone: <input type="text" name="alt_phone" value=""><br><br>
+	Mobile phone: <input type="text" name="mobile_phone" value=""><br><br>
+	Fax: <input type="text" name="fax" value=""><br><br>
+	Email: <input type="text" name="email" value=""><br><br>
+	Twitter: <input type="text" name="twitter" value=""><br><br>
+	Linkedin: <input type="text" name="linkedin" value=""><br><br>
+	Facebook: <input type="text" name="facebook" value=""><br><br>
+	Job title: <input type="text" name="job_title" value=""><br><br>
+	Company id: <input type="text" name="company_id" value=""><br><br>
+	When met: <input type="text" name="when_met" value=""><br><br>
+	Where met: <input type="text" name="where_met" value=""><br><br>
+	Time zone: <input type="text" name="time_zone" value=""><br><br>
+	Main contact: <input type="text" name="main_contact" value=""><br><br>
+	Out of_marketing: <input type="text" name="out_of_marketing" value=""><br><br>
+	Out of_billing: <input type="text" name="out_of_billing" value=""><br><br>
+	Extra info: <input type="text" name="extra_info" value=""><br><br>
+	    <input type="submit" value="Submit">
+	  </fieldset>
+</form>
+{% endblock %}
+
+
+{% include web/footer.html %}
+    <input type="text" name="contact_type" value="1"><br>
+

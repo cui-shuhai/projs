@@ -3,11 +3,12 @@
 Current opportunities list:
 {% block meat %}
 
-	Name:  {{ campaign_name }} <br><br>
+	Subject:  {{ subject }} <br><br>
 	Status : {{ "status" }} <br><br>
-	Description: {{ description }} <br>
-	Start: {{ start_date }} <br>
-	<a href="/campaign/{{ campaign_id }}">View detail...</a>
+	Priority: {{ priority }} <br>
+	Last act: {{ last_activity }} <br>
+	Next act: {{ next_activity }} <br>
+	<a href="/case/{{ case_id }}">View detail...</a>
 <br>
 ---------
 

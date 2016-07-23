@@ -11,6 +11,7 @@
 #include "NLTemplate/NLTemplate.h"
 
 #include "customer_table.h"
+#include "contact_table.h"
 #include "NewCustomerPost.h"
 
 using namespace std;
@@ -37,6 +38,13 @@ void NewCustomerPost::Process(){
 			m["bill_addr"], m["ship_addr"]);
 		c.AddCustomer();
 		id = c.GetCustomerId();
+
+		contact_table ct; 
+		ct.set_firstName(m["firstName"]);
+		ct.set_lastName(m["lastName"]);
+		ct.set_company_id(id);
+
+		ct.add_contact_table();
 
 		stringstream cs;		
 
