@@ -1,0 +1,36 @@
+{% include web/header.html %}
+
+{% block meat %}
+<form action="newcustomer" method="post">
+	  <fieldset>
+	    <legend>Customer Information:</legend>
+	Lead id : <input type="text" name="lead_id", value=""> <br><br>
+	Company name : <input type="text" name="company_name", value=""> <br><br>
+	Contact name : <input type="text" name="contact_name", value=""> <br><br>
+	Personal title : <input type="text" name="personal_title", value=""> <br><br>
+	First name : <input type="text" name="first_name", value=""> <br><br>
+	Last name : <input type="text" name="last_name", value=""> <br><br>
+	Phone : <input type="text" name="phone", value=""> <br><br>
+	Email : <input type="text" name="email", value=""> <br><br>
+	Street addr : <input type="text" name="street_addr", value=""> <br><br>
+	City : <input type="text" name="city", value=""> <br><br>
+	State : <input type="text" name="state", value=""> <br><br>
+	Post code : <input type="text" name="post_code", value=""> <br><br>
+	Country : <input type="text" name="country", value=""> <br><br>
+	Bill addr : <input type="text" name="bill_addr", value=""> <br><br>
+	Ship addr : <input type="text" name="ship_addr", value=""> <br><br>
+	Lead source : <input type="text" name="lead_source", value=""> <br><br>
+	Lead status : <input type="text" name="lead_status", value=""> <br><br>
+	Lead ratig : <input type="text" name="lead_ratig", value=""> <br><br>
+	    <input type="submit" value="Submit">
+	  </fieldset>
+</form>
+{% endblock %}
+
+
+{% include web/footer.html %}
+    <input type="text" name="contact_type" value="1"><br>
+
+
+
+

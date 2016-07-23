@@ -165,7 +165,7 @@ CREATE TABLE lead(
 	ship_addr varchar(50),
 	lead_source int, /*meeting, campaign, etc*/
 	lead_status int, /*open, unqualified, qualified*/
-	lead_ratig int, /*cold, warm, hot*/
+	lead_rating int /*cold, warm, hot*/
 );
 
 /*

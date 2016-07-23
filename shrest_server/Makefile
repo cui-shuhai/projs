@@ -3,7 +3,9 @@ SOURCE=server_instance.cpp \
 	RequestResponse/RequestResponseFactory.cpp \
 	RequestResponse/RequestResponse.cpp \
 	RequestResponse/AddCustomerGetRequest.cpp \
+	RequestResponse/AddLeadInterface.cpp \
 	RequestResponse/AddCustomerContactInterface.cpp \
+	RequestResponse/AddLeadContactInterface.cpp \
 	RequestResponse/JsonPostRequest.cpp \
 	RequestResponse/ListCustomersGet.cpp \
 	RequestResponse/NewCustomerPost.cpp \
@@ -31,6 +33,7 @@ SOURCE=server_instance.cpp \
 	RequestResponse/SearchContactActivity.cpp \
 	utils/shrest_utils.cpp \
 	shrest_db/customer_table.cpp \
+	shrest_db/lead_table.cpp \
 	shrest_db/contact_table.cpp \
 	shrest_db/activity_table.cpp \
 	shrest_db/activity_status.cpp \

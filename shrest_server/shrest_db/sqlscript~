@@ -165,7 +165,7 @@ CREATE TABLE lead(
 	ship_addr varchar(50),
 	lead_source int, /*meeting, campaign, etc*/
 	lead_status int, /*open, unqualified, qualified*/
-	lead_ratig int, /*cold, warm, hot*/
+	lead_rating int, /*cold, warm, hot*/
 );
 
 /*
@@ -199,7 +199,7 @@ CREATE TABLE contact(
 	'email' varchar(32),
 	'twitter' varchar(32),
 	'linkedin' varchar(32),
-	'faceboot' varchar(32),
+	'facebook' varchar(32),
 	'job_title' varchar(32),
 	'company_id' int ,
 	'when_met' Date NOT NULL,
@@ -212,6 +212,7 @@ CREATE TABLE contact(
 	FOREIGN KEY(status) REFERENCES contact_status(status),
 	FOREIGN KEY(company_id) REFERENCES company(company_id)
 );
+
 
 
 #activities 

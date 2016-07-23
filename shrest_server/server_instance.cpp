@@ -69,6 +69,14 @@ int main() {
     };
 	LOG("Adding [addcustomer, GET] API");
 
+     //AddLeadInterface to test Template
+     server.resource["^/addlead$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("AddLeadInterface", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [addleadinterface, GET] API");
+
      //AddCustomerContactInterface to test Template
      server.resource["^/addcustomercontact$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
 
@@ -76,6 +84,14 @@ int main() {
 	processor->Process();        
     };
 	LOG("Adding [addcustomercontact, GET] API");
+
+     //AddLeadContactInterface to test Template
+     server.resource["^/addleadcontact$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("AddLeadContactInterface", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [addleadcontact, GET] API");
 
     //NewCustomerPost to connecting to mysql
      server.resource["^/newcustomer$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {

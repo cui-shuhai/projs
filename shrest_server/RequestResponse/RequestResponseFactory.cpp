@@ -3,7 +3,9 @@
 #include "JsonPostRequest.h"
 #include "PieGetRequest.h"
 #include "AddCustomerGetRequest.h"
+#include "AddLeadInterface.h"
 #include "AddCustomerContactInterface.h"
+#include "AddLeadContactInterface.h"
 #include "NewCustomerPost.h"
 #include "ListCustomersGet.h"
 #include "IcrmIndex.h"
@@ -36,8 +38,12 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 		return unique_ptr<PieGetRequest>( new PieGetRequest(rs, rq));
 	if(name == "AddCustomerGet")
 		return unique_ptr<AddCustomerGetRequest>( new AddCustomerGetRequest(rs, rq));
+	if(name == "AddLeadInterface")
+		return unique_ptr<AddLeadInterface>( new AddLeadInterface(rs, rq));
 	if(name == "AddCustomerContactInterface")
 		return unique_ptr<AddCustomerContactInterface>( new AddCustomerContactInterface(rs, rq));
+	if(name == "AddLeadContactInterface")
+		return unique_ptr<AddLeadContactInterface>( new AddLeadContactInterface(rs, rq));
 	if(name == "NewCustomerPost")
 		return unique_ptr<NewCustomerPost>( new NewCustomerPost(rs, rq));
 	if(name == "ListCustomersGet")
