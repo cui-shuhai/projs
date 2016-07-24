@@ -1,9 +1,29 @@
 {% include web/header.html %}
 
+{
+    "msg": '[{"value":"1","label":"xyz"}, {"value":"2","label":"abc"}]'
+}
+
+ $(data.msg).each(function()
+ {
+     alert(this.value);
+     alert(this.label);
+
+     //this refers to the current item being iterated over
+
+     var option = $('<option />');
+     option.attr('value', this.value).text(this.label);
+
+     $('#myDropDown').append(option);
+ });
+
 {% block meat %}
 <form action="newcustomer" method="post">
+  	    Select Lead:
+ <select name ="lead_origin" style="width: 150px;">
+ 	    </select><br><br>
 	  <fieldset>
-	    <legend>Customer Information:</legend>
+<legend>Customer Information:</legend>
 <table>
 <tr>
 	<td>Company Name:</td><td><input type="text" name="company_name" value=""> </td>
@@ -41,6 +61,30 @@
 </form>
 {% endblock %}
 
+ 
+<script>
+function displayVals() {
+  var multipleValues = $( "#from_id" ).val() || [];
+  
+  if(multipleValues == "0") window.alert(multipleValues);
+  else{
+	$.getJSON("listcontact/contact_content", {from_id: multipleValues},
+		function(jsonData) {
+		  alert(jsonData);
+	});
+  }
+}
+
+$( document ).ready( function() {
+	$.getJSON("listlead/json", function(jsonData){
+	//fill combox
+	};)
+});
+ 
+$( "#from_id" ).change( displayVals );
+//$( "select" ).change( displayVals );
+displayVals();
+</script>
 
 {% include web/footer.html %}
  <!--   <input type="text" name="contact_type" value="1"><br> //-->

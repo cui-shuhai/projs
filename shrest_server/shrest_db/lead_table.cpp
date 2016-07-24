@@ -147,3 +147,56 @@ void lead_table::get_lead_rating(std::map<int, string> &m)
 	} while(res->next_row());
 }
 
+
+void lead_table::get_lead_records( string source, string &result ){
+
+	string sql = "SELECT lead_id, company_name, contact_name, personal_title, first_name, last_name, "
+	"phone, email, street_addr, city, state, post_code, country, "
+	"bill_addr, ship_addr, lead_source.description, lead_status.description, lead_rating.description"
+	" FROM lead INNER JOIN lead_status ON lead.lead_status = lead_status.status  "
+	" INNER JOIN lead_source ON lead.lead_source = lead_source.source "
+	" INNER JOIN lead_rating ON lead.lead_rating = lead_rating.rating ";
+
+		sql.append("'").append(source).append("'");
+		query q(*conn, sql);
+		LOG("sql", sql);
+		auto res = q.emit_result();
+	
+		stringstream ss;
+
+		bool first = true;
+		ss << "{ lead:[ ";
+		do{
+			if(first)
+				first = false;
+			else{
+				ss << ", ";
+			}
+			ss << "{" ;
+			ss << ", " << "lead_id" << res->get_string(0);
+			ss << ", " << "company_name" << res->get_string(1);
+			ss << ", " << "contact_name" << res->get_string(2);
+			ss << ", " << "personal_title" << res->get_string(3);
+			ss << ", " << "first_name" << res->get_string(4);
+			ss << ", " << "last_name" << res->get_string(5);
+			ss << ", " << "phone" << res->get_string(6);
+			ss << ", " << "email" << res->get_string(7);
+			ss << ", " << "street_addr" << res->get_string(8);
+			ss << ", " << "city" << res->get_string(9);
+			ss << ", " << "state" << res->get_string(10);
+			ss << ", " << "post_code" << res->get_string(11);
+			ss << ", " << "country" << res->get_string(12);
+			ss << ", " << "bill_addr" << res->get_string(13);
+			ss << ", " << "ship_addr" << res->get_string(14);
+			ss << ", " << "lead_source.description" << res->get_string(15);
+			ss << ", " << "lead_status.description" << res->get_string(16);
+			ss << ", " << "lead_rating.description" << res->get_string(17);
+			ss << "}";
+		} while(res->next_row());
+
+		ss << " ] }";
+		result = ss.str();
+}
+
+void lead_table::get_lead_list(std::map<int, string> &leads){
+}

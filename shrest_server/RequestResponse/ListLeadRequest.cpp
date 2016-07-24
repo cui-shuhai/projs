@@ -13,31 +13,41 @@
 #include "shrest_utils.h"
 #include "NLTemplate/NLTemplate.h"
 
-#include "customer_table.h"
-#include "SearchCustomerInterface.h"
+#include "lead_table.h"
+#include "cookie_table.h"
+#include "ListLeadRequest.h"
 
 using namespace sqlite;
 using namespace std;
 using namespace NL::Template;
 
-
-SearchCustomerInterface::SearchCustomerInterface(HttpServer::Response &rs, ShRequest rq): RequestResponse(rs, rq){
+ListLeadRequest::ListLeadRequest(HttpServer::Response &rs, ShRequest rq): RequestResponse(rs, rq){
 }
 /*parse customer information and put into database*/
 
-void SearchCustomerInterface::Process(){
+void ListLeadRequest::Process(){
 	LOG(rq_->method, rq_->path);
 
-	try {		
+	try {
+		
+		std::map<string, string> m;
 		stringstream cs;
-				
-		LoaderFile loader; // Let's use the default loader that loads files from disk.
-		Template t( loader );
-		t.load( "web/searchcustomerinterface.html" );
+		string  path = rq_->path;
+		utils::parse_get_params(path, m);
 
-
-		t.render( cs ); // Render the template with the variables we've set above
- 
+		if(m.size() == 0){
+			LoaderFile loader; 
+			Template t( loader );
+			t.load( "web/listlead.html" );
+			t.render( cs ); 
+		}
+		else{
+			string result;
+			lead_table lt;
+			//XXX this should be current addigned flag
+			lt.get_lead_records( m["from_id"], result); 
+			cs << result;
+		}
 		
 		cs.seekp(0, ios::end);
 		rs_ <<  cs.rdbuf();

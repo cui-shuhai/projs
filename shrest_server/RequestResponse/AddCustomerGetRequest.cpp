@@ -2,8 +2,6 @@
 
 
 #define BOOST_SPIRIT_THREADSAFE
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/json_parser.hpp>
 
 #include "NLTemplate/NLTemplate.h"
 #include "AddCustomerGetRequest.h"
@@ -11,7 +9,6 @@
 using namespace std;
 using namespace NL::Template;
 
-using namespace boost::property_tree;
 
 AddCustomerGetRequest::AddCustomerGetRequest(HttpServer::Response &rs, ShRequest rq): RequestResponse(rs, rq){
 }

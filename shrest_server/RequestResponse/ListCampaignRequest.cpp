@@ -2,8 +2,6 @@
 
 
 #define BOOST_SPIRIT_THREADSAFE
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/json_parser.hpp>
 #include <boost/regex.hpp>//g++4.8 regex implementation has some errors but fixed fin 4.9
 
 #include <sqlite/transaction.hpp>
@@ -22,8 +20,6 @@
 using namespace sqlite;
 using namespace std;
 using namespace NL::Template;
-
-using namespace boost::property_tree;
 
 ListCampaignRequest::ListCampaignRequest(HttpServer::Response &rs, ShRequest rq): RequestResponse(rs, rq){
 }

@@ -2,8 +2,11 @@
 
 {% block meat %}
 <form action="newcustomer" method="post">
+  	    Select Lead:
+ <select name ="lead_origin" style="width: 150px;">
+ 	    </select><br><br>
 	  <fieldset>
-	    <legend>Customer Information:</legend>
+<legend>Customer Information:</legend>
 <table>
 <tr>
 	<td>Company Name:</td><td><input type="text" name="company_name" value=""> </td>
@@ -43,4 +46,4 @@
 
 
 {% include web/footer.html %}
-    <input type="text" name="contact_type" value="1"><br>
+ <!--   <input type="text" name="contact_type" value="1"><br> //-->

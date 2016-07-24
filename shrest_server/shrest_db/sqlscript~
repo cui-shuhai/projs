@@ -463,7 +463,7 @@ CREATE TABLE 'vendor'(
 'vendor_status' int, 
 'active_flag' int,
 'web_service_url' varchar(20),
-'last_update' varchar(20),
+'last_update' date,
 FOREIGN KEY(credit_rating) REFERENCES vendor_rate(rate)
 );
 

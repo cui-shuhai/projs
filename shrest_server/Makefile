@@ -24,6 +24,7 @@ SOURCE=server_instance.cpp \
 	RequestResponse/AddTaskRequest.cpp \
 	RequestResponse/ListTaskRequest.cpp \
 	RequestResponse/ListContactRequest.cpp \
+	RequestResponse/ListLeadRequest.cpp \
 	RequestResponse/ListCampaignRequest.cpp \
 	RequestResponse/ListCaseRequest.cpp \
 	RequestResponse/ListActivityRequest.cpp \

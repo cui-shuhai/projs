@@ -24,6 +24,8 @@ public:
 	void get_lead_status(std::map<int, string> &m);
 	void get_lead_source(std::map<int, string> &m);
 	void get_lead_rating(std::map<int, string> &m);
+	void get_lead_records( string source, string &result );
+	void get_lead_list(std::map<int, string> &leads);
 
 	int get_lead_id(){ return lead_id; }
 	string get_company_name(){ return company_name; }

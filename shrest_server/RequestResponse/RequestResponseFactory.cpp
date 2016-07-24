@@ -29,6 +29,7 @@
 #include "ListTaskRequest.h"
 #include "ListCampaignRequest.h"
 #include "ListCaseRequest.h"
+#include "ListLeadRequest.h"
 #include "ListActivityRequest.h"
 #include "ListContactRequest.h"
 #include "ListOpportunityRequest.h"
@@ -98,6 +99,8 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 		return unique_ptr<ListCampaignRequest>( new ListCampaignRequest(rs, rq));	
 	if(name == "ListCaseRequest")
 		return unique_ptr<ListCaseRequest>( new ListCaseRequest(rs, rq));	
+	if(name == "ListLeadRequest")
+		return unique_ptr<ListLeadRequest>( new ListLeadRequest(rs, rq));	
 	if(name == "ListActivityRequest")
 		return unique_ptr<ListActivityRequest>( new ListActivityRequest(rs, rq));	
 	if(name == "ListContactRequest")

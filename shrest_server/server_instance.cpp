@@ -288,6 +288,13 @@ int main() {
 	processor->Process();        
     };
 	LOG("Adding [listcaserequest, GET] API");
+ 	//Add listcaserequest request
+     server.resource["^/listlead$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("ListLeadRequest", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [listleadrequest, GET] API");
 
 	//Add login request
      server.resource["^/loginrequest$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {

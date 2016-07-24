@@ -3,18 +3,19 @@
 #include <stdlib.h>
 #include <memory>
 #include <iostream>
+#include <sstream>
 
 #define BOOST_SPIRIT_THREADSAFE
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/json_parser.hpp>
+//#include <boost/property_tree/ptree.hpp>
+//#include <boost/property_tree/json_parser.hpp>
 
 #include <sqlite/transaction.hpp>
 #include <sqlite/connection.hpp>
 #include <sqlite/command.hpp>
 #include <sqlite/execute.hpp>
 
-#include "shrest_log.h"
 #include "shrest_db/contact_table.h"
+#include "shrest_log.h"
 
 contact_table::contact_table():SqlAccessor()
 {
@@ -108,12 +109,13 @@ int contact_table::get_contact_tableId(){
 
 void contact_table::get_contact_records( string source, string &result ){
 	string sql = "SELECT contact_id, firstName, lastName, contact_from.description "
-		"FROM contact INNER JOIN contact_from ON contact.contact_from = contact_from.from" 
-		"WHERE lower(contact_from.description) = " ;
+		"FROM contact INNER JOIN contact_from ON contact.contact_from = contact_from.contact_from" 
+		"  WHERE lower(contact_from.description) = " ;
 
-		sql.append("source)");
+		sql.append("'").append(source).append("'");
 
 		query q(*conn, sql);
+		LOG("sql", sql);
 		auto res = q.emit_result();
 	
 		stringstream ss;
@@ -123,12 +125,14 @@ void contact_table::get_contact_records( string source, string &result ){
 		do{
 			if(first)
 				first = false;
-			else
-			ss << ", ";
-			ss << "{" << "contact_id:" << res->get_int(0) 
-			<< ", " <<  "firstName:" << res->get_string(1) 
-			<< ", " << "lastName:" << res->get_string(2)
-			<< "}";
+			else{
+				ss << ", ";
+			}
+			ss << "{";
+			ss  << "contact_id:" << res->get_int(0) ;
+			ss <<   ", " <<  "firstName:" << res->get_string(1) ;
+			ss << ", " << "lastName:" << res->get_string(2);
+			ss << "}";
 		} while(res->next_row());
 
 		ss << " ] }";
@@ -146,9 +150,11 @@ void contact_table::get_contact_list(std::map<int, string> &contacts){
 		return;
 
 	string sql = "SELECT contact_id, firstName, lastName, contact_from.description "
-		"FROM contact INNER JOIN contact_from ON contact.contact_from = contact_from.from";
+		"FROM contact INNER JOIN contact_from ON contact.contact_from = contact_from.contact_from";
 	
 	query q(*conn, sql);
+
+	LOG("sql", sql);
 	auto res = q.emit_result();
 
 	do{

@@ -195,12 +195,12 @@ Opt out of billing means the contact will be flagged to not receive billing mail
 */
 
 CREATE TABLE 'contact_from'(
-	'from' INT PRIMARY KEY,
+	'contact_from' INT PRIMARY KEY,
 	'description' varchar(20)
-};
+);
 
-INSERT INTO 'contact_from'(from, description)
-VALUES(1, "Lead"), (2, "Customer"), (3, "Vendor"), (4, "Employee"), (5, "Other")
+INSERT INTO 'contact_from'(contact_from, description)
+VALUES(1, "Lead"), (2, "Customer"), (3, "Vendor"), (4, "Employee"), (5, "Other");
 
 CREATE TABLE contact(
 	'contact_id' INTEGER PRIMARY KEY,
