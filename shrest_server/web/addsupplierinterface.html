@@ -4,30 +4,43 @@
 <form action="addvendorrequest" method="post">
 	  <fieldset>
 	    <legend></legend>
-account num:
- <input type="text" name="{{ account_num }}" value=""><br><br>
-contact:
- <input type="text" name="{{ contact }}" value=""><br><br>
-company name:
- <input type="text" name="{{ company_name }}" value=""><br><br>
-<td>credit rating: 
-    <select name ="credit_rating" style="width: 150px;">
+<table>
+<tr>
+<td> account num: </td>
+<td>  <input type="text" name="{{ account_num }}" value=""> </td>
+<tr></tr>
+<td> contact: </td>
+<td>  <input type="text" name="{{ contact }}" value=""> </td>
+<tr></tr>
+<td> company name: </td>
+<td>  <input type="text" name="{{ company_name }}" value=""> </td>
+<tr></tr>
+<td> credit rating:  </td>
+<td>    <select name ="credit_rating" style="width: 150px;">
 {% block credit_rating_block %}
 	<option value="{{ credit_rating_value }}"> {{ credit_rating_show }}</option>
 {% endblock %}
     </select>
-<br><br>
-vendor status:
- <input type="text" name="{{ vendor_status }}" value=""><br><br>
-active flag:
- <input type="text" name="{{ active_flag }}" value=""><br><br>
-web service url:
- <input type="text" name="{{ web_service_url }}" value=""><br><br>
-last update:
- <input type="text" name="{{ last_update }}" value=""><br><br>
-	    <input type="submit" value="  Add  " >
+</td>
+<tr></tr>
+
+<td> vendor status: </td>
+<td>  <input type="text" name="{{ vendor_status }}" value=""> </td>
+<tr></tr>
+<td> active flag: </td>
+<td>  <input type="text" name="{{ active_flag }}" value=""> </td>
+<tr></tr>
+<td> web service url: </td>
+<td>  <input type="text" name="{{ web_service_url }}" value=""> </td>
+<tr></tr>
+<td> last update: </td>
+<td>  <input type="text" name="{{ last_update }}" value=""> </td>
+<tr></tr>
+<td> 	    <input type="submit" value="  Add  " > </td>
+</tr>
+</table>
 	  </fieldset>
-</form><br>
+</form>
 
 {% endblock %}
 

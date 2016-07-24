@@ -4,36 +4,52 @@
 
 <form action="adduserrequest" method="post">
 	  <fieldset>
-	    <legend></legend>
-  	Select User:
+	    <legend>Select user to add login account</legend>
+<table>
+<tr>
+  	<td>Select User:</td><td>
 	    <select name ="new_user" style="width: 150px;">
 	{% block user_block %}
 		<option value="{{ user_value }}"> {{ user_show }}</option>
 	{% endblock %}
- 	    </select><br><br>
-	    Login ID:
-	    <input type="text" name="login_name" value=""><br><br>
-	    Password:
-	    <input type="text" name="pass_word" value=""><br><br>
-	    Repeat Passord:
-	    <input type="text" name="pass_word" value=""><br><br>
-	    Role:
+ 	    </select>
+	    </td>
+</tr><tr>
+<td>Login ID:</td><td>
+	    <input type="text" name="login_name" value="">
+	    </td>
+</tr><tr>
+<td>Password:</td><td>
+	    <input type="text" name="pass_word" value="">
+	    </td>
+</tr><tr>
+<td>Repeat Passord:</td><td>
+	    <input type="text" name="pass_word" value="">
+	    </td>
+</tr><tr>
+<td> Role:</td><td>
 	    <select name = "role_id" style="width: 150px;">
 	{% block role_block %}
-	    <option value="{{ role_value }}"> {{ role_show }}</option> <br><br>
+	    <option value="{{ role_value }}"> {{ role_show }}</option> 
 	{% endblock %}
-	    </select><br><br>
-	    Profile:
+	    </select>
+	    </td>
+</tr><tr>
+<td>Profile:</td><td>
 	    <select name = "profile_id" style="width: 150px;">
 	{% block profile_block %}
-	    <option value="{{ profile_value }}"> {{ profile_show }} </option><br><br>
+	    <option value="{{ profile_value }}"> {{ profile_show }} </option>
 	{% endblock %}
-	    </select><br><br>
+	    </select>
+</td>
+</tr><tr>
+<td>
 	    <input type="submit" value="  Add  " >
+</td>
+</tr>
 	  </fieldset>
-</form><br>
+</form>
 
-git ls-files --deleted -z | xargs -0 git rm 
 
 {% endblock %}
 

@@ -6,44 +6,44 @@
 	    <legend>Lead Information:</legend>
 <table>
 <tr>
-<td>	Company name : <input type="text" name="company_name", value=""> </td>
-<td>	Contact name : <input type="text" name="contact_name", value=""> </td>
+<td>	Company name : </td> <td> <input type="text" name="company_name", value=""> </td>
+<td>	Contact name : </td> <td> <input type="text" name="contact_name", value=""> </td>
 </tr>
 <tr>
-<td>	Personal title : <input type="text" name="personal_title", value=""> </td>
-<td>	First name : <input type="text" name="first_name", value=""> </td>
+<td>	Personal title : </td> <td> <input type="text" name="personal_title", value=""> </td>
+<td>	First name : </td> <td> <input type="text" name="first_name", value=""> </td>
 </tr>
 <tr>
-<td>	Last name : <input type="text" name="last_name", value=""> </td>
-<td>	Phone : <input type="text" name="phone", value=""> </td>
+<td>	Last name : </td> <td> <input type="text" name="last_name", value=""> </td>
+<td>	Phone : </td> <td> <input type="text" name="phone", value=""> </td>
 </tr>
 <tr>
-<td>	Email : <input type="text" name="email", value=""> </td>
-<td>	Street addr : <input type="text" name="street_addr", value=""> </td>
+<td>	Email : </td> <td> <input type="text" name="email", value=""> </td>
+<td>	Street addr : </td> <td> <input type="text" name="street_addr", value=""> </td>
 </tr>
 <tr>
-<td>	City : <input type="text" name="city", value=""> </td>
-<td>	State : <input type="text" name="state", value=""> </td>
+<td>	City : </td> <td> <input type="text" name="city", value=""> </td>
+<td>	State : </td> <td> <input type="text" name="state", value=""> </td>
 </tr>
 <tr>
-<td>	Post code : <input type="text" name="post_code", value=""> </td>
-<td>	Country : <input type="text" name="country", value=""> </td>
+<td>	Post code : </td> <td> <input type="text" name="post_code", value=""> </td>
+<td>	Country : </td> <td> <input type="text" name="country", value=""> </td>
 </tr>
 <tr>
-<td>	Bill addr : <input type="text" name="bill_addr", value=""> </td>
-<td>	Ship addr : <input type="text" name="ship_addr", value=""> </td>
+<td>	Bill addr : </td> <td> <input type="text" name="bill_addr", value=""> </td>
+<td>	Ship addr : </td> <td> <input type="text" name="ship_addr", value=""> </td>
 </tr>
 <tr>
-	<td>Lead source : 
-    <select name ="lead_source" style="width: 150px;">
+	<td>Lead source : </td> <td> 
+    <select name ="lead_source" style="width: </td> <td> 150px;">
 {% block lead_source %}
 	<option value="{{ lead_source_value }}"> {{ lead_source_show }}</option>
 {% endblock %}
     </select>
 </td>
 <td>
-	Lead status :
-    <select name ="lead_status" style="width: 150px;">
+	Lead status : </td> <td>
+    <select name ="lead_status" style="width: </td> <td> 150px;">
 {% block lead_status %}
 	<option value="{{ lead_status_value }}"> {{ lead_status_show }}</option>
 {% endblock %}
@@ -52,17 +52,16 @@
 </tr>
 <tr>
 <td>
-	Lead ratig : 
+	Lead ratig : </td> <td> 
     <select name ="lead_rating" style="width: 150px;">
 {% block lead_rating %}
 	<option value="{{ lead_rating_value }}"> {{ lead_rating_show }}</option>
 {% endblock %}
     </select>
-</td><td><td>
-
-<tr>
+</td><td> <input type="submit" value="Submit">
+</td>
+</tr>
 </table>
-	    <input type="submit" value="Submit">
 	  </fieldset>
 </form>
 {% endblock %}

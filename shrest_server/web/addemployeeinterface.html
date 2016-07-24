@@ -4,47 +4,60 @@
 
 <form action="addemployeerequest" method="post">
 	  <fieldset>
-	    <legend></legend>
-	    First Name:
-	    <input type="text" name="first_name" value=""><br><br>
-	    Last Name:
-	    <input type="text" name="last_name" value=""><br><br>
-	Title:
-	    <select name ="job_title" style="width: 150px;">
-	{% block titles %}
-		<option value="{{ title_value }}"> {{ title_show }}</option>
-	{% endblock %}
- 	    </select><br><br>
-	    Department:
-	    <select name ="department" style="width: 150px;">
-	{% block departments %}
-		<option value="{{ department_value }}"> {{ department_show }}</option>
-	{% endblock %}
- 	    </select><br><br>
-	    Report to:
-	    <select name ="report_to" style="width: 150px;">
-	{% block report_to %}
-		<option value="{{ report_to_value }}"> {{ report_to_show }}</option>
-	{% endblock %}
- 	    </select><br><br>
-	    Age:
-	    <select name ="age" style="width: 150px;">
-	{% block ages %}
-		<option value="{{ age_value }}"> {{ age_show }}</option>
-	{% endblock %}
- 	    </select> <br><br>
-	    Address:
-	    <input type="text" name="address" value=""><br><br>
-	    Mobile:
-	    <input type="text" name="mobile_phone" value=""><br><br>
-	    Office phone:
-	    <input type="text" name="office_phone" value=""><br><br>
-	    Home Phone:
-	    <input type="text" name="home_phone" value=""><br><br>
-	    Email:
-	    <input type="text" name="email" value=""><br><br>
-
-	    <input type="submit" value="Submit">
+	    <legend>Add employee:</legend>
+<table>
+<tr>
+	    <td> First Name: </td>
+	    <td> <input type="text" name="first_name" value=""> </td>
+</tr><tr>
+	    <td> Last Name: </td>
+	    <td> <input type="text" name="last_name" value=""> </td>
+</tr><tr>
+	<td> Title: </td>
+	    <td> <select name ="job_title" style="width: 150px;"> 
+	 {% block titles %} 
+		 <option value="{{ title_value }}"> {{ title_show }}</option> 
+	 {% endblock %} 
+ 	     </select> </td>
+</tr><tr>
+	    <td> Department: </td>
+	    <td> <select name ="department" style="width: 150px;"> 
+	 {% block departments %} 
+		 <option value="{{ department_value }}"> {{ department_show }}</option> 
+	 {% endblock %} 
+ 	    </select> </td>
+</tr><tr>
+	    <td> Report to: </td>
+	    <td> <select name ="report_to" style="width: 150px;"> 
+	 {% block report_to %} 
+		 <option value="{{ report_to_value }}"> {{ report_to_show }}</option> 
+	 {% endblock %} 
+ 	    </select> </td>
+</tr><tr>
+	    <td> Age: </td>
+	    <td> <select name ="age" style="width: 150px;"> 
+	 {% block ages %} 
+		 <option value="{{ age_value }}"> {{ age_show }}</option> 
+	 {% endblock %} 
+ 	    </select>  </td>
+</tr><tr>
+	    <td> Address: </td>
+	    <td> <input type="text" name="address" value=""> </td>
+</tr><tr>
+	    <td> Mobile: </td>
+	    <td> <input type="text" name="mobile_phone" value=""> </td>
+</tr><tr>
+	    <td> Office phone: </td>
+	    <td> <input type="text" name="office_phone" value=""> </td>
+</tr><tr>
+	    <td> Home Phone: </td>
+	    <td> <input type="text" name="home_phone" value=""> </td>
+</tr><tr>
+	    <td> Email: </td>
+	    <td> <input type="text" name="email" value=""> </td>
+</tr><tr>
+	    <td> <input type="submit" value="Submit"> </td>
+</table>
 	  </fieldset>
 </form>
 
