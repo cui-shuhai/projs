@@ -59,8 +59,9 @@ void lead_table::add_lead_table(){
 		"lead_source, lead_status, lead_rating "
 		"VALUES( ?, ?, ?, ?, ?,"
 			"  ?, ?, ?, ?, ?, ?, "
-			"  ?, ?, ?, ?, ?, ? ";
+			"  ?, ?, ?, ?, ?, ? )";
 
+	LOG( "add_lead sqql:", sql);
 	command c(*conn, sql);
 	c.bind(1, company_name);
 	c.bind(2, contact_name);

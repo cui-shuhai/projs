@@ -4,6 +4,9 @@
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/uuid/random_generator.hpp>
 #include <boost/lexical_cast.hpp>
+#include <ctime>   // localtime
+#include <sstream> // stringstream
+#include <string>  // string
 
 #include "shrest_utils.h"
 
@@ -26,4 +29,40 @@ string utils::create_uuid(){
 	std::string as_text = boost::lexical_cast<std::string>(uuid);
 	return as_text;
 }
+
+std::string utils::get_date(){
+
+
+
+	time_t t = time(0);   // get time now
+	struct tm * now = localtime( & t );
+	
+	ostringstream os;
+	os << now->tm_year + 1900 <<"/"<< now->tm_mon + 1 << "/" << now->tm_mday;
+	string date = os.str();
+	return date;
+}
+/*
+boost::regex re("Cookie\\s* ([^=&]+)=([^&]+)", boost::regex::icase);        // Create the reg exp
+		boost::smatch what; 
+		if (regex_match(content, what, re)){
+
+			string keyid = what[1].str();
+			const string key = what[2].str();
+			if(keyid == "secret_key"){
+				cookie_table ct;
+				string user{};
+				string password{};
+				ct.get_cookie_user(key, user, password);
+				CreateDashboard(user, password);
+				return;
+			}
+			else{
+				LOG("cookie corrupted\n");
+				rs_ << "cookie corrupted, please clear cookie and relogin\n";
+				rs_.flush();
+				return;
+			}
+		}		
+*/
 

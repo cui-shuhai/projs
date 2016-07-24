@@ -26,6 +26,7 @@ void AddLeadInterface::Process(){
 		Template t( loader );
 
 		t.load( "web/addleadinterface.html" );
+#if 0
 		t.block("meat").repeat(1); 
 		lead_table lt;
            
@@ -68,6 +69,7 @@ void AddLeadInterface::Process(){
 				block[i].set("lead_rating_show", v.second);
 			}
 		}
+#endif
 
 		t.render( content_stream ); // Render the template with the variables we've set above
  

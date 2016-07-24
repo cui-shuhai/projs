@@ -4,6 +4,9 @@
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/uuid/random_generator.hpp>
 #include <boost/lexical_cast.hpp>
+#include <ctime>   // localtime
+#include <sstream> // stringstream
+#include <string>  // string
 
 #include "shrest_utils.h"
 
@@ -21,12 +24,38 @@ void utils::parse_kye_value(std::string content, std::map<std::string, std::stri
 	}
 }
 
+
+//$1 = "/listcontact/contact_content?from_id=lead"
+void utils::parse_get_params(std::string content, std::map<std::string, std::string> &m){
+
+   	boost::regex re("([^=&?]+)=([^&]+)");        // Create the reg exp
+   	boost::sregex_iterator pos(content.begin(), content.end(), re);
+      	boost::sregex_iterator end;
+	
+	stringstream cs;
+	for ( ; pos!=end ; ++pos ) {
+		m[pos->str(1)] = pos->str(2);
+	}
+}
+
 string utils::create_uuid(){
 	boost::uuids::uuid uuid = boost::uuids::random_generator()();
 	std::string as_text = boost::lexical_cast<std::string>(uuid);
 	return as_text;
 }
 
+std::string utils::get_date(){
+
+
+
+	time_t t = time(0);   // get time now
+	struct tm * now = localtime( & t );
+	
+	ostringstream os;
+	os << now->tm_year + 1900 <<"/"<< now->tm_mon + 1 << "/" << now->tm_mday;
+	string date = os.str();
+	return date;
+}
 /*
 boost::regex re("Cookie\\s* ([^=&]+)=([^&]+)", boost::regex::icase);        // Create the reg exp
 		boost::smatch what; 

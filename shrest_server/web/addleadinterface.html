@@ -1,6 +1,5 @@
 {% include web/header.html %}
 
-{% block meat %}
 <form action="addleadrequest" method="post">
 	  <fieldset>
 	    <legend>Lead Information:</legend>
@@ -16,56 +15,76 @@
 <tr>
 <td>	Last name : </td> <td> <input type="text" name="last_name", value=""> </td>
 <td>	Phone : </td> <td> <input type="text" name="phone", value=""> </td>
-</tr>
-<tr>
+</tr> <tr>
 <td>	Email : </td> <td> <input type="text" name="email", value=""> </td>
 <td>	Street addr : </td> <td> <input type="text" name="street_addr", value=""> </td>
-</tr>
-<tr>
+</tr> <tr>
 <td>	City : </td> <td> <input type="text" name="city", value=""> </td>
 <td>	State : </td> <td> <input type="text" name="state", value=""> </td>
-</tr>
-<tr>
+</tr> <tr>
 <td>	Post code : </td> <td> <input type="text" name="post_code", value=""> </td>
 <td>	Country : </td> <td> <input type="text" name="country", value=""> </td>
-</tr>
-<tr>
+</tr> <tr>
 <td>	Bill addr : </td> <td> <input type="text" name="bill_addr", value=""> </td>
 <td>	Ship addr : </td> <td> <input type="text" name="ship_addr", value=""> </td>
-</tr>
-<tr>
+</tr> <tr>
 	<td>Lead source : </td> <td> 
-    <select name ="lead_source" style="width: </td> <td> 150px;">
-{% block lead_source %}
-	<option value="{{ lead_source_value }}"> {{ lead_source_show }}</option>
-{% endblock %}
+    <select name ="lead_source" id="lead_source_id" style="width: 150px;">
     </select>
-</td>
-<td>
+</td> <td>
 	Lead status : </td> <td>
-    <select name ="lead_status" style="width: </td> <td> 150px;">
-{% block lead_status %}
-	<option value="{{ lead_status_value }}"> {{ lead_status_show }}</option>
-{% endblock %}
+    <select name ="lead_status" id="lead_status_id" style="width: 150px;">
     </select>
-</td>
-</tr>
-<tr>
-<td>
-	Lead ratig : </td> <td> 
-    <select name ="lead_rating" style="width: 150px;">
-{% block lead_rating %}
-	<option value="{{ lead_rating_value }}"> {{ lead_rating_show }}</option>
-{% endblock %}
+</td> </tr>
+<tr> <td>
+	Lead rating : </td> <td> 
+    <select name ="lead_rating" id="lead_rating_id" style="width: 150px;">
     </select>
 </td><td> <input type="submit" value="Submit">
-</td>
-</tr>
+</td> </tr>
 </table>
 	  </fieldset>
 </form>
-{% endblock %}
+ 
+<script>
+function fillLeadSource() {
+  
+	$.getJSON("listlead/lead_source", function(jsonData) {
+		var sourceValues = $( "#lead_source_id" );
+		$.each(jsonData,function(key, value) {
+		sourceValues.append('<option value=' + key + '>' + value + '</option>');
+		});
+	});
+}
 
+function fillLeadStatus() {
+  
+	$.getJSON("listlead/lead_status", function(jsonData) {
+	var statusValues = $( "#lead_status_id" );
+	$.each(jsonData,function(key, value) {
+	statusValues.append('<option value=' + key + '>' + value + '</option>');
+	});
+	});
+}
+
+function fillLeadRating() {
+  
+	$.getJSON("listlead/lead_rating", function(jsonData) {
+	var ratingValues = $( "#lead_rating_id" );
+	$.each(jsonData,function(key, value) {
+	ratingValues.append('<option value=' + key + '>' + value + '</option>');
+	});
+	});
+}
+
+$( document ).ready( function(){
+	fillLeadSource();
+	fillLeadStatus();
+	fillLeadRating();
+});
+ 
+</script>
+ 
 
 {% include web/footer.html %}
 
