@@ -116,6 +116,13 @@ int main() {
 	LOG("Adding [newcustomer, POST] API");
 	
     //AddCustomerGet to test Template
+     server.resource["^/addcustomerize$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("CustomerizeRequest", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [addcustomize, GET] API");
+    //AddCustomerGet to test Template
      server.resource["^/adduser$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
 
 	auto processor = RequestResponseFactory::CreateProcessor("AddUserInterface", response, request);	
@@ -209,6 +216,13 @@ int main() {
 	processor->Process();        
     };
 	LOG("Adding [ListActivityrequest, GET] API");
+ 	//listcontact 
+     server.resource["^/listcontact.*$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("ListContactRequest", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [ListContactrequest, GET] API");
 
  	//listopportunity 
      server.resource["^/listopportunity$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {

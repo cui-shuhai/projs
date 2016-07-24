@@ -106,6 +106,35 @@ int contact_table::get_contact_tableId(){
 	return contact_id;
 }
 
+void contact_table::get_contact_records( string source, string &result ){
+	string sql = "SELECT contact_id, firstName, lastName, contact_from.description "
+		"FROM contact INNER JOIN contact_from ON contact.contact_from = contact_from.from" 
+		"WHERE lower(contact_from.description) = " ;
+
+		sql.append("source)");
+
+		query q(*conn, sql);
+		auto res = q.emit_result();
+	
+		stringstream ss;
+
+		bool first = true;
+		ss << "{ contact:[ ";
+		do{
+			if(first)
+				first = false;
+			else
+			ss << ", ";
+			ss << "{" << "contact_id:" << res->get_int(0) 
+			<< ", " <<  "firstName:" << res->get_string(1) 
+			<< ", " << "lastName:" << res->get_string(2)
+			<< "}";
+		} while(res->next_row());
+
+		ss << " ] }";
+		result = ss.str();
+}
+
 void contact_table::get_contact_list(std::map<int, string> &contacts){
 	auto count_sql = "SELECT count(1) FROM contact";
 

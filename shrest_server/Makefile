@@ -13,6 +13,7 @@ SOURCE=server_instance.cpp \
 	RequestResponse/NewCustomerPost.cpp \
 	RequestResponse/PieGetRequest.cpp \
 	RequestResponse/IcrmIndex.cpp \
+	RequestResponse/CustomerizeRequest.cpp \
 	RequestResponse/SearchCustomerInterface.cpp \
 	RequestResponse/SearchCustomerRequest.cpp \
 	RequestResponse/AddActivityInterface.cpp \
@@ -22,6 +23,7 @@ SOURCE=server_instance.cpp \
 	RequestResponse/AddTaskInterface.cpp \
 	RequestResponse/AddTaskRequest.cpp \
 	RequestResponse/ListTaskRequest.cpp \
+	RequestResponse/ListContactRequest.cpp \
 	RequestResponse/ListCampaignRequest.cpp \
 	RequestResponse/ListCaseRequest.cpp \
 	RequestResponse/ListActivityRequest.cpp \
