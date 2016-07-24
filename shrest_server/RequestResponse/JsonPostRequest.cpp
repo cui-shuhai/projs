@@ -1,13 +1,14 @@
 
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
 #include "JsonPostRequest.h"
 
 
 #define BOOST_SPIRIT_THREADSAFE
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/json_parser.hpp>
 
 using namespace std;
 using namespace boost::property_tree;
+
 JsonPostRequest::JsonPostRequest(HttpServer::Response &rs, ShRequest rq): RequestResponse(rs, rq){
 }
 

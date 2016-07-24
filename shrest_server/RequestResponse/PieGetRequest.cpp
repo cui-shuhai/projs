@@ -2,13 +2,10 @@
 
 
 #define BOOST_SPIRIT_THREADSAFE
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/json_parser.hpp>
 
 #include "PieGetRequest.h"
 
 using namespace std;
-using namespace boost::property_tree;
 PieGetRequest::PieGetRequest(HttpServer::Response &rs, ShRequest rq): RequestResponse(rs, rq){
 }
 

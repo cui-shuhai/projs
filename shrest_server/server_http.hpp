@@ -81,7 +81,7 @@ namespace SimpleWeb {
               }
             };
         public:
-            std::string method, path, http_version, cookies;
+            std::string method, path, http_version, cookies, get_params;
 
             Content content;
 
@@ -306,6 +306,13 @@ namespace SimpleWeb {
                 if((path_end=line.find(' ', method_end+1))!=std::string::npos) {
                     request->method=line.substr(0, method_end);
                     request->path=line.substr(method_end+1, path_end-method_end-1);
+#if 1
+auto question_mark = request->path.find('?');
+if(question_mark != std::string::npos){
+request->get_params = request->path.substr(question_mark + 1);
+request->path = request->path.substr(0, question_mark);
+}
+#endif
 
                     size_t protocol_end;
                     if((protocol_end=line.find('/', path_end+1))!=std::string::npos) {

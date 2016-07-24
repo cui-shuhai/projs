@@ -56,27 +56,54 @@ std::string utils::get_date(){
 	string date = os.str();
 	return date;
 }
-/*
-boost::regex re("Cookie\\s* ([^=&]+)=([^&]+)", boost::regex::icase);        // Create the reg exp
-		boost::smatch what; 
-		if (regex_match(content, what, re)){
 
-			string keyid = what[1].str();
-			const string key = what[2].str();
-			if(keyid == "secret_key"){
-				cookie_table ct;
-				string user{};
-				string password{};
-				ct.get_cookie_user(key, user, password);
-				CreateDashboard(user, password);
-				return;
-			}
-			else{
-				LOG("cookie corrupted\n");
-				rs_ << "cookie corrupted, please clear cookie and relogin\n";
-				rs_.flush();
-				return;
-			}
-		}		
-*/
+void utils::build_json(std::map<std::string, std::string> &m, string &result)
+{
+	stringstream ss;
+
+	bool first = true;
+	ss << "{ \"recordset\":[ ";
+	for( const auto &v : m ){
+		if(first)
+			first = false;
+		else{
+			ss << ", ";
+		}
+		ss << "{" ;
+		ss << "\"key\"" <<  ":" << "\"" << v.first << "\""  << ", "; 
+		ss << "\"value\"" << ":" << "\"" << v.second << "\"" ; 
+		ss << "}";
+	} 
+	ss << " ] }";
+	result = ss.str();
+
+}
+
+void utils::build_raw__response(string &content){
+
+	stringstream ss;
+		ss << "HTTP/1.1 200 OK\r\nContent-Length: " << content.length() << "\r\n\r\n" << content;
+	content = ss.str();
+}
+
+void utils::build_json(std::map<int , std::string> &m, string &result)
+{
+	stringstream ss;
+
+	bool first = true;
+	ss << "{ \"recordset\":[ ";
+	for( const auto &v : m ){
+		if(first)
+			first = false;
+		else{
+			ss << ", ";
+		}
+		ss << "{" ;
+		ss << "\"key\"" <<  ":" << "\"" << v.first << "\"" << ", " ; 
+		ss << "\"value\"" << ":" << "\"" << v.second << "\"" ; 
+		ss << "}";
+	} 
+	ss << " ] }";
+	result = ss.str();
+}
 

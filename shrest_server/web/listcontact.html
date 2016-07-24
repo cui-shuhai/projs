@@ -11,12 +11,13 @@ From:
 <p></p>
  
 <script>
-function displayVals() {
+function fill_source() {
   var multipleValues = $( "#from_id" ).val() || [];
   
-  if(multipleValues == "0") window.alert(multipleValues);
-  else{
-	$.getJSON("listcontact/contact_content", {from_id: multipleValues},
+  if(multipleValues == "0"){ 
+//	window.alert(multipleValues);
+  } else{
+	$.getJSON("/listcontact", {"directory": multipleValues},
 		function(jsonData) {
 		  alert(jsonData);
 	});
@@ -24,9 +25,9 @@ function displayVals() {
 }
 
  
-$( "#from_id" ).change( displayVals );
+$( "#from_id" ).change( fill_source );
 //$( "select" ).change( displayVals );
-displayVals();
+//fill_source();
 </script>
  
 </body>

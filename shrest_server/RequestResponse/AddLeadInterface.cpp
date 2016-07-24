@@ -18,6 +18,7 @@ AddLeadInterface::AddLeadInterface(HttpServer::Response &rs, ShRequest rq): Requ
 }
 
 void AddLeadInterface::Process(){
+	LOG(rq_->method, rq_->path);
      try {
 
         	stringstream content_stream;

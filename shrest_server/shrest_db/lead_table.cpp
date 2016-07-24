@@ -148,6 +148,19 @@ void lead_table::get_lead_rating(std::map<int, string> &m)
 	} while(res->next_row());
 }
 
+void lead_table::get_lead_for_customer(std::map<int, string> &m){
+	string sql = "SELECT lead_id, contact_name, company_name FROM lead";
+
+	query q(*conn, sql);
+	auto res = q.emit_result();
+
+	do{
+		auto desc = res->get_string(1);
+		desc.append(": ").append(res->get_string(2));
+		m[res->get_int(0)] = desc;
+	} while(res->next_row());
+
+}
 
 void lead_table::get_lead_records( string source, string &result ){
 
@@ -158,7 +171,8 @@ void lead_table::get_lead_records( string source, string &result ){
 	" INNER JOIN lead_source ON lead.lead_source = lead_source.source "
 	" INNER JOIN lead_rating ON lead.lead_rating = lead_rating.rating ";
 
-		sql.append("'").append(source).append("'");
+		if(!source.empty())
+		sql.append("WHERE lead.lead_source = ").append(source);
 		query q(*conn, sql);
 		LOG("sql", sql);
 		auto res = q.emit_result();

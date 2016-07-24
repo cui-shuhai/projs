@@ -54,6 +54,7 @@ public:
 	int GetCustomerId();
 	int GetCustomerCount();
 	void GetCustomerProfile(std::map<int, string> &m);
+	void get_customer_records( string source, string &result );
 
 private:
 	int customer_id;

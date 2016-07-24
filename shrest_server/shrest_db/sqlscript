@@ -152,17 +152,36 @@ CREATE TABLE lead_status(
 	'detail'  varchar(100)
 );
 
+INSERT INTO 'lead_status'(status, description)
+	VALUES( 1, "qualified"), (2, "unqualified"), (3, "closed");
+
 CREATE TABLE lead_source(
 	'source' int PRIMARY KEY,
 	'description' varchar(20),
 	'detail'  varchar(100)
 );
 
+INSERT INTO 'lead_source'( source, description )
+	VALUES( 1, "web site"),(2, "marketing"),
+	(3, "Advertisement"),
+	(4, "Employee Referral"),
+	(5, "Other"),
+	(6, "Partner"),
+	(7, "Public Relations"),
+	(8, "Seminar-internal"),
+	(9, "Seminar-Partner"),
+	(10, "Trade Show"),
+	(11, "Word of mouth");
+
+
 CREATE TABLE lead_rating(
 	'rating' int PRIMARY KEY,
 	'description' varchar(20),
 	'detail'  varchar(100)
 );
+
+INSERT INTO 'lead_rating'( rating, description )
+	VALUES( 1, "high"),(2, "medium");
 
 CREATE TABLE lead(
 	lead_id  INTEGER PRIMARY KEY,

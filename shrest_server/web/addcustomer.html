@@ -1,26 +1,9 @@
 {% include web/header.html %}
 
-{
-    "msg": '[{"value":"1","label":"xyz"}, {"value":"2","label":"abc"}]'
-}
 
- $(data.msg).each(function()
- {
-     alert(this.value);
-     alert(this.label);
-
-     //this refers to the current item being iterated over
-
-     var option = $('<option />');
-     option.attr('value', this.value).text(this.label);
-
-     $('#myDropDown').append(option);
- });
-
-{% block meat %}
 <form action="newcustomer" method="post">
   	    Select Lead:
- <select name ="lead_origin" style="width: 150px;">
+ <select name ="lead_origin"  id="origin_id" style="width: 150px;">
  	    </select><br><br>
 	  <fieldset>
 <legend>Customer Information:</legend>
@@ -59,32 +42,26 @@
 	    <input type="submit" value="Submit">
 	  </fieldset>
 </form>
-{% endblock %}
 
  
 <script>
-function displayVals() {
-  var multipleValues = $( "#from_id" ).val() || [];
+function fill_coustomer() {
   
-  if(multipleValues == "0") window.alert(multipleValues);
-  else{
-	$.getJSON("listcontact/contact_content", {from_id: multipleValues},
-		function(jsonData) {
-		  alert(jsonData);
+	$.getJSON("/listlead", { "directory": "add_customer" }, function(jsonData) {
+	var leadValues = $( "#origin_id" );
+	$.each(jsonData.recordset,function(key, value) {
+	leadValues.append('<option value=' + value.key + '>' + value.value + '</option>');
 	});
-  }
+	})
+	.error(function() { alert("error"); });
 }
 
 $( document ).ready( function() {
-	$.getJSON("listlead/json", function(jsonData){
-	//fill combox
+	fill_customer();
 	};)
 });
  
-$( "#from_id" ).change( displayVals );
-//$( "select" ).change( displayVals );
-displayVals();
+$( "#origin_id" ).change( fill_coustomer );
 </script>
 
 {% include web/footer.html %}
- <!--   <input type="text" name="contact_type" value="1"><br> //-->

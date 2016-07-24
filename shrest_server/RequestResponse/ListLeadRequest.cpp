@@ -32,25 +32,48 @@ void ListLeadRequest::Process(){
 		
 		std::map<string, string> m;
 		stringstream cs;
-		string  path = rq_->path;
-		utils::parse_get_params(path, m);
+		string  params= rq_->get_params;
+		utils::parse_get_params(params, m);
 
-		if(m.size() == 0){
+		string jstr;
+		if(m.size() == 0){ //list lead
 			LoaderFile loader; 
 			Template t( loader );
 			t.load( "web/listlead.html" );
 			t.render( cs ); 
 		}
-		else{
+		else{ //for adding lead
 			string result;
 			lead_table lt;
-			//XXX this should be current addigned flag
-			lt.get_lead_records( m["from_id"], result); 
-			cs << result;
+
+			std::map<int, string> resultset;
+			if(m["directory"] == "lead_source"){
+				lt.get_lead_source( resultset); 
+				utils::build_json(resultset, jstr); 
+			}
+			else if(m["directory"] == "lead_status"){
+				lt.get_lead_status( resultset); 
+				utils::build_json(resultset, jstr); 
+			}
+			else if(m["directory"] == "lead_rating"){
+				lt.get_lead_rating(resultset); 
+				utils::build_json(resultset, jstr); 
+			}
+			else if(m["directory"] == "all_leads"){
+				lt.get_lead_records("", jstr);
+			}
+			else if(m["directory"] == "add_customer"){
+				lt.get_lead_for_customer(resultset);
+				utils::build_json(resultset, jstr); 
+			}
+
+		//	cs << jstr;
 		}
 		
-		cs.seekp(0, ios::end);
-		rs_ <<  cs.rdbuf();
+		//cs.seekp(0, ios::end);
+		//rs_ << "HTTP/1.1 200 OK\r\nContent-Length: " << jstr.length() << "\r\n\r\n" << jstr;
+		//rs_ <<  cs.rdbuf();
+		rs_ << "HTTP/1.1 200 OK\r\n" << "Content-Type: application/javascript"  << "\r\n" << "Content-Length: " << jstr.length() << "\r\n\r\n" << jstr;
 		rs_.flush();
 		
 	}

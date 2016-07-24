@@ -29,16 +29,16 @@
 <td>	Ship addr : </td> <td> <input type="text" name="ship_addr", value=""> </td>
 </tr> <tr>
 	<td>Lead source : </td> <td> 
-    <select name ="lead_source" id="lead_source_id" style="width: 150px;">
+    <select name ="lead_source" id="lead_source_id" style="width: 180px;">
     </select>
 </td> <td>
 	Lead status : </td> <td>
-    <select name ="lead_status" id="lead_status_id" style="width: 150px;">
+    <select name ="lead_status" id="lead_status_id" style="width: 180px;">
     </select>
 </td> </tr>
 <tr> <td>
 	Lead rating : </td> <td> 
-    <select name ="lead_rating" id="lead_rating_id" style="width: 150px;">
+    <select name ="lead_rating" id="lead_rating_id" style="width: 180px;">
     </select>
 </td><td> <input type="submit" value="Submit">
 </td> </tr>
@@ -49,32 +49,39 @@
 <script>
 function fillLeadSource() {
   
-	$.getJSON("listlead/lead_source", function(jsonData) {
+	$.getJSON("/listlead", { "directory": "lead_source"}, function(jsonData) {
 		var sourceValues = $( "#lead_source_id" );
-		$.each(jsonData,function(key, value) {
-		sourceValues.append('<option value=' + key + '>' + value + '</option>');
+		$.each(jsonData.recordset,function(key, value) {
+		sourceValues.append('<option value=' + value.key + '>' + value.value + '</option>');
 		});
-	});
+	})
+	//.error(function() { alert("json error"); });
 }
 
 function fillLeadStatus() {
   
-	$.getJSON("listlead/lead_status", function(jsonData) {
+	$.getJSON("/listlead", { "directory": "lead_status" }, function(jsonData) {
 	var statusValues = $( "#lead_status_id" );
-	$.each(jsonData,function(key, value) {
-	statusValues.append('<option value=' + key + '>' + value + '</option>');
+	$.each(jsonData.recordset,function(key, value) {
+	statusValues.append('<option value=' + value.key + '>' + value.value + '</option>');
 	});
-	});
+	})
+	//.error(function() { alert("json error"); });
 }
 
 function fillLeadRating() {
   
-	$.getJSON("listlead/lead_rating", function(jsonData) {
+	$.getJSON("/listlead", { "directory": "lead_rating" }, function(jsonData) {
 	var ratingValues = $( "#lead_rating_id" );
-	$.each(jsonData,function(key, value) {
-	ratingValues.append('<option value=' + key + '>' + value + '</option>');
+	$.each(jsonData.recordset,function(key, value) {
+	ratingValues.append('<option value=' + value.key + '>' + value.value + '</option>');
 	});
-	});
+	})
+//	.error(function() { alert("json error"); });
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	//alert(XMLHttpRequest.responseText);
+
+})
 }
 
 $( document ).ready( function(){
