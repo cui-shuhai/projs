@@ -7,16 +7,16 @@
 #include "SqlAccessor.h"
 
 using namespace std;
-class Customer : public SqlAccessor{
+class customer_table : public SqlAccessor{
 
 public:
-	Customer();
-	Customer( int customer_id, string  & company_name, string  & contact_name, 
+	customer_table();
+	customer_table( int customer_id, string  & company_name, string  & contact_name, 
 			string  & personal_title, string  & first_name, string  & last_name,
 			string  & phone, string  & email, string  & street_addr, string  & city, 
 			string  & state, string  & post_code, string  & country, 
 			string  & bill_addr, string  & ship_addr);
-	~Customer();
+	~customer_table();
 	
 	int get_customer_id(){ return customer_id; }
 	string get_company_name(){ return company_name; }
@@ -50,10 +50,9 @@ public:
 	void set_bill_addr( string bill_addr_ ){ bill_addr = bill_addr_; }
 	void set_ship_addr( string ship_addr_ ){ ship_addr = ship_addr_; }
 
-	void AddCustomer();
-	int GetCustomerId();
-	int GetCustomerCount();
-	void GetCustomerProfile(std::map<int, string> &m);
+	void add_customer_table();
+	int get_customer_tableCount();
+	void get_customer_profile(std::map<int, string> &m);
 	void get_customer_records( string source, string &result );
 
 private:

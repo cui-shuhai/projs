@@ -16,11 +16,11 @@
 #include "shrest_log.h"
 #include "shrest_db/customer_table.h"
 
-Customer::Customer():SqlAccessor()
+customer_table::customer_table():SqlAccessor()
 {
 }
 
-Customer::Customer( int customer_id_, string  & company_name_, string  & contact_name_, 
+customer_table::customer_table( int customer_id_, string  & company_name_, string  & contact_name_, 
 			string  & personal_title_, string  & first_name_, string  & last_name_,
 			string  & phone_, string  & email_, string  & street_addr_, string  & city_, 
 			string  & state_, string  & post_code_, string  & country_, 
@@ -44,10 +44,10 @@ Customer::Customer( int customer_id_, string  & company_name_, string  & contact
 {
 }
 
-Customer::~Customer(){
+customer_table::~customer_table(){
 }
 
-void Customer::AddCustomer(){
+void customer_table::add_customer_table(){
 
 	auto sql = "INSERT INTO 'customer'("
 		"company_name, contact_name, personal_title, first_name, last_name, phone, email, "
@@ -80,12 +80,7 @@ void Customer::AddCustomer(){
 	//t.commit();
 }
 
-int Customer::GetCustomerId()
-{	
-	return customer_id;
-}
-
-int Customer::GetCustomerCount(){
+int customer_table::get_customer_tableCount(){
 	auto count_sql = "SELECT count(1) FROM customer";
 
 	query count_query(*conn, count_sql);
@@ -93,7 +88,7 @@ int Customer::GetCustomerCount(){
 	return count_res->get_int(0);
 }
 
-void Customer::GetCustomerProfile(std::map<int, string> &m)
+void customer_table::get_customer_profile(std::map<int, string> &m)
 {
 
 	string sql = "SELECT customer_id, company_name FROM customer";
@@ -105,8 +100,8 @@ void Customer::GetCustomerProfile(std::map<int, string> &m)
 		m[res->get_int(0)] = res->get_string(1);
 	} while(res->next_row());
 }
-void Customer::get_customer_records( string source, string &result ){
-		Customer c;
+void customer_table::get_customer_records( string source, string &result ){
+		customer_table c;
 		stringstream ss;
 		
 		string sql = "SELECT customer_id, company_name, first_name, last_name, "

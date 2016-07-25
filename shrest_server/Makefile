@@ -2,7 +2,7 @@ SOURCE=server_instance.cpp \
 	NLTemplate/NLTemplate.cpp \
 	RequestResponse/RequestResponseFactory.cpp \
 	RequestResponse/RequestResponse.cpp \
-	RequestResponse/AddCustomerGetRequest.cpp \
+	RequestResponse/AddCustomerInterface.cpp \
 	RequestResponse/AddVendorInterface.cpp \
 	RequestResponse/AddLeadInterface.cpp \
 	RequestResponse/AddLeadRequest.cpp \
@@ -10,7 +10,7 @@ SOURCE=server_instance.cpp \
 	RequestResponse/AddLeadContactInterface.cpp \
 	RequestResponse/JsonPostRequest.cpp \
 	RequestResponse/ListCustomersGet.cpp \
-	RequestResponse/NewCustomerPost.cpp \
+	RequestResponse/AddCustomerRequest.cpp \
 	RequestResponse/PieGetRequest.cpp \
 	RequestResponse/IcrmIndex.cpp \
 	RequestResponse/CustomerizeRequest.cpp \

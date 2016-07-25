@@ -2,13 +2,13 @@
 
 #include "JsonPostRequest.h"
 #include "PieGetRequest.h"
-#include "AddCustomerGetRequest.h"
+#include "AddCustomerInterface.h"
 #include "AddVendorInterface.h"
 #include "AddLeadInterface.h"
 #include "AddLeadRequest.h"
 #include "AddCustomerContactInterface.h"
 #include "AddLeadContactInterface.h"
-#include "NewCustomerPost.h"
+#include "AddCustomerRequest.h"
 #include "ListCustomersGet.h"
 #include "IcrmIndex.h"
 #include "AddActivityInterface.h"
@@ -43,8 +43,8 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 		return unique_ptr<JsonPostRequest>( new JsonPostRequest(rs, rq));
 	if(name == "PieGet")
 		return unique_ptr<PieGetRequest>( new PieGetRequest(rs, rq));
-	if(name == "AddCustomerGet")
-		return unique_ptr<AddCustomerGetRequest>( new AddCustomerGetRequest(rs, rq));
+	if(name == "AddCustomerInterface")
+		return unique_ptr<AddCustomerInterface>( new AddCustomerInterface(rs, rq));
 	if(name == "AddVendorInterface")
 		return unique_ptr<AddVendorInterface>( new AddVendorInterface(rs, rq));
 	if(name == "AddLeadInterface")
@@ -55,8 +55,8 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 		return unique_ptr<AddCustomerContactInterface>( new AddCustomerContactInterface(rs, rq));
 	if(name == "AddLeadContactInterface")
 		return unique_ptr<AddLeadContactInterface>( new AddLeadContactInterface(rs, rq));
-	if(name == "NewCustomerPost")
-		return unique_ptr<NewCustomerPost>( new NewCustomerPost(rs, rq));
+	if(name == "AddCustomerRequest")
+		return unique_ptr<AddCustomerRequest>( new AddCustomerRequest(rs, rq));
 	if(name == "ListCustomersGet")
 		return unique_ptr<ListCustomersGet>( new ListCustomersGet(rs, rq));
 	if(name == "IcrmIndex")

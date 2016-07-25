@@ -48,9 +48,9 @@ void AddCustomerContactInterface::Process(){
 
 		Block &block =t.block("meat")[0].block("from_block");
 
-		Customer ct;
+		customer_table ct;
 		std::map<int, string> m;
-		ct.GetCustomerProfile(m); 
+		ct.get_customer_profile(m); 
 		
 		auto rows = m.size();
 

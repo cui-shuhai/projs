@@ -30,7 +30,7 @@ void AddTransactionRequest::Process(){
 
 	try {
 		
-		Customer c;
+		customer_table c;
 
 		stringstream cs;
 		

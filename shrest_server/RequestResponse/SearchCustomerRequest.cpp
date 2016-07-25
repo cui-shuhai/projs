@@ -34,7 +34,7 @@ void SearchCustomerRequest::Process(){
 		std::map<std::string, std::string> m;
 		utils::parse_kye_value(content, m);
 
-		Customer c;
+		customer_table c;
 		stringstream where;
 
 		where << " WHERE ";

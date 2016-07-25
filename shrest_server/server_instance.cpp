@@ -61,10 +61,10 @@ int main() {
     };
 	LOG("Adding [json$ POST] API");
 
-     //AddCustomerGet to test Template
+     //AddCustomerInterface to test Template
      server.resource["^/addcustomer$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
 
-	auto processor = RequestResponseFactory::CreateProcessor("AddCustomerGet", response, request);	
+	auto processor = RequestResponseFactory::CreateProcessor("AddCustomerInterface", response, request);	
 	processor->Process();        
     };
 	LOG("Adding [addcustomer, GET] API");
@@ -107,22 +107,22 @@ int main() {
     };
 	LOG("Adding [addleadcontact, GET] API");
 
-    //NewCustomerPost to connecting to mysql
+    //AddCustomerRequest to connecting to mysql
      server.resource["^/newcustomer$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
 
-	auto processor = RequestResponseFactory::CreateProcessor("NewCustomerPost", response, request);	
+	auto processor = RequestResponseFactory::CreateProcessor("AddCustomerRequest", response, request);	
 	processor->Process();        
     };
 	LOG("Adding [newcustomer, POST] API");
 	
-    //AddCustomerGet to test Template
+    //AddCustomerInterface to test Template
      server.resource["^/addcustomerize$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
 
 	auto processor = RequestResponseFactory::CreateProcessor("CustomerizeRequest", response, request);	
 	processor->Process();        
     };
 	LOG("Adding [addcustomize, GET] API");
-    //AddCustomerGet to test Template
+    //AddCustomerInterface to test Template
      server.resource["^/adduser$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
 
 	auto processor = RequestResponseFactory::CreateProcessor("AddUserInterface", response, request);	
@@ -130,7 +130,7 @@ int main() {
     };
 	LOG("Adding [adduser, GET] API");
 
-    //NewCustomerPost to connecting to mysql
+    //AddCustomerRequest to connecting to mysql
      server.resource["^/adduserrequest$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
 
 	auto processor = RequestResponseFactory::CreateProcessor("AddUserRequest", response, request);	
@@ -152,7 +152,7 @@ int main() {
     };
 	LOG("Adding [uploaddocumentrequest, POST] API");
 	
-    //AddCustomerGet to test Template
+    //AddCustomerInterface to test Template
      server.resource["^/addemployee$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
 
 	auto processor = RequestResponseFactory::CreateProcessor("AddEmployeeInterface", response, request);	
@@ -160,7 +160,7 @@ int main() {
     };
 	LOG("Adding [addemployee, GET] API");
 
-    //NewCustomerPost to connecting to mysql
+    //AddCustomerRequest to connecting to mysql
      server.resource["^/addemployeerequest$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
 
 	auto processor = RequestResponseFactory::CreateProcessor("AddEmployeeRequest", response, request);	
