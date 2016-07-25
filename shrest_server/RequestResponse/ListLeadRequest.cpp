@@ -46,34 +46,37 @@ void ListLeadRequest::Process(){
 			string result;
 			lead_table lt;
 
+			string directory = m["directory"];
 			std::map<int, string> resultset;
-			if(m["directory"] == "lead_source"){
+
+			if(directory.compare("lead_source") == 0){
 				lt.get_lead_source( resultset); 
 				utils::build_json(resultset, jstr); 
 			}
-			else if(m["directory"] == "lead_status"){
+			else if(directory.compare("lead_status") == 0){
 				lt.get_lead_status( resultset); 
 				utils::build_json(resultset, jstr); 
 			}
-			else if(m["directory"] == "lead_rating"){
+			else if(directory.compare("lead_rating") == 0){
 				lt.get_lead_rating(resultset); 
 				utils::build_json(resultset, jstr); 
 			}
-			else if(m["directory"] == "all_leads"){
+			else if(directory.compare("lead_content") == 0){
 				lt.get_lead_records("", jstr);
 			}
-			else if(m["directory"] == "add_customer"){
+			else if(directory.compare("add_customer") == 0){
 				lt.get_lead_for_customer(resultset);
 				utils::build_json(resultset, jstr); 
 			}
 
-		//	cs << jstr;
+			utils::build_raw_response( jstr);
+			rs_ << jstr;
+			//rs_ << "HTTP/1.1 200 OK\r\n" << "Content-Type: application/javascript"  << "\r\n" << "Content-Length: " << jstr.length() << "\r\n\r\n" << jstr;
+			return;
 		}
 		
-		//cs.seekp(0, ios::end);
-		//rs_ << "HTTP/1.1 200 OK\r\nContent-Length: " << jstr.length() << "\r\n\r\n" << jstr;
-		//rs_ <<  cs.rdbuf();
-		rs_ << "HTTP/1.1 200 OK\r\n" << "Content-Type: application/javascript"  << "\r\n" << "Content-Length: " << jstr.length() << "\r\n\r\n" << jstr;
+		cs.seekp(0, ios::end);
+		rs_ <<  cs.rdbuf();
 		rs_.flush();
 		
 	}

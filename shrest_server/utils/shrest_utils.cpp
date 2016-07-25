@@ -79,10 +79,11 @@ void utils::build_json(std::map<std::string, std::string> &m, string &result)
 
 }
 
-void utils::build_raw__response(string &content){
+void utils::build_raw_response(string &content){
 
 	stringstream ss;
-		ss << "HTTP/1.1 200 OK\r\nContent-Length: " << content.length() << "\r\n\r\n" << content;
+
+	ss << "HTTP/1.1 200 OK\r\n" << "Content-Type: application/javascript"  << "\r\n" << "Content-Length: " << content.length() << "\r\n\r\n" << content;
 	content = ss.str();
 }
 

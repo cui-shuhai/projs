@@ -55,12 +55,13 @@ void ListCustomersGet::Process(){
 			}
 
 			cs << jstr;
+
+			rs_ << "HTTP/1.1 200 OK\r\n" << "Content-Type: application/javascript"  << "\r\n" << "Content-Length: " << jstr.length() << "\r\n\r\n" << jstr;
+			return;
 		}
 		
-		rs_ << "HTTP/1.1 200 OK\r\n" << "Content-Type: application/javascript"  << "\r\n" << "Content-Length: " << jstr.length() << "\r\n\r\n" << jstr;
-		//rs_ << "HTTP/1.1 200 OK\r\n" << "Content-Type: text/plain"  << "\r\n" << "Content-Length: " << jstr.length() << "\r\n\r\n" << jstr;
-		//cs.seekp(0, ios::end);
-		//rs_ <<  cs.rdbuf();
+		cs.seekp(0, ios::end);
+		rs_ <<  cs.rdbuf();
 		rs_.flush();
 		
 	}
