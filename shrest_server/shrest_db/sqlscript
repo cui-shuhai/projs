@@ -19,8 +19,8 @@ CREATE TABLE 'crm_user'(
 	FOREIGN KEY(creator_id) REFERENCES employee(employee_id),
 	FOREIGN KEY(employee_id) REFERENCES employee(employee_id)
 );
-INSERT INTO 'crm_user'(login_name, pass_word, employee_id, role_id, profile_id, creator_id, create_date) 
-	VALUES("root", "magic", 0, 0, 0, 0, "2016/11/21");
+INSERT INTO 'crm_user'(login_name, pass_word, employee_id, role_name, profile_name, creator_id, create_date) 
+	VALUES("root", "magic", "xxxx", "xxxx1", "xxxx2", "ksjdkfj", "2016/11/21");
 
 CREATE TABLE employee_role(
 	'role_name' char(20) PRIMARY KEY,
@@ -34,7 +34,7 @@ CREATE TABLE employee_profile(
 	'profile_name' char(20) PRIMARY KEY,
 	'description' char(20)
 );
-INSERT INTO 'employee_profile'(profile_id, name, description) 
+INSERT INTO 'employee_profile'(profile_name, description) 
 	VALUES( "database manager", "Manages database daily maintainence");
 
 
