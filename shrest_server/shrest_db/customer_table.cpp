@@ -101,14 +101,13 @@ void customer_table::get_customer_profile(std::map<int, string> &m)
 	} while(res->next_row());
 }
 void customer_table::get_customer_records( string source, string &result ){
-		customer_table c;
+
 		stringstream ss;
-		
 		string sql = "SELECT customer_id, company_name, first_name, last_name, "
 				" phone, email, street_addr, city, state, country, bill_addr, ship_addr, personal_title , post_code   FROM customer";
 
 		if(!source.empty())
-		sql.append("WHERE lead.lead_source = ").append(source);
+		sql.append("WHERE customer.company_name = ").append(source);
 
 		query q(*conn, sql);
 		LOG("sql", sql);
@@ -116,7 +115,7 @@ void customer_table::get_customer_records( string source, string &result ){
 		result_type res =  q.emit_result();
 
 		bool first = true;
-		ss << "{ lead:[ ";
+		ss << "{ \"customer\":[ ";
 		do{
 			if(first)
 				first = false;
@@ -125,25 +124,83 @@ void customer_table::get_customer_records( string source, string &result ){
 			}
 			ss << "{" ;
  
-			ss << "," <<"customer_id" <<  res->get_int(0);
-			ss << "," <<"company_name" << res->get_string(1);
-			ss << "," <<"contact_name" << res->get_string(2) + " " + res->get_string(3);
-			ss << "," <<"personal_title" << res->get_string(12);
-			ss << "," <<"first_name" << res->get_string(2);
-			ss << "," <<"last_name" << res->get_string(3);
-			ss << "," <<"phone" << res->get_string(4);
-			ss << "," <<"email" << res->get_string(5);
-			ss << "," <<"street_addr" << res->get_string(6);
-			ss << "," <<"city" << res->get_string(7);
-			ss << "," <<"state" << res->get_string(8);
-			ss << "," <<"country" << res->get_string(9);
-			ss << "," <<"bill_addr" << res->get_string(10);
-			ss << "," <<"ship_addr" << res->get_string(11);
-			ss << "," <<"post_code" << res->get_string(13);
+			ss << "\"customer_id\"" << ":" << "\""  <<  res->get_int(0) << "\"" << ",";
+			ss << "\"company_name\"" << ":" << "\""  << res->get_string(1) << "\"" << ",";
+			ss << "\"contact_name\"" << ":" << "\""  << res->get_string(2) + " " + res->get_string(3) << "\"" << ",";
+			ss << "\"personal_title\"" << ":" << "\""  << res->get_string(12) << "\"" << ",";
+			ss << "\"first_name\"" << ":" << "\""  << res->get_string(2) << "\"" << ",";
+			ss << "\"last_name\"" << ":" << "\""  << res->get_string(3) << "\"" << ",";
+			ss << "\"phone\"" << ":" << "\""  << res->get_string(4) << "\"" << ",";
+			ss << "\"email\"" << ":" << "\""  << res->get_string(5) << "\"" << ",";
+			ss << "\"street_addr\"" << ":" << "\""  << res->get_string(6) << "\"" << ",";
+			ss << "\"city\"" << ":" << "\""  << res->get_string(7) << "\"" << ",";
+			ss << "\"state\"" << ":" << "\""  << res->get_string(8) << "\"" << ",";
+			ss << "\"country\"" << ":" << "\""  << res->get_string(9) << "\"" << ",";
+			ss << "\"bill_addr\"" << ":" << "\""  << res->get_string(10) << "\"" << ",";
+			ss << "\"ship_addr\"" << ":" << "\""  << res->get_string(11) << "\"" << ",";
+			ss << "\"post_code\"" << ":" << "\""  << res->get_string(13) << "\"" ;
 			ss << "}";
 		} while(res->next_row());
 
 		ss << " ] }";
 		result = ss.str();
+
+}
+
+void customer_table::get_customer_instance(std::map<string, string> &customer){
+		
+		string sql = "SELECT customer_id, company_name, first_name, last_name, "
+				" phone, email, street_addr, city, state, country, bill_addr, ship_addr, personal_title , post_code   FROM customer ";
+
+		sql.append(" WHERE customer_id = ").append(to_string(customer_id));
+
+		query q(*conn, sql);
+		//LOG("sql", sql);
+
+		result_type res =  q.emit_result();
+
+ 
+		customer["customer_id"] = to_string(res->get_int(0));
+		customer["company_name"] = res->get_string(1);
+		customer["contact_name"] = res->get_string(2);
+		customer["personal_title"] = res->get_string(12);
+		customer["first_name"] = res->get_string(2);
+		customer["last_name"] = res->get_string(3);
+		customer["phone"] = res->get_string(4);
+		customer["email"] = res->get_string(5);
+		customer["street_addr"] = res->get_string(6);
+		customer["city"] = res->get_string(7);
+		customer["state"] = res->get_string(8);
+		customer["country"] = res->get_string(9);
+		customer["bill_addr"] = res->get_string(10);
+		customer["ship_addr"] = res->get_string(11);
+		customer["post_code"] = res->get_string(13);
+
+}
+
+void customer_table::update_customer_table(){
+
+	stringstream ss;
+	 ss <<  "UPDATE customer SET ";
+	ss << "customer_id =" << "\"" << customer_id << "\"" << ",";
+	ss << "company_name =" << "\"" << company_name << "\"" << ",";
+	ss << "contact_name =" << "\"" << contact_name << "\"" << ",";
+	ss << "personal_title =" << "\"" << personal_title << "\"" << ",";
+	ss << "first_name =" << "\"" << first_name << "\"" << ",";
+	ss << "last_name =" << "\"" << last_name << "\"" << ",";
+	ss << "phone =" << "\"" << phone << "\"" << ",";
+	ss << "email =" << "\"" << email << "\"" << ",";
+	ss << "street_addr =" << "\"" << street_addr << "\"" << ",";
+	ss << "city =" << "\"" << city << "\"" << ",";
+	ss << "state =" << "\"" << state << "\"" << ",";
+	ss << "country =" << "\"" << country << "\"" << ",";
+	ss << "bill_addr =" << "\"" << bill_addr << "\"" << ",";
+	ss << "ship_addr =" << "\"" << ship_addr << "\"" << ",";
+	ss << "post_code =" << "\"" << post_code << "\"" ;
+	ss << " WHERE customer_id = " << 	customer_id ;
+
+	auto sql = ss.str();
+	command c(*conn, sql);
+	c.emit();
 
 }

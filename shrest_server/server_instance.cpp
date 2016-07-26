@@ -89,15 +89,67 @@ int main() {
 	auto processor = RequestResponseFactory::CreateProcessor("AddLeadRequest", response, request);	
 	processor->Process();        
     };
-	LOG("Adding [addleadinterface, POST] API");
+	LOG("Adding [addleadrequest, POST] API");
+     //editlead
+     server.resource["^/editlead$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
 
-     //AddCustomerContactInterface to test Template
-     server.resource["^/addcustomercontact$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
-
-	auto processor = RequestResponseFactory::CreateProcessor("AddCustomerContactInterface", response, request);	
+	auto processor = RequestResponseFactory::CreateProcessor("EditLeadInterface", response, request);	
 	processor->Process();        
     };
-	LOG("Adding [addcustomercontact, GET] API");
+	LOG("Adding [editlead, POST] API");
+     //editlead
+     server.resource["^/editlead$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("EditLeadRequest", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [editlead, POST] API");
+
+     //EditActivityInterface to test Template
+     server.resource["^/editactivity$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("EditActivityInterface", response, request);	
+	processor->Process();        
+    };
+	LOG("Editing [editactivityinterface, GET] API");
+     //EditActivityRequest to test Template
+     server.resource["^/editactivityrequest$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("EditActivityRequest", response, request);	
+	processor->Process();        
+    };
+	LOG("Editing [editactivityrequest, POST] API");
+
+     //editcustomer
+     server.resource["^/editcustomer$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("EditCustomerInterface", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [editcustomer, GET] API");
+     //editcustomer
+     server.resource["^/editcustomer$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("EditCustomerRequest", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [editcustomer, POST] API");
+
+     //AddContactInterface to test Template
+     server.resource["^/addcontact$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("AddContactInterface", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [addcontact, GET] API");
+
+     //AddContactRequest to test Template
+     server.resource["^/addcontact$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("AddContactRequest", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [addcontact, POST] API");
 
      //AddLeadContactInterface to test Template
      server.resource["^/addleadcontact$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
@@ -108,12 +160,12 @@ int main() {
 	LOG("Adding [addleadcontact, GET] API");
 
     //AddCustomerRequest to connecting to mysql
-     server.resource["^/newcustomer$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
+     server.resource["^/addcustomerrequest$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
 
 	auto processor = RequestResponseFactory::CreateProcessor("AddCustomerRequest", response, request);	
 	processor->Process();        
     };
-	LOG("Adding [newcustomer, POST] API");
+	LOG("Adding [addcustomerrequest, POST] API");
 	
     //AddCustomerInterface to test Template
      server.resource["^/addcustomerize$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
@@ -171,7 +223,7 @@ int main() {
       //List all customers
      server.resource["^/listcustomer$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
 
-	auto processor = RequestResponseFactory::CreateProcessor("ListCustomersGet", response, request);	
+	auto processor = RequestResponseFactory::CreateProcessor("ListCustomerRequest", response, request);	
 	processor->Process();        
     };
 	LOG("Adding [listcustomer, GET] API");

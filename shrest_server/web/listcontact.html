@@ -1,38 +1,67 @@
 {% include web/header.html %}
 
-From:
-<select id="from_id" style="width: 150px;" >
-<option value="0"></option>
-<option value="vendor">Vendor</option>
-<option value="customer" selected>Customer</option>
-<option value="lead">Lead</option>
-</select>
+<h3>All contacts list</h3>
 
-<p></p>
+<table id="contact_table" border="1">
+
+</table>
  
 <script>
-function fill_source() {
-  var multipleValues = $( "#from_id" ).val() || [];
+function listContacts() {
   
-  if(multipleValues == "0"){ 
-//	window.alert(multipleValues);
-  } else{
-	$.getJSON("/listcontact", {"directory": multipleValues},
-		function(jsonData) {
-		  alert(jsonData);
+	$.getJSON("/listcontact", { "directory": "contact_content"}, function(jsonData) {
+
+		var bHeader = true;
+
+		var sourceTable= $( "#contact_table" );
+
+		$.each(jsonData.contact ,function(key, value) {
+			if(bHeader){
+				bHeader = false;
+				tr = $('<tr/>');
+				var keys = Object.keys(value);
+				Object.keys(value).forEach(function(k) {
+				  tr.append("<th>" + k + "</th>");});
+				sourceTable.append(tr);
+			}
+
+			tr = $('<tr/>');
+                        tr.append("<td>" +  value.contact_status + "</td>");
+                        tr.append("<td>" +  value.firstName + "</td>");
+                        tr.append("<td>" +  value.lastName + "</td>");
+                        tr.append("<td>" +  value.contact_source + "</td>"); 
+                        tr.append("<td>" +  value.address + "</td>");
+                        tr.append("<td>" +  value.primary_phone + "</td>");
+                        tr.append("<td>" +  value.alt_phone + "</td>");
+                        tr.append("<td>" +  value.mobile_phone + "</td>");
+                        tr.append("<td>" +  value.fax + "</td>");
+                        tr.append("<td>" +  value.email + "</td>");
+                        tr.append("<td>" +  value.twitter + "</td>");
+                        tr.append("<td>" +  value.linkedin + "</td>");
+                        tr.append("<td>" +  value.facebook + "</td>");
+                        tr.append("<td>" +  value.job_title + "</td>");
+                        tr.append("<td>" +  value.company_id + "</td>");
+                        tr.append("<td>" +  value.when_met + "</td>");
+                        tr.append("<td>" +  value.where_met + "</td>");
+                        tr.append("<td>" +  value.time_zone + "</td>");
+                        tr.append("<td>" +  value.main_contact + "</td>");
+                        tr.append("<td>" +  value.out_of_marketing + "</td>");
+                        tr.append("<td>" +  value.out_of_billing + "</td>");
+                        tr.append("<td>" +  value.extra_info + "</td>");
+                        tr.append("<td>" +  value.contact_id + "</td>");
+			sourceTable.append(tr);
+		});
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	alert(XMLHttpRequest.responseText);
 	});
-  }
 }
 
+
+$( document ).ready( function(){
+	listContacts();
+});
  
-$( "#from_id" ).change( fill_source );
-//$( "select" ).change( displayVals );
-//fill_source();
 </script>
- 
-</body>
-</html>
 
 {% include web/footer.html %}
-
-

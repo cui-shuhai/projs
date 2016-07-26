@@ -18,6 +18,8 @@ public:
 			string  & bill_addr, string  & ship_addr);
 	~customer_table();
 	
+	void update_customer_table();
+	void get_customer_instance(std::map<string, string> &customer);
 	int get_customer_id(){ return customer_id; }
 	string get_company_name(){ return company_name; }
 	string get_contact_name(){ return contact_name; }

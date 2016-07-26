@@ -24,6 +24,7 @@ public:
 
 	bool check_user_exist();
 	bool check_login_exist();
+	void get_user_list( map<int, string> &m);
 
 
 	void set_login_name(string login_name_){ login_name = login_name_;}

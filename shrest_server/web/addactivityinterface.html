@@ -6,14 +6,14 @@
 	    <legend>Adding activity:</legend>
 <table>
 <tr>
-	    <td> Name: </td>
-	    <td> <input type="text" name="contact_type" value=""> </td>
+	    <td> Subject: </td>
+	    <td> <input type="text" name="activity_name" value=""> </td>
 
 </tr><tr>
 	    <td> Type: </td>
-	    <td> <select name ="activity_type" style="width: 150px;"> </td>
-	<td> {% block titles %}
-		<td> <option value="{{ type_value }}"> {{ type_show }}</option>
+	    <td> <select name ="activity_type" style="width: 150px;"> 
+	 {% block typeblock %}
+		 <option value="{{ activity_type_value }}"> {{ activity_type_show }}</option>
 	 {% endblock %} 
  	     </select> 
 </td>
@@ -22,8 +22,8 @@
 	    <td> Status: </td>
 <td>
 	    <select name ="activity_status" style="width: 150px;">
-	{% block titles %}
-		<option value="{{ status_value }}"> {{ status_show }}</option>
+	{% block statusblock %}
+		<option value="{{ activity_status_value }}"> {{ activity_status_show }}</option>
 	{% endblock %}
  	    </select>
 </td>
@@ -33,8 +33,8 @@
 	    <td> Priority: </td>
 <td>
 	    <select name ="activity_priority" style="width: 150px;">
-	{% block titles %}
-		<option value="{{ priority_value }}"> {{ priority_show }}</option>
+	{% block priorityblock %}
+		<option value="{{ activity_priority_value }}"> {{ activity_priority_show }}</option>
 	{% endblock %}
  	    </select>
 </td>
@@ -42,8 +42,8 @@
 	    <td> Presider: </td>
 <td>
 	    <select name ="who_preside" style="width: 150px;">
-	{% block titles %}
-		<option value="{{ presider_value }}"> {{ presider_show }}</option>
+	{% block presiderblock %}
+		<option value="{{ activity_presider_value }}"> {{ activity_presider_show }}</option>
 	{% endblock %}
  	    </select>
 </td>

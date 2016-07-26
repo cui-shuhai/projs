@@ -1,5 +1,64 @@
 {% include web/header.html %}
 
+<h3>Activilty list</h3>
+
+<fieldset>
+<legend>XXXXX</legend>
+
+<table id="activity_table" border="1">
+
+</table>
+<br><br>
+<a href="/addactivity">
+<button id="add_activity"  style="float:right" type="button">Add Activity</button>
+</a>
+
+</fieldset>
+
+<script>
+function listActivities() {
+  
+	$.getJSON("/listactivity", { "directory": "activity_content"}, function(jsonData) {
+
+		var sourceTable= $( "#activity_table" );
+		tr = $('<tr/>');
+		tr.append("<th>" + "Click to edit..." + "</th>");
+		tr.append("<th>" + "Subject" + "</th>");
+		tr.append("<th>" + "Type" + "</th>");
+		tr.append("<th>" + "Status" + "</th>");
+		tr.append("<th>" + "Priority" + "</th>");
+		tr.append("<th>" + "Assigned to" + "</th>");
+		tr.append("<th>" + "Create time " + "</th>");
+		tr.append("<th>" + "Note" + "</th>");
+		sourceTable.append(tr);
+
+		$.each(jsonData.activity ,function(key, value) {
+			tr = $('<tr/>');
+			tr.append("<td>" + "<a href=\"/editactivity?directory=activity&activity_id=" + value.activity_id + "\"" +">Go...</a>"  + "</td>");
+			tr.append("<td>" + value.activity_name + "</td>");
+			tr.append("<td>" + value.activity_type + "</td>");
+			tr.append("<td>" + value.activity_status + "</td>");
+			tr.append("<td>" + value.activity_priority + "</td>");
+			tr.append("<td>" + value.who_preside + "</td>");
+			tr.append("<td>" + value.when_created + "</td>");
+			tr.append("<td>" + value.note + "</td>");
+			sourceTable.append(tr);
+		});
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	alert(XMLHttpRequest.responseText);
+	});
+}
+
+
+$( document ).ready( function(){
+	listActivities();
+});
+ 
+</script>
+{% include web/footer.html %}
+ 
+<!--
 Current avtivities list:
 <table style="width:100%"  border="1">
 <tr>
@@ -26,5 +85,4 @@ Current avtivities list:
 
 </table>
 
-{% include web/footer.html %}
- 
+//-->

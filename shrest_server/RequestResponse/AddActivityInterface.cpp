@@ -13,7 +13,11 @@
 #include "shrest_utils.h"
 #include "NLTemplate/NLTemplate.h"
 
-#include "customer_table.h"
+#include "activity_table.h"
+#include "activity_status.h"
+#include "activity_type.h"
+#include "activity_priority.h"
+#include "user_table.h"
 #include "AddActivityInterface.h"
 
 using namespace sqlite;
@@ -34,6 +38,73 @@ void AddActivityInterface::Process(){
 		LoaderFile loader; // Let's use the default loader that loads files from disk.
 		Template t( loader );
 		t.load( "web/addactivityinterface.html" );
+#if 1
+	               t.block("meat").repeat(1); 
+	               //activity_table at;
+	           
+	               {
+			       activity_type at;
+	                       Block & block = t.block( "meat" )[ 0 ].block( "typeblock" );
+	                       std::map<int, string> types;
+	
+	                       at.get_activity_type(types);
+	                       auto rows = types.size();
+	                       block.repeat(rows);
+	                       int i = 0;
+	                       for(const auto &v : types){
+	                               block[i].set("activity_type_value", to_string(v.first));
+	                               block[i].set("activity_type_show", v.second);
+					++i;
+	                       }
+	               }
+	               {
+			       activity_status at;
+	                       Block & block = t.block( "meat" )[ 0 ].block( "statusblock" );
+	                       std::map<int, string> statuss;
+	
+	                       at.get_activity_status(statuss);
+	                       auto rows = statuss.size();
+	                       block.repeat(rows);
+	                       int i = 0;
+	                       for(const auto &v : statuss){
+	                               block[i].set("activity_status_value", to_string(v.first));
+	                               block[i].set("activity_status_show", v.second);
+					++i;
+	                       }
+	               }
+	               {
+			       activity_priority at;
+	                       Block & block = t.block( "meat" )[ 0 ].block( "priorityblock" );
+	                       std::map<int, string> prioritys;
+	
+	                       at.get_activity_priority(prioritys);
+	                       auto rows = prioritys.size();
+	                       block.repeat(rows);
+	                       int i = 0;
+	                       for(const auto &v : prioritys){
+	                               block[i].set("activity_priority_value", to_string(v.first));
+	                               block[i].set("activity_priority_show", v.second);
+					++i;
+	                       }
+	               }
+	               {
+				//this comes from users(operational employee)
+			       user_table ut;
+	                       Block & block = t.block( "meat" )[ 0 ].block( "presiderblock" );
+	                       std::map<int, string> presiders;
+	
+	                       ut.get_user_list(presiders);
+	                       auto rows = presiders.size();
+	                       block.repeat(rows);
+	                       int i = 0;
+	                       for(const auto &v : presiders){
+	                               block[i].set("activity_presider_value", to_string(v.first));
+	                               block[i].set("activity_presider_show", v.second);
+					++i;
+	                       }
+	               }
+#endif
+
 
 
 		t.render( cs ); // Render the template with the variables we've set above

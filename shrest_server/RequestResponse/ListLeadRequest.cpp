@@ -14,7 +14,6 @@
 #include "NLTemplate/NLTemplate.h"
 
 #include "lead_table.h"
-#include "cookie_table.h"
 #include "ListLeadRequest.h"
 
 using namespace sqlite;
@@ -71,7 +70,6 @@ void ListLeadRequest::Process(){
 
 			utils::build_raw_response( jstr);
 			rs_ << jstr;
-			//rs_ << "HTTP/1.1 200 OK\r\n" << "Content-Type: application/javascript"  << "\r\n" << "Content-Length: " << jstr.length() << "\r\n\r\n" << jstr;
 			return;
 		}
 		

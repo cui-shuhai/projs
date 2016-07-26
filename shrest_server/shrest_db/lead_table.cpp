@@ -3,18 +3,21 @@
 #include <stdlib.h>
 #include <memory>
 #include <iostream>
+#include <sstream>
+#include <string>
+
 
 #define BOOST_SPIRIT_THREADSAFE
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/json_parser.hpp>
 
 #include <sqlite/transaction.hpp>
 #include <sqlite/connection.hpp>
 #include <sqlite/command.hpp>
 #include <sqlite/execute.hpp>
 
-#include "shrest_log.h"
 #include "lead_table.h"
+#include "shrest_log.h"
+
+using namespace std;
 
 lead_table::lead_table():SqlAccessor()
 {
@@ -214,4 +217,70 @@ void lead_table::get_lead_records( string source, string &result ){
 }
 
 void lead_table::get_lead_list(std::map<int, string> &leads){
+}
+void lead_table::get_lead_instance(std::map<string, string> &lead){
+
+
+	string sql = "SELECT lead_id,  company_name, contact_name, personal_title, first_name, last_name, "
+	"phone, email, street_addr, city, state, post_code, country, "
+	"bill_addr, ship_addr, lead_source.description as lead_source_description , lead_status.description as lead_status_description, lead_rating.description as lead_rating_description"
+	" FROM lead INNER JOIN lead_status ON lead.lead_status = lead_status.status  "
+	" INNER JOIN lead_source ON lead.lead_source = lead_source.source "
+	" INNER JOIN lead_rating ON lead.lead_rating = lead_rating.rating "
+	" WHERE lead_id = ";
+
+		sql.append( to_string( lead_id ));
+		query q(*conn, sql);
+		LOG("sql", sql);
+		auto res = q.emit_result();
+		
+	
+		 lead["lead_id"] = to_string(res->get_int(0));
+		 lead["company_name"] = res->get_string(1);
+		 lead["contact_name"] = res->get_string(2);
+		 lead["personal_title"] = res->get_string(3);
+		 lead["first_name"] = res->get_string(4);
+		 lead["last_name"] = res->get_string(5);
+		 lead["phone"] = res->get_string(6);
+		 lead["email"] = res->get_string(7);
+		 lead["street_addr"] = res->get_string(8);
+		 lead["city"] = res->get_string(9);
+		 lead["state"] = res->get_string(10);
+		 lead["post_code"] = res->get_string(11);
+		 lead["country"] = res->get_string(12);
+		 lead["bill_addr"] = res->get_string(13);
+		 lead["ship_addr"] = res->get_string(14);
+		 lead["lead_source_description"] = res->get_string(15);
+		 lead["lead_status_description"] = res->get_string(16);
+		 lead["lead_rating_description"] = res->get_string(17);
+}
+
+void lead_table::update_lead_table(){
+
+	stringstream ss;
+	 ss <<  "UPDATE lead SET ";
+	ss << "company_name =" << "\"" << company_name <<"\"" << ",";
+	ss << "contact_name =" << "\"" << contact_name <<"\"" << ",";
+	ss << "personal_title =" << "\"" << personal_title <<"\"" << ",";
+	ss << "first_name =" << "\"" << first_name <<"\"" << ",";
+	ss << "last_name =" << "\"" << last_name <<"\"" << ",";
+	ss << "phone =" << "\"" << phone <<"\"" << ",";
+	ss << "email =" << "\"" << email <<"\"" << ",";
+	ss << "street_addr =" << "\"" << street_addr <<"\"" << ",";
+	ss << "city =" << "\"" << city <<"\"" << ",";
+	ss << "state =" << "\"" << state <<"\"" << ",";
+	ss << "post_code =" << "\"" << post_code <<"\"" << ",";
+	ss << "country =" << "\"" << country <<"\"" << ",";
+	ss << "bill_addr =" << "\"" << bill_addr <<"\"" << ",";
+	ss << "ship_addr =" << "\"" << ship_addr <<"\"" << ",";
+	ss << "lead_source =" << "\"" << lead_source <<"\"" << ",";
+	ss << "lead_status =" << "\"" << lead_status <<"\"" << ",";
+	ss << "lead_rating =" << "\"" << lead_rating <<"\"" ;
+	ss << " WHERE lead_id = " << 	lead_id ;
+
+
+	auto sql = ss.str();
+	command c(*conn, sql);
+	c.emit();
+
 }

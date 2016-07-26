@@ -13,44 +13,50 @@
 #include "shrest_utils.h"
 #include "NLTemplate/NLTemplate.h"
 
-#include "contact_table.h"
-#include "ListContactRequest.h"
+#include "customer_table.h"
+#include "lead_table.h"
+#include "ListCustomerRequest.h"
 
 using namespace sqlite;
 using namespace std;
 using namespace NL::Template;
 
-ListContactRequest::ListContactRequest(HttpServer::Response &rs, ShRequest rq): RequestResponse(rs, rq){
+ListCustomerRequest::ListCustomerRequest(HttpServer::Response &rs, ShRequest rq): RequestResponse(rs, rq){
 }
 /*parse customer information and put into database*/
 
-void ListContactRequest::Process(){
+void ListCustomerRequest::Process(){
 	LOG(rq_->method, rq_->path);
 
 	try {
-	//parse path, contact? load : send pack query information	
 		std::map<string, string> m;
 		stringstream cs;
+		string jstr;
 		string  params= rq_->get_params;
 		utils::parse_get_params(params, m);
 
-		string jstr;
-		if(m.size() == 0){
+		if(m.size() == 0){ //list lead
 			LoaderFile loader; 
 			Template t( loader );
-			t.load( "web/listcontact.html" );
-			t.render( cs );
+			t.load( "web/listcustomers.html" );
+			t.render( cs ); 
 		}
-		else{
+		else{ //for adding lead
 			string result;
-			contact_table ct;
 
 			string directory = m["directory"];
 			std::map<int, string> resultset;
 
-			if(directory.compare("contact_content") == 0){
-				ct.get_contact_records( "", jstr); 
+			if( directory.compare("add_contact") == 0){
+		 	//	lead_table lt;
+			//	lt.get_lead_source( resultset); 
+			//	utils::build_json(resultset, jstr); 
 			}
+			else if( directory.compare("customer_content") == 0){
+				customer_table ct;
+				ct.get_customer_records("", jstr);
+			}
+
 
 			utils::build_raw_response( jstr);
 			rs_ << jstr;
@@ -58,7 +64,7 @@ void ListContactRequest::Process(){
 		}
 		
 		cs.seekp(0, ios::end);
-			rs_ <<  cs.rdbuf();
+		rs_ <<  cs.rdbuf();
 		rs_.flush();
 		
 	}

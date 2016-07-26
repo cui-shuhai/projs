@@ -1,5 +1,5 @@
 
-#include <string>
+
 
 #define BOOST_SPIRIT_THREADSAFE
 #include <boost/regex.hpp>//g++4.8 regex implementation has some errors but fixed fin 4.9
@@ -13,50 +13,44 @@
 #include "shrest_utils.h"
 #include "NLTemplate/NLTemplate.h"
 
-#include "activity_table.h"
-#include "AddActivityRequest.h"
+#include "lead_table.h"
+#include "EditLeadRequest.h"
 
 using namespace sqlite;
 using namespace std;
 using namespace NL::Template;
 
 
-AddActivityRequest::AddActivityRequest(HttpServer::Response &rs, ShRequest rq): RequestResponse(rs, rq){
+EditLeadRequest::EditLeadRequest(HttpServer::Response &rs, ShRequest rq): RequestResponse(rs, rq){
 }
-  
-void AddActivityRequest::Process(){
+/*parse customer information and put into database*/
+
+void EditLeadRequest::Process(){
 	LOG(rq_->method, rq_->path);
 
 	try {
+
 		auto content=rq_->content.string();
 		std::map<std::string, std::string> m;
 		utils::parse_kye_value(content, m);
+		lead_table c( stoi(m["lead_id"]), m["company_name"], m["contact_name"], m["personal_title"], 
+				m["first_name"], m["last_name"], m["phone"], m["email"], 
+				m["street_addr"], m["city"], m["state"], m["post_code"], 
+				m["country"], m["bill_addr"], m["ship_addr"], 
+				1, 1, 1);
+				//stoi(m["lead_source"]), stoi(m["lead_status"]), stoi(m["lead_rating"]));
 
-		activity_table c( -1, m["activity_name"], 
-			stoi( m["activity_type"] ), stoi( m["activity_status"] ), stoi( m["activity_priority"] ), 
-			stoi( m["who_preside"] ), utils::get_date(), m["note"]);
+		c.update_lead_table();
 
-		c.add_activity_table();
-
-		auto id = c.get_activity_id();
 		LoaderFile loader; // Let's use the default loader that loads files from disk.
 
 		Template t( loader );
 
-		t.load( "web/addactivityrequest.html" );
-/*
-		t.block("meat").repeat(1);
-		t.block("meat")[0].set("event_id", to_string(id));
-		t.block("meat")[0].set("contact_type",m["contact_type"]);
-		t.block("meat")[0].set("contact_id",  m["contactee"]);
-		t.block("meat")[0].set("who_contacts", m["contactor"]);
-		t.block("meat")[0].set("when_created", m["create_date"]);
-		t.block("meat")[0].set("note", m["note"]);
-*/
-
-
 		stringstream cs;
+
+		cs << "lead saved" << endl;
 		t.render( cs ); // Render the template with the variables we've set above
+ 
 		
 		cs.seekp(0, ios::end);
 		rs_ <<  cs.rdbuf();

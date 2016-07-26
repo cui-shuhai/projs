@@ -28,22 +28,34 @@ void ListActivityRequest::Process(){
 	LOG(rq_->method, rq_->path);
 
 	try {
-		
-		activity_table c;
-
+		std::map<string, string> m;
 		stringstream cs;
+		string  params= rq_->get_params;
+		utils::parse_get_params(params, m);
+
+		string jstr;
+		if(m.size() == 0){ //list lead
+			LoaderFile loader; 
+			Template t( loader );
+			t.load( "web/listactivity.html" );
+			t.render( cs ); 
+		}
+		else{ //for adding lead
+			string result;
+			activity_table ct;
+
+			string directory = m["directory"];
+			std::map<int, string> resultset;
+
+			if(directory.compare("activity_content") == 0){
+				ct.get_activity_records("", jstr);
+			}
+			utils::build_raw_response( jstr);
+			rs_ << jstr;
+			return;
+		}
 		
-		//XXX it should be filtered by requester's id.
-
-		auto sql = "SELECT activity_id, activity_name, activity_type.description, activity_status.description,"
-			" activity_priority.description, who_preside, when_created, note "
-			" FROM activity INNER JOIN activity_type ON activity_type.activity_type = activity.activity_type INNER JOIN "
-			" activity_status  ON activity_status.activity_status = activity.activity_status INNER JOIN "
-			" activity_priority ON activity_priority.activity_priority = activity.activity_priority ";
-
-			
-
-	//there is an error from sqlite library, query get_row_count fails (return 0)
+/*
 		auto count_sql = "SELECT count(1) FROM activity";
 		auto count_query = c.BuildQuery(count_sql);
 		auto count_res = count_query->emit_result();
@@ -73,6 +85,7 @@ void ListActivityRequest::Process(){
 
 
 		t.render( cs ); // Render the template with the variables we've set above
+*/
  
 		
 		cs.seekp(0, ios::end);

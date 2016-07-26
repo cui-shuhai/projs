@@ -2,19 +2,17 @@
 /* Standard C++ includes */
 #include <stdlib.h>
 #include <memory>
+#include <map>
 #include <iostream>
-
-#define BOOST_SPIRIT_THREADSAFE
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/json_parser.hpp>
 
 #include <sqlite/transaction.hpp>
 #include <sqlite/connection.hpp>
 #include <sqlite/command.hpp>
 #include <sqlite/execute.hpp>
 
-#include "shrest_log.h"
 #include "shrest_db/user_table.h"
+#include "shrest_db/employee_table.h"
+#include "shrest_log.h"
 
 user_table::user_table():SqlAccessor()
 { }
@@ -43,7 +41,7 @@ user_table::~user_table(){
 bool user_table::check_user_exist()
 {
 
-	string check_user_exist = "SELECT COUNT(1) FROM user WHERE login_name = ? ";
+	string check_user_exist = "SELECT COUNT(1) FROM crm_user WHERE login_name = ? ";
 	query q(*conn, check_user_exist);
 	q.bind(1, login_name);
 	auto res = q.emit_result();
@@ -53,7 +51,7 @@ bool user_table::check_user_exist()
 
 bool user_table::check_login_exist()
 {
-	string check_user_exist = "SELECT COUNT(1) FROM user WHERE login_name = ? AND pass_word = ?";
+	string check_user_exist = "SELECT COUNT(1) FROM crm_user WHERE login_name = ? AND pass_word = ?";
 	query q(*conn, check_user_exist);
 	q.bind(1, login_name);
 	q.bind(2, pass_word);
@@ -64,7 +62,7 @@ bool user_table::check_login_exist()
 
 void user_table::add_user_table(){
 
-	string sql = "INSERT INTO 'user'(login_name, pass_word, employee_id, role_id, profile_id, create_date, creator_id) VALUES(?, ?, ?, ?, ?, ?, ?)";
+	string sql = "INSERT INTO 'crm_user'(login_name, pass_word, employee_id, role_id, profile_id, create_date, creator_id) VALUES(?, ?, ?, ?, ?, ?, ?)";
 
 	command c(*conn, sql);
 	c.bind(1, login_name);
@@ -79,7 +77,7 @@ void user_table::add_user_table(){
 
 bool user_table::change_user_password(const string & loginName, const string &password) const
 {	
-	string sql = "UPDATE 'user' set pass_word = ? WHERE login_name = ?";
+	string sql = "UPDATE 'crm_user' set pass_word = ? WHERE login_name = ?";
 
 	command c(*conn, sql);
 	c.bind(1, pass_word);
@@ -91,7 +89,7 @@ bool user_table::change_user_password(const string & loginName, const string &pa
 
 bool user_table::update_user(const string& loginName, const string &pass, int employeeId, int rl, int p){
 	
-	string sql = "UPDATE 'user' SET  pass_word = ?, employee_id = ?, role_id = ?, profile_id = ? WHERE login_name = ?";
+	string sql = "UPDATE 'crm_user' SET  pass_word = ?, employee_id = ?, role_id = ?, profile_id = ? WHERE login_name = ?";
 
 	command c(*conn, sql);
 	c.bind(1, pass_word);
@@ -101,4 +99,16 @@ bool user_table::update_user(const string& loginName, const string &pass, int em
 	c.bind(5, login_name);
 	c.emit();
 	return true;
+}
+
+void user_table::get_user_list( map<int, string> &m){
+
+	string sql = "SELECT firstName, lastName employee_id from employee INNER JOIN crm_user ON crm_user.employee_id = employee.employee_id";
+
+	query q(*conn, sql);
+	auto res = q.emit_result();
+
+	do{
+		m[res->get_int(0)] = res->get_string(1);
+	} while(res->next_row());
 }

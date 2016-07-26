@@ -21,7 +21,7 @@ void AddCustomerInterface::Process(){
 
 		Template t( loader );
 
-		t.load( "web/addcustomer.html" );
+		t.load( "web/addcustomerinterface.html" );
            
 		//t.set( "text", "Hello, world" ); 
 

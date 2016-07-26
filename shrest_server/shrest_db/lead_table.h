@@ -3,6 +3,7 @@
 /* Standard C++ includes */
 #include <stdlib.h>
 #include <iostream>
+#include <map>
 
 #include "SqlAccessor.h"
 
@@ -19,6 +20,8 @@ public:
 	~lead_table();
 
 	void add_lead_table();
+	void update_lead_table();
+	void get_lead_instance(std::map<string, string> &lead);
 	int get_lead_table_count();
 	void get_lead_table_profile(std::map<int, string> &m);
 	void get_lead_status(std::map<int, string> &m);

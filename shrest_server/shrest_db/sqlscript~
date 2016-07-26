@@ -152,17 +152,36 @@ CREATE TABLE lead_status(
 	'detail'  varchar(100)
 );
 
+INSERT INTO 'lead_status'(status, description)
+	VALUES( 1, "qualified"), (2, "unqualified"), (3, "closed");
+
 CREATE TABLE lead_source(
 	'source' int PRIMARY KEY,
 	'description' varchar(20),
 	'detail'  varchar(100)
 );
 
+INSERT INTO 'lead_source'( source, description )
+	VALUES( 1, "web site"),(2, "marketing"),
+	(3, "Advertisement"),
+	(4, "Employee Referral"),
+	(5, "Other"),
+	(6, "Partner"),
+	(7, "Public Relations"),
+	(8, "Seminar-internal"),
+	(9, "Seminar-Partner"),
+	(10, "Trade Show"),
+	(11, "Word of mouth");
+
+
 CREATE TABLE lead_rating(
 	'rating' int PRIMARY KEY,
 	'description' varchar(20),
 	'detail'  varchar(100)
 );
+
+INSERT INTO 'lead_rating'( rating, description )
+	VALUES( 1, "high"),(2, "medium");
 
 CREATE TABLE lead(
 	lead_id  INTEGER PRIMARY KEY,
@@ -195,14 +214,14 @@ Opt out of billing means the contact will be flagged to not receive billing mail
 */
 
 CREATE TABLE 'contact_from'(
-	'from' INT PRIMARY KEY,
+	'contact_from' INT PRIMARY KEY,
 	'description' varchar(20)
-};
+);
 
-INSERT INTO 'contact_from'(from, description)
-VALUES(1, "Lead"), (2, "Customer"), (3, "Vendor"), (4, "Employee"), (5, "Other")
+INSERT INTO 'contact_from'(contact_from, description)
+VALUES(1, "Lead"), (2, "Customer"), (3, "Vendor"), (4, "Employee"), (5, "Other");
 
-CREATE TABLE contact(
+CREATE TABLE 'contact'(
 	'contact_id' INTEGER PRIMARY KEY,
 	'status' int DEFAULT 1,
 	'firstName' char(20), 

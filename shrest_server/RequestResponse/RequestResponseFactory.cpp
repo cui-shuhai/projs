@@ -6,13 +6,20 @@
 #include "AddVendorInterface.h"
 #include "AddLeadInterface.h"
 #include "AddLeadRequest.h"
-#include "AddCustomerContactInterface.h"
+#include "EditLeadInterface.h"
+#include "EditLeadRequest.h"
+#include "EditCustomerInterface.h"
+#include "EditCustomerRequest.h"
+#include "AddContactInterface.h"
+#include "AddContactRequest.h"
 #include "AddLeadContactInterface.h"
 #include "AddCustomerRequest.h"
-#include "ListCustomersGet.h"
+#include "ListCustomerRequest.h"
 #include "IcrmIndex.h"
 #include "AddActivityInterface.h"
 #include "AddActivityRequest.h"
+#include "EditActivityInterface.h"
+#include "EditActivityRequest.h"
 #include "SearchCustomerInterface.h"
 #include "SearchCustomerRequest.h"
 #include "AddTransactionInterface.h"
@@ -51,14 +58,24 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 		return unique_ptr<AddLeadInterface>( new AddLeadInterface(rs, rq));
 	if(name == "AddLeadRequest")
 		return unique_ptr<AddLeadRequest>( new AddLeadRequest(rs, rq));
-	if(name == "AddCustomerContactInterface")
-		return unique_ptr<AddCustomerContactInterface>( new AddCustomerContactInterface(rs, rq));
+	if(name == "EditLeadInterface")
+		return unique_ptr<EditLeadInterface>( new EditLeadInterface(rs, rq));
+	if(name == "EditLeadRequest")
+		return unique_ptr<EditLeadRequest>( new EditLeadRequest(rs, rq));
+	if(name == "EditCustomerInterface")
+		return unique_ptr<EditCustomerInterface>( new EditCustomerInterface(rs, rq));
+	if(name == "EditCustomerRequest")
+		return unique_ptr<EditCustomerRequest>( new EditCustomerRequest(rs, rq));
+	if(name == "AddContactInterface")
+		return unique_ptr<AddContactInterface>( new AddContactInterface(rs, rq));
+	if(name == "AddContactRequest")
+		return unique_ptr<AddContactRequest>( new AddContactRequest(rs, rq));
 	if(name == "AddLeadContactInterface")
 		return unique_ptr<AddLeadContactInterface>( new AddLeadContactInterface(rs, rq));
 	if(name == "AddCustomerRequest")
 		return unique_ptr<AddCustomerRequest>( new AddCustomerRequest(rs, rq));
-	if(name == "ListCustomersGet")
-		return unique_ptr<ListCustomersGet>( new ListCustomersGet(rs, rq));
+	if(name == "ListCustomerRequest")
+		return unique_ptr<ListCustomerRequest>( new ListCustomerRequest(rs, rq));
 	if(name == "IcrmIndex")
 		return unique_ptr<IcrmIndex>( new IcrmIndex(rs, rq));
 	if(name == "SearchCustomerInterface")
@@ -69,6 +86,10 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 		return unique_ptr<AddActivityInterface>( new AddActivityInterface(rs, rq));
 	if(name == "AddActivityRequest")
 		return unique_ptr<AddActivityRequest>( new AddActivityRequest(rs, rq));
+	if(name == "EditActivityInterface")
+		return unique_ptr<EditActivityInterface>( new EditActivityInterface(rs, rq));
+	if(name == "EditActivityRequest")
+		return unique_ptr<EditActivityRequest>( new EditActivityRequest(rs, rq));
 	if(name == "AddTransactionInterface")
 		return unique_ptr<AddTransactionInterface>( new AddTransactionInterface(rs, rq));
 	if(name == "AddTransactionRequest")

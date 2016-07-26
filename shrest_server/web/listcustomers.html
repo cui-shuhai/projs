@@ -1,46 +1,79 @@
 {% include web/header.html %}
 
-Customer List:
-<table style="width:100%"  border="1">
-<tr>
-	<th>Customer</th>
-	<th>Company</th>
-	<th>Contact</th>
-	<th>Personal</th>
-	<th>First</th>
-	<th>Last</th>
-	<th>Phone</th>
-	<th>Email</th>
-	<th>Street</th>
-	<th>City</th>
-	<th>State</th>
-	<th>Post</th>
-	<th>Country</th>
-	<th>Bill</th>
-	<th>Ship</th>
-</tr>
-{% block meat %}
+<h3>Customers and contacts list</h3>
 
-<tr>
-<td> {{ customer_id }} </td>
-<td> {{ company_name }} </td>
-<td> {{ contact_name }} </td>
-<td> {{ personal_title }} </td>
-<td> {{ first_name }} </td>
-<td> {{ last_name }} </td>
-<td> {{ phone }} </td>
-<td> {{ email }} </td>
-<td> {{ street_addr }} </td>
-<td> {{ city }} </td>
-<td> {{ state }} </td>
-<td> {{ post_code }} </td>
-<td> {{ country }} </td>
-<td> {{ bill_addr }} </td>
-<td> {{ ship_addr }} </td>
-</tr>
+<table id="customer_table" border="1">
 
-{% endblock %}
 </table>
-
-{% include web/footer.html %}
  
+<script>
+function listCustomers() {
+  
+	$.getJSON("/listcustomer", { "directory": "customer_content"}, function(jsonData) {
+
+		var bHeader = true;
+
+		var sourceTable= $( "#customer_table" );
+		tr = $('<tr/>');
+		tr.append("<th>" + "Click Edit..." + "</th>"); 
+		tr.append("<th>" + "Company_name" + "</th>"); 
+		tr.append("<th>" + "Contact_name" + "</th>"); 
+		tr.append("<th>" + "Personal_title" + "</th>"); 
+		tr.append("<th>" + "First_name" + "</th>"); 
+		tr.append("<th>" + "Last_name" + "</th>"); 
+		tr.append("<th>" + "Phone" + "</th>"); 
+		tr.append("<th>" + "Email" + "</th>"); 
+		tr.append("<th>" + "Street_addr" + "</th>"); 
+		tr.append("<th>" + "City" + "</th>"); 
+		tr.append("<th>" + "State" + "</th>"); 
+		tr.append("<th>" + "Country" + "</th>"); 
+		tr.append("<th>" + "Bill_addr" + "</th>"); 
+		tr.append("<th>" + "Ship_addr" + "</th>"); 
+		tr.append("<th>" + "Post_code" + "</th>"); 
+		sourceTable.append(tr);
+
+		$.each(jsonData.customer ,function(key, value) {
+//			if(bHeader){
+//				bHeader = false;
+//				tr = $('<tr/>');
+//				var keys = Object.keys(value);
+//				Object.keys(value).forEach(function(k) {
+//				  tr.append("<th>" + k + "</th>");});
+//				sourceTable.append(tr);
+//			}
+
+			tr = $('<tr/>');
+                        tr.append("<td>" + "<a href=\"/editcustomer?from=customer&customer_id=" + value.customer_id +"\"" +">Go...</a>"  + "</td>");
+                        tr.append("<td>" + value.company_name + "</td>"); 
+                        tr.append("<td>" + value.contact_name + "</td>"); 
+                        tr.append("<td>" + value.personal_title + "</td>"); 
+                        tr.append("<td>" + value.first_name + "</td>"); 
+                        tr.append("<td>" + value.last_name + "</td>"); 
+                        tr.append("<td>" + value.phone + "</td>"); 
+                        tr.append("<td>" + value.email + "</td>"); 
+                        tr.append("<td>" + value.street_addr + "</td>"); 
+                        tr.append("<td>" + value.city + "</td>"); 
+                        tr.append("<td>" + value.state + "</td>"); 
+                        tr.append("<td>" + value.country + "</td>"); 
+                        tr.append("<td>" + value.bill_addr + "</td>"); 
+                        tr.append("<td>" + value.ship_addr + "</td>"); 
+                        tr.append("<td>" + value.post_code + "</td>"); 
+			sourceTable.append(tr);
+		});
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	alert(XMLHttpRequest.responseText);
+	});
+}
+
+
+$( document ).ready( function(){
+	listCustomers();
+});
+ 
+</script>
+ 
+{% include web/footer.html %}
+   
+
+

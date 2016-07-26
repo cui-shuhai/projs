@@ -8,7 +8,7 @@ You can add other details like phone numbers, address, photo, fax, website, date
 user must be employee, if not, give it a dumy id like customer department, verdor part etc
 
 */
-CREATE TABLE 'user'(
+CREATE TABLE 'crm_user'(
 	'login_name' varchar(32) PRIMARY KEY,
 	'pass_word' char(32),
 	'employee_id'	INT,
@@ -19,7 +19,7 @@ CREATE TABLE 'user'(
 	FOREIGN KEY(creator_id) REFERENCES employee(employee_id),
 	FOREIGN KEY(employee_id) REFERENCES employee(employee_id)
 );
-INSERT INTO 'user'(login_name, pass_word, employee_id, role_id, profile_id, creator_id, create_date) 
+INSERT INTO 'crm_user'(login_name, pass_word, employee_id, role_id, profile_id, creator_id, create_date) 
 	VALUES("root", "magic", 0, 0, 0, 0, "2016/11/21");
 
 CREATE TABLE employee_role(
@@ -221,7 +221,7 @@ CREATE TABLE 'contact_from'(
 INSERT INTO 'contact_from'(contact_from, description)
 VALUES(1, "Lead"), (2, "Customer"), (3, "Vendor"), (4, "Employee"), (5, "Other");
 
-CREATE TABLE contact(
+CREATE TABLE 'contact'(
 	'contact_id' INTEGER PRIMARY KEY,
 	'status' int DEFAULT 1,
 	'firstName' char(20), 
@@ -277,7 +277,7 @@ INSERT INTO 'activity_status'(activity_status, description) VAlUES
 	(3, "Completed"),
 	(4, "In Progress"),	
 	(5, "Deferred"),
-	(6, "Waiting on someone else")
+	(6, "Waiting on someone else");
 
 CREATE TABLE 'activity_priority'(
 	'activity_priority' INT PRIMARY KEY,
@@ -287,7 +287,7 @@ CREATE TABLE 'activity_priority'(
 INSERT INTO 'activity_priority'(activity_priority, description) VAlUES
 	(1, "High"),
 	(2, "Medium"),
-	(3, "Low")
+	(3, "Low");
 
 CREATE TABLE activity(
 	'activity_id'  INTEGER  PRIMARY KEY,

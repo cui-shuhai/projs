@@ -1,0 +1,61 @@
+{% include web/header.html %}
+
+{% block meat %}
+
+<form action="editcustomer" method="post">
+
+<input type="hidden" name="customer_id" value="{{ customer_id }}">
+<legend>Customer to edit:</legend>
+<table>
+<tr>
+	<td>Company Name:</td><td><input type="text" name="company_name" value="{{ company_name }}"> </td>
+	<td>Contact Name:</td><td><input type="text" name="contact_name" value="{{ contact_name }}"> </td>
+</tr><tr>
+	<td>Mr/Ms:</td><td><input type="text" name="personal_title" value="{{ personal_title }}"> </td>
+	<td>First Name:</td><td><input type="text" name="first_name" value="{{ first_name }}"> </td>
+</tr><tr>
+	<td>Last Name:</td><td><input type="text" name="last_name" value="{{ last_name }}"> </td>
+	<td>Phone:</td><td><input type="text" name="phone" value="{{ phone }}"> </td>
+</tr><tr>
+	<td>Email:</td><td><input type="text" name="email" value="{{ email }}"> </td>
+	<td>Street Addr:</td><td><input type="text" name="street_addr" value="{{ street_addr }}"> </td>
+</tr><tr>
+	<td>City:</td><td><input type="text" name="city" value="{{ city }}"> </td>
+	<td>State:</td><td><input type="text" name="state" value="{{ state }}"> </td>
+</tr><tr>
+	<td>Post Code:</td><td><input type="text" name="post_code" value="{{ post_code }}"> </td>
+	<td>Country:</td><td><input type="text" name="country" value="{{ country }}"> </td>
+</tr><tr>
+	<td>Bill Addr:</td><td><input type="text" name="bill_addr" value="{{ bill_addr }}"> </td>
+	<td>Ship Addr:</td><td><input type="text" name="ship_addr" value="{{ ship_addr }}"> </td>
+</tr><tr>
+	    <td><input type="submit"  name="submit" value="clear"></td>
+	    <td><input type="submit"  name="submit" value="save"></td>
+	    <td><input type="submit"  name="submit" value="save and add"></td>
+</tr>
+</table>
+	  </fieldset>
+</form>
+{% endblock %}
+
+ 
+<script>
+function fill_customer() {
+//  
+//	$.getJSON("/listlead", { "directory": "add_customer" }, function(jsonData) {
+//	var leadValues = $( "#origin_id" );
+//	$.each(jsonData.recordset,function(key, value) {
+//	leadValues.append('<option value=' + value.key + '>' + value.value + '</option>');
+//	});
+//	})
+//	.error(function() { alert("error"); });
+}
+
+$( document ).ready( function() {
+	//fill_customer();
+	});
+ 
+//$( "#origin_id" ).change( fill_customer );
+</script>
+
+{% include web/footer.html %}

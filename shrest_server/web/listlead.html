@@ -2,10 +2,19 @@
 
 <h3>Leads and contacts list</h3>
 
+<fieldset>
+<legend>XXXXX</legend>
+
 <table id="lead_table" border="1">
 
 </table>
- 
+<br><br>
+<a href="/addlead">
+<button id="add_lead"  style="float:right" type="button">Add Lead</button>
+</a>
+
+</fieldset>
+
 <script>
 function listLeads() {
   
@@ -14,19 +23,35 @@ function listLeads() {
 		var bHeader = true;
 
 		var sourceTable= $( "#lead_table" );
+		tr = $('<tr/>');
+		tr.append("<th>" + "Click Edit..."  + "</th>");
+		tr.append("<th>" + "Company" + "</th>");
+		tr.append("<th>" + "Contact" + "</th>");
+		tr.append("<th>" + "Title" + "</th>");
+		tr.append("<th>" + "First Name" + "</th>");
+		tr.append("<th>" + "Last Name" + "</th>");
+		tr.append("<th>" + "Phone" + "</th>");
+		tr.append("<th>" + "Email" + "</th>");
+		tr.append("<th>" + "Street_addr" + "</th>");
+		tr.append("<th>" + "City" + "</th>");
+		tr.append("<th>" + "State" + "</th>");
+		tr.append("<th>" + "Post Code" + "</th>");
+		tr.append("<th>" + "Country" + "</th>");
+		sourceTable.append(tr);
 
 		$.each(jsonData.lead ,function(key, value) {
-			if(bHeader){
-				bHeader = false;
-				tr = $('<tr/>');
-				var keys = Object.keys(value);
-				Object.keys(value).forEach(function(k) {
-				  tr.append("<th>" + k + "</th>");});
-				sourceTable.append(tr);
-			}
+
+//			if(bHeader){
+//				bHeader = false;
+//				tr = $('<tr/>');
+//				var keys = Object.keys(value);
+//				Object.keys(value).forEach(function(k) {
+//				  tr.append("<th>" + k + "</th>");});
+//				sourceTable.append(tr);
+//			}
 
 			tr = $('<tr/>');
-                          tr.append("<td>" + value.lead_id + "</td>");
+                          tr.append("<td>" + "<a href=\"/editlead?from=lead&lead_id=" + value.lead_id +"\"" +">Go...</a>"  + "</td>");
                           tr.append("<td>" + value.company_name + "</td>");
                           tr.append("<td>" + value.contact_name + "</td>");
                           tr.append("<td>" + value.personal_title + "</td>");
@@ -39,11 +64,11 @@ function listLeads() {
                           tr.append("<td>" + value.state + "</td>");
                           tr.append("<td>" + value.post_code + "</td>");
                           tr.append("<td>" + value.country + "</td>");
-                          tr.append("<td>" + value.bill_addr + "</td>");
-                          tr.append("<td>" + value.ship_addr + "</td>");
-                          tr.append("<td>" + value.lead_source_description + "</td>");
-                          tr.append("<td>" + value.lead_status_description + "</td>");
-                          tr.append("<td>" + value.lead_rating_description + "</td>");
+//                          tr.append("<td>" + value.bill_addr + "</td>");
+//                          tr.append("<td>" + value.ship_addr + "</td>");
+//                          tr.append("<td>" + value.lead_source_description + "</td>");
+//                          tr.append("<td>" + value.lead_status_description + "</td>");
+//                          tr.append("<td>" + value.lead_rating_description + "</td>");
 			sourceTable.append(tr);
 		});
 	})
@@ -62,5 +87,4 @@ $( document ).ready( function(){
 {% include web/footer.html %}
    
 
-  }   
 

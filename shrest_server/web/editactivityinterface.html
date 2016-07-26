@@ -1,9 +1,73 @@
 {% include web/header.html %}
 
-<field>
-	    <legend>Add {{ category }} contact </legend>
+{% block meat %}
+<form action="/editactivityrequest" method="post">
+<input type="hidden" name="activity_id" value="{{ activity_id }}">
+	  <fieldset>
+	    <legend>Editing activity:</legend>
+<table id="edit_activity_id" border="1">
+<tr>
+	    <td> Subject: </td>
+	    <td> <input type="text" name="activity_name" value=""> </td>
+</tr><tr>
+	    <td> Type: </td>
+	    <td> <select name ="activity_type" style="width: 150px;"> 
+		 <option value="{{ activity_type_value }}"> {{ activity_type_show }}</option>
+ 	     </select> 
+</td>
+</tr><tr>
+	    <td> Status: </td>
+<td>
+	    <select name ="activity_status" style="width: 150px;">
+		<option value="{{ activity_status_value }}"> {{ activity_status_show }}</option>
+ 	    </select>
+</td>
+</tr><tr>
+	    <td> Priority: </td>
+<td>
+	    <select name ="activity_priority" style="width: 150px;">
+		<option value="{{ activity_priority_value }}"> {{ activity_priority_show }}</option>
+ 	    </select>
+</td>
+</tr><tr>
+	    <td> Presider: </td>
+<td>
+	    <select name ="who_preside" style="width: 150px;">
+		<option value="{{ activity_presider_value }}"> {{ activity_presider_show }}</option>
+ 	    </select>
+</td>
+</tr>
+	    <td> Note:		 </td>
+</table>
+	    <TEXTAREA NAME="note" COLS=50 ROWS=6></TEXTAREA><br><br>	
+	    <input type="submit" value="Submit">
+	  </fieldset>
+</form>
+{% endblock %}
+ 
+<script>
+var hide = 1;
+function fill_activity_edit(){
+  
+//	$.getJSON("/editactivity", { "directory": "edit_activity" }, function(jsonData) {
+//		var leadValues = $( "#origin_id" );
+//		$.each(jsonData.recordset,function(key, value) {
+//		leadValues.append('<option value=' + value.key + '>' + value.value + '</option>');
+//		});
+//	})
+//	.error(function() { alert("error"); });
+}
+//
+//$( document ).ready( function() {
+//	fill_activity_edit();
+//	});
+ 
+</script>
 
-<form action="/addcontact" method="post">
+{% include web/footer.html %}
+
+<!--
+<form action="/editcontact" method="post">
 Company name:<input type="text" name="company_name" value=""><br><br>
 <table>
 <tr>
@@ -41,10 +105,7 @@ Company name:<input type="text" name="company_name" value=""><br><br>
 <td>	    <input type="submit" value="   Submit  "></td>
 </tr>
 </table>
-
 	  </fieldset>
-{% endblock %}
 </form>
+//-->
 
-
-{% include web/footer.html %}

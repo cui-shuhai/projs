@@ -6,10 +6,15 @@ SOURCE=server_instance.cpp \
 	RequestResponse/AddVendorInterface.cpp \
 	RequestResponse/AddLeadInterface.cpp \
 	RequestResponse/AddLeadRequest.cpp \
-	RequestResponse/AddCustomerContactInterface.cpp \
+	RequestResponse/EditLeadInterface.cpp \
+	RequestResponse/EditLeadRequest.cpp \
+	RequestResponse/EditCustomerInterface.cpp \
+	RequestResponse/EditCustomerRequest.cpp \
+	RequestResponse/AddContactInterface.cpp \
+	RequestResponse/AddContactRequest.cpp \
 	RequestResponse/AddLeadContactInterface.cpp \
 	RequestResponse/JsonPostRequest.cpp \
-	RequestResponse/ListCustomersGet.cpp \
+	RequestResponse/ListCustomerRequest.cpp \
 	RequestResponse/AddCustomerRequest.cpp \
 	RequestResponse/PieGetRequest.cpp \
 	RequestResponse/IcrmIndex.cpp \
@@ -18,6 +23,8 @@ SOURCE=server_instance.cpp \
 	RequestResponse/SearchCustomerRequest.cpp \
 	RequestResponse/AddActivityInterface.cpp \
 	RequestResponse/AddActivityRequest.cpp \
+	RequestResponse/EditActivityInterface.cpp \
+	RequestResponse/EditActivityRequest.cpp \
 	RequestResponse/AddTransactionInterface.cpp \
 	RequestResponse/AddTransactionRequest.cpp \
 	RequestResponse/AddTaskInterface.cpp \
@@ -44,6 +51,8 @@ SOURCE=server_instance.cpp \
 	shrest_db/contact_table.cpp \
 	shrest_db/activity_table.cpp \
 	shrest_db/activity_status.cpp \
+	shrest_db/activity_type.cpp \
+	shrest_db/activity_priority.cpp \
 	shrest_db/task_table.cpp \
 	shrest_db/cookie_table.cpp \
 	shrest_db/user_table.cpp \

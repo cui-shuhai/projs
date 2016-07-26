@@ -24,7 +24,7 @@ public:
 	~contact_table();
 	
 	void add_contact_table();
-	int get_contact_tableId();
+
 	void get_contact_records( string source, string &result );
 	void get_contact_list(std::map<int, string> &contacts);
 	int get_contact_id(){ return contact_id; }

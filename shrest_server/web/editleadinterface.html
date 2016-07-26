@@ -1,0 +1,119 @@
+{% include web/header.html %}
+
+{% block meat %}
+
+<form action="editlead" method="post">
+
+<input type="hidden" name="lead_id" value="{{ lead_id }}">
+<legend>Lead to edit :</legend>
+<table>
+<tr>
+	<td>Company Name:</td><td><input type="text" name="company_name" value="{{ company_name }}"> </td>
+	<td>Contact Name:</td><td><input type="text" name="contact_name" value="{{ contact_name }}"> </td>
+</tr><tr>
+	<td>Mr/Ms:</td><td><input type="text" name="personal_title" value="{{ personal_title }}"> </td>
+	<td>First Name:</td><td><input type="text" name="first_name" value="{{ first_name }}"> </td>
+</tr><tr>
+	<td>Last Name:</td><td><input type="text" name="last_name" value="{{ last_name }}"> </td>
+	<td>Phone:</td><td><input type="text" name="phone" value="{{ phone }}"> </td>
+</tr><tr>
+	<td>Email:</td><td><input type="text" name="email" value="{{ email }}"> </td>
+	<td>Street Addr:</td><td><input type="text" name="street_addr" value="{{ street_addr }}"> </td>
+</tr><tr>
+	<td>City:</td><td><input type="text" name="city" value="{{ city }}"> </td>
+	<td>State:</td><td><input type="text" name="state" value="{{ state }}"> </td>
+</tr><tr>
+	<td>Post Code:</td><td><input type="text" name="post_code" value="{{ post_code }}"> </td>
+	<td>Country:</td><td><input type="text" name="country" value="{{ country }}"> </td>
+</tr><tr>
+	<td>Bill Addr:</td><td><input type="text" name="bill_addr" value="{{ bill_addr }}"> </td>
+	<td>Ship Addr:</td><td><input type="text" name="ship_addr" value="{{ ship_addr }}"> </td>
+</tr><tr>
+	    <td><input type="submit"  name="submit" value="clear"></td>
+	    <td><input type="submit"  name="submit" value="save"></td>
+	    <td><input type="submit"  name="submit" value="save and add"></td>
+</tr>
+</table>
+
+	  </fieldset>
+</form>
+<br><br>
+<!--
+<form action="/addcontact" method="post">
+Company name:<input type="text" name="company_name" value=""><br><br>
+<table>
+<tr>
+<td>Status:</td> <td> <input type="text" name="status" value=""></td>
+<td>FirstName:</td> <td> <input type="text" name="firstName" value=""></td>
+</tr><tr>
+<td>LastName:</td> <td> <input type="text" name="lastName" value=""></td>
+<td>Address:</td> <td> <input type="text" name="address" value=""></td>
+</tr><tr>
+<td>Primary phone:</td> <td> <input type="text" name="primary_phone" value=""></td>
+<td>Alt phone:</td> <td> <input type="text" name="alt_phone" value=""></td>
+</tr><tr>
+<td>Mobile phone:</td> <td> <input type="text" name="mobile_phone" value=""></td>
+<td>Fax:</td> <td> <input type="text" name="fax" value=""></td>
+</tr><tr>
+<td>Email:</td> <td> <input type="text" name="email" value=""></td>
+<td>Twitter:</td> <td> <input type="text" name="twitter" value=""></td>
+</tr><tr>
+<td>Linkedin:</td> <td> <input type="text" name="linkedin" value=""></td>
+<td>Facebook:</td> <td> <input type="text" name="facebook" value=""></td>
+</tr><tr>
+<td>Job title:</td> <td> <input type="text" name="job_title" value=""></td>
+<td>Company id:</td> <td> <input type="text" name="company_id" value=""></td>
+</tr><tr>
+<td>When met:</td> <td> <input type="text" name="when_met" value=""></td>
+<td>Where met:</td> <td> <input type="text" name="where_met" value=""></td>
+</tr><tr>
+<td>Time zone:</td> <td> <input type="text" name="time_zone" value=""></td>
+<td>Main contact:</td> <td> <input type="text" name="main_contact" value=""></td>
+</tr><tr>
+<td>Out of_marketing:</td> <td> <input type="text" name="out_of_marketing" value=""></td>
+<td>Out of_billing:</td> <td> <input type="text" name="out_of_billing" value=""></td>
+</tr><tr>
+<td>Extra info:</td> <td> <input type="text" name="extra_info" value=""></td>
+<td>	    <input type="submit" value="   Submit  "></td>
+</tr>
+</table>
+	  </fieldset>
+</form>
+//-->
+
+<button type="button" onclick="addclick(this.id)"  name="add_contact" id="addcontact_button_id" value="Add Contact..."> Add Contact </td>
+
+{% endblock %}
+ 
+<script>
+var hide = 1;
+function addclick(id) {
+	if(hide == 1){
+	document.getElementById("#new_contact_id").style.display="block";
+	hide = 0;
+	document.getElementById("#addcontact_button_id").text="Finish";
+	}
+	else{
+	hide = 1;
+	document.getElementById("#new_contact_id").style.display="Add...";
+	}
+}
+//function fill_customer() {
+//  
+//	$.getJSON("/listlead", { "directory": "add_customer" }, function(jsonData) {
+//	var leadValues = $( "#origin_id" );
+//	$.each(jsonData.recordset,function(key, value) {
+//	leadValues.append('<option value=' + value.key + '>' + value.value + '</option>');
+//	});
+//	})
+//	.error(function() { alert("error"); });
+//}
+//
+//$( document ).ready( function() {
+//	fill_customer();
+//	});
+ 
+//$( "#origin_id" ).change( fill_customer );
+</script>
+
+{% include web/footer.html %}
