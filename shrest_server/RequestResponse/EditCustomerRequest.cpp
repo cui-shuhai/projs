@@ -33,7 +33,7 @@ void EditCustomerRequest::Process(){
 		auto content=rq_->content.string();
 		std::map<std::string, std::string> m;
 		utils::parse_kye_value(content, m);
-		customer_table c( stoi(m["customer_id"]), m["company_name"], m["contact_name"], m["personal_title"], 
+		customer_table c( m["customer_id"], m["company_name"], m["contact_name"], m["personal_title"], 
 				m["first_name"], m["last_name"], m["phone"], m["email"], 
 				m["street_addr"], m["city"], m["state"], m["post_code"], 
 				m["country"], m["bill_addr"], m["ship_addr"] );

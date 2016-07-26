@@ -72,14 +72,14 @@ LOG(rq_->method, rq_->path);
 		//Campaigns
 		if(true){
 			string campaign_sql = "SELECT campaign_name, status, start_date, close_date, description FROM campaign WHERE assign_to = ";
-			campaign_sql.append(to_string(user_id)).append(" ORDER BY status");
+			campaign_sql.append(user_id).append(" ORDER BY status");
 		
 			campaign_table ct;
 			auto cp_query = ct.BuildQuery(campaign_sql);
 			auto res = cp_query->emit_result();
 
 			string count_sql = "SELECT count(*) FROM campaign WHERE assign_to = ";
-			count_sql.append(to_string(user_id));
+			count_sql.append(user_id);
 
 			auto count_query = ct.BuildQuery(count_sql);
 			auto count_res = count_query->emit_result();
@@ -104,15 +104,15 @@ LOG(rq_->method, rq_->path);
 	
 		//Opportunities
 		if(true){
-			string opportunity_sql = "SELECT opportunity_name, firstName, lastName, opportunity.contact_id, pipeline, amount, probability, close_date FROM opportunity JOIN contact ON opportunity.contact_id = contact.contact_id WHERE assign_to = ";
-			opportunity_sql.append(to_string(user_id)).append(" ORDER BY pipeline");
+			string opportunity_sql = "SELECT opportunity_name, first_name, last_name, opportunity.contact_id, pipeline, amount, probability, close_date FROM opportunity JOIN contact ON opportunity.contact_id = contact.contact_id WHERE assign_to = ";
+			opportunity_sql.append(user_id).append(" ORDER BY pipeline");
 		
 			activity_table ot;
 			auto ot_query = ot.BuildQuery(opportunity_sql);
 			auto res = ot_query->emit_result();
 
 			string count_sql = "SELECT count(1) FROM opportunity JOIN contact ON opportunity.contact_id = contact.contact_id WHERE assign_to = ";
-			count_sql.append(to_string(user_id));
+			count_sql.append(user_id);
 
 			auto count_query = ot.BuildQuery(count_sql);
 			auto count_res = count_query->emit_result();
@@ -126,11 +126,11 @@ LOG(rq_->method, rq_->path);
 			//all fields must be string
 	 		for ( int i=0; i < rows; i++, res->next_row() ) {
 				block.set("opportunity", res->get_string(0));
-				block.set("id", to_string(res->get_int(3)));
+				block.set("id", (res->get_string(3)));
 				block.set("contactee", res->get_string(1) + " " + res->get_string(2));
 				block.set("pipeline", res->get_string(4)); 
 				block.set("amount", to_string(res->get_double(5))); 
-				block.set("probablity", to_string(res->get_int(6))); 
+				block.set("probablity", res->get_string(6)); 
 				block.set("close_date", res->get_string(7));
 			}
 		}
@@ -138,14 +138,14 @@ LOG(rq_->method, rq_->path);
 
 		//activities
 		if(true){
-			string activity_sql = "SELECT  firstName, lastName,  activity.activity_name, activity_type.description, "
+			string activity_sql = "SELECT  first_name, last_name,  activity.activity_name, activity_type.description, "
 						"activity_status.description, activity_priority.description, note, when_created " 
 						" FROM activity INNER JOIN activity_type ON activity_type.activity_type = activity.activity_type "
 						"INNER JOIN activity_status ON activity.activity_status = activity_status.activity_status "
 						"INNER JOIN activity_priority ON activity_priority.activity_priority = activity.activity_priority "
 						"INNER JOIN employee ON employee.employee_id = activity.who_preside" 
 						"  WHERE activity.who_preside = ";
-			activity_sql.append(to_string(user_id)).append(" ORDER BY activity.when_created");
+			activity_sql.append(user_id).append(" ORDER BY activity.when_created");
 		
 			activity_table at;
 			auto at_query = at.BuildQuery(activity_sql);
@@ -156,7 +156,7 @@ LOG(rq_->method, rq_->path);
 						"INNER JOIN activity_priority ON activity_priority.activity_priority = activity.activity_priority "
 						"INNER JOIN employee ON employee.employee_id = activity.who_preside" 
 						"  WHERE activity.who_preside = ";
-			count_sql.append(to_string(user_id));
+			count_sql.append(user_id);
 
 			auto count_query = at.BuildQuery(count_sql);
 			auto count_res = count_query->emit_result();
@@ -183,14 +183,14 @@ LOG(rq_->method, rq_->path);
 		if(true){
 			string task_sql = "SELECT task_name, task.description, task_status.description, due_date  " 
 " FROM task INNER JOIN task_status ON task.status = task_status.status_id WHERE task.assignee = ";
-			task_sql.append(to_string(user_id)).append(" ORDER BY due_date");
+			task_sql.append(user_id).append(" ORDER BY due_date");
 		
 			task_table tt;
 			auto tt_query = tt.BuildQuery(task_sql);
 			auto res = tt_query->emit_result();
 
 			string count_sql = "SELECT count(1)  FROM task INNER JOIN task_status ON task.status = task_status.status_id WHERE task.assignee = ";
-			count_sql.append(to_string(user_id));
+			count_sql.append(user_id);
 
 			auto count_query = tt.BuildQuery(count_sql);
 			auto count_res = count_query->emit_result();
@@ -225,7 +225,7 @@ LOG(rq_->method, rq_->path);
 }
 
 
-int RequestResponse::GetUserId(){
+string RequestResponse::GetUserId(){
 
 	auto cookies = rq_->cookies;
 	if(!cookies.empty()){
@@ -237,10 +237,10 @@ int RequestResponse::GetUserId(){
 		}
 	}
 
-	return -1;
+	return "";
 }
 
-void  RequestResponse::GetUser(int &uid, string& name){
+void  RequestResponse::GetUser(string &uid, string& name){
 
 	auto cookies = rq_->cookies;
 	if(!cookies.empty()){

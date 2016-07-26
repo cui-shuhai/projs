@@ -28,11 +28,13 @@
 #include "AddTaskRequest.h"
 #include "AddUserInterface.h"
 #include "AddUserRequest.h"
+#include "ListUserRequest.h"
 #include "CustomerizeRequest.h"
 #include "UploadDocumentInterface.h"
 #include "UploadDocumentRequest.h"
 #include "AddEmployeeInterface.h"
 #include "AddEmployeeRequest.h"
+#include "ListEmployeeRequest.h"
 #include "ListTaskRequest.h"
 #include "ListCampaignRequest.h"
 #include "ListCaseRequest.h"
@@ -104,6 +106,8 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 		return unique_ptr<AddUserInterface>( new AddUserInterface(rs, rq));	
 	if(name == "AddUserRequest")
 		return unique_ptr<AddUserRequest>( new AddUserRequest(rs, rq));	
+	if(name == "ListUserRequest")
+		return unique_ptr<ListUserRequest>( new ListUserRequest(rs, rq));	
 	if(name == "CustomerizeRequest")
 		return unique_ptr<CustomerizeRequest>( new CustomerizeRequest(rs, rq));	
 	if(name == "UploadDocumentInterface")
@@ -114,6 +118,8 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 		return unique_ptr<AddEmployeeInterface>( new AddEmployeeInterface(rs, rq));	
 	if(name == "AddEmployeeRequest")
 		return unique_ptr<AddEmployeeRequest>( new AddEmployeeRequest(rs, rq));	
+	if(name == "ListEmployeeRequest")
+		return unique_ptr<ListEmployeeRequest>( new ListEmployeeRequest(rs, rq));	
 	if(name == "ListTaskRequest")
 		return unique_ptr<ListTaskRequest>( new ListTaskRequest(rs, rq));	
 	if(name == "ListCampaignRequest")

@@ -21,19 +21,19 @@ contact_table::contact_table():SqlAccessor()
 {
 }
 
-contact_table::contact_table( int contact_id_, int status_, string firstName_,
-		 string lastName_, int contact_from_, string address_, 
+contact_table::contact_table( string contact_id_, string status_, string first_name_,
+		 string last_name_, string contact_from_, string address_, 
 		 string primary_phone_, string alt_phone_, string mobile_phone_, 
 		 string fax_, string email_, string twitter_, string linkedin_, 
-		 string facebook_, string job_title_, int company_id_, 
+		 string facebook_, string job_title_, string company_id_, 
 		 string when_met_, string where_met_, string time_zone_, 
-		 int main_contact_, int out_of_marketing_, int out_of_billing_, 
+		 string main_contact_, string out_of_marketing_, string out_of_billing_, 
                  string extra_info_):
 	SqlAccessor(),
 	contact_id { contact_id_ },
 	status { status_ },
-	firstName { firstName_ },
-	lastName { lastName_ },
+	first_name { first_name_ },
+	last_name { last_name_ },
 	contact_from { contact_from_ },
 	address { address_ },
 	primary_phone { primary_phone_ },
@@ -62,19 +62,19 @@ contact_table::~contact_table(){
 void contact_table::add_contact_table(){
 
 	auto sql = "INSERT INTO 'contact'("
-		"status, firstName, lastName, contact_from, "
+		"status, first_name, last_name, contact_from, "
 		"address, primary_phone, alt_phone, mobile_phone, fax, email, "
 		"twitter, linkedin, facebook, job_title, company_id, "
 		"when_met, where_met, time_zone, main_contact, "
-		"out_of_marketing, out_of_billing, extra_info )  VALUES( "
+		"out_of_marketing, out_of_billing, extra_info, contact_id )  VALUES( "
 		"?, ?, ?, ?, ?, ?, ?, ?, "
 		"?, ?, ?, ?, ?, ?, ?, ?, "
-		"?, ?, ?, ?, ?, ? )";
+		"?, ?, ?, ?, ?, ?, ? )";
 
 	command c(*conn, sql);
 	c.bind(1, status);
-	c.bind(2, firstName);
-	c.bind(3, lastName);
+	c.bind(2, first_name);
+	c.bind(3, last_name);
 	c.bind(4, contact_from);
 	c.bind(5, address);
 	c.bind(6, primary_phone);
@@ -94,60 +94,55 @@ void contact_table::add_contact_table(){
 	c.bind(20, out_of_marketing);
 	c.bind(21, out_of_billing);
 	c.bind(22, extra_info);
+	c.bind(23, contact_id);
 
 	c.emit();
-	auto id_sql = "SELECT last_insert_rowid()";
-	query id_query(*conn, id_sql);
-	auto id_res = id_query.emit_result();
-	contact_id = id_res->get_int(0);
-
 }
 
 void contact_table::get_contact_records( string source, string &result ){
 		string sql = "SELECT "
-		"status AS contact_satus, firstName, lastName, contact_from.description AS contact_source , "
+		"status AS contact_satus, first_name, last_name, contact_from AS contact_source , "
 		"address, primary_phone, alt_phone, mobile_phone, fax, email, "
 		"twitter, linkedin, facebook, job_title, company_id, "
 		"when_met, where_met, time_zone, main_contact, "
 		"out_of_marketing, out_of_billing, extra_info , contact_id "
-		"FROM contact INNER JOIN contact_from ON  contact.contact_from = contact_from.contact_from "
-		"ORDER BY contact.contact_from " ;
+		"FROM contact ";
 
 		if(!source.empty()){
-			sql.append("WHERE contact_from.description = ");
+			sql.append("WHERE contact_from = ");
 			sql.append("'").append(source).append("'");
 		}
 
-		query q(*conn, sql);
-		LOG("sql", sql);
-		auto res = q.emit_result();
-	
-		stringstream ss;
+			query q(*conn, sql);
+			LOG("sql", sql);
+			auto res = q.emit_result();
+		
+			stringstream ss;
 
-		bool first = true;
-		ss << "{ \"contact\":[ ";
-		do{
-			if(first)
-				first = false;
-			else{
-				ss << ", ";
-			}
-			ss << "{";
-			ss << "\"contact_status\"" << ":" << "\"" << res->get_string(0) << "\"" << "," ;
-			ss << "\"firstName\"" << ":" << "\"" << res->get_string(1) << "\"" << "," ;
-			ss << "\"lastName\"" << ":" << "\"" << res->get_string(2) << "\"" << "," ;
-			ss << "\"contact_source \"" << ":" << "\"" << res->get_string(3) << "\"" << "," ;
-			ss << "\"address\"" << ":" << "\"" << res->get_string(4) << "\"" << "," ;
-			ss << "\"primary_phone\"" << ":" << "\"" << res->get_string(5) << "\"" << "," ;
-			ss << "\"alt_phone\"" << ":" << "\"" << res->get_string(6) << "\"" << "," ;
-			ss << "\"mobile_phone\"" << ":" << "\"" << res->get_string(7) << "\"" << "," ;
-			ss << "\"fax\"" << ":" << "\"" << res->get_string(8) << "\"" << "," ;
-			ss << "\"email\"" << ":" << "\"" << res->get_string(9) << "\"" << "," ;
-			ss << "\"twitter\"" << ":" << "\"" << res->get_string(10) << "\"" << "," ;
-			ss << "\"linkedin\"" << ":" << "\"" << res->get_string(11) << "\"" << "," ;
-			ss << "\"facebook\"" << ":" << "\"" << res->get_string(12) << "\"" << "," ;
-			ss << "\"job_title\"" << ":" << "\"" << res->get_string(13) << "\"" << "," ;
-			ss << "\"company_id\"" << ":" << "\"" << res->get_string(14) << "\"" << "," ;
+			bool first = true;
+			ss << "{ \"contact\":[ ";
+			do{
+				if(first)
+					first = false;
+				else{
+					ss << ", ";
+				}
+				ss << "{";
+				ss << "\"contact_status\"" << ":" << "\"" << res->get_string(0) << "\"" << "," ;
+				ss << "\"first_name\"" << ":" << "\"" << res->get_string(1) << "\"" << "," ;
+				ss << "\"last_name\"" << ":" << "\"" << res->get_string(2) << "\"" << "," ;
+				ss << "\"contact_source \"" << ":" << "\"" << res->get_string(3) << "\"" << "," ;
+				ss << "\"address\"" << ":" << "\"" << res->get_string(4) << "\"" << "," ;
+				ss << "\"primary_phone\"" << ":" << "\"" << res->get_string(5) << "\"" << "," ;
+				ss << "\"alt_phone\"" << ":" << "\"" << res->get_string(6) << "\"" << "," ;
+				ss << "\"mobile_phone\"" << ":" << "\"" << res->get_string(7) << "\"" << "," ;
+				ss << "\"fax\"" << ":" << "\"" << res->get_string(8) << "\"" << "," ;
+				ss << "\"email\"" << ":" << "\"" << res->get_string(9) << "\"" << "," ;
+				ss << "\"twitter\"" << ":" << "\"" << res->get_string(10) << "\"" << "," ;
+				ss << "\"linkedin\"" << ":" << "\"" << res->get_string(11) << "\"" << "," ;
+				ss << "\"facebook\"" << ":" << "\"" << res->get_string(12) << "\"" << "," ;
+				ss << "\"job_title\"" << ":" << "\"" << res->get_string(13) << "\"" << "," ;
+				ss << "\"company_id\"" << ":" << "\"" << res->get_string(14) << "\"" << "," ;
 			ss << "\"when_met\"" << ":" << "\"" << res->get_string(15) << "\"" << "," ;
 			ss << "\"where_met\"" << ":" << "\"" << res->get_string(16) << "\"" << "," ;
 			ss << "\"time_zone\"" << ":" << "\"" << res->get_string(17) << "\"" << "," ;
@@ -163,7 +158,7 @@ void contact_table::get_contact_records( string source, string &result ){
 		result = ss.str();
 }
 
-void contact_table::get_contact_list(std::map<int, string> &contacts){
+void contact_table::get_contact_list(std::map<string, string> &contacts){
 	auto count_sql = "SELECT count(1) FROM contact";
 
 	query count_query(*conn, count_sql);
@@ -173,7 +168,7 @@ void contact_table::get_contact_list(std::map<int, string> &contacts){
 	if(rows == 0)
 		return;
 
-	string sql = "SELECT contact_id, firstName, lastName, contact_from.description "
+	string sql = "SELECT contact_id, first_name, last_name, contact_from.description "
 		"FROM contact INNER JOIN contact_from ON contact.contact_from = contact_from.contact_from";
 	
 	query q(*conn, sql);
@@ -183,7 +178,7 @@ void contact_table::get_contact_list(std::map<int, string> &contacts){
 
 	do{
 		string contact_item = res->get_string(1) + " " + res->get_string(2) +": " + res->get_string(3);
-		contacts[res->get_int(0)] = contact_item;
+		contacts[res->get_string(0)] = contact_item;
 	} while(res->next_row());
 }
 

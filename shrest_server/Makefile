@@ -38,10 +38,12 @@ SOURCE=server_instance.cpp \
 	RequestResponse/ListOpportunityRequest.cpp \
 	RequestResponse/AddUserInterface.cpp \
 	RequestResponse/AddUserRequest.cpp \
+	RequestResponse/ListUserRequest.cpp \
 	RequestResponse/UploadDocumentInterface.cpp \
 	RequestResponse/UploadDocumentRequest.cpp \
 	RequestResponse/AddEmployeeInterface.cpp \
 	RequestResponse/AddEmployeeRequest.cpp \
+	RequestResponse/ListEmployeeRequest.cpp \
 	RequestResponse/LoginRequest.cpp \
 	RequestResponse/LogoutRequest.cpp \
 	RequestResponse/SearchContactActivity.cpp \
@@ -63,6 +65,7 @@ SOURCE=server_instance.cpp \
 	shrest_db/employee_role.cpp \
 	shrest_db/employee_profile.cpp \
 	shrest_db/campaign_table.cpp \
+	shrest_db/company_table.cpp \
 	shrest_db/case_table.cpp \
 	shrest_db/case_status.cpp \
 	shrest_db/case_priority.cpp \

@@ -17,7 +17,7 @@ public:
 	~activity_priority();
 	
 	void add_activity_priority();
-	void get_activity_priority( std::map<int, string> &m);
+	void get_activity_priority( std::vector<string> &m);
 
 private:
 	int priority_id;

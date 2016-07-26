@@ -33,7 +33,23 @@ void AddLeadContactInterface::Process(){
 	LOG(rq_->method, rq_->path);
 
 	try {
+/*
+//parse for adding contact for either lead or customer
+		std::map<string, string> m;
+		stringstream cs;
+		string  params= rq_->get_params;
+		utils::parse_get_params(params, m);
 
+		string jstr;
+		if(m.size() == 0){ //list lead
+			LoaderFile loader; 
+			Template t( loader );
+			t.load( "web/listlead.html" );
+			t.render( cs ); 
+		}
+		else{ //for adding lead
+
+*/
 		LoaderFile loader; // Let's use the default loader that loads files from disk.
 		Template t( loader );
 

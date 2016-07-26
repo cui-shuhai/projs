@@ -18,7 +18,7 @@ public:
 	void add_cookie_table();
 	void delete_cookie_table();
 	bool get_cookie_user();
-	int get_user_id();
+	string get_user_id();
 
 	string  get_session_id() { return session_id;}
 	string  get_user_name() { return user_name;}

@@ -32,7 +32,7 @@ void AddEmployeeRequest::Process(){
 
 	try {
 		string creator;
-		int uid = 0;
+		string uid ;
 		GetUser(uid, creator);
 
 		auto content=rq_->content.string();
@@ -40,7 +40,7 @@ void AddEmployeeRequest::Process(){
 		std::map<std::string, std::string> m;
 		utils::parse_kye_value(content, m);
 
-		int id =0;
+		string id = utils::create_uuid();
 		{
 			boost::regex re("%40");
 			
@@ -50,14 +50,15 @@ void AddEmployeeRequest::Process(){
 			
 			s = m["email"];
 
-			employee_table e( -1, m["first_name"], m["last_name"],
+			if(m["report_to"].empty())
+				m["report_to"] = id;
+			employee_table e( id, m["first_name"], m["last_name"],
 					 stoi( m["age"] ), m["address"], m["mobile_phone"],
 					 m["office_phone"], m["home_phone"], m["email"], 
-					 stoi(m["job_title"]), stoi(m["department"]), stoi(m["report_to"]), utils::get_date(), uid);
+					 m["job_title"], m["department"], m["report_to"], utils::get_date(), uid);
 		
 			e.add_employee_table();
 
-			id = e.get_employee_tableId();
 		}
 		LoaderFile loader; // Let's use the default loader that loads files from disk.
 
@@ -68,7 +69,7 @@ void AddEmployeeRequest::Process(){
 		t.load( "web/addemployeeresponse.html" );
 
 		t.block("meat").repeat(1);
-		t.block("meat")[0].set("employee_id", to_string(id));
+		t.block("meat")[0].set("employee_id", id);
 		t.block("meat")[0].set("first_name", m["first_name"]);
 		t.block("meat")[0].set("last_name",m["last_name"]);
 		t.block("meat")[0].set("job_title", m["job_title"]);

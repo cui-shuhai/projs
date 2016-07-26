@@ -13,7 +13,7 @@
 #include "shrest_utils.h"
 #include "NLTemplate/NLTemplate.h"
 
-#include "user_table.h"
+#include "contact_table.h"
 #include "AddContactRequest.h"
 
 using namespace sqlite;
@@ -21,9 +21,8 @@ using namespace std;
 using namespace NL::Template;
 
 
-AddContactRequest::AddContactRequest(HttpServer::Response &rs, ShRequest rq): RequestResponse(rs, rq){
-}
-  
+AddContactRequest::AddContactRequest(HttpServer::Response &rs, ShRequest rq): RequestResponse(rs, rq){}
+
 
 void AddContactRequest::Process(){
 	LOG(rq_->method, rq_->path);
@@ -38,21 +37,20 @@ void AddContactRequest::Process(){
 
 		Template t( loader );
 
-		user_table u(m["login_name"], m["pass_word"],stoi( m["new_user"] ), stoi(m["role_id"]), stoi(m["profile_id"]), utils::get_date(), GetUserId());
-
-		if(!u.check_user_exist())
+		contact_table ct( utils::create_uuid(), m["status"], m["first_name"], m["last_name"], m["contact_from"], m["address"], m["primary_phone"], m["alt_phone"], m["mobile_phone"], m["fax"], m["email"], m["twitter"], m["linkedin"], m["facebook"], m["job_title"], m["company_id"], m["when_met"], m["where_met"], m["time_zone"], m["main_contact"], m["out_of_marketing"], m["out_of_billing"], m["extra_info"] );
+		if( true) //!ct.check_contact_exist())
 		{
-			u.add_user_table();
+			ct.add_contact_table();
 
-			t.load( "web/addcustomerresponse.html" );
+			t.load( "web/addcontactresponse.html" );
 		}
 		else
 		{
-			t.load( "web/adduserexistwarning.html" );
+			t.load( "web/addcontactwarning.html" );
 		}
 
-		t.block("meat").repeat(1);
-		t.block("meat")[0].set("login_name",m["login_name"]);
+		//t.block("meat").repeat(1);
+		//t.block("meat")[0].set("login_name",m["login_name"]);
 
 
 		stringstream cs;

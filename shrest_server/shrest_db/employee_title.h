@@ -12,14 +12,13 @@ class employee_title : public SqlAccessor{
 
 public:
 	employee_title();
-	employee_title(int title_id, string name, string description);
+	employee_title(int title_name, string description);
 	~employee_title();
 	
 	void add_employee_title();
-	void get_employee_titles( map<int, string> &m);
+	void get_employee_titles( vector<string> &m);
 
 private:
-	int title_id;
-	string name;
+	int title_name;
 	string description;
 };

@@ -39,7 +39,7 @@ void SearchContactActivity::Process(){
 		
 		//auto id = stoi(results[2]);
 		
-		string sql = "SELECT id_, firstName, lastName, age, phone, address FROM customer WHERE id_ = " + results[2];
+		string sql = "SELECT id_, first_name, last_name, age, phone, address FROM customer WHERE id_ = " + results[2];
 	
 		stringstream cs;
 

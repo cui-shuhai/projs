@@ -1,0 +1,64 @@
+{% include web/header.html %}
+
+<h3>User list</h3>
+
+<fieldset>
+<legend>XXXXX</legend>
+
+<table id="user_table" border="1">
+
+</table>
+<br><br>
+<a href="/adduser">
+<button id="add_user"  style="float:right" type="button">Add User</button>
+</a>
+
+</fieldset>
+
+<script>
+function listUsers() {
+  
+	$.getJSON("/listuser", { "directory": "user_content"}, function(jsonData) {
+	var sourceTable= $( "#user_table" );
+	tr = $('<tr/>');
+	tr.append("<th>" + "login_name" + "</th>"); 
+	tr.append("<th>" + "pass_word" + "</th>"); 
+	tr.append("<th>" + "employee_id" + "</th>"); 
+	tr.append("<th>" + "role_name" + "</th>"); 
+	tr.append("<th>" + "profile_name" + "</th>"); 
+	tr.append("<th>" + "creator_id" + "</th>"); 
+	tr.append("<th>" + "create_date" + "</th>"); 
+	sourceTable.append(tr);
+
+
+
+	$.each(jsonData.user ,function(key, value) {
+
+
+		tr = $('<tr/>');
+		tr.append("<td>" + value.login_name + "</td>"); 
+		tr.append("<td>" + value.pass_word + "</td>"); 
+		tr.append("<td>" + value.employee_id + "</td>"); 
+		tr.append("<td>" + value.role_name + "</td>"); 
+		tr.append("<td>" + value.profile_name + "</td>"); 
+		tr.append("<td>" + value.creator_id + "</td>"); 
+		tr.append("<td>" + value.create_date + "</td>"); 
+			sourceTable.append(tr);
+		});
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	alert(XMLHttpRequest.responseText);
+	});
+}
+
+
+$( document ).ready( function(){
+	listUsers();
+});
+ 
+</script>
+ 
+{% include web/footer.html %}
+   
+
+

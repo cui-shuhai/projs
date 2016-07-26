@@ -4,6 +4,7 @@
 #include <memory>
 #include <map>
 #include <iostream>
+#include <sstream>
 
 #include <sqlite/transaction.hpp>
 #include <sqlite/connection.hpp>
@@ -23,14 +24,14 @@ user_table::user_table(const string& loginName):
 { }
 
 user_table::user_table(const string& loginName, const string &pass,
-	 int employeeId, int rl, int p,
-	 string w, int c_id):
+	 string employeeId, string rl, string p,
+	 string w, string c_id):
 	SqlAccessor(),
 	 login_name{loginName},
 	 pass_word{pass},
 	 employee_id{employeeId},
-	 role_id{rl},
-  	 profile_id{p},
+	 role_name{rl},
+  	 profile_name{p},
   	 create_date{w},
   	 creator_id{c_id}
 { }
@@ -62,14 +63,14 @@ bool user_table::check_login_exist()
 
 void user_table::add_user_table(){
 
-	string sql = "INSERT INTO 'crm_user'(login_name, pass_word, employee_id, role_id, profile_id, create_date, creator_id) VALUES(?, ?, ?, ?, ?, ?, ?)";
+	string sql = "INSERT INTO 'crm_user'(login_name, pass_word, employee_id, role_name, profile_name, create_date, creator_id) VALUES(?, ?, ?, ?, ?, ?, ?)";
 
 	command c(*conn, sql);
 	c.bind(1, login_name);
 	c.bind(2, pass_word);
 	c.bind(3, employee_id);
-	c.bind(4, role_id);
-	c.bind(5, profile_id);
+	c.bind(4, role_name);
+	c.bind(5, profile_name);
 	c.bind(6, create_date);
 	c.bind(7, creator_id);
 	c.emit();
@@ -87,28 +88,63 @@ bool user_table::change_user_password(const string & loginName, const string &pa
 }
 
 
-bool user_table::update_user(const string& loginName, const string &pass, int employeeId, int rl, int p){
+bool user_table::update_user(const string& loginName, const string &pass, string employeeId, string rl, string p){
 	
-	string sql = "UPDATE 'crm_user' SET  pass_word = ?, employee_id = ?, role_id = ?, profile_id = ? WHERE login_name = ?";
+	string sql = "UPDATE 'crm_user' SET  pass_word = ?, employee_id = ?, role_name = ?, profile_name = ? WHERE login_name = ?";
 
 	command c(*conn, sql);
 	c.bind(1, pass_word);
 	c.bind(2, employee_id);
-	c.bind(3, role_id);
-	c.bind(4, profile_id);
+	c.bind(3, role_name);
+	c.bind(4, profile_name);
 	c.bind(5, login_name);
 	c.emit();
 	return true;
 }
 
-void user_table::get_user_list( map<int, string> &m){
-
-	string sql = "SELECT firstName, lastName employee_id from employee INNER JOIN crm_user ON crm_user.employee_id = employee.employee_id";
+void user_table::get_user_list( map<string, string> &m){
+	string sql = "SELECT first_name, last_name employee_id from employee INNER JOIN crm_user ON crm_user.employee_id = employee.employee_id";
 
 	query q(*conn, sql);
 	auto res = q.emit_result();
 
 	do{
-		m[res->get_int(0)] = res->get_string(1);
+		m[res->get_string(0)] = res->get_string(1) + res->get_string(2);
 	} while(res->next_row());
+}
+void user_table::get_user_records( string source, string &result ){
+
+
+
+		string sql = "SELECT login_name, pass_word, employee_id, role_name, profile_name, create_date, creator_id FROM crm_user ";
+
+		if(!source.empty())
+		sql.append("WHERE employee.employee_source = ").append(source);
+		query q(*conn, sql);
+		LOG("sql", sql);
+		auto res = q.emit_result();
+	
+		stringstream ss;
+
+		bool first = true;
+		ss << "{ \"user\":[ ";
+		do{
+			if(first)
+				first = false;
+			else{
+				ss << ", ";
+			}
+			ss << "{" ;
+			ss << "\"login_name\"" << ":" << "\"" << res->get_string(0) << "\"" << ",";
+			ss << "\"pass_word\"" << ":" << "\"" << res->get_string(1) << "\"" << ",";
+			ss << "\"employee_id\"" << ":" << "\"" << res->get_string(2) << "\"" << ",";
+			ss << "\"role_name\"" << ":" << "\"" << res->get_string(3) << "\"" << ",";
+			ss << "\"profile_name\"" << ":" << "\"" << res->get_string(4) << "\"" << ",";
+			ss << "\"create_date\"" << ":" << "\"" << res->get_string(5) << "\"" << ",";
+			ss << "\"creator_id\"" << ":" << "\"" << res->get_string(6) << "\"" ;
+			ss << "}";
+		} while(res->next_row());
+
+		ss << " ] }";
+		result = ss.str();
 }

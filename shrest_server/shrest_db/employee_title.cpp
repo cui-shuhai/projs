@@ -20,10 +20,9 @@ employee_title::employee_title():SqlAccessor()
 {
 }
 
-employee_title::employee_title(int title_id_, string name_, string description_):
+employee_title::employee_title(int title_name_, string description_):
 	SqlAccessor(),
-	title_id{title_id_},
-	name{name_},
+	title_name{title_name_},
 	description{description_}
 { }
 
@@ -31,25 +30,24 @@ employee_title::~employee_title(){ }
 
 void employee_title::add_employee_title(){
 
-	auto sql = "INSERT INTO 'employee_title'(title_id, name, description) VALUES(?, ?, ?)";
+	auto sql = "INSERT INTO 'employee_title'(title_name, name, description) VALUES(?, ?, ?)";
 
 	command c(*conn, sql);
-	c.bind(1, title_id);
-	c.bind(2, name);
-	c.bind(3, description);
+	c.bind(1, title_name);
+	c.bind(2, description);
 
 	c.emit();
 
 }
 
-void employee_title::get_employee_titles( map<int, string> &m)
+void employee_title::get_employee_titles( vector<string> &m)
 {	
-	string sql = "SELECT title_id, name FROM employee_title";
+	string sql = "SELECT title_name FROM employee_title";
 	
 	query q(*conn, sql);
 	auto res = q.emit_result();
 
 	do{
-		m[res->get_int(0)] = res->get_string(1);
+		m.push_back(res->get_string(0));
 	} while(res->next_row());
 }

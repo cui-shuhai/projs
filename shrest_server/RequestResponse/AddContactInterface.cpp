@@ -34,39 +34,40 @@ void AddContactInterface::Process(){
 
 	try {
 
-		LoaderFile loader; // Let's use the default loader that loads files from disk.
+//parse for adding contact for either lead or customer
+		std::map<string, string> m;
+		stringstream cs;
+		string  params= rq_->get_params;
+		utils::parse_get_params(params, m);
+
+		string jstr;
+		LoaderFile loader; 
 		Template t( loader );
 
-		t.load( "web/addcontactinterface.html" );
-#if 0
+		if(m.size() == 0){ //list lead
 
-		t.block("meat").repeat(1);
-
-		t.block("meat")[0].set("Information_id", "New customer contact:");
-
-		t.block("meat")[0].set("newcontactaction", "addcustomercontactrequest");
-		t.block("meat")[0].set("contact_source", "to add contact");
-
-		Block &block =t.block("meat")[0].block("from_block");
-
-		customer_table ct;
-		std::map<int, string> m;
-		ct.get_customer_profile(m); 
-		
-		auto rows = m.size();
-
-		block.repeat(rows);
-
-		int i = 0;
-		for(const auto & v : m){
-			block[i].set("from_value", to_string(v.first));
-			block[i].set("from_show", v.second);
+			t.load( "web/addcontactinterface.html" );
 		}
-#endif
+		else{ //for adding lead
 
-		stringstream cs;
-		t.render( cs ); // Render the template with the variables we've set above
-		
+			string directory = m["directory"];
+
+			if(directory.compare("edit_lead") == 0){
+				t.load( "web/addcontactinterface.html" );
+				t.block("meat").repeat(1);
+				t.block("meat")[0].set("company", m["company"]);
+				t.block("meat")[0].set("category", "lead");
+				t.block("meat")[0].set("source_id", m["lead_id"]);
+			}
+			else if(directory.compare("edit_customer") == 0){
+				t.load( "web/addcontactinterface.html" );
+				t.block("meat").repeat(1);
+				t.block("meat")[0].set("company", m["company"]);
+				t.block("meat")[0].set("category", "customer");
+				t.block("meat")[0].set("source_id", m["customer_id"]);
+			}
+		}
+		t.render( cs ); 
 		cs.seekp(0, ios::end);
 		rs_ <<  cs.rdbuf();
 		rs_.flush();

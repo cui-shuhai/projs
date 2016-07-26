@@ -18,8 +18,8 @@ public:
 	
 	void CreateDashboard(const string & username, const string password);
 	bool GetSession(std::string& session);
-	int GetUserId();
-	void GetUser(int &uid, string& name);
+	string GetUserId();
+	void GetUser(string &uid, string& name);
 
 	virtual void Process() = 0;
 

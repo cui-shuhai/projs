@@ -43,14 +43,14 @@ void activity_priority::add_activity_priority(){
 
 }
 
-void activity_priority::get_activity_priority( map<int, string> &m)
+void activity_priority::get_activity_priority( vector<string> &m)
 {	
-	string sql = "SELECT activity_priority, description FROM activity_priority";
+	string sql = "SELECT activity_priority FROM activity_priority";
 	
 	query q(*conn, sql);
 	auto res = q.emit_result();
 
 	do{
-		m[res->get_int(0)] = res->get_string(1);
+		m.push_back(res->get_string(0));
 	} while(res->next_row());
 }

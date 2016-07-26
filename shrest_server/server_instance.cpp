@@ -189,6 +189,14 @@ int main() {
 	processor->Process();        
     };
 	LOG("Adding [adduserrequest, POST] API");
+
+ 	//Add listcaserequest request
+     server.resource["^/listuser$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("ListUserRequest", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [listuserrequest, GET] API");
     //-----------
      server.resource["^/uploaddocument$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
 
@@ -219,6 +227,14 @@ int main() {
 	processor->Process();        
     };
 	LOG("Adding [addemployeerequest, POST] API");
+
+ 	//Add listcaserequest request
+     server.resource["^/listemployee$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("ListEmployeeRequest", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [listemployeerequest, GET] API");
 	
       //List all customers
      server.resource["^/listcustomer$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {

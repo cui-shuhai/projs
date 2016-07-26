@@ -38,7 +38,7 @@ void AddUserRequest::Process(){
 
 		Template t( loader );
 
-		user_table u(m["login_name"], m["pass_word"],stoi( m["new_user"] ), stoi(m["role_id"]), stoi(m["profile_id"]), utils::get_date(), GetUserId());
+		user_table u(m["login_name"], m["pass_word"], m["new_user"] , m["role_name"], m["profile_name"], utils::get_date(), GetUserId());
 
 		if(!u.check_user_exist())
 		{

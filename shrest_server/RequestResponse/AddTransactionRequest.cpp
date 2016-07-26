@@ -34,7 +34,7 @@ void AddTransactionRequest::Process(){
 
 		stringstream cs;
 		
-		auto sql = "SELECT id_, firstName, lastName, age, phone, address FROM customer";
+		auto sql = "SELECT id_, first_name, last_name, age, phone, address FROM customer";
 
 	//there is an error from sqlite library, query get_row_count fails (return 0)
 		auto count_sql = "SELECT count(*) FROM customer";

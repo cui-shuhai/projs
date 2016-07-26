@@ -60,30 +60,30 @@ void AddActivityInterface::Process(){
 	               {
 			       activity_status at;
 	                       Block & block = t.block( "meat" )[ 0 ].block( "statusblock" );
-	                       std::map<int, string> statuss;
+	                       std::vector<string> statuss;
 	
 	                       at.get_activity_status(statuss);
 	                       auto rows = statuss.size();
 	                       block.repeat(rows);
 	                       int i = 0;
 	                       for(const auto &v : statuss){
-	                               block[i].set("activity_status_value", to_string(v.first));
-	                               block[i].set("activity_status_show", v.second);
+	                               block[i].set("activity_status_value", v);
+	                               block[i].set("activity_status_show", v);
 					++i;
 	                       }
 	               }
 	               {
 			       activity_priority at;
 	                       Block & block = t.block( "meat" )[ 0 ].block( "priorityblock" );
-	                       std::map<int, string> prioritys;
+	                       std::vector<string> prioritys;
 	
 	                       at.get_activity_priority(prioritys);
 	                       auto rows = prioritys.size();
 	                       block.repeat(rows);
 	                       int i = 0;
 	                       for(const auto &v : prioritys){
-	                               block[i].set("activity_priority_value", to_string(v.first));
-	                               block[i].set("activity_priority_show", v.second);
+	                               block[i].set("activity_priority_value", v);
+	                               block[i].set("activity_priority_show", v);
 					++i;
 	                       }
 	               }
@@ -91,14 +91,14 @@ void AddActivityInterface::Process(){
 				//this comes from users(operational employee)
 			       user_table ut;
 	                       Block & block = t.block( "meat" )[ 0 ].block( "presiderblock" );
-	                       std::map<int, string> presiders;
+	                       std::map<string, string> presiders;
 	
 	                       ut.get_user_list(presiders);
 	                       auto rows = presiders.size();
 	                       block.repeat(rows);
 	                       int i = 0;
 	                       for(const auto &v : presiders){
-	                               block[i].set("activity_presider_value", to_string(v.first));
+	                               block[i].set("activity_presider_value", v.first);
 	                               block[i].set("activity_presider_show", v.second);
 					++i;
 	                       }

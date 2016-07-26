@@ -17,7 +17,7 @@ void JsonPostRequest::Process(){
             ptree pt;
             read_json(rq_->content, pt);
 
-            string name=pt.get<string>("firstName")+" "+pt.get<string>("lastName");
+            string name=pt.get<string>("first_name")+" "+pt.get<string>("last_name");
 
             rs_ << "HTTP/1.1 200 OK\r\nContent-Length: " << name.length() << "\r\n\r\n" << name;
 	rs_.flush();

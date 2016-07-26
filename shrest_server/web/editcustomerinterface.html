@@ -31,31 +31,24 @@
 </tr><tr>
 	    <td><input type="submit"  name="submit" value="clear"></td>
 	    <td><input type="submit"  name="submit" value="save"></td>
-	    <td><input type="submit"  name="submit" value="save and add"></td>
+	    <td><input type="submit"  name="submit" value="add contact"></td>
 </tr>
 </table>
 	  </fieldset>
 </form>
 {% endblock %}
 
+<button id="add contact"  onclick="addcontact();" value="Add Customer Contact">  Add Customer Contact </button>
  
 <script>
-function fill_customer() {
-//  
-//	$.getJSON("/listlead", { "directory": "add_customer" }, function(jsonData) {
-//	var leadValues = $( "#origin_id" );
-//	$.each(jsonData.recordset,function(key, value) {
-//	leadValues.append('<option value=' + value.key + '>' + value.value + '</option>');
-//	});
-//	})
-//	.error(function() { alert("error"); });
-}
+function addcontact(){
 
-$( document ).ready( function() {
-	//fill_customer();
-	});
- 
-//$( "#origin_id" ).change( fill_customer );
+	var id  = $("#customer_id").val();
+	var cp = $("input[name=company_name]").val();
+	var url="/addcontact?directory=edit_customer&customer_id=";
+	url = url + id + '&' + "company=" + cp;
+	window.open(url, "myWindow", "width=500,height=200");
+}
 </script>
 
 {% include web/footer.html %}

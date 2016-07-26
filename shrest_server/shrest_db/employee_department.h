@@ -4,7 +4,7 @@
 /* Standard C++ includes */
 #include <stdlib.h>
 #include <iostream>
-#include <map>
+#include <vector>
 
 #include "SqlAccessor.h"
 
@@ -13,14 +13,13 @@ class employee_department : public SqlAccessor{
 
 public:
 	employee_department();
-	employee_department(int employee_id, string name, string description);
+	employee_department(string department_name,  string description);
 	~employee_department();
 	
 	void add_employee_department();
-	void get_employee_departments( std::map<int, string> &m);
+	void get_employee_departments( std::vector<string> &m);
 
 private:
-	int employee_id;
-	string name;
+	string department_name;
 	string description;
 };

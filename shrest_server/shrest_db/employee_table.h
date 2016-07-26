@@ -12,32 +12,47 @@ class employee_table : public SqlAccessor{
 
 public:
 	employee_table();
-	employee_table(int employee_id, string firstName, string lastName, 
+	employee_table(string employee_id, string first_name, string last_name, 
 			int age, string address, string mobile_phone,
 			string office_phone, string home_phone, string email, 
-			int job_title, int department_id, int reports_to, string create_date, int created_by);
+			string job_title, string department_name, string reports_to, string create_date, string created_by);
 
 	~employee_table();
+
+	string get_employee_id(){ return employee_id; }
+	string get_first_name(){ return first_name; }
+	string get_last_name(){ return last_name; }
+	int get_age(){ return age; }
+	string get_address(){ return address; }
+	string get_mobile_phone(){ return mobile_phone; }
+	string get_office_phone(){ return office_phone; }
+	string get_home_phone(){ return home_phone; }
+	string get_email(){ return email; }
+	string get_job_title(){ return job_title; }
+	string get_department_name(){ return department_name; }
+	string get_reports_to(){ return reports_to; }
+	string get_create_date(){ return create_date; }
+	string get_created_by(){ return created_by; }
 	
 	void add_employee_table();
-	int get_employee_tableId();
-	void get_department_managers(std::map<int, string> &managers);
-	void get_employee_list(std::map<int, string> &employees);
+	void get_department_managers(std::map<string, string> &managers);
+	void get_employee_list(std::map<string, string> &employees);
+	void get_employee_records( string source, string &result );
 
 private:
-	int employee_id;
-	string firstName;
-	string lastName;
+	string employee_id;
+	string first_name;
+	string last_name;
 	int age;
 	string address;
 	string mobile_phone;
 	string office_phone;
 	string home_phone;
 	string email;
-	int job_title;
-	int department_id;
-	int reports_to;
+	string job_title;
+	string department_name;
+	string reports_to;
 	string create_date;
-	int created_by;
+	string created_by;
 };
 

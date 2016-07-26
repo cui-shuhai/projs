@@ -11,7 +11,7 @@ class customer_table : public SqlAccessor{
 
 public:
 	customer_table();
-	customer_table( int customer_id, string  & company_name, string  & contact_name, 
+	customer_table( string customer_id, string  & company_name, string  & contact_name, 
 			string  & personal_title, string  & first_name, string  & last_name,
 			string  & phone, string  & email, string  & street_addr, string  & city, 
 			string  & state, string  & post_code, string  & country, 
@@ -20,7 +20,7 @@ public:
 	
 	void update_customer_table();
 	void get_customer_instance(std::map<string, string> &customer);
-	int get_customer_id(){ return customer_id; }
+	string get_customer_id(){ return customer_id; }
 	string get_company_name(){ return company_name; }
 	string get_contact_name(){ return contact_name; }
 	string get_personal_title(){ return personal_title; }
@@ -36,7 +36,7 @@ public:
 	string get_bill_addr(){ return bill_addr; }
 	string get_ship_addr(){ return ship_addr; }
 
-	void set_customer_id( int customer_id_ ){ customer_id = customer_id_; }
+	void set_customer_id( string customer_id_ ){ customer_id = customer_id_; }
 	void set_company_name( string company_name_ ){ company_name = company_name_; }
 	void set_contact_name( string contact_name_ ){ contact_name = contact_name_; }
 	void set_personal_title( string personal_title_ ){ personal_title = personal_title_; }
@@ -54,11 +54,11 @@ public:
 
 	void add_customer_table();
 	int get_customer_tableCount();
-	void get_customer_profile(std::map<int, string> &m);
+	void get_customer_profile(std::map<string, string> &m);
 	void get_customer_records( string source, string &result );
 
 private:
-	int customer_id;
+	string customer_id;
 	string company_name;
 	string contact_name;
 	string personal_title;

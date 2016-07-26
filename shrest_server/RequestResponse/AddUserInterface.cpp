@@ -43,7 +43,7 @@ void AddUserInterface::Process(){
 		
 		if(true){
 			employee_table et;
-			std::map<int, string> employees;
+			std::map<string, string> employees;
 			et.get_employee_list(employees);
 			auto rows = employees.size();
 
@@ -51,7 +51,7 @@ void AddUserInterface::Process(){
 			block.repeat(rows);
 			int i = 0;
 			for(const auto & v : employees){
-				block[i].set("user_value", to_string(v.first));
+				block[i].set("user_value", v.first);
 				block[i].set("user_show", v.second);
 				++i;
 			}
@@ -60,7 +60,7 @@ void AddUserInterface::Process(){
 		//role
 		if(true){
 			employee_role rt;
-			std::map<int, string> roles;
+			std::vector<string> roles;
 			rt.get_employee_roles(roles);
 			auto rows = roles.size();
 
@@ -68,8 +68,8 @@ void AddUserInterface::Process(){
 			block.repeat(rows);
 			int i = 0;
 			for(const auto & v : roles){
-				block[i].set("role_value", to_string(v.first));
-				block[i].set("role_show", v.second);
+				block[i].set("role_value", v);
+				block[i].set("role_show", v);
 				++i;
 			}
 		}
@@ -77,7 +77,7 @@ void AddUserInterface::Process(){
 		//profile
 		if(true){
 			employee_profile pt;
-			std::map<int, string> profiles;
+			std::vector<string> profiles;
 			pt.get_employee_profiles(profiles);
 			auto rows = profiles.size();
 
@@ -85,8 +85,8 @@ void AddUserInterface::Process(){
 			block.repeat(rows);
 			int i = 0;
 			for(const auto & v : profiles){
-				block[i].set("profile_value", to_string(v.first));
-				block[i].set("profile_show", v.second);
+				block[i].set("profile_value", v);
+				block[i].set("profile_show", v);
 				++i;
 			}
 		}

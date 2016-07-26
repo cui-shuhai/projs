@@ -21,10 +21,9 @@ employee_role::employee_role():SqlAccessor()
 {
 }
 
-employee_role::employee_role(int role_id_, string name_, string description_):
+employee_role::employee_role(int role_name_,  string description_):
 	SqlAccessor(),
-	role_id{role_id_},
-	name{name_},
+	role_name{role_name_},
 	description{description_}
 {
 }
@@ -34,25 +33,24 @@ employee_role::~employee_role(){
 
 void employee_role::add_employee_role(){
 
-	auto sql = "INSERT INTO 'employee_role'(role_id, name, description) VALUES(?, ?, ?)";
+	auto sql = "INSERT INTO 'employee_role'(role_name,  description) VALUES( ?, ?)";
 
 	command c(*conn, sql);
-	c.bind(1, role_id);
-	c.bind(2, name);
-	c.bind(3, description);
+	c.bind(1, role_name);
+	c.bind(2, description);
 
 	c.emit();
 
 }
 
-void employee_role::get_employee_roles( map<int, string> &m)
+void employee_role::get_employee_roles( vector<string> &m)
 {	
-	string sql = "SELECT role_id, name FROM employee_role";
+	string sql = "SELECT role_name FROM employee_role";
 	
 	query q(*conn, sql);
 	auto res = q.emit_result();
 
 	do{
-		m[res->get_int(0)] = res->get_string(1);
+		m.push_back(res->get_string(0));
 	} while(res->next_row());
 }

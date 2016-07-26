@@ -1,16 +1,18 @@
 {% include web/header.html %}
 
+{% block meat %}
 <field>
-	    <legend>Add {{ category }} contact </legend>
+	    <legend>Add {{ company }} contact </legend>
 
 <form action="/addcontact" method="post">
-Company name:<input type="text" name="company_name" value=""><br><br>
+<input type="hidden" id="category"  name="category" value="{{ category }}">
+<input type="hidden" id="source_id"  name="source_id" value="{{ source_id }}">
 <table>
 <tr>
 <td>Status:</td> <td> <input type="text" name="status" value=""></td>
-<td>FirstName:</td> <td> <input type="text" name="firstName" value=""></td>
+<td>FirstName:</td> <td> <input type="text" name="first_name" value=""></td>
 </tr><tr>
-<td>LastName:</td> <td> <input type="text" name="lastName" value=""></td>
+<td>LastName:</td> <td> <input type="text" name="last_name" value=""></td>
 <td>Address:</td> <td> <input type="text" name="address" value=""></td>
 </tr><tr>
 <td>Primary phone:</td> <td> <input type="text" name="primary_phone" value=""></td>

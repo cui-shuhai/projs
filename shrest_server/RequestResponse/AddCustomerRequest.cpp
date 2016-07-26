@@ -31,17 +31,16 @@ void AddCustomerRequest::Process(){
 		std::map<std::string, std::string> m;
 		utils::parse_kye_value(content, m);
 
-		int id = 10;
+		string id = utils::create_uuid();
 		customer_table c(id,  m["company_name"], m["contact_name"], m["personal_title"], 
 			m["first_name"], m["last_name"], m["phone"], m["email"], 
 			m["street_addr"], m["city"], m["state"], m["post_code"], m["country"], 
 			m["bill_addr"], m["ship_addr"]);
 		c.add_customer_table();
-		id = c.get_customer_id();
 
 		contact_table ct; 
-		ct.set_firstName(m["firstName"]);
-		ct.set_lastName(m["lastName"]);
+		ct.set_first_name(m["first_name"]);
+		ct.set_last_name(m["last_name"]);
 		ct.set_company_id(id);
 
 		ct.add_contact_table();

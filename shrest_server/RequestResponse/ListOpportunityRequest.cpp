@@ -39,7 +39,7 @@ void ListOpportunityRequest::Process(){
 		
 		//XXX it should be filtered by requester's id.
 
-		auto uid = to_string(GetUserId());
+		auto uid = GetUserId();
 	//there is an error from sqlite library, query get_row_count fails (return 0)
 		string count_sql = "SELECT count(1) "
 			" FROM opportunity INNER JOIN opportunity_pipeline ON opportunity_pipeline.pipeline_id = opportunity.opportunity "

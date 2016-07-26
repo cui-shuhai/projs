@@ -8,95 +8,90 @@ You can add other details like phone numbers, address, photo, fax, website, date
 user must be employee, if not, give it a dumy id like customer department, verdor part etc
 
 */
-CREATE TABLE 'user'(
+CREATE TABLE 'crm_user'(
 	'login_name' varchar(32) PRIMARY KEY,
 	'pass_word' char(32),
-	'employee_id'	INT,
-	'role_id'	int,
-	'profile_id' int,
-	'creator_id' INT,
+	'employee_id'	char(36),
+	'role_name'	char(10),
+	'profile_name' char(10),
+	'creator_id' char(36),
 	'create_date' DATE NOT NULL,
 	FOREIGN KEY(creator_id) REFERENCES employee(employee_id),
 	FOREIGN KEY(employee_id) REFERENCES employee(employee_id)
 );
-INSERT INTO 'user'(login_name, pass_word, employee_id, role_id, profile_id, creator_id, create_date) 
+INSERT INTO 'crm_user'(login_name, pass_word, employee_id, role_id, profile_id, creator_id, create_date) 
 	VALUES("root", "magic", 0, 0, 0, 0, "2016/11/21");
 
 CREATE TABLE employee_role(
-	'role_id' INT PRIMARY KEY,
-	'name' char(20), 
+	'role_name' char(20) PRIMARY KEY,
 	'description' char(20)
 );
-INSERT INTO 'employee_role'(role_id, name, description) 
-	VALUES(0, "CEO", "Manages the whole company");
+INSERT INTO 'employee_role'(role_ame, description) 
+	VALUES("CEO", "Manages the whole company");
 	
 
 CREATE TABLE employee_profile(
-	'profile_id' INT PRIMARY KEY,
-	'name' char(20), 
+	'profile_name' char(20) PRIMARY KEY,
 	'description' char(20)
 );
 INSERT INTO 'employee_profile'(profile_id, name, description) 
-	VALUES(0, "database manager", "Manages database daily maintainence");
+	VALUES( "database manager", "Manages database daily maintainence");
 
 
 CREATE TABLE 'company'(
-	'company_id' INTEGER PRIMARY KEY,
+	'company_id' char(36) PRIMARY KEY,
 	'name'	varchar(100), 
 	'address'	varchar(100), 
 	'phone'	varchar(20), 
 	'fax'	varchar(20),
 	'parent_company' INT,
 	'industry_type'	INT, 
-	'who_referred' INT, 
 	'annual_revenue' float, 
 	'currency_id' char(3),
 	'credit_limit'	float, 
-	'credit_rating'	INT, 
-	'time_zone'	INT, 
+	'credit_rating'	char(6), 
+	'time_zone'	char(3), 
 	'payment_terms'	INT);
 
 CREATE TABLE employee(
-	'employee_id' INTEGER PRIMARY KEY,
-	'firstName' char(20), 
-	'lastName' char(20), 
+	'employee_id' char(36) PRIMARY KEY,
+	'first_name' char(20), 
+	'last_name' char(20), 
 	'age' int, 
 	'address' varchar(100),
 	'mobile_phone' char(20), 
 	'office_phone' char(20),  
 	'home_phone' char(20), 
 	'email' varchar(32),
-	'job_title' int,
-	'department_id' int,
-	'reports_to' int,
+	'job_title' char(20),
+	'department_name' char(20),
+	'reports_to' char(36),
 	'create_date' DATE,
-	'created_by' int,
-	FOREIGN KEY(job_title) REFERENCES employee_title(title_id),
-	FOREIGN KEY(department_id) REFERENCES employee_title(department_id),
+	'created_by' char(36),
+	FOREIGN KEY(job_title) REFERENCES employee_title(title_name),
+	FOREIGN KEY(department_name) REFERENCES employee_department(department_name),
 	FOREIGN KEY(created_by) REFERENCES employee(employee_id)
 );
 
 CREATE TABLE employee_title(
-	'title_id' INT PRIMARY KEY,
-	'name' char(20) NOT NULL, 
+	'title_name' char(20) PRIMARY KEY,
 	'description' char(20) NOT NULL
 );
 
-INSERT INTO 'employee_title'( title_id, name, description ) VALUES
-(1, "regular", "without stuff management reponsibilities"),
-(2, "manager", "manages other people");
+INSERT INTO 'employee_title'( title_name, description ) VALUES
+( "regular", "without stuff management reponsibilities"),
+( "manager", "manages other people");
 
 
 CREATE TABLE employee_department(
-	'department_id' INT PRIMARY KEY,
-	'name' char(20), 
+	'department_name' char(20) PRIMARY KEY,
 	'description' char(20)
 );
 
-INSERT INTO 'employee_department'( department_id, name, description ) VALUES
-(1, "sales", "selling prodcts"),
-(2, "marketing", "markegint products"),
-(3, "development", "development products");
+INSERT INTO 'employee_department'( department_name, description ) VALUES
+( "sales", "selling prodcts"),
+( "marketing", "markegint products"),
+( "development", "development products");
 /*
 
 First Name/Last Name are the first and last names of the contact
@@ -277,7 +272,7 @@ INSERT INTO 'activity_status'(activity_status, description) VAlUES
 	(3, "Completed"),
 	(4, "In Progress"),	
 	(5, "Deferred"),
-	(6, "Waiting on someone else")
+	(6, "Waiting on someone else");
 
 CREATE TABLE 'activity_priority'(
 	'activity_priority' INT PRIMARY KEY,
@@ -287,7 +282,7 @@ CREATE TABLE 'activity_priority'(
 INSERT INTO 'activity_priority'(activity_priority, description) VAlUES
 	(1, "High"),
 	(2, "Medium"),
-	(3, "Low")
+	(3, "Low");
 
 CREATE TABLE activity(
 	'activity_id'  INTEGER  PRIMARY KEY,

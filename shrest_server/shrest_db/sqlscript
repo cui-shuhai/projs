@@ -26,7 +26,7 @@ CREATE TABLE employee_role(
 	'role_name' char(20) PRIMARY KEY,
 	'description' char(20)
 );
-INSERT INTO 'employee_role'(role_ame, description) 
+INSERT INTO 'employee_role'(role_name, description) 
 	VALUES("CEO", "Manages the whole company");
 	
 
@@ -123,7 +123,7 @@ If the contact type field is blank, that means the contact is only associated wi
 */
 
 CREATE TABLE customer(
-	customer_id  INTEGER PRIMARY KEY,
+	customer_id  char(36) PRIMARY KEY,
 	company_name varchar(100) NOT NULL,
 	contact_name varchar(100),
 	personal_title char(5),
@@ -217,11 +217,11 @@ INSERT INTO 'contact_from'(contact_from, description)
 VALUES(1, "Lead"), (2, "Customer"), (3, "Vendor"), (4, "Employee"), (5, "Other");
 
 CREATE TABLE 'contact'(
-	'contact_id' INTEGER PRIMARY KEY,
-	'status' int DEFAULT 1,
-	'firstName' char(20), 
-	'lastName' char(20), 
-	'contact_from' int,
+	'contact_id' char(36) PRIMARY KEY,
+	'status' char(10) DEFAULT 1,
+	'first_name' char(20), 
+	'last_name' char(20), 
+	'contact_from' char(20),
 	'address' varchar(100),
 	'primary_phone' char(20), 
 	'alt_phone' char(20),  
@@ -232,16 +232,16 @@ CREATE TABLE 'contact'(
 	'linkedin' varchar(32),
 	'facebook' varchar(32),
 	'job_title' varchar(32),
-	'company_id' int ,
+	'company_id' char(36) ,
 	'when_met' Date NOT NULL,
 	'where_met' varchar(100),
 	'time_zone' char(3),
-	'main_contact' int,
-	'out_of_marketing' int,
-	'out_of_billing' bool,
-	'extra_info' varchar(200),
+	'main_contact' char(10),
+	'out_of_marketing' char(10),
+	'out_of_billing' char(10),
+	'extra_info' varchar(200)/*,
 	FOREIGN KEY(status) REFERENCES contact_status(status),
-	FOREIGN KEY(company_id) REFERENCES company(company_id)
+	FOREIGN KEY(company_id) REFERENCES company(company_id)*/
 );
 
 
@@ -262,7 +262,7 @@ INSERT INTO 'activity_type'(activity_type, description) VAlUES
 	(7, "Other");
 
 CREATE TABLE activity_status(
-	'activity_status' INT PRIMARY KEY,
+	'activity_status' char(20) PRIMARY KEY,
 	'description' nvarchar(50)
 );
 
@@ -275,7 +275,7 @@ INSERT INTO 'activity_status'(activity_status, description) VAlUES
 	(6, "Waiting on someone else");
 
 CREATE TABLE 'activity_priority'(
-	'activity_priority' INT PRIMARY KEY,
+	'activity_priority' char(20) PRIMARY KEY,
 	'description' varchar(50)
 );
 
@@ -473,22 +473,33 @@ CREATE TABLE 'vendor'(
 'account_num' varchar(20),
 'contact' int,
 'company_name' varchar(20),
-'credit_rating' int,
-'vendor_status' int, 
-'active_flag' int,
+'credit_rating' char(20),
+'vendor_status' char(20), 
+'active_flag' char(20),
 'web_service_url' varchar(20),
 'last_update' date,
 FOREIGN KEY(credit_rating) REFERENCES vendor_rate(rate)
 );
 
-CREATE TABLE 'vendor_rate'(
-rate int PRIMARY KEY,
+CREATE TABLE 'vendor_rating'(
+rating_name char(20) PRIMARY KEY,
 description varchar(20)
 );
 
-INSERT INTO 'vendor_rate'(rate, description) VALUES
+INSERT INTO 'vendor_rate'(rate_name, description) VALUES
 (1, "Superior"),
 (2, "Excellent"),
 (3, "Above average"),
 (4, "Average"),
 (5, "Below average")
+
+CREATE TABLE 'vendor_status'(
+status_name char(20) PRIMARY KEY,
+description varchar(20)
+);
+
+CREATE TABLE 'vendor_flag'(
+flag_name char(20) PRIMARY KEY,
+description varchar(20)
+);
+

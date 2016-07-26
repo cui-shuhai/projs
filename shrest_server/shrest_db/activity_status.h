@@ -17,7 +17,7 @@ public:
 	~activity_status();
 	
 	void add_activity_status();
-	void get_activity_status( std::map<int, string> &m);
+	void get_activity_status( std::vector<string> &m);
 
 private:
 	int status_id;

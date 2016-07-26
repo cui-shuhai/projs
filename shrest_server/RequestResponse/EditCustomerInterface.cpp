@@ -34,7 +34,7 @@ void EditCustomerInterface::Process(){
 		string  params= rq_->get_params;
 		utils::parse_get_params(params, m);
 
-		auto id = stoi(m["customer_id"]);
+		auto id = m["customer_id"];
 		customer_table ct;
 
 		std::map<string, string> customer;

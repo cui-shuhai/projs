@@ -41,7 +41,7 @@ void AddEmployeeInterface::Process(){
 		t.block("meat").repeat(1); 
 		//fill title block
 		if(true){
-			std::map<int, string> titles;
+			std::vector<string> titles;
 			employee_title et;
 			et.get_employee_titles(titles);
 			Block & block = t.block( "meat" )[ 0 ].block( "titles" );
@@ -52,15 +52,15 @@ void AddEmployeeInterface::Process(){
 			int i = 0;
 
 			for(const auto & v : titles){
-				block[i].set("title_value", to_string(v.first));
-				block[i].set("title_show", v.second);
+				block[i].set("title_value", v);
+				block[i].set("title_show", v);
 				++i;
 			}
 		}
 
 		//fill department
 		if(true){
-			std::map<int, string> departments;
+			std::vector<string> departments;
 			employee_department et;
 			et.get_employee_departments(departments);
 			Block & block = t.block( "meat" )[ 0 ].block( "departments" );
@@ -71,8 +71,8 @@ void AddEmployeeInterface::Process(){
 			int i = 0;
 
 			for(const auto & v : departments){
-				block[i].set("department_value", to_string(v.first));
-				block[i].set("department_show", v.second);
+				block[i].set("department_value", v);
+				block[i].set("department_show", v);
 				++i;
 			}
 		}
@@ -80,7 +80,7 @@ void AddEmployeeInterface::Process(){
 
 		//fill report to
 		if(true){
-			std::map<int, string> report_tos;
+			std::map<string, string> report_tos;
 			auto rows = report_tos.size();
 			employee_table et;
 			et.get_department_managers(report_tos);
@@ -89,16 +89,12 @@ void AddEmployeeInterface::Process(){
 
 			rows = report_tos.size();
 			
-			if(rows == 0){
-				report_tos[0] = "A B : C";
-				++rows;
-			}
 			block.repeat(rows);
 
 			int i = 0;
 
 			for(const auto & v : report_tos){
-				block[i].set("report_to_value", to_string(v.first));
+				block[i].set("report_to_value", v.first);
 				block[i].set("report_to_show", v.second);
 				++i;
 			}

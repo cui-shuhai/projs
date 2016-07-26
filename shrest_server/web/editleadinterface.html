@@ -4,7 +4,7 @@
 
 <form action="editlead" method="post">
 
-<input type="hidden" name="lead_id" value="{{ lead_id }}">
+<input type="hidden" id="lead_id"  name="lead_id" value="{{ lead_id }}">
 <legend>Lead to edit :</legend>
 <table>
 <tr>
@@ -31,12 +31,14 @@
 </tr><tr>
 	    <td><input type="submit"  name="submit" value="clear"></td>
 	    <td><input type="submit"  name="submit" value="save"></td>
-	    <td><input type="submit"  name="submit" value="save and add"></td>
+	    <td><input type="submit"  name="submit" value="add contact"></td>
 </tr>
 </table>
 
 	  </fieldset>
 </form>
+{% endblock %}
+<button id="add contact"  onclick="addcontact();" value="Add Lead Contact">  Add Lead Contact </button>
 <br><br>
 <!--
 <form action="/addcontact" method="post">
@@ -81,22 +83,16 @@ Company name:<input type="text" name="company_name" value=""><br><br>
 </form>
 //-->
 
-<button type="button" onclick="addclick(this.id)"  name="add_contact" id="addcontact_button_id" value="Add Contact..."> Add Contact </td>
-
-{% endblock %}
  
 <script>
-var hide = 1;
-function addclick(id) {
-	if(hide == 1){
-	document.getElementById("#new_contact_id").style.display="block";
-	hide = 0;
-	document.getElementById("#addcontact_button_id").text="Finish";
-	}
-	else{
-	hide = 1;
-	document.getElementById("#new_contact_id").style.display="Add...";
-	}
+
+function addcontact(){
+
+	var id  = $("#lead_id").val();
+	var cp = $("input[name=company_name]").val();
+	var url="/addcontact?directory=edit_lead&lead_id=";
+	url = url + id + '&' + "company=" + cp;
+	window.open(url, "myWindow", "width=500,height=200");
 }
 //function fill_customer() {
 //  

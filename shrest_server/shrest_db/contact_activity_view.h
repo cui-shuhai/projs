@@ -12,8 +12,8 @@ class contact_activity_view : public SqlAccessor{
 public:
 	typedef struct{
 		int id; //cusotomer id
-		string firstName;
-		string lastName;	
+		string first_name;
+		string last_name;	
 		
 	} RECORDSET;
 

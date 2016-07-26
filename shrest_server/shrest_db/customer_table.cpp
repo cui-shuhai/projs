@@ -20,7 +20,7 @@ customer_table::customer_table():SqlAccessor()
 {
 }
 
-customer_table::customer_table( int customer_id_, string  & company_name_, string  & contact_name_, 
+customer_table::customer_table( string customer_id_, string  & company_name_, string  & contact_name_, 
 			string  & personal_title_, string  & first_name_, string  & last_name_,
 			string  & phone_, string  & email_, string  & street_addr_, string  & city_, 
 			string  & state_, string  & post_code_, string  & country_, 
@@ -51,8 +51,8 @@ void customer_table::add_customer_table(){
 
 	auto sql = "INSERT INTO 'customer'("
 		"company_name, contact_name, personal_title, first_name, last_name, phone, email, "
-		"street_addr, city, state, post_code, country, bill_addr, ship_addr )"
-		"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		"street_addr, city, state, post_code, country, bill_addr, ship_addr , customer_id)"
+		"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 	command c(*conn, sql);
 
@@ -70,12 +70,9 @@ void customer_table::add_customer_table(){
 	c.bind(12, country);
 	c.bind(13, bill_addr);
 	c.bind(14, ship_addr);
+	c.bind(15, customer_id);
 
 	c.emit();
-	auto id_sql = "SELECT last_insert_rowid()";
-	query id_query(*conn, id_sql);
-	auto id_res = id_query.emit_result();
-	customer_id = id_res->get_int(0);
 
 	//t.commit();
 }
@@ -88,7 +85,7 @@ int customer_table::get_customer_tableCount(){
 	return count_res->get_int(0);
 }
 
-void customer_table::get_customer_profile(std::map<int, string> &m)
+void customer_table::get_customer_profile(std::map<string, string> &m)
 {
 
 	string sql = "SELECT customer_id, company_name FROM customer";
@@ -97,7 +94,7 @@ void customer_table::get_customer_profile(std::map<int, string> &m)
 	auto res = q.emit_result();
 
 	do{
-		m[res->get_int(0)] = res->get_string(1);
+		m[res->get_string(0)] = res->get_string(1);
 	} while(res->next_row());
 }
 void customer_table::get_customer_records( string source, string &result ){
@@ -124,7 +121,7 @@ void customer_table::get_customer_records( string source, string &result ){
 			}
 			ss << "{" ;
  
-			ss << "\"customer_id\"" << ":" << "\""  <<  res->get_int(0) << "\"" << ",";
+			ss << "\"customer_id\"" << ":" << "\""  <<  res->get_string(0) << "\"" << ",";
 			ss << "\"company_name\"" << ":" << "\""  << res->get_string(1) << "\"" << ",";
 			ss << "\"contact_name\"" << ":" << "\""  << res->get_string(2) + " " + res->get_string(3) << "\"" << ",";
 			ss << "\"personal_title\"" << ":" << "\""  << res->get_string(12) << "\"" << ",";
@@ -152,7 +149,7 @@ void customer_table::get_customer_instance(std::map<string, string> &customer){
 		string sql = "SELECT customer_id, company_name, first_name, last_name, "
 				" phone, email, street_addr, city, state, country, bill_addr, ship_addr, personal_title , post_code   FROM customer ";
 
-		sql.append(" WHERE customer_id = ").append(to_string(customer_id));
+		sql.append(" WHERE customer_id = ").append(customer_id);
 
 		query q(*conn, sql);
 		//LOG("sql", sql);
@@ -160,7 +157,7 @@ void customer_table::get_customer_instance(std::map<string, string> &customer){
 		result_type res =  q.emit_result();
 
  
-		customer["customer_id"] = to_string(res->get_int(0));
+		customer["customer_id"] = res->get_string(0);
 		customer["company_name"] = res->get_string(1);
 		customer["contact_name"] = res->get_string(2);
 		customer["personal_title"] = res->get_string(12);

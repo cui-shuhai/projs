@@ -43,14 +43,14 @@ void activity_status::add_activity_status(){
 
 }
 
-void activity_status::get_activity_status( map<int, string> &m)
+void activity_status::get_activity_status( vector<string> &m)
 {	
-	string sql = "SELECT activity_status, description FROM activity_status";
+	string sql = "SELECT activity_status FROM activity_status";
 	
 	query q(*conn, sql);
 	auto res = q.emit_result();
 
 	do{
-		m[res->get_int(0)] = res->get_string(1);
+		m.push_back(res->get_string(0));
 	} while(res->next_row());
 }

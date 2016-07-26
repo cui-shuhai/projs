@@ -68,7 +68,7 @@ void SearchCustomerRequest::Process(){
 
 		stringstream cs;
 		
-		string sql = "SELECT id_, firstName, lastName, age, phone, address FROM customer";
+		string sql = "SELECT id_, first_name, last_name, age, phone, address FROM customer";
 		sql.append(where.str());
 
 	//there is an error from sqlite library, query get_row_count fails (return 0)
