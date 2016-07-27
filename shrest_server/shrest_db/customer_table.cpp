@@ -97,6 +97,31 @@ void customer_table::get_customer_profile(std::map<string, string> &m)
 		m[res->get_string(0)] = res->get_string(1);
 	} while(res->next_row());
 }
+void customer_table::get_last_names( string source, string &result ){
+
+		stringstream ss;
+		string sql = "SELECT  DISTINCT  last_name FROM customer";
+
+		query q(*conn, sql);
+		LOG("sql", sql);
+
+		result_type res =  q.emit_result();
+
+		bool first = true;
+		ss << "{ \"last_name\":[ ";
+		do{
+			if(first)
+				first = false;
+			else{
+				ss << ", ";
+			}
+			ss << "\""  <<  res->get_string(0) << "\""; 
+		} while(res->next_row());
+
+		ss << " ] }";
+		result = ss.str();
+}
+
 void customer_table::get_customer_records( string source, string &result ){
 
 		stringstream ss;

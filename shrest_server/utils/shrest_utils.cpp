@@ -79,6 +79,25 @@ void utils::build_json(std::map<std::string, std::string> &m, string &result)
 
 }
 
+void utils::build_json(std::vector< std::string> &m, string &result)
+{
+	stringstream ss;
+
+	bool first = true;
+	ss << "{ \"recordset\":[ ";
+	for( const auto &v : m ){
+		if(first)
+			first = false;
+		else{
+			ss << ", ";
+		}
+		ss << "\"" << v << "\"" ; 
+	} 
+	ss << " ] }";
+	result = ss.str();
+
+}
+
 void utils::build_raw_response(string &content){
 
 	stringstream ss;

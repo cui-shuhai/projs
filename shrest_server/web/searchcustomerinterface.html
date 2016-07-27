@@ -3,15 +3,14 @@
 {% block meat %}
 <form action="searchcustomerrequest" method="post">
 	  <fieldset>
-	    <legend>Seaches satisfying any of the following conditions:</legend>
-	    Customer ID:<br>
-	    <input type="text" name="id_" value="-1"><br>
+	    <legend>Seaches satisfying the following conditions:</legend>
+	    First name:<br>
+	    <input type="text" name="first_name" value=""><br><br>
 	    Last name:<br>
-	    <input type="text" name="firstName" value="Joe"><br><br>
-	    Last name:<br>
-	    <input type="text" name="lastName" value="Mouse"><br><br>
-	    Age:<br>
-	    <input type="text" name="age" value=""><br><br>
+	    <input type="text" name="last_name" id="txtAutoComplete" list="lastnamelist" value="Mouse" onChange="fillLastName()" ><br><br>
+		<datalist id="lastnamelist">
+		</datalist>
+<br><br>
 	    Phone:<br>
 	    <input type="text" name="phone" value=""><br><br>
 	    Address:<br>
@@ -21,5 +20,21 @@
 </form>
 {% endblock %}
 
+<!-- Intellisense Autocomplete -->
+<script>
+function fillLastName() {
+  
+	$.getJSON("/listcustomer", { "directory": "last_name"}, function(jsonData) {
+
+		$.each(jsonData.last_name ,function(key, value) {
+			$('#lastnamelist').append("<option value='" + value  + "'>");
+		});
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	alert(XMLHttpRequest.responseText);
+	});
+}
+ 
+</script>
 {% include web/footer.html %}
    

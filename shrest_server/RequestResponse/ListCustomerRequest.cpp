@@ -45,16 +45,16 @@ void ListCustomerRequest::Process(){
 			string result;
 
 			string directory = m["directory"];
-			std::map<int, string> resultset;
 
 			if( directory.compare("add_contact") == 0){
-		 	//	lead_table lt;
-			//	lt.get_lead_source( resultset); 
-			//	utils::build_json(resultset, jstr); 
 			}
 			else if( directory.compare("customer_content") == 0){
 				customer_table ct;
 				ct.get_customer_records("", jstr);
+			}
+			else if( directory.compare("last_name") == 0){
+				customer_table ct;
+				ct.get_last_names("", jstr);
 			}
 
 

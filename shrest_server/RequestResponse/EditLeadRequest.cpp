@@ -33,11 +33,11 @@ void EditLeadRequest::Process(){
 		auto content=rq_->content.string();
 		std::map<std::string, std::string> m;
 		utils::parse_kye_value(content, m);
-		lead_table c( stoi(m["lead_id"]), m["company_name"], m["contact_name"], m["personal_title"], 
+		lead_table c( m["lead_id"], m["company_name"], m["contact_name"], m["personal_title"], 
 				m["first_name"], m["last_name"], m["phone"], m["email"], 
 				m["street_addr"], m["city"], m["state"], m["post_code"], 
 				m["country"], m["bill_addr"], m["ship_addr"], 
-				1, 1, 1);
+				"web", "active", "normal");
 				//stoi(m["lead_source"]), stoi(m["lead_status"]), stoi(m["lead_rating"]));
 
 		c.update_lead_table();

@@ -14,6 +14,7 @@
 #include <sqlite/command.hpp>
 #include <sqlite/execute.hpp>
 
+#include "shrest_utils.h"
 #include "lead_table.h"
 #include "shrest_log.h"
 
@@ -23,11 +24,11 @@ lead_table::lead_table():SqlAccessor()
 {
 }
 
-lead_table::lead_table( int lead_id_, string company_name_, string contact_name_, 
+lead_table::lead_table( string lead_id_, string company_name_, string contact_name_, 
 		string personal_title_, string first_name_, string last_name_, 
 		string phone_, string email_, string street_addr_, string city_, 
 		string state_, string post_code_, string country_, string bill_addr_, 
-		string ship_addr_, int lead_source_, int lead_status_, int lead_rating_):
+		string ship_addr_, string lead_source_, string lead_status_, string lead_rating_):
 	SqlAccessor(),
 	lead_id{ lead_id_ },
 	company_name{ company_name_ },
@@ -55,14 +56,15 @@ lead_table::~lead_table(){
 
 void lead_table::add_lead_table(){
 
+	auto id = utils::create_uuid();
 	auto sql = "INSERT INTO 'lead'("
 		"company_name, contact_name, personal_title, "
 		"first_name, last_name, phone, email, street_addr, city, "
 		"state, post_code, country, bill_addr, ship_addr, "
-		"lead_source, lead_status, lead_rating ) "
+		"lead_source, lead_status, lead_rating, lead_id ) "
 		"VALUES( ?, ?, ?, ?, ?,"
 			"  ?, ?, ?, ?, ?, ?, "
-			"  ?, ?, ?, ?, ?, ? )";
+			"  ?, ?, ?, ?, ?, ?, ? )";
 
 	LOG( "add_lead sqql:", sql);
 	command c(*conn, sql);
@@ -83,14 +85,9 @@ void lead_table::add_lead_table(){
 	c.bind(15, lead_source);
 	c.bind(16, lead_status);
 	c.bind(17, lead_rating);
+	c.bind(18, lead_id);
 
 	c.emit();
-	auto id_sql = "SELECT last_insert_rowid()";
-	query id_query(*conn, id_sql);
-	auto id_res = id_query.emit_result();
-	lead_id = id_res->get_int(0);
-
-	//t.commit();
 }
 
 
@@ -102,7 +99,7 @@ int lead_table::get_lead_table_count(){
 	return count_res->get_int(0);
 }
 
-void lead_table::get_lead_table_profile(std::map<int, string> &m)
+void lead_table::get_lead_table_profile(std::map<string, string> &m)
 {
 
 	string sql = "SELECT lead_id, company_name FROM lead";
@@ -111,47 +108,47 @@ void lead_table::get_lead_table_profile(std::map<int, string> &m)
 	auto res = q.emit_result();
 
 	do{
-		m[res->get_int(0)] = res->get_string(1);
+		m[res->get_string(0)] = res->get_string(1);
 	} while(res->next_row());
 }
 
-void lead_table::get_lead_status(std::map<int, string> &m)
+void lead_table::get_lead_statuss(std::vector<string> &m)
 {
-	string sql = "SELECT status, description FROM lead_status";
+	string sql = "SELECT status_name FROM lead_status";
 
 	query q(*conn, sql);
 	auto res = q.emit_result();
 
 	do{
-		m[res->get_int(0)] = res->get_string(1);
+		m.push_back(res->get_string(0));
 	} while(res->next_row());
 }
 
-void lead_table::get_lead_source(std::map<int, string> &m)
+void lead_table::get_lead_sources(std::vector<string> &m)
 {
-	string sql = "SELECT source, description FROM lead_source";
+	string sql = "SELECT source_name FROM lead_source";
 
 	query q(*conn, sql);
 	auto res = q.emit_result();
 
 	do{
-		m[res->get_int(0)] = res->get_string(1);
+		m.push_back(res->get_string(0));
 	} while(res->next_row());
 }
 
-void lead_table::get_lead_rating(std::map<int, string> &m)
+void lead_table::get_lead_ratings(std::vector<string> &m)
 {
-	string sql = "SELECT rating, description FROM lead_rating";
+	string sql = "SELECT rating_name FROM lead_rating";
 
 	query q(*conn, sql);
 	auto res = q.emit_result();
 
 	do{
-		m[res->get_int(0)] = res->get_string(1);
+		m.push_back(res->get_string(0));
 	} while(res->next_row());
 }
 
-void lead_table::get_lead_for_customer(std::map<int, string> &m){
+void lead_table::get_lead_for_customer(std::map<string, string> &m){
 	string sql = "SELECT lead_id, contact_name, company_name FROM lead";
 
 	query q(*conn, sql);
@@ -160,7 +157,7 @@ void lead_table::get_lead_for_customer(std::map<int, string> &m){
 	do{
 		auto desc = res->get_string(1);
 		desc.append(": ").append(res->get_string(2));
-		m[res->get_int(0)] = desc;
+		m[res->get_string(0)] = desc;
 	} while(res->next_row());
 
 }
@@ -229,13 +226,13 @@ void lead_table::get_lead_instance(std::map<string, string> &lead){
 	" INNER JOIN lead_rating ON lead.lead_rating = lead_rating.rating "
 	" WHERE lead_id = ";
 
-		sql.append( to_string( lead_id ));
+		sql.append( lead_id );
 		query q(*conn, sql);
 		LOG("sql", sql);
 		auto res = q.emit_result();
 		
 	
-		 lead["lead_id"] = to_string(res->get_int(0));
+		 lead["lead_id"] = res->get_string(0);
 		 lead["company_name"] = res->get_string(1);
 		 lead["contact_name"] = res->get_string(2);
 		 lead["personal_title"] = res->get_string(3);

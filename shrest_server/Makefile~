@@ -1,12 +1,35 @@
 SOURCE=server_instance.cpp \
 	NLTemplate/NLTemplate.cpp \
+	RequestResponse/RequestResponseFactory.cpp \
 	RequestResponse/RequestResponse.cpp \
 	RequestResponse/AddCustomerGetRequest.cpp \
 	RequestResponse/JsonPostRequest.cpp \
 	RequestResponse/ListCustomersGet.cpp \
 	RequestResponse/NewCustomerPost.cpp \
 	RequestResponse/PieGetRequest.cpp \
-	
+	RequestResponse/IcrmIndex.cpp \
+	RequestResponse/SearchCustomerInterface.cpp \
+	RequestResponse/SearchCustomerRequest.cpp \
+	RequestResponse/AddEventInterface.cpp \
+	RequestResponse/AddEventRequest.cpp \
+	RequestResponse/AddTransactionInterface.cpp \
+	RequestResponse/AddTransactionRequest.cpp \
+	RequestResponse/AddTaskInterface.cpp \
+	RequestResponse/AddTaskRequest.cpp \
+	RequestResponse/ListTaskRequest.cpp \
+	RequestResponse/AddUserInterface.cpp \
+	RequestResponse/AddUserRequest.cpp \
+	RequestResponse/LoginRequest.cpp \
+	RequestResponse/SearchContactActivity.cpp \
+	utils/shrest_utils.cpp \
+	shrest_db/customers_table.cpp \
+	shrest_db/contact_activity.cpp \
+	shrest_db/exist_task.cpp \
+	shrest_db/cookie_table.cpp \
+	shrest_db/user_table.cpp \
+	shrest_db/compaign_table.cpp \
+	shrest_db/SqlAccessor.cpp \
+	shrest_db/SqlAccessorFactory.cpp
 
 MYPROGRAM=crm_server
 
@@ -17,7 +40,7 @@ OPTIONS=-std=c++11 -g
 LIBRARYPATH=-L/usr/lib/x86_64-linux-gnu 
 #debuge modules
 MYLIBRARIES= -lpthread  -lboost_date_time -lboost_filesystem -lboost_thread \
--lboost_regex -lboost_system  -lboost_coroutine -lboost_context  
+-lboost_regex -lboost_system  -lboost_coroutine -lboost_context  -lvsqlitepp
 
 
 CC=g++

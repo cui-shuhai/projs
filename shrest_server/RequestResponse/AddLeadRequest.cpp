@@ -14,6 +14,7 @@
 #include "NLTemplate/NLTemplate.h"
 
 #include "lead_table.h"
+#include "contact_table.h"
 #include "AddLeadRequest.h"
 
 using namespace sqlite;
@@ -33,14 +34,23 @@ void AddLeadRequest::Process(){
 		auto content=rq_->content.string();
 		std::map<std::string, std::string> m;
 		utils::parse_kye_value(content, m);
-		lead_table c( 0, m["company_name"], m["contact_name"], m["personal_title"], 
+		string id = utils::create_uuid();
+		lead_table c( id, m["company_name"], m["contact_name"], m["personal_title"], 
 				m["first_name"], m["last_name"], m["phone"], m["email"], 
 				m["street_addr"], m["city"], m["state"], m["post_code"], 
 				m["country"], m["bill_addr"], m["ship_addr"], 
-				stoi(m["lead_source"]), stoi(m["lead_status"]), stoi(m["lead_rating"]));
+				m["lead_source"], m["lead_status"], m["lead_rating"]);
 
 		c.add_lead_table();
-		auto id = c.get_lead_id();
+
+		contact_table ct; 
+		ct.set_contact_id(utils::create_uuid());
+		ct.set_contact_from("lead");
+		ct.set_first_name(m["first_name"]);
+		ct.set_last_name(m["last_name"]);
+		ct.set_company_id(id);
+
+		ct.add_contact_table();
 
 		LoaderFile loader; // Let's use the default loader that loads files from disk.
 

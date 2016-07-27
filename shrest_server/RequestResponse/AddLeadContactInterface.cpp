@@ -64,7 +64,7 @@ void AddLeadContactInterface::Process(){
 		Block &block =t.block("meat")[0].block("from_block");
 
 		lead_table lt;
-		std::map<int, string> m;
+		std::map<string, string> m;
 		lt.get_lead_table_profile(m); 
 		
 		auto rows = m.size();
@@ -73,7 +73,7 @@ void AddLeadContactInterface::Process(){
 
 		int i = 0;
 		for(const auto & v : m){
-			block[i].set("from_value", to_string(v.first));
+			block[i].set("from_value", v.first);
 			block[i].set("from_show", v.second);
 		}
 

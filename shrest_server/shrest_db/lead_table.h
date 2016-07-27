@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <map>
+#include <vector>
 
 #include "SqlAccessor.h"
 
@@ -12,26 +13,26 @@ class lead_table : public SqlAccessor{
 
 public:
 	lead_table();
-	lead_table( int lead_id, string company_name, string contact_name, 
+	lead_table( string lead_id, string company_name, string contact_name, 
 		string personal_title, string first_name, string last_name, 
 		string phone, string email, string street_addr, string city, 
 		string state, string post_code, string country, string bill_addr, 
-		string ship_addr, int lead_source, int lead_status, int lead_rating);
+		string ship_addr, string lead_source, string lead_status, string lead_rating);
 	~lead_table();
 
 	void add_lead_table();
 	void update_lead_table();
 	void get_lead_instance(std::map<string, string> &lead);
 	int get_lead_table_count();
-	void get_lead_table_profile(std::map<int, string> &m);
-	void get_lead_status(std::map<int, string> &m);
-	void get_lead_source(std::map<int, string> &m);
-	void get_lead_rating(std::map<int, string> &m);
-void get_lead_for_customer(std::map<int, string> &m);
+	void get_lead_table_profile(std::map<string, string> &m);
+	void get_lead_statuss(std::vector<string> &m);
+	void get_lead_sources(std::vector<string> &m);
+	void get_lead_ratings(std::vector<string> &m);
+	void get_lead_for_customer(std::map<string, string> &m);
 	void get_lead_records( string source, string &result );
 	void get_lead_list(std::map<int, string> &leads);
 
-	int get_lead_id(){ return lead_id; }
+	string get_lead_id(){ return lead_id; }
 	string get_company_name(){ return company_name; }
 	string get_contact_name(){ return contact_name; }
 	string get_personal_title(){ return personal_title; }
@@ -46,11 +47,11 @@ void get_lead_for_customer(std::map<int, string> &m);
 	string get_country(){ return country; }
 	string get_bill_addr(){ return bill_addr; }
 	string get_ship_addr(){ return ship_addr; }
-	int get_lead_source(){ return lead_source; }
-	int get_lead_status(){ return lead_status; }
-	int get_lead_rating(){ return lead_rating; }
+	string get_lead_source(){ return lead_source; }
+	string get_lead_status(){ return lead_status; }
+	string get_lead_rating(){ return lead_rating; }
 
-	void set_lead_id(int lead_id_){ lead_id = lead_id_; }
+	void set_lead_id(string lead_id_){ lead_id = lead_id_; }
 	void set_company_name(string company_name_){ company_name = company_name_; }
 	void set_contact_name(string contact_name_){ contact_name = contact_name_; }
 	void set_personal_title(string personal_title_){ personal_title = personal_title_; }
@@ -65,12 +66,12 @@ void get_lead_for_customer(std::map<int, string> &m);
 	void set_country(string country_){ country = country_; }
 	void set_bill_addr(string bill_addr_){ bill_addr = bill_addr_; }
 	void set_ship_addr(string ship_addr_){ ship_addr = ship_addr_; }
-	void set_lead_source(int lead_source_){ lead_source = lead_source_; }
-	void set_lead_status(int lead_status_){ lead_status = lead_status_; }
-	void set_lead_rating(int lead_rating_){ lead_rating = lead_rating_; }
+	void set_lead_source(string lead_source_){ lead_source = lead_source_; }
+	void set_lead_status(string lead_status_){ lead_status = lead_status_; }
+	void set_lead_rating(string lead_rating_){ lead_rating = lead_rating_; }
 
 private:
-	int lead_id;
+	string lead_id;
 	string company_name;
 	string contact_name;
 	string personal_title;
@@ -85,7 +86,7 @@ private:
 	string country;
 	string bill_addr;
 	string ship_addr;
-	int lead_source;
-	int lead_status;
-	int lead_rating;
+	string lead_source;
+	string lead_status;
+	string lead_rating;
 };

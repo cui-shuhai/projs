@@ -47,33 +47,22 @@ void SearchCustomerRequest::Process(){
 			if(!v.second.empty())
 			{
 				if(first == false)
-					where << " OR ";
+					where << " AND ";
 				else
 					first = false;
-				if( v.first == "id_" || v.first == "age")
-					where << v.first << " == " << v.second;
-				else
 					where << v.first << " == '" << v.second << "'";
 			}
 		}
 		
 
-		//no search condition redirect to ListCustomersGet
-		if(first){
-			auto processor = RequestResponseFactory::CreateProcessor("ListCustomersGet", rs_, rq_);	
-			processor->Process();
-			return;    
-		}
-				
-
 		stringstream cs;
 		
-		string sql = "SELECT id_, first_name, last_name, age, phone, address FROM customer";
+		string sql = "SELECT customer_id, first_name, last_name, phone, street_addr FROM customer";
 		sql.append(where.str());
 
 	//there is an error from sqlite library, query get_row_count fails (return 0)
 		string count_sql = "SELECT count(*) FROM customer";
-		count_sql.append( where.str() );
+		count_sql.append(where.str());
 		auto count_query = c.BuildQuery(count_sql);
 		auto count_res = count_query->emit_result();
 		auto rows = count_res->get_int(0);
@@ -91,21 +80,14 @@ void SearchCustomerRequest::Process(){
 
 		//all fields must be string
  		for ( int i=0; i < rows; i++, res->next_row() ) {
-			t.block("meat")[i].set("customerId", to_string(res->get_int(0)));
+			t.block("meat")[i].set("customerId", res->get_string(0));
 			t.block("meat")[i].set("firstname", res->get_string(1));
 			t.block("meat")[i].set("lastname", res->get_string(2));
-			t.block("meat")[i].set("age", to_string(res->get_int(3)));
-			t.block("meat")[i].set("phone", res->get_string(4));
-			t.block("meat")[i].set("address", res->get_string(5));
-			t.block("meat")[i].set("activities", to_string(res->get_int(0)));
-			t.block("meat")[i].set("transactions", to_string(res->get_int(0)));
-
+			t.block("meat")[i].set("phone", res->get_string(3));
+			t.block("meat")[i].set("address", res->get_string(4));
 		}
 
-
 		t.render( cs ); // Render the template with the variables we've set above
- 
-		
 		cs.seekp(0, ios::end);
 		rs_ <<  cs.rdbuf();
 		rs_.flush();

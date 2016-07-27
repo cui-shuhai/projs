@@ -34,7 +34,7 @@ void EditLeadInterface::Process(){
 		string  params= rq_->get_params;
 		utils::parse_get_params(params, m);
 
-		auto id = stoi(m["lead_id"]);
+		auto id = m["lead_id"];
 		lead_table lt;
 
 		std::map<string, string> lead;

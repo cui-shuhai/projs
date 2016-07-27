@@ -39,6 +39,8 @@ void AddCustomerRequest::Process(){
 		c.add_customer_table();
 
 		contact_table ct; 
+		ct.set_contact_id(utils::create_uuid());
+		ct.set_contact_from("customer");
 		ct.set_first_name(m["first_name"]);
 		ct.set_last_name(m["last_name"]);
 		ct.set_company_id(id);

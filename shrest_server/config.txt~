@@ -1,0 +1,50 @@
+{
+'database':{
+'host':'localhost',
+'port':'3306',
+'user':'root',
+'pwd':'dspwj100',
+'schema':'crm_template.db'
+}
+
+'design contents':{
+A contact management system (CMS) may be chosen because it is thought to provide the following advantages:[2]
+
+Centralized repository of contact information
+Ready to use database with searching
+Sales tracking
+Email integration
+Scheduling of appointments and meetings
+Document management
+Notes and conversation management
+Customizable fields
+Drip marketing
+Import/export utility
+
+#Full Features Contacts - Vendors - Sales Leads - Tasks and and Opportunity Management
+}
+}
+
+
+
+These are Lead Status pick-list values that we use as a blueprint on our engagements – see if this makes sense:
+
+Not Attempted – you haven’t tried to reach the lead
+Attempted – you have tried (person-to-person) to reach the lead
+Contacted – you have had a person-to-person dialog with the lead
+New Opportunity – new opportunity identified (convert lead)
+Additional Contact – new contact at existing opportunity (convert lead)
+Disqualified – never going to be a prospect for your product or service because this lead is the incorrect industry, company, contact or data
+
+Lead management is an important business process that combines tools with techniques to enable effective leads generation, management and tracking of new sales opportunities. In Zoho CRM, leads are considered the raw details of a company, person or business opportunity.
+
+========
+
+So, what is the difference between a CRM lead and an opportunity?
+A Lead – is a contact or an account with very little information. It could be just a person who you might have met at a conference. You will need to retrieve more information regarding this lead in order to create (qualify) an opportunity in your sales pipeline. A old sales rule says: “If you have never contacted your contact, it’s a lead.”
+
+An Opportunity – is a contact or an account which has been qualified. This person has entered into your buying cycle and is committed to working with you. You have already contacted, called or met him and know their needs or requirements. The old sales rule says: “The opportunity is a deal that you have the possibility to close!”
+
+“Think about the difference between a lead and an opportunity as an evolving process i.e. each lead needs to be qualified to an opportunity. There will always be plenty of leads in your sales territory, but only few of them will qualify to become real sales opportunity.”
+
+

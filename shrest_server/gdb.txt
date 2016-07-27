@@ -1,0 +1,265 @@
+Breakpoint 1 at 0x43987c: file server_http.hpp, line 307.
+Breakpoint 2 at 0x479907: file RequestResponse/AddLeadRequest.cpp, line 29.
+Already logging to gdb.txt.
+Breakpoint 3 at 0x43987c: file server_http.hpp, line 307.
+Breakpoint 4 at 0x479907: file RequestResponse/AddLeadRequest.cpp, line 29.
+Already logging to gdb.txt.
+Breakpoint 5 at 0x43987c: file server_http.hpp, line 307.
+Breakpoint 6 at 0x479907: file RequestResponse/AddLeadRequest.cpp, line 29.
+Starting program: /home/scui/projs/shrest_server/crm_server 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[New Thread 0x7ffff3dd6700 (LWP 13541)]
+[New Thread 0x7ffff35d5700 (LWP 13542)]
+[New Thread 0x7ffff2dd4700 (LWP 13543)]
+[New Thread 0x7ffff25d3700 (LWP 13544)]
+[Switching to Thread 0x7ffff35d5700 (LWP 13542)]
+
+Breakpoint 1, SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::parse_request (this=0x7fffffffde00, request=warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+std::shared_ptr (count 2, weak 0) 0x7fffe40009b0, stream=...) at server_http.hpp:307
+307	                    request->method=line.substr(0, method_end);
+[Switching to Thread 0x7ffff3dd6700 (LWP 13541)]
+
+Breakpoint 1, SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::parse_request (this=0x7fffffffde00, request=warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+std::shared_ptr (count 2, weak 0) 0x7fffec0107a0, stream=...) at server_http.hpp:307
+307	                    request->method=line.substr(0, method_end);
+302			LOG("request 1:", line);
+303	            size_t method_end;
+304	            if((method_end=line.find(' '))!=std::string::npos) {
+305	                size_t path_end;
+306	                if((path_end=line.find(' ', method_end+1))!=std::string::npos) {
+307	                    request->method=line.substr(0, method_end);
+308	                    request->path=line.substr(method_end+1, path_end-method_end-1);
+309	#if 1
+310	auto question_mark = request->path.find('?');
+311	if(question_mark != std::string::npos){
+312	request->get_params = request->path.substr(question_mark + 1);
+313	request->path = request->path.substr(0, question_mark);
+314	}
+315	#endif
+316	
+317	                    size_t protocol_end;
+318	                    if((protocol_end=line.find('/', path_end+1))!=std::string::npos) {
+319	                        if(line.substr(path_end+1, protocol_end-path_end-1)!="HTTP")
+320	                            return false;
+321	                        request->http_version=line.substr(protocol_end+1, line.size()-protocol_end-2);
+Breakpoint 7 at 0x439932: file server_http.hpp, line 310.
+Breakpoint 8 at 0x4399ce: file server_http.hpp, line 313.
+Continuing.
+[Switching to Thread 0x7ffff35d5700 (LWP 13542)]
+
+Breakpoint 7, SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::parse_request (this=0x7fffffffde00, request=warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+std::shared_ptr (count 2, weak 0) 0x7fffe40009b0, stream=...) at server_http.hpp:310
+310	auto question_mark = request->path.find('?');
+Continuing.
+[Switching to Thread 0x7ffff3dd6700 (LWP 13541)]
+
+Breakpoint 7, SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::parse_request (this=0x7fffffffde00, request=warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+std::shared_ptr (count 2, weak 0) 0x7fffec0107a0, stream=...) at server_http.hpp:310
+310	auto question_mark = request->path.find('?');
+311	if(question_mark != std::string::npos){
+$1 = 18446744073709551615
+318	                    if((protocol_end=line.find('/', path_end+1))!=std::string::npos) {
+Continuing.
+[Switching to Thread 0x7ffff2dd4700 (LWP 13543)]
+
+Breakpoint 1, SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::parse_request (this=0x7fffffffde00, request=warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+std::shared_ptr (count 2, weak 0) 0x7fffdc000910, stream=...) at server_http.hpp:307
+307	                    request->method=line.substr(0, method_end);
+Continuing.
+[Switching to Thread 0x7ffff35d5700 (LWP 13542)]
+
+Breakpoint 1, SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::parse_request (this=0x7fffffffde00, request=warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+std::shared_ptr (count 2, weak 0) 0x7fffe40009b0, stream=...) at server_http.hpp:307
+307	                    request->method=line.substr(0, method_end);
+$2 = "GET /addlead HTTP/1.1\r"
+Continuing.
+
+Breakpoint 7, SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::parse_request (this=0x7fffffffde00, request=warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+std::shared_ptr (count 2, weak 0) 0x7fffe40009b0, stream=...) at server_http.hpp:310
+310	auto question_mark = request->path.find('?');
+Continuing.
+[Switching to Thread 0x7ffff2dd4700 (LWP 13543)]
+
+Breakpoint 7, SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::parse_request (this=0x7fffffffde00, request=warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+std::shared_ptr (count 2, weak 0) 0x7fffdc000910, stream=...) at server_http.hpp:310
+310	auto question_mark = request->path.find('?');
+Continuing.
+[Switching to Thread 0x7ffff25d3700 (LWP 13544)]
+
+Breakpoint 1, SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::parse_request (this=0x7fffffffde00, request=warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+std::shared_ptr (count 2, weak 0) 0x7fffe8000980, stream=...) at server_http.hpp:307
+307	                    request->method=line.substr(0, method_end);
+Continuing.
+[Switching to Thread 0x7ffff35d5700 (LWP 13542)]
+
+Breakpoint 1, SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::parse_request (this=0x7fffffffde00, request=warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+std::shared_ptr (count 2, weak 0) 0x7fffe40009b0, stream=...) at server_http.hpp:307
+307	                    request->method=line.substr(0, method_end);
+[Switching to Thread 0x7ffff25d3700 (LWP 13544)]
+
+Breakpoint 7, SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::parse_request (this=0x7fffffffde00, request=warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+std::shared_ptr (count 2, weak 0) 0x7fffe8000980, stream=...) at server_http.hpp:310
+310	auto question_mark = request->path.find('?');
+311	if(question_mark != std::string::npos){
+$3 = 9
+312	request->get_params = request->path.substr(question_mark + 1);
+[Switching to Thread 0x7ffff3dd6700 (LWP 13541)]
+
+Breakpoint 1, SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::parse_request (this=0x7fffffffde00, request=warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+std::shared_ptr (count 2, weak 0) 0x7fffec0107a0, stream=...) at server_http.hpp:307
+307	                    request->method=line.substr(0, method_end);
+302			LOG("request 1:", line);
+303	            size_t method_end;
+304	            if((method_end=line.find(' '))!=std::string::npos) {
+305	                size_t path_end;
+306	                if((path_end=line.find(' ', method_end+1))!=std::string::npos) {
+307	                    request->method=line.substr(0, method_end);
+308	                    request->path=line.substr(method_end+1, path_end-method_end-1);
+309	#if 1
+310	auto question_mark = request->path.find('?');
+311	if(question_mark != std::string::npos){
+312	request->get_params = request->path.substr(question_mark + 1);
+313	request->path = request->path.substr(0, question_mark);
+314	}
+315	#endif
+316	
+317	                    size_t protocol_end;
+318	                    if((protocol_end=line.find('/', path_end+1))!=std::string::npos) {
+319	                        if(line.substr(path_end+1, protocol_end-path_end-1)!="HTTP")
+320	                            return false;
+321	                        request->http_version=line.substr(protocol_end+1, line.size()-protocol_end-2);
+Breakpoint 9 at 0x439a30: file server_http.hpp, line 318.
+Continuing.
+[Switching to Thread 0x7ffff25d3700 (LWP 13544)]
+
+Breakpoint 8, SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::parse_request (this=0x7fffffffde00, request=warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+std::shared_ptr (count 2, weak 0) 0x7fffe8000980, stream=...) at server_http.hpp:313
+313	request->path = request->path.substr(0, question_mark);
+[Switching to Thread 0x7ffff2dd4700 (LWP 13543)]
+
+Breakpoint 1, SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::parse_request (this=0x7fffffffde00, request=warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+std::shared_ptr (count 2, weak 0) 0x7fffdc000910, stream=...) at server_http.hpp:307
+307	                    request->method=line.substr(0, method_end);
+[Switching to Thread 0x7ffff25d3700 (LWP 13544)]
+
+Breakpoint 9, SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::parse_request (this=0x7fffffffde00, request=warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+std::shared_ptr (count 2, weak 0) 0x7fffe8000980, stream=...) at server_http.hpp:318
+318	                    if((protocol_end=line.find('/', path_end+1))!=std::string::npos) {
+[Switching to Thread 0x7ffff35d5700 (LWP 13542)]
+
+Breakpoint 7, SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::parse_request (this=0x7fffffffde00, request=warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+std::shared_ptr (count 2, weak 0) 0x7fffe40009b0, stream=...) at server_http.hpp:310
+310	auto question_mark = request->path.find('?');
+The program stopped in another thread while making a function call from GDB.
+Evaluation of the expression containing the function
+(std::__shared_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request, (__gnu_cxx::_Lock_policy)2>::operator->() const) will be abandoned.
+When the function is done executing, GDB will silently stop.
+[Switching to Thread 0x7ffff25d3700 (LWP 13544)]
+The program stopped in another thread while making a function call from GDB.
+Evaluation of the expression containing the function
+(std::__shared_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request, (__gnu_cxx::_Lock_policy)2>::operator->() const) will be abandoned.
+When the function is done executing, GDB will silently stop.
+Continuing.
+[Switching to Thread 0x7ffff3dd6700 (LWP 13541)]
+
+Breakpoint 7, SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::parse_request (this=0x7fffffffde00, request=warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+std::shared_ptr (count 2, weak 0) 0x7fffec0107a0, stream=...) at server_http.hpp:310
+310	auto question_mark = request->path.find('?');
+Continuing.
+[Switching to Thread 0x7ffff2dd4700 (LWP 13543)]
+
+Breakpoint 7, SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::parse_request (this=0x7fffffffde00, request=warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+std::shared_ptr (count 2, weak 0) 0x7fffdc000910, stream=...) at server_http.hpp:310
+310	auto question_mark = request->path.find('?');
+Continuing.
+
+Breakpoint 8, SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::parse_request (this=0x7fffffffde00, request=warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+std::shared_ptr (count 2, weak 0) 0x7fffdc000910, stream=...) at server_http.hpp:313
+313	request->path = request->path.substr(0, question_mark);
+Continuing.
+[Switching to Thread 0x7ffff3dd6700 (LWP 13541)]
+
+Breakpoint 9, SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::parse_request (this=0x7fffffffde00, request=warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+std::shared_ptr (count 2, weak 0) 0x7fffec0107a0, stream=...) at server_http.hpp:318
+318	                    if((protocol_end=line.find('/', path_end+1))!=std::string::npos) {
+Continuing.
+[Switching to Thread 0x7ffff35d5700 (LWP 13542)]
+Continuing.
+
+Breakpoint 8, SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::parse_request (this=0x7fffffffde00, request=warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+std::shared_ptr (count 2, weak 0) 0x7fffe40009b0, stream=...) at server_http.hpp:313
+313	request->path = request->path.substr(0, question_mark);
+308	                    request->path=line.substr(method_end+1, path_end-method_end-1);
+309	#if 1
+310	auto question_mark = request->path.find('?');
+311	if(question_mark != std::string::npos){
+312	request->get_params = request->path.substr(question_mark + 1);
+313	request->path = request->path.substr(0, question_mark);
+314	}
+315	#endif
+316	
+317	                    size_t protocol_end;
+[Switching to Thread 0x7ffff2dd4700 (LWP 13543)]
+
+Breakpoint 9, SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::parse_request (this=0x7fffffffde00, request=warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+std::shared_ptr (count 2, weak 0) 0x7fffdc000910, stream=...) at server_http.hpp:318
+318	                    if((protocol_end=line.find('/', path_end+1))!=std::string::npos) {
+The program stopped in another thread while making a function call from GDB.
+Evaluation of the expression containing the function
+(std::__shared_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request, (__gnu_cxx::_Lock_policy)2>::operator->() const) will be abandoned.
+When the function is done executing, GDB will silently stop.
+Continuing.
+[Switching to Thread 0x7ffff35d5700 (LWP 13542)]
+Continuing.
+
+Breakpoint 9, SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::parse_request (this=0x7fffffffde00, request=warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+warning: RTTI symbol not found for class 'std::_Sp_counted_ptr<SimpleWeb::ServerBase<boost::asio::basic_stream_socket<boost::asio::ip::tcp, boost::asio::stream_socket_service<boost::asio::ip::tcp> > >::Request*, (__gnu_cxx::_Lock_policy)2>'
+std::shared_ptr (count 2, weak 0) 0x7fffe40009b0, stream=...) at server_http.hpp:318
+318	                    if((protocol_end=line.find('/', path_end+1))!=std::string::npos) {
+313	request->path = request->path.substr(0, question_mark);
+314	}
+315	#endif
+316	
+317	                    size_t protocol_end;
+318	                    if((protocol_end=line.find('/', path_end+1))!=std::string::npos) {
+319	                        if(line.substr(path_end+1, protocol_end-path_end-1)!="HTTP")
+320	                            return false;
+321	                        request->http_version=line.substr(protocol_end+1, line.size()-protocol_end-2);
+322	                    }
+$4 = "/listlead"
+$5 = "GET /listlead?directory=lead_rating HTTP/1.1\r"
+$6 = "directory=lead_rating"
+Continuing.
+
+Program received signal SIGINT, Interrupt.
+[Switching to Thread 0x7ffff7fda780 (LWP 13537)]
+0x00007ffff7bc565b in pthread_join (threadid=140737284761344, thread_return=0x0) at pthread_join.c:92
+92	pthread_join.c: No such file or directory.
+A debugging session is active.
+
+	Inferior 1 [process 13537] will be killed.
+
+Quit anyway? (y or n) 

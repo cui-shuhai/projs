@@ -46,26 +46,27 @@ void ListLeadRequest::Process(){
 			lead_table lt;
 
 			string directory = m["directory"];
-			std::map<int, string> resultset;
+			std::vector<string> resultset;
 
 			if(directory.compare("lead_source") == 0){
-				lt.get_lead_source( resultset); 
+				lt.get_lead_sources( resultset); 
 				utils::build_json(resultset, jstr); 
 			}
 			else if(directory.compare("lead_status") == 0){
-				lt.get_lead_status( resultset); 
+				lt.get_lead_statuss( resultset); 
 				utils::build_json(resultset, jstr); 
 			}
 			else if(directory.compare("lead_rating") == 0){
-				lt.get_lead_rating(resultset); 
+				lt.get_lead_ratings(resultset); 
 				utils::build_json(resultset, jstr); 
 			}
 			else if(directory.compare("lead_content") == 0){
 				lt.get_lead_records("", jstr);
 			}
 			else if(directory.compare("add_customer") == 0){
-				lt.get_lead_for_customer(resultset);
-				utils::build_json(resultset, jstr); 
+				std::map<string, string> result;
+				lt.get_lead_for_customer(result);
+				utils::build_json(result, jstr); 
 			}
 
 			utils::build_raw_response( jstr);
