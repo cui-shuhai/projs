@@ -172,21 +172,13 @@ int main() {
 	LOG("Adding [addemployee, GET] API");
 
     //AddCustomerRequest to connecting to mysql
-     server.resource["^/addemployeerequest$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
+     server.resource["^/employee$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
 
-	auto processor = RequestResponseFactory::CreateProcessor("AddEmployeeRequest", response, request);	
+	auto processor = RequestResponseFactory::CreateProcessor("AddEmployeeInterface", response, request);	
 	processor->Process();        
     };
 	LOG("Adding [addemployeerequest, POST] API");
 
- 	//Add listcaserequest request
-     server.resource["^/listemployee$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
-
-	auto processor = RequestResponseFactory::CreateProcessor("ListEmployeeRequest", response, request);	
-	processor->Process();        
-    };
-	LOG("Adding [listemployeerequest, GET] API");
-	
 
      server.resource["^/searchcustomer$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
 

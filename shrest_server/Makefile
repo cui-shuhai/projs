@@ -5,11 +5,8 @@ SOURCE=server_instance.cpp \
 	RequestResponse/AddCustomerInterface.cpp \
 	RequestResponse/AddVendorInterface.cpp \
 	RequestResponse/AddLeadInterface.cpp \
-	RequestResponse/EditCustomerInterface.cpp \
-	RequestResponse/EditCustomerRequest.cpp \
 	RequestResponse/AddContactInterface.cpp \
 	RequestResponse/AddContactRequest.cpp \
-	RequestResponse/AddLeadContactInterface.cpp \
 	RequestResponse/JsonPostRequest.cpp \
 	RequestResponse/PieGetRequest.cpp \
 	RequestResponse/IcrmIndex.cpp \
@@ -32,8 +29,6 @@ SOURCE=server_instance.cpp \
 	RequestResponse/UploadDocumentInterface.cpp \
 	RequestResponse/UploadDocumentRequest.cpp \
 	RequestResponse/AddEmployeeInterface.cpp \
-	RequestResponse/AddEmployeeRequest.cpp \
-	RequestResponse/ListEmployeeRequest.cpp \
 	RequestResponse/LoginRequest.cpp \
 	RequestResponse/LogoutRequest.cpp \
 	RequestResponse/SearchContactActivity.cpp \
