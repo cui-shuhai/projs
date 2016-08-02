@@ -1,7 +1,7 @@
 {% include web/header.html %}
 
 {% block meat %}
-<form action="addleadrequest" method="post">
+<form action="lead" method="post">
 	  <fieldset>
 	    <legend>Lead Information:</legend>
 <table>
@@ -58,7 +58,7 @@
 	<option value="{{ lead_rating_value }}"> {{ lead_rating_show }}</option>
 {% endblock %}
     </select>
-</td><td> <input type="submit" value="Submit">
+</td><td> <input type="submit" value="add">
 </td>
 </tr>
 </table>

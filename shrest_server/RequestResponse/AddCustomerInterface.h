@@ -6,5 +6,6 @@
 class AddCustomerInterface : public RequestResponse{
 public:
 	AddCustomerInterface(HttpServer::Response &rs, ShRequest rq);
-	void Process() override;
+	void ProcessGet() override;
+	void ProcessPost() override;
 }; 

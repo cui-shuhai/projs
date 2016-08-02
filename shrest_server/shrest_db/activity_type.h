@@ -13,13 +13,13 @@ class activity_type : public SqlAccessor{
 
 public:
 	activity_type();
-	activity_type(int type_id, string description);
+	activity_type(string type_name, string description);
 	~activity_type();
 	
 	void add_activity_type();
-	void get_activity_type( std::map<int, string> &m);
+	void get_activity_type( std::vector< string> &m);
 
 private:
-	int type_id;
+	string type_name;
 	string description;
 };

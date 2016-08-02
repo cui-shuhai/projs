@@ -56,36 +56,37 @@ lead_table::~lead_table(){
 
 void lead_table::add_lead_table(){
 
-	auto id = utils::create_uuid();
-	auto sql = "INSERT INTO 'lead'("
+	string sql = "INSERT INTO 'lead'(lead_id , "
 		"company_name, contact_name, personal_title, "
 		"first_name, last_name, phone, email, street_addr, city, "
 		"state, post_code, country, bill_addr, ship_addr, "
-		"lead_source, lead_status, lead_rating, lead_id ) "
-		"VALUES( ?, ?, ?, ?, ?,"
-			"  ?, ?, ?, ?, ?, ?, "
-			"  ?, ?, ?, ?, ?, ?, ? )";
+		"lead_source, lead_status, lead_rating ) "
+		"VALUES( ";
 
+	stringstream ss;
+	ss << sql;
+	ss << "'" << lead_id << "'" << ", ";
+	ss << "'" << company_name << "'" << ", ";
+	ss << "'" << contact_name << "'" << ", ";
+	ss << "'" << personal_title << "'" << ", ";
+	ss << "'" << first_name << "'" << ", ";
+	ss << "'" << last_name << "'" << ", ";
+	ss << "'" << phone << "'" << ", ";
+	ss << "'" << email << "'" << ", ";
+	ss << "'" << street_addr << "'" << ", ";
+	ss << "'" << city << "'" << ", ";
+	ss << "'" << state << "'" << ", ";
+	ss << "'" << post_code << "'" << ", ";
+	ss << "'" << country << "'" << ", ";
+	ss << "'" << bill_addr << "'" << ", ";
+	ss << "'" << ship_addr << "'" << ", ";
+	ss << "'" << lead_source << "'" << ", ";
+	ss << "'" << lead_status << "'" << ", ";
+	ss << "'" << lead_rating << "'" << ") ";
+
+	sql = ss.str();
 	LOG( "add_lead sqql:", sql);
 	command c(*conn, sql);
-	c.bind(1, company_name);
-	c.bind(2, contact_name);
-	c.bind(3, personal_title);
-	c.bind(4, first_name);
-	c.bind(5, last_name);
-	c.bind(6, phone);
-	c.bind(7, email);
-	c.bind(8, street_addr);
-	c.bind(9, city);
-	c.bind(10, state);
-	c.bind(11, post_code);
-	c.bind(12, country);
-	c.bind(13, bill_addr);
-	c.bind(14, ship_addr);
-	c.bind(15, lead_source);
-	c.bind(16, lead_status);
-	c.bind(17, lead_rating);
-	c.bind(18, lead_id);
 
 	c.emit();
 }
@@ -226,7 +227,7 @@ void lead_table::get_lead_instance(std::map<string, string> &lead){
 	" INNER JOIN lead_rating ON lead.lead_rating = lead_rating.rating "
 	" WHERE lead_id = ";
 
-		sql.append( lead_id );
+		sql.append("'").append( lead_id ).append("'");
 		query q(*conn, sql);
 		LOG("sql", sql);
 		auto res = q.emit_result();

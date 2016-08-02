@@ -1,7 +1,7 @@
 {% include web/header.html %}
 
 {% block meat %}
-<form action="addtransactionrequest" method="post">
+<form action="transaction" method="post">
 	  <fieldset>
 	    <legend>Order Information:</legend>
 	    Customer ID:<br>
@@ -14,7 +14,7 @@
 	    <input type="text" name="date" value=""><br><br>
 	    Order status:<br>
 	    <input type="text" name="order_status" value=""><br><br>	
-	    <input type="submit" value="Submit">
+	    <input type="submit" value="add">
 	  </fieldset>
 </form>
 {% endblock %}

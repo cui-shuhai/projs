@@ -4,7 +4,7 @@
 <field>
 	    <legend>Add {{ company }} contact </legend>
 
-<form action="/addcontact" method="post">
+<form action="/contact" method="post">
 <input type="hidden" id="category"  name="category" value="{{ category }}">
 <input type="hidden" id="source_id"  name="source_id" value="{{ source_id }}">
 <table>
@@ -40,7 +40,7 @@
 <td>Out of_billing:</td> <td> <input type="text" name="out_of_billing" value=""></td>
 </tr><tr>
 <td>Extra info:</td> <td> <input type="text" name="extra_info" value=""></td>
-<td>	    <input type="submit" value="   Submit  "></td>
+<td>	    <input type="submit" value="add"></td>
 </tr>
 </table>
 

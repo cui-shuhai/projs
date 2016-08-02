@@ -103,13 +103,13 @@ bool user_table::update_user(const string& loginName, const string &pass, string
 }
 
 void user_table::get_user_list( map<string, string> &m){
-	string sql = "SELECT first_name, last_name employee_id from employee INNER JOIN crm_user ON crm_user.employee_id = employee.employee_id";
+	string sql = "SELECT first_name, last_name,  employee.employee_id from employee INNER JOIN crm_user ON crm_user.employee_id = employee.employee_id";
 
 	query q(*conn, sql);
 	auto res = q.emit_result();
 
 	do{
-		m[res->get_string(0)] = res->get_string(1) + res->get_string(2);
+		m[res->get_string(2)] = res->get_string(0) + res->get_string(1);
 	} while(res->next_row());
 }
 void user_table::get_user_records( string source, string &result ){

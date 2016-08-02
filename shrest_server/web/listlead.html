@@ -9,16 +9,18 @@
 
 </table>
 <br><br>
-<a href="/addlead">
-<button id="add_lead"  style="float:right" type="button">Add Lead</button>
+<a href="/lead?action=add">
+<button id="add_lead"   type="button">Add Lead</button>
 </a>
 
 </fieldset>
 
 <script>
+
 function listLeads() {
+
   
-	$.getJSON("/listlead", { "directory": "lead_content"}, function(jsonData) {
+	$.getJSON("/lead", {"action":"list", "directory": "lead_content"}, function(jsonData) {
 
 		var bHeader = true;
 
@@ -51,7 +53,7 @@ function listLeads() {
 //			}
 
 			tr = $('<tr/>');
-                          tr.append("<td>" + "<a href=\"/editlead?from=lead&lead_id=" + value.lead_id +"\"" +">Go...</a>"  + "</td>");
+                          tr.append("<td>" + "<a href=\"/lead?action=edit?directory=lead&lead_id=" + value.lead_id +"\"" +">Go...</a>"  + "</td>");
                           tr.append("<td>" + value.company_name + "</td>");
                           tr.append("<td>" + value.contact_name + "</td>");
                           tr.append("<td>" + value.personal_title + "</td>");

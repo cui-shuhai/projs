@@ -6,5 +6,6 @@
 class AddLeadInterface : public RequestResponse{
 public:
 	AddLeadInterface(HttpServer::Response &rs, ShRequest rq);
-	void Process() override;
+	void ProcessGet() override;
+	void ProcessPost() override;
 }; 

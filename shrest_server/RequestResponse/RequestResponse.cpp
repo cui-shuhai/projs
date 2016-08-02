@@ -138,24 +138,16 @@ LOG(rq_->method, rq_->path);
 
 		//activities
 		if(true){
-			string activity_sql = "SELECT  first_name, last_name,  activity.activity_name, activity_type.description, "
-						"activity_status.description, activity_priority.description, note, when_created " 
-						" FROM activity INNER JOIN activity_type ON activity_type.activity_type = activity.activity_type "
-						"INNER JOIN activity_status ON activity.activity_status = activity_status.activity_status "
-						"INNER JOIN activity_priority ON activity_priority.activity_priority = activity.activity_priority "
-						"INNER JOIN employee ON employee.employee_id = activity.who_preside" 
-						"  WHERE activity.who_preside = ";
-			activity_sql.append(user_id).append(" ORDER BY activity.when_created");
+			string activity_sql = "SELECT  activity_name, activity_type, "
+						"activity_status, activity_priority, note, when_created " 
+						" FROM activity   WHERE who_preside = ";
+			activity_sql.append(user_id).append(" ORDER BY when_created");
 		
 			activity_table at;
 			auto at_query = at.BuildQuery(activity_sql);
 			auto res = at_query->emit_result();
 
-			string count_sql = "SELECT count(1) FROM activity INNER JOIN activity_type ON activity_type.activity_type = activity.activity_type "
-						"INNER JOIN activity_status ON activity.activity_status = activity_status.activity_status "
-						"INNER JOIN activity_priority ON activity_priority.activity_priority = activity.activity_priority "
-						"INNER JOIN employee ON employee.employee_id = activity.who_preside" 
-						"  WHERE activity.who_preside = ";
+			string count_sql = "SELECT count(1) FROM activity  WHERE who_preside = ";
 			count_sql.append(user_id);
 
 			auto count_query = at.BuildQuery(count_sql);
@@ -251,5 +243,13 @@ void  RequestResponse::GetUser(string &uid, string& name){
 			name = ct.get_user_name();
 			uid = ct.get_user_id();
 		}
+	}
+}
+void RequestResponse::Process(){
+	if(boost::iequals(rq_->method, "get")){
+		ProcessGet();
+	}
+	else if(boost::iequals(rq_->method, "post")){
+		ProcessPost();
 	}
 }

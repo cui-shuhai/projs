@@ -1,7 +1,7 @@
 {% include web/header.html %}
 
 {% block meat %}
-<form action="/editactivityrequest" method="post">
+<form action="/activity" method="post">
 <input type="hidden" name="activity_id" value="{{ activity_id }}">
 	  <fieldset>
 	    <legend>Editing activity:</legend>
@@ -40,7 +40,7 @@
 	    <td> Note:		 </td>
 </table>
 	    <TEXTAREA NAME="note" COLS=50 ROWS=6></TEXTAREA><br><br>	
-	    <input type="submit" value="Submit">
+	    <button type="submit" name="submit" id="submit" value="save"> Save </button>
 	  </fieldset>
 </form>
 {% endblock %}

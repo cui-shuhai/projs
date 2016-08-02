@@ -143,7 +143,7 @@ CREATE TABLE customer(
 
 CREATE TABLE lead_status(
 	'status_name' char(20) PRIMARY KEY,
-	'description' varchar(20),
+	'description' varchar(20)
 );
 
 INSERT INTO 'lead_status'(status_name )
@@ -151,7 +151,7 @@ INSERT INTO 'lead_status'(status_name )
 
 CREATE TABLE lead_source(
 	'source_name' char(20) PRIMARY KEY,
-	'description' varchar(20),
+	'description' varchar(20)
 );
 
 INSERT INTO 'lead_source'( source_name )
@@ -169,11 +169,14 @@ INSERT INTO 'lead_source'( source_name )
 
 CREATE TABLE lead_rating(
 	'rating_name' char(20) PRIMARY KEY,
-	'description' varchar(20),
+	'description' varchar(20)
 );
 
-INSERT INTO 'lead_rating'( rating )
-	VALUES( "high"),("medium");
+
+INSERT INTO 'lead_rating'( rating_name )
+        VALUES( "high"),("medium");
+
+
 
 CREATE TABLE lead(
 	lead_id  INTEGER PRIMARY KEY,
@@ -246,48 +249,48 @@ CREATE TABLE 'contact'(
 #activities 
 /*metting, to-do, Phone call incoming*/
 CREATE TABLE activity_type(
-	'activity_type' INT PRIMARY KEY,
+	'activity_type' char(20) PRIMARY KEY,
 	'description' nvarchar(50)
 );
-INSERT INTO 'activity_type'(activity_type, description) VAlUES
-	(1, "Email Incoming"),
-	(2, "Email Incoming & Outgoing"),
-	(3, "Email Outgoing"),
-	(4, "Meeting"),	
-	(5, "Phone Callin"),
-	(6, "{Phone Callout"),
-	(7, "Other");
+INSERT INTO 'activity_type'(activity_type ) VAlUES
+	( "Email Incoming"),
+	( "Email Incoming & Outgoing"),
+	( "Email Outgoing"),
+	( "Meeting"),	
+	( "Phone Callin"),
+	( "Phone Callout"),
+	( "Other");
 
 CREATE TABLE activity_status(
 	'activity_status' char(20) PRIMARY KEY,
 	'description' nvarchar(50)
 );
 
-INSERT INTO 'activity_status'(activity_status, description) VAlUES
-	(1, "Not Started"),
-	(2, "Cancelled"),
-	(3, "Completed"),
-	(4, "In Progress"),	
-	(5, "Deferred"),
-	(6, "Waiting on someone else");
+INSERT INTO 'activity_status'(activity_status ) VAlUES
+	("Not Started"),
+	("Cancelled"),
+	("Completed"),
+	("In Progress"),	
+	("Deferred"),
+	("Waiting on someone else");
 
 CREATE TABLE 'activity_priority'(
 	'activity_priority' char(20) PRIMARY KEY,
 	'description' varchar(50)
 );
 
-INSERT INTO 'activity_priority'(activity_priority, description) VAlUES
-	(1, "High"),
-	(2, "Medium"),
-	(3, "Low");
+INSERT INTO 'activity_priority'(activity_priority ) VAlUES
+	("High"),
+	("Medium"),
+	("Low");
 
 CREATE TABLE activity(
-	'activity_id'  INTEGER  PRIMARY KEY,
+	'activity_id'  char(36)  PRIMARY KEY,
 	'activity_name' varchar(30),
-	'activity_type'  INT, 
-	'activity_status' INT, /**/
-	'activity_priority' INT,	
-	'who_preside' INT,
+	'activity_type'  char(20), 
+	'activity_status' char(20), /**/
+	'activity_priority' char(20),	
+	'who_preside' char(20),
 	'when_created' Date NOT NULL,
 	'note'	varchar(100),
 	FOREIGN KEY (activity_type)REFERENCES activity_type(activity_type),
@@ -300,18 +303,17 @@ CREATE TABLE activity(
 
 /*lead management status*/
 CREATE TABLE contact_status(
-	'status' int PRIMARY KEY,
+	'status' char(20) PRIMARY KEY,
 	'description' varchar(20),
-	'detail'  varchar(100)
 };
 
-INSERT INTO 'contact_status'(status, description, detail)
-	 VALUES(1, "Not Attempted", "you haven’t tried to reach the lead"),
-	 (2, "Attempted", "you have tried (person-to-person) to reach the lead"),
-	 (3, "Contacted", "you have had a person-to-person dialog with the lead"),
-	 (4, "New Opportunity", "new opportunity identified (convert lead)"),
-	 (5, "Additional Contact", "new contact at existing opportunity (convert lead)"),
-	 (6, "Disqualified", "never going to be a prospect for your product or service because this lead is the incorrect industry, company, contact or data");
+INSERT INTO 'contact_status'(status, description )
+	 VALUES( "Not Attempted", "you haven’t tried to reach the lead"),
+	 ( "Attempted", "you have tried (person-to-person) to reach the lead"),
+	 ( "Contacted", "you have had a person-to-person dialog with the lead"),
+	 ( "New Opportunity", "new opportunity identified (convert lead)"),
+	 ( "Additional Contact", "new contact at existing opportunity (convert lead)"),
+	 ( "Disqualified", "never going to be a prospect for your product or service because this lead is the incorrect industry, company, contact or data");
 
 CREATE TABLE task( 
 	'task_id' INTEGER PRIMARY KEY,
@@ -319,14 +321,14 @@ CREATE TABLE task(
 	'due_date' Date NOT NULL,
 	'description' varchar(200), 
 	'status' varchar(20),
-	'assignee' int, 
-	'assigner' int, 
-	'creator' int,
+	'assignee' char(36), 
+	'assigner' char(36), 
+	'creator' char(36),
 	CHECK( description IN ("Not Assigned", "Assigned", "Finished", "Revoked"))
 );
 
 CREATE TABLE task_status( 
-	'status_id' int PRIMARY KEY,
+	'status_id' char(20) PRIMARY KEY,
 	'description' varchar(20)
 );
 
@@ -358,31 +360,30 @@ CREATE TABLE 'cookie'(
 );
 
 CREATE TABLE 'opportunity_pipeline'(
-	'pipeline_id' INT PRIMARY KEY,
-	'name'  varchar(20),
+	'pipeline_name' char(20) PRIMARY KEY,
 	'description' varchar(100));
 
-INSERT INTO 'opportunity_pipeline'(pipeline_id, name, description) VALUES
-(1, "Prospecting", "The first step in locating new opportunities, prospecting means \“testing the waters\” with a potential customer and measuring a level of interest."),
-(2, "Qualification", " This involves evaluating the lead or customer based on a variety of criteria, including how interested they are, how likely they are to purchase, and how long the process might take."),
-(3, "Needs Analysis", " Analyzing needs means determining what the need is in a target company and deciding whether or not your company can fulfill those needs using your product or service."),
-(4, "Value Proposition", " This step involves understanding the relationship between the value of your product or service and the value it represents to a potential or current customer."),
-(5, "Identify Decision Makers", " Identifying decision makers means determining who at a company is the person with the power to make purchasing decisions, and beginning to develop a relationship with them."),
-(6, "Perception Analysis", " This stage involves determining how a customer perceives the services or products you offer; what they expect from your company and the product or service you offer."),
-(7, "Proposal / Price Quote", " This happens later on in the pipeline - quoting a price and creating a proposal happens once the lead is interested enough to pursue this potential, but may want to confirm pricing and compare quotes with other companies."),
-(8, "Negotiation / Review", " This stage happens towards the end of a pipeline; by the negotiation and review stage you should be hammering out the final details of the deal."),
-(9, "Closed" , "either Closed Won or Closed Lost");
+INSERT INTO 'opportunity_pipeline'(pipeline_name,  description) VALUES
+( "Prospecting", "The first step in locating new opportunities, prospecting means \“testing the waters\” with a potential customer and measuring a level of interest."),
+( "Qualification", " This involves evaluating the lead or customer based on a variety of criteria, including how interested they are, how likely they are to purchase, and how long the process might take."),
+( "Needs Analysis", " Analyzing needs means determining what the need is in a target company and deciding whether or not your company can fulfill those needs using your product or service."),
+( "Value Proposition", " This step involves understanding the relationship between the value of your product or service and the value it represents to a potential or current customer."),
+( "Identify Decision Makers", " Identifying decision makers means determining who at a company is the person with the power to make purchasing decisions, and beginning to develop a relationship with them."),
+( "Perception Analysis", " This stage involves determining how a customer perceives the services or products you offer; what they expect from your company and the product or service you offer."),
+( "Proposal / Price Quote", " This happens later on in the pipeline - quoting a price and creating a proposal happens once the lead is interested enough to pursue this potential, but may want to confirm pricing and compare quotes with other companies."),
+( "Negotiation / Review", " This stage happens towards the end of a pipeline; by the negotiation and review stage you should be hammering out the final details of the deal."),
+( "Closed" , "either Closed Won or Closed Lost");
 
 CREATE TABLE 'opportunity'(
-	'opportunity' INTEGER PRIMARY KEY,
+	'opportunity' char(36) PRIMARY KEY,
 	'opportunity_name' varchar(50),
-	'assign_to'  INT,
-	'contact_id' INT,
-	'creator_id' INT,
+	'assign_to'  char(36),
+	'contact_id' char(36),
+	'creator_id' char(36),
 	'close_date' DATE,
-	'pipeline' int,
+	'pipeline' char(20),
 	'amount' decimal(8,2),
-	'probability' INT,
+	'probability' char(20),
 	FOREIGN KEY(assign_to) REFERENCES employee(employee_id),
 	FOREIGN KEY(contact_id) REFERENCES contact(contact_id),
 	FOREIGN KEY(creator_id) REFERENCES employee(employee_id),
@@ -391,26 +392,25 @@ CREATE TABLE 'opportunity'(
 
 
 CREATE TABLE 'campaign_status'(
-	'status_id' INTEGER,
-	'status_name' varchar(20),
+	'status_name' varchar(20) PRIMARY KEY,
 	'description'  varchar(50)
 );
 
 INSERT INTO 'campaign_status'(status_id, status_name, description) VALUES
-	(0, "Proposed", "Active"),
-	(1, "Ready", "Active"),
-	(2, "Launched", "Active"),
-	(3, "Completed", "Active"),
-	(4, "Canceled", "Active"),
-	(5, "Suspended", "Active"),
-	(6, "Inactive", "Inactive");
+	( "Proposed", "Active"),
+	( "Ready", "Active"),
+	( "Launched", "Active"),
+	( "Completed", "Active"),
+	( "Canceled", "Active"),
+	( "Suspended", "Active"),
+	( "Inactive", "Inactive");
 	
 CREATE TABLE 'campaign'(
-	'campaign_id' INTEGER PRIMARY KEY,
+	'campaign_id' char(36) PRIMARY KEY,
 	'campaign_name' varchar(50),
-	'assign_to'  INT,
-	'status' int,
-	'creator_id' INT,
+	'assign_to'  char(36),
+	'status' char(20),
+	'creator_id' char(36),
 	'start_date' DATE,
 	'close_date' DATE,
 	'description' varchar(100),
@@ -420,55 +420,44 @@ CREATE TABLE 'campaign'(
 	
 
 CREATE TABLE 'case_status'(
-	'status' INT PRIMARY KEY,
+	'status' char(20) PRIMARY KEY,
 	'description' varchar(20)
 );
 
 CREATE TABLE 'case_priority'(
-	'priority' INT PRIMARY KEY,
+	'priority' char(20) PRIMARY KEY,
 	'description' varchar(20)
 );
 
 CREATE TABLE 'case_type'(
-	'type' INT PRIMARY KEY,
+	'type' char(20) PRIMARY KEY,
 	'description' varchar(20)
 );
 
 CREATE TABLE 'case_reason'(
-	'reason' INT PRIMARY KEY,
+	'reason' char(20) PRIMARY KEY,
 	'description' varchar(20)
 );
 
 CREATE TABLE 'case_tbl'(
-	'case_id' INTEGER PRIMARY KEY,
-	'assign_to' INT,
-	'contact' INT,
+	'case_id' char(36) PRIMARY KEY,
+	'assign_to' char(36),
+	'contact' char(36),
 	'subject' varchar(100),
-	'priority' int,
-	'status' int,
-	'type' int,
-	'reason' int,
+	'priority' char(20),
+	'status' char(20),
+	'type' char(20),
+	'reason' char(20),
 	'last_activity' DATE,
 	'next_activity' DATE,
 	FOREIGN KEY(assign_to) REFERENCES employee(employee_id),
 	FOREIGN KEY(contact) REFERENCES contact(contact_id)
 );
-/*
-Case #: This number is automatically generated in an ascending order each time you create a case in Method. You can search and order the grid using these numbers.
-Created date: The date a case was created.
-Assigned to/Origin/Status: This three-part grid header will identify which Method user a case was assigned to, where the case originated, and the status of the case (see New case for more details on all of this).
-Contact/Name/Company: This section will list the contact, name, and company associated with this case based in the information that was provided in the case information.
-Subject: This will detail the subject line that was filled in when the case was created.
-Priority: Priorities, much like in activities, can be set to three levels out-of-the-box in Method: low, medium, and high.
-Internal comments: This will display any pertinent comments you have included regarding this case.
-Last activity: This will identify the date the last activity was due to for this case.
-Next activity: This will identify the date the next activity is due for this case.
-*/
 
 CREATE TABLE 'vendor'(
-'vendor_id' INTEGER PRIMARY KEY,
+'vendor_id' char(36) PRIMARY KEY,
 'account_num' varchar(20),
-'contact' int,
+'contact' char(36),
 'company_name' varchar(20),
 'credit_rating' char(20),
 'vendor_status' char(20), 
@@ -483,12 +472,12 @@ rating_name char(20) PRIMARY KEY,
 description varchar(20)
 );
 
-INSERT INTO 'vendor_rate'(rate_name, description) VALUES
-(1, "Superior"),
-(2, "Excellent"),
-(3, "Above average"),
-(4, "Average"),
-(5, "Below average")
+INSERT INTO 'vendor_rate'(rate_name ) VALUES
+( "Superior"),
+( "Excellent"),
+( "Above average"),
+( "Average"),
+( "Below average")
 
 CREATE TABLE 'vendor_status'(
 status_name char(20) PRIMARY KEY,

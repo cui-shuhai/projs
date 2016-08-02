@@ -6,5 +6,6 @@
 class AddEmployeeInterface : public RequestResponse{
 public:
 	AddEmployeeInterface(HttpServer::Response &rs, ShRequest rq);
-	void Process() override;
+	void ProcessGet() override;
+	void ProcessPost() override;
 }; 

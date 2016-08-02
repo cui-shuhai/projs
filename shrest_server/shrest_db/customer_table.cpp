@@ -174,7 +174,7 @@ void customer_table::get_customer_instance(std::map<string, string> &customer){
 		string sql = "SELECT customer_id, company_name, first_name, last_name, "
 				" phone, email, street_addr, city, state, country, bill_addr, ship_addr, personal_title , post_code   FROM customer ";
 
-		sql.append(" WHERE customer_id = ").append(customer_id);
+		sql.append(" WHERE customer_id = ").append("'").append(customer_id).append("'");
 
 		query q(*conn, sql);
 		//LOG("sql", sql);

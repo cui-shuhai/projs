@@ -4,6 +4,9 @@
 
 #include "server_http.hpp"
 
+/*
+Patent: customer auto identification and relation co-manage 
+*/
 using namespace std;
 
 class SimpleWeb::Server<SimpleWeb::HTTP>;
@@ -21,12 +24,14 @@ public:
 	string GetUserId();
 	void GetUser(string &uid, string& name);
 
-	virtual void Process() = 0;
+	virtual void Process();;
+	virtual void ProcessGet() {};
+	virtual void ProcessPost() {};
+	virtual void ProcessPut() {};
+	virtual void ProcessDelete() {};
 
 
 protected:
 	HttpServer::Response &rs_;
-	//rq_: path contains the whole path information. like /customers/john
-	//XXX we can hook  ^/customers$ to function to get all customers $/customers/.\+/$ to get specific customers
 	ShRequest rq_;
 };

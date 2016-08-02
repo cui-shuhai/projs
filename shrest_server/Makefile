@@ -5,9 +5,6 @@ SOURCE=server_instance.cpp \
 	RequestResponse/AddCustomerInterface.cpp \
 	RequestResponse/AddVendorInterface.cpp \
 	RequestResponse/AddLeadInterface.cpp \
-	RequestResponse/AddLeadRequest.cpp \
-	RequestResponse/EditLeadInterface.cpp \
-	RequestResponse/EditLeadRequest.cpp \
 	RequestResponse/EditCustomerInterface.cpp \
 	RequestResponse/EditCustomerRequest.cpp \
 	RequestResponse/AddContactInterface.cpp \
@@ -22,19 +19,14 @@ SOURCE=server_instance.cpp \
 	RequestResponse/SearchCustomerInterface.cpp \
 	RequestResponse/SearchCustomerRequest.cpp \
 	RequestResponse/AddActivityInterface.cpp \
-	RequestResponse/AddActivityRequest.cpp \
-	RequestResponse/EditActivityInterface.cpp \
-	RequestResponse/EditActivityRequest.cpp \
 	RequestResponse/AddTransactionInterface.cpp \
 	RequestResponse/AddTransactionRequest.cpp \
 	RequestResponse/AddTaskInterface.cpp \
 	RequestResponse/AddTaskRequest.cpp \
 	RequestResponse/ListTaskRequest.cpp \
 	RequestResponse/ListContactRequest.cpp \
-	RequestResponse/ListLeadRequest.cpp \
 	RequestResponse/ListCampaignRequest.cpp \
 	RequestResponse/ListCaseRequest.cpp \
-	RequestResponse/ListActivityRequest.cpp \
 	RequestResponse/ListOpportunityRequest.cpp \
 	RequestResponse/AddUserInterface.cpp \
 	RequestResponse/AddUserRequest.cpp \
@@ -73,7 +65,15 @@ SOURCE=server_instance.cpp \
 	shrest_db/case_reason.cpp \
 	shrest_db/opportunity_table.cpp \
 	shrest_db/SqlAccessor.cpp \
-	shrest_db/SqlAccessorFactory.cpp
+	shrest_db/SqlAccessorFactory.cpp \
+#	RequestResponse/AddActivityRequest.cpp \
+#	RequestResponse/ListActivityRequest.cpp 
+#	RequestResponse/EditActivityInterface.cpp \
+	#RequestResponse/EditActivityRequest.cpp \
+	RequestResponse/AddLeadRequest.cpp \
+	RequestResponse/EditLeadInterface.cpp \
+	RequestResponse/EditLeadRequest.cpp \
+	RequestResponse/ListLeadRequest.cpp \
 
 MYPROGRAM=crm_server
 

@@ -1,6 +1,6 @@
 {% include web/header.html %}
 
-<form action="addleadrequest" method="post">
+<form action="lead" method="post">
 	  <fieldset>
 	    <legend>Lead Information:</legend>
 <table>
@@ -40,7 +40,7 @@
 	Lead rating : </td> <td> 
     <select name ="lead_rating" id="lead_rating_id" style="width: 180px;">
     </select>
-</td><td> <input type="submit" value="Submit">
+</td><td> <input type="submit" name="submit" id="submit" value="add">
 </td> </tr>
 </table>
 	  </fieldset>
@@ -49,10 +49,10 @@
 <script>
 function fillLeadSource() {
   
-	$.getJSON("/listlead", { "directory": "lead_source"}, function(jsonData) {
+	$.getJSON("/lead", {"action":"list",  "directory": "lead_source"}, function(jsonData) {
 		var sourceValues = $( "#lead_source_id" );
 		$.each(jsonData.recordset,function(key, value) {
-		sourceValues.append('<option value=' + value.key + '>' + value.value + '</option>');
+		sourceValues.append('<option value=' + key + '>' + value + '</option>');
 		});
 	})
 	//.error(function() { alert("json error"); });
@@ -60,10 +60,10 @@ function fillLeadSource() {
 
 function fillLeadStatus() {
   
-	$.getJSON("/listlead", { "directory": "lead_status" }, function(jsonData) {
+	$.getJSON("/lead", { "action":"list", "directory": "lead_status" }, function(jsonData) {
 	var statusValues = $( "#lead_status_id" );
 	$.each(jsonData.recordset,function(key, value) {
-	statusValues.append('<option value=' + value.key + '>' + value.value + '</option>');
+	statusValues.append('<option value=' + key + '>' + value + '</option>');
 	});
 	})
 	//.error(function() { alert("json error"); });
@@ -71,10 +71,10 @@ function fillLeadStatus() {
 
 function fillLeadRating() {
   
-	$.getJSON("/listlead", { "directory": "lead_rating" }, function(jsonData) {
+	$.getJSON("/lead", { "action":"list", "directory": "lead_rating" }, function(jsonData) {
 	var ratingValues = $( "#lead_rating_id" );
 	$.each(jsonData.recordset,function(key, value) {
-	ratingValues.append('<option value=' + value.key + '>' + value.value + '</option>');
+	ratingValues.append('<option value=' + key + '>' + value + '</option>');
 	});
 	})
 //	.error(function() { alert("json error"); });

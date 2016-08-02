@@ -25,8 +25,14 @@ AddTransactionInterface::AddTransactionInterface(HttpServer::Response &rs, ShReq
 }
 /*parse customer information and put into database*/
 
-void AddTransactionInterface::Process(){
+void AddTransactionInterface::ProcessGet(){
 	LOG(rq_->method, rq_->path);
+
+	std::map<string, string> m;
+	string  params= rq_->get_params;
+	utils::parse_get_params(params, m);
+
+	if(boost::iequals(m["action"], "add")){
 
 	try {		
 		stringstream cs;
@@ -46,4 +52,14 @@ void AddTransactionInterface::Process(){
 	}
 	catch(exception& e) {
 		rs_ << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n" << e.what();
-	}}
+	}
+		return;
+	}
+	if(boost::iequals(m["action"], "edit")){
+	}
+	if(boost::iequals(m["action"], "list")){
+	}
+}
+
+void AddTransactionInterface::ProcessPost(){
+}

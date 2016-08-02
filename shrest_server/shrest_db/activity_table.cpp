@@ -20,7 +20,7 @@ activity_table::activity_table():SqlAccessor()
 {
 }
 
-activity_table::activity_table( int activity_id_, string activity_name_, int activity_type_, int activity_status_, int activity_priority_, int who_preside_, string when_created_, string note_):
+activity_table::activity_table( string activity_id_, string activity_name_, string activity_type_, string activity_status_, string activity_priority_, string who_preside_, string when_created_, string note_):
 	SqlAccessor(),
 	activity_id{ activity_id_ },
 	activity_name{ note_ },
@@ -40,8 +40,8 @@ void activity_table::add_activity_table(){
 
 	string sql = "INSERT INTO 'activity'( activity_name, "
 		"activity_type,  activity_status,  activity_priority,  "
-		"who_preside,  when_created,  note) "
-		" VALUES(?, ?, ?,  ?, ?, ?, ?)";
+		"who_preside,  when_created,  note, activity_id) "
+		" VALUES(?, ?, ?,  ?, ?, ?, ?, ?)";
 
 
 	command c(*conn, sql);
@@ -53,20 +53,18 @@ void activity_table::add_activity_table(){
 	c.bind(5, who_preside);
 	c.bind(6, when_created);
 	c.bind(7, note);
+	c.bind(8, activity_id);
 
 	c.emit();
-	auto id_sql = "SELECT last_insert_rowid()";
-	query id_query(*conn, id_sql);
-	auto id_res = id_query.emit_result();
-	activity_id = id_res->get_int(0);
 }
 
 void activity_table::get_activity_records( string source, string &result ){
 
 		string count_sql = "SELECT count(1) "
-			" FROM activity INNER JOIN activity_type ON activity_type.activity_type = activity.activity_type INNER JOIN "
-			" activity_status  ON activity_status.activity_status = activity.activity_status INNER JOIN "
-			" activity_priority ON activity_priority.activity_priority = activity.activity_priority ";
+			" FROM activity ";
+
+		if(!source.empty())
+			count_sql.append("WHERE activity_type = ").append(source);
 
 		query count_query(*conn, count_sql);
 		auto count_res = count_query.emit_result();
@@ -74,15 +72,14 @@ void activity_table::get_activity_records( string source, string &result ){
 			return;
 		
 
-		string sql = "SELECT activity_id, activity_name, activity_type.description, activity_status.description,"
-			" activity_priority.description, who_preside, when_created, note "
-			" FROM activity INNER JOIN activity_type ON activity_type.activity_type = activity.activity_type INNER JOIN "
-			" activity_status  ON activity_status.activity_status = activity.activity_status INNER JOIN "
-			" activity_priority ON activity_priority.activity_priority = activity.activity_priority ";
+		string sql = "SELECT activity_id, activity_name, activity_type, activity_status, "
+			" activity_priority, who_preside, when_created, note "
+			" FROM activity ";
 
 			
 		if(!source.empty())
-		sql.append("WHERE activity_type.description = ").append(source);
+			sql.append("WHERE activity_type = ").append(source);
+
 		query q(*conn, sql);
 		LOG("sql", sql);
 		auto res = q.emit_result();
@@ -119,12 +116,12 @@ void activity_table::get_activity_records( string source, string &result ){
 void activity_table::update_table(){
 
 	stringstream ss;
-	ss << "activity_id = " << "\"" << activity_id << "\"" << ",";
-	ss << "activity_name = " << "\"" << activity_name << "\"" << ",";
-	ss << "activity_type = " << "\"" << activity_type << "\"" << ",";
-	ss << "activity_status = " << "\"" << activity_status << "\"" << ",";
-	ss << "activity_priority = " << "\"" << activity_priority << "\"" << ",";
-	ss << " WHERE activity_id = " << 	activity_id ;
+	ss << "UPDATE activity SET ";
+	ss << "activity_name = " << "'" << activity_name << "'"  << ",";
+	ss << "activity_type = " << "'" << activity_type << "'" <<",";
+	ss << "activity_status = " << "'" << activity_status << "'" << ",";
+	ss << "activity_priority = " << "'" << activity_priority  << "'"  ;
+	ss << " WHERE activity_id = " << "'" << activity_id << "'";
 
 
 	auto sql = ss.str();
@@ -134,18 +131,16 @@ void activity_table::update_table(){
 
 void activity_table::get_activity_instance(std::map<string, string> &activity){
 
-		string sql = "SELECT activity_id, activity_name, activity_type.description, activity_status.description,"
-			" activity_priority.description, who_preside, when_created, note "
-			" FROM activity INNER JOIN activity_type ON activity_type.activity_type = activity.activity_type INNER JOIN "
-			" activity_status  ON activity_status.activity_status = activity.activity_status INNER JOIN "
-			" activity_priority ON activity_priority.activity_priority = activity.activity_priority  WHERE activity_id = ";
+		string sql = "SELECT activity_id, activity_name, activity_type, activity_status, "
+			" activity_priority, who_preside, when_created, note "
+			" FROM activity WHERE activity_id = ";
 
-		sql.append( to_string( activity_id ));
+		sql.append("'").append( activity_id ).append("'");
 		query q(*conn, sql);
 		LOG("sql", sql);
 		auto res = q.emit_result();
 		;
-		activity["activity_id"] = to_string( res->get_int(0) );
+		activity["activity_id"] =  res->get_string(0);
 		activity["activity_name"] = res->get_string(1) ;
 		activity["activity_type"] = res->get_string(2) ;
 		activity["activity_status"] = res->get_string(3) ;

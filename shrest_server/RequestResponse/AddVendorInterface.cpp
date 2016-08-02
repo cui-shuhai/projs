@@ -28,8 +28,14 @@ AddVendorInterface::AddVendorInterface(HttpServer::Response &rs, ShRequest rq): 
 }
 
 /*parse customer information and put into database*/
-void AddVendorInterface::Process(){
+void AddVendorInterface::ProcessGet(){
 	LOG(rq_->method, rq_->path);
+
+	std::map<string, string> m;
+	string  params= rq_->get_params;
+	utils::parse_get_params(params, m);
+//load adding interface
+	if(boost::iequals(m["action"], "add")){
 	
 	try {		
 		stringstream cs;
@@ -69,4 +75,12 @@ void AddVendorInterface::Process(){
 	catch(exception& e) {
 		rs_ << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n" << e.what();
 	}
+	}
+	if(boost::iequals(m["action"], "edit")){
+	}
+	if(boost::iequals(m["action"], "list")){
+	}
+}
+
+void AddVendorInterface::ProcessPost(){
 }

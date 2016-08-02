@@ -1,0 +1,77 @@
+{% include web/header.html %}
+
+{% block meat %}
+
+<form action="/contact" method="post">
+<input type="hidden" id="category"  name="category" value="{{ category }}">
+<input type="hidden" id="source_id"  name="source_id" value="{{ source_id }}">
+<table>
+<tr>
+<td>Status:</td> <td> <input type="text" name="status" value="{{ value= }}"></td>
+<td>FirstName:</td> <td> <input type="text" name="first_name" value="{{ value= }}"></td>
+</tr><tr>
+<td>LastName:</td> <td> <input type="text" name="last_name" value="{{ value= }}"></td>
+<td>Address:</td> <td> <input type="text" name="address" value="{{ value= }}"></td>
+</tr><tr>
+<td>Primary phone:</td> <td> <input type="text" name="primary_phone" value="{{ value= }}"></td>
+<td>Alt phone:</td> <td> <input type="text" name="alt_phone" value="{{ value= }}"></td>
+</tr><tr>
+<td>Mobile phone:</td> <td> <input type="text" name="mobile_phone" value="{{ value= }}"></td>
+<td>Fax:</td> <td> <input type="text" name="fax" value="{{ value= }}"></td>
+</tr><tr>
+<td>Email:</td> <td> <input type="text" name="email" value="{{ value= }}"></td>
+<td>Twitter:</td> <td> <input type="text" name="twitter" value="{{ value= }}"></td>
+</tr><tr>
+<td>Linkedin:</td> <td> <input type="text" name="linkedin" value="{{ value= }}"></td>
+<td>Facebook:</td> <td> <input type="text" name="facebook" value="{{ value= }}"></td>
+</tr><tr>
+<td>Job title:</td> <td> <input type="text" name="job_title" value="{{ value= }}"></td>
+<td>Company id:</td> <td> <input type="text" name="company_id" value="{{ value= }}"></td>
+</tr><tr>
+<td>When met:</td> <td> <input type="text" name="when_met" value="{{ value= }}"></td>
+<td>Where met:</td> <td> <input type="text" name="where_met" value="{{ value= }}"></td>
+</tr><tr>
+<td>Time zone:</td> <td> <input type="text" name="time_zone" value="{{ value= }}"></td>
+<td>Main contact:</td> <td> <input type="text" name="main_contact" value="{{ value= }}"></td>
+</tr><tr>
+<td>Out of_marketing:</td> <td> <input type="text" name="out_of_marketing" value="{{ value= }}"></td>
+<td>Out of_billing:</td> <td> <input type="text" name="out_of_billing" value="{{ value= }}"></td>
+</tr><tr>
+<td>Extra info:</td> <td> <input type="text" name="extra_info" value="{{ value= }}"></td>
+<td>	    <input type="submit" value="save"></td>
+</tr>
+</table>
+
+	  </fieldset>
+{% endblock %}
+</form>
+ 
+<script>
+
+function addcontact(){
+
+	var id  = $("#lead_id").val();
+	var cp = $("input[name=company_name]").val();
+	var url="/addcontact?directory=edit_lead&lead_id=";
+	url = url + id + '&' + "company=" + cp;
+	window.open(url, "myWindow", "width=500,height=200");
+}
+//function fill_customer() {
+//  
+//	$.getJSON("/listlead", { "directory": "add_customer" }, function(jsonData) {
+//	var leadValues = $( "#origin_id" );
+//	$.each(jsonData.recordset,function(key, value) {
+//	leadValues.append('<option value=' + value.key + '>' + value.value + '</option>');
+//	});
+//	})
+//	.error(function() { alert("error"); });
+//}
+//
+//$( document ).ready( function() {
+//	fill_customer();
+//	});
+ 
+//$( "#origin_id" ).change( fill_customer );
+</script>
+
+{% include web/footer.html %}

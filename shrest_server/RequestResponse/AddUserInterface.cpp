@@ -16,6 +16,7 @@
 #include "NLTemplate/NLTemplate.h"
 
 #include "employee_table.h"
+#include "user_table.h"
 #include "employee_profile.h"
 #include "employee_role.h"
 #include "AddUserInterface.h"
@@ -30,8 +31,14 @@ AddUserInterface::AddUserInterface(HttpServer::Response &rs, ShRequest rq): Requ
 }
 
 /*parse customer information and put into database*/
-void AddUserInterface::Process(){
+void AddUserInterface::ProcessGet(){
 	LOG(rq_->method, rq_->path);
+
+	std::map<string, string> m;
+	string  params= rq_->get_params;
+	utils::parse_get_params(params, m);
+//load adding interface
+	if(boost::iequals(m["action"], "add")){
 	
 	try {		
 		stringstream cs;
@@ -101,5 +108,104 @@ void AddUserInterface::Process(){
 	}
 	catch(exception& e) {
 		rs_ << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n" << e.what();
+	}
+		return;
+
+	}
+	if(boost::iequals(m["action"], "edit")){
+	}
+	if(boost::iequals(m["action"], "list")){
+
+	try {
+		
+		std::map<string, string> m;
+		stringstream cs;
+		string  params= rq_->get_params;
+		utils::parse_get_params(params, m);
+
+		string jstr;
+		if(m.size() == 0){ //list user
+			LoaderFile loader; 
+			Template t( loader );
+			t.load( "web/listuser.html" );
+			t.render( cs ); 
+		}
+		else{ //for adding user
+			string result;
+			user_table ut;
+
+			string directory = m["directory"];
+			std::map<int, string> resultset;
+
+			if(directory.compare("user_content") == 0){
+				ut.get_user_records("", jstr);
+			}
+
+			utils::build_raw_response( jstr);
+			rs_ << jstr;
+			return;
+		}
+		
+		cs.seekp(0, ios::end);
+		rs_ <<  cs.rdbuf();
+		rs_.flush();
+		
+	}
+	catch(exception& e) {
+		rs_ << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n" << e.what();
+	}
+	}
+}
+
+void AddUserInterface::ProcessPost(){
+	LOG(rq_->method, rq_->path);
+
+	auto content=rq_->content.string();
+	std::map<std::string, std::string> m;
+	utils::parse_kye_value(content, m);
+
+	if(boost::iequals(m["submit"], "add")){
+
+	try {
+		auto content=rq_->content.string();
+		std::map<std::string, std::string> m;
+		utils::parse_kye_value(content, m);
+
+
+		LoaderFile loader; // Let's use the default loader that loads files from disk.
+
+		Template t( loader );
+
+		user_table u(m["login_name"], m["pass_word"], m["new_user"] , m["role_name"], m["profile_name"], utils::get_date(), GetUserId());
+
+		if(!u.check_user_exist())
+		{
+			u.add_user_table();
+
+			t.load( "web/adduserresponse.html" );
+		}
+		else
+		{
+			t.load( "web/adduserexistwarning.html" );
+		}
+
+		t.block("meat").repeat(1);
+		t.block("meat")[0].set("login_name",m["login_name"]);
+
+
+		stringstream cs;
+		t.render( cs ); // Render the template with the variables we've set above
+		
+		cs.seekp(0, ios::end);
+		rs_ <<  cs.rdbuf();
+		rs_.flush();
+		
+	}
+	catch(exception& e) {
+		rs_ << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n" << e.what();
+	}
+		return;
+	}
+	if(boost::iequals(m["submit"], "save")){
 	}
 }

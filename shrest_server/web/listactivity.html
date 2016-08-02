@@ -18,7 +18,7 @@
 <script>
 function listActivities() {
   
-	$.getJSON("/listactivity", { "directory": "activity_content"}, function(jsonData) {
+	$.getJSON("/activity", { "action": "list", "directory":"activity_content" }, function(jsonData) {
 
 		var sourceTable= $( "#activity_table" );
 		tr = $('<tr/>');
@@ -34,7 +34,7 @@ function listActivities() {
 
 		$.each(jsonData.activity ,function(key, value) {
 			tr = $('<tr/>');
-			tr.append("<td>" + "<a href=\"/editactivity?directory=activity&activity_id=" + value.activity_id + "\"" +">Go...</a>"  + "</td>");
+			tr.append("<td>" + "<a href=\"/activity?action=edit&activity_id=" + value.activity_id + "\"" +">Go...</a>"  + "</td>");
 			tr.append("<td>" + value.activity_name + "</td>");
 			tr.append("<td>" + value.activity_type + "</td>");
 			tr.append("<td>" + value.activity_status + "</td>");

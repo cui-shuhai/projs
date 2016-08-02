@@ -1,7 +1,7 @@
 {% include web/header.html %}
 
 {% block meat %}
-<form action="addactivityrequest" method="post">
+<form action="/activity" method="post">
 	  <fieldset>
 	    <legend>Adding activity:</legend>
 <table>
@@ -52,7 +52,7 @@
 	    <td> Note:		 </td>
 </table>
 	    <TEXTAREA NAME="note" COLS=50 ROWS=6></TEXTAREA><br><br>	
-	    <input type="submit" value="Submit">
+	    <button type="submit" id="submit" name="submit" value="add">Add </button>
 	  </fieldset>
 </form>
 {% endblock %}
