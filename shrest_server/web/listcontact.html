@@ -9,7 +9,7 @@
 <script>
 function listContacts() {
   
-	$.getJSON("/listcontact", { "directory": "contact_content"}, function(jsonData) {
+	$.getJSON("/contact", {"action":"list",  "directory": "contact_content"}, function(jsonData) {
 
 		var bHeader = true;
 

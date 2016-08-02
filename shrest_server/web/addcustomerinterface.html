@@ -39,7 +39,7 @@
 <script>
 function fill_customer() {
   
-	$.getJSON("/listlead", { "directory": "add_customer" }, function(jsonData) {
+	$.getJSON("/lead", {"action":"list", "directory": "add_customer" }, function(jsonData) {
 	var leadValues = $( "#origin_id" );
 	$.each(jsonData.recordset,function(key, value) {
 	leadValues.append('<option value=' + value.key + '>' + value.value + '</option>');

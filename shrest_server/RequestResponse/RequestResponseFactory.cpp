@@ -5,16 +5,9 @@
 #include "AddCustomerInterface.h"
 #include "AddVendorInterface.h"
 #include "AddLeadInterface.h"
-//#include "AddLeadRequest.h"
-//#include "EditLeadInterface.h"
-//#include "EditLeadRequest.h"
-#include "EditCustomerInterface.h"
-#include "EditCustomerRequest.h"
 #include "AddContactInterface.h"
 #include "AddContactRequest.h"
 #include "AddLeadContactInterface.h"
-#include "AddCustomerRequest.h"
-#include "ListCustomerRequest.h"
 #include "IcrmIndex.h"
 #include "AddActivityInterface.h"
 //#include "AddActivityRequest.h"
@@ -38,8 +31,6 @@
 #include "ListTaskRequest.h"
 #include "ListCampaignRequest.h"
 #include "ListCaseRequest.h"
-//#include "ListLeadRequest.h"
-//#include "ListActivityRequest.h"
 #include "ListContactRequest.h"
 #include "ListOpportunityRequest.h"
 #include "LoginRequest.h"
@@ -58,20 +49,12 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 		return unique_ptr<AddVendorInterface>( new AddVendorInterface(rs, rq));
 	if(name == "AddLeadInterface")
 		return unique_ptr<AddLeadInterface>( new AddLeadInterface(rs, rq));
-	if(name == "EditCustomerInterface")
-		return unique_ptr<EditCustomerInterface>( new EditCustomerInterface(rs, rq));
-	if(name == "EditCustomerRequest")
-		return unique_ptr<EditCustomerRequest>( new EditCustomerRequest(rs, rq));
 	if(name == "AddContactInterface")
 		return unique_ptr<AddContactInterface>( new AddContactInterface(rs, rq));
 	if(name == "AddContactRequest")
 		return unique_ptr<AddContactRequest>( new AddContactRequest(rs, rq));
 	if(name == "AddLeadContactInterface")
 		return unique_ptr<AddLeadContactInterface>( new AddLeadContactInterface(rs, rq));
-	if(name == "AddCustomerRequest")
-		return unique_ptr<AddCustomerRequest>( new AddCustomerRequest(rs, rq));
-	if(name == "ListCustomerRequest")
-		return unique_ptr<ListCustomerRequest>( new ListCustomerRequest(rs, rq));
 	if(name == "IcrmIndex")
 		return unique_ptr<IcrmIndex>( new IcrmIndex(rs, rq));
 	if(name == "SearchCustomerInterface")

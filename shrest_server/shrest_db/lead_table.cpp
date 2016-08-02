@@ -167,13 +167,11 @@ void lead_table::get_lead_records( string source, string &result ){
 
 	string sql = "SELECT lead_id, company_name, contact_name, personal_title, first_name, last_name, "
 	"phone, email, street_addr, city, state, post_code, country, "
-	"bill_addr, ship_addr, lead_source.description as lead_source_description , lead_status.description as lead_status_description, lead_rating.description as lead_rating_description"
-	" FROM lead INNER JOIN lead_status ON lead.lead_status = lead_status.status  "
-	" INNER JOIN lead_source ON lead.lead_source = lead_source.source "
-	" INNER JOIN lead_rating ON lead.lead_rating = lead_rating.rating ";
+	"bill_addr, ship_addr, lead_source, lead_status, lead_rating"
+	" FROM lead ";
 
 		if(!source.empty())
-		sql.append("WHERE lead.lead_source = ").append(source);
+		sql.append("WHERE lead_source = ").append(source);
 		query q(*conn, sql);
 		LOG("sql", sql);
 		auto res = q.emit_result();
@@ -204,9 +202,9 @@ void lead_table::get_lead_records( string source, string &result ){
 			ss <<  "\"country\""  << ":" <<  "\"" << res->get_string(12) << "\"" << "," ;
 			ss <<  "\"bill_addr\""  << ":" <<  "\"" << res->get_string(13) << "\"" << "," ;
 			ss <<  "\"ship_addr\""  << ":" <<  "\"" << res->get_string(14) << "\"" << "," ;
-			ss <<  "\"lead_source_description\""  << ":" <<  "\"" << res->get_string(15) << "\"" << "," ;
-			ss <<  "\"lead_status_description\""  << ":" <<  "\"" << res->get_string(16) << "\"" << "," ;
-			ss <<  "\"lead_rating_description\""  << ":" <<  "\"" << res->get_string(17) << "\"";
+			ss <<  "\"lead_source\""  << ":" <<  "\"" << res->get_string(15) << "\"" << "," ;
+			ss <<  "\"lead_status\""  << ":" <<  "\"" << res->get_string(16) << "\"" << "," ;
+			ss <<  "\"lead_rating\""  << ":" <<  "\"" << res->get_string(17) << "\"";
 			ss << "}";
 		} while(res->next_row());
 
@@ -221,11 +219,8 @@ void lead_table::get_lead_instance(std::map<string, string> &lead){
 
 	string sql = "SELECT lead_id,  company_name, contact_name, personal_title, first_name, last_name, "
 	"phone, email, street_addr, city, state, post_code, country, "
-	"bill_addr, ship_addr, lead_source.description as lead_source_description , lead_status.description as lead_status_description, lead_rating.description as lead_rating_description"
-	" FROM lead INNER JOIN lead_status ON lead.lead_status = lead_status.status  "
-	" INNER JOIN lead_source ON lead.lead_source = lead_source.source "
-	" INNER JOIN lead_rating ON lead.lead_rating = lead_rating.rating "
-	" WHERE lead_id = ";
+	"bill_addr, ship_addr, lead_source, lead_status, lead_rating "
+	" FROM lead  WHERE lead_id = ";
 
 		sql.append("'").append( lead_id ).append("'");
 		query q(*conn, sql);
@@ -248,9 +243,9 @@ void lead_table::get_lead_instance(std::map<string, string> &lead){
 		 lead["country"] = res->get_string(12);
 		 lead["bill_addr"] = res->get_string(13);
 		 lead["ship_addr"] = res->get_string(14);
-		 lead["lead_source_description"] = res->get_string(15);
-		 lead["lead_status_description"] = res->get_string(16);
-		 lead["lead_rating_description"] = res->get_string(17);
+		 lead["lead_source"] = res->get_string(15);
+		 lead["lead_status"] = res->get_string(16);
+		 lead["lead_rating"] = res->get_string(17);
 }
 
 void lead_table::update_lead_table(){

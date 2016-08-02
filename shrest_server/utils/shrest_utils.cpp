@@ -12,7 +12,7 @@
 
 using namespace std;
 
-void utils::parse_kye_value(std::string content, std::map<std::string, std::string> &m){
+void utils::parse_kye_value(std::string& content, std::map<std::string, std::string> &m){
 
    	boost::regex re("([^=&]+)=([^&]+)");        // Create the reg exp
    	boost::sregex_iterator pos(content.begin(), content.end(), re);
@@ -26,7 +26,7 @@ void utils::parse_kye_value(std::string content, std::map<std::string, std::stri
 
 
 //$1 = "/listcontact/contact_content?from_id=lead"
-void utils::parse_get_params(std::string content, std::map<std::string, std::string> &m){
+void utils::parse_get_params(std::string& content, std::map<std::string, std::string> &m){
 
    	boost::regex re("([^=&?]+)=([^&]+)");        // Create the reg exp
    	boost::sregex_iterator pos(content.begin(), content.end(), re);

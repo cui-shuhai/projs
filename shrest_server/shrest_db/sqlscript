@@ -179,7 +179,7 @@ INSERT INTO 'lead_rating'( rating_name )
 
 
 CREATE TABLE lead(
-	lead_id  INTEGER PRIMARY KEY,
+	lead_id  char(36) PRIMARY KEY,
 	company_name varchar(100) NOT NULL,
 	contact_name varchar(100),
 	personal_title char(5),
@@ -316,7 +316,7 @@ INSERT INTO 'contact_status'(status, description )
 	 ( "Disqualified", "never going to be a prospect for your product or service because this lead is the incorrect industry, company, contact or data");
 
 CREATE TABLE task( 
-	'task_id' INTEGER PRIMARY KEY,
+	'task_id' char(36) PRIMARY KEY,
 	'task_name' varchar(60), 
 	'due_date' Date NOT NULL,
 	'description' varchar(200), 
@@ -336,7 +336,7 @@ INSERT INTO 'task_status'(status_id, description)
 	VALUES( 1, "Not Assigned"),(2, "Assigned"), (3, "Finished"), (4, "Revoked");
 
 CREATE TABLE 'product'( 
-	'product_id' INTEGER PRIMARY KEY,
+	'product_id' char(36) PRIMARY KEY,
 	'name' varchar(32),
 	'price' decimal(6,2),
 	'limit' int,
@@ -345,7 +345,7 @@ CREATE TABLE 'product'(
 );
 
 CREATE TABLE 'order'( 
-	'order_id' INTEGER PRIMARY KEY,
+	'order_id' char(36) PRIMARY KEY,
 	'customer_id' int,
 	'product_id' int,
 	'order_amount' decimal(8,2),

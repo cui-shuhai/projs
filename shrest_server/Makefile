@@ -11,8 +11,6 @@ SOURCE=server_instance.cpp \
 	RequestResponse/AddContactRequest.cpp \
 	RequestResponse/AddLeadContactInterface.cpp \
 	RequestResponse/JsonPostRequest.cpp \
-	RequestResponse/ListCustomerRequest.cpp \
-	RequestResponse/AddCustomerRequest.cpp \
 	RequestResponse/PieGetRequest.cpp \
 	RequestResponse/IcrmIndex.cpp \
 	RequestResponse/CustomerizeRequest.cpp \
@@ -74,6 +72,7 @@ SOURCE=server_instance.cpp \
 	RequestResponse/EditLeadInterface.cpp \
 	RequestResponse/EditLeadRequest.cpp \
 	RequestResponse/ListLeadRequest.cpp \
+	RequestResponse/AddCustomerRequest.cpp \
 
 MYPROGRAM=crm_server
 

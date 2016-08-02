@@ -43,7 +43,7 @@ function addcontact(){
 
 	var id  = $("#customer_id").val();
 	var cp = $("input[name=company_name]").val();
-	var url="/addcontact?directory=edit_customer&customer_id=";
+	var url="/contact?action=add&directory=edit_customer&customer_id=";
 	url = url + id + '&' + "company=" + cp;
 	window.open(url, "myWindow", "width=500,height=200");
 }

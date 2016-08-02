@@ -4,15 +4,15 @@
 
 <table id="customer_table" border="1">
 
-<a href="/addcustomer">
-<button id="add_customer"  style="float:right" type="button">Add Customer</button>
+<a href="/customer?action=add">
+<button id="add_customer"   type="button">Add Customer</button>
 </>
 </table>
  
 <script>
 function listCustomers() {
   
-	$.getJSON("/listcustomer", { "directory": "customer_content"}, function(jsonData) {
+	$.getJSON("/customer", {"action" : "list",  "directory": "customer_content"}, function(jsonData) {
 
 		var bHeader = true;
 
@@ -46,7 +46,7 @@ function listCustomers() {
 //			}
 
 			tr = $('<tr/>');
-                        tr.append("<td>" + "<a href=\"/editcustomer?from=customer&customer_id=" + value.customer_id +"\"" +">Go...</a>"  + "</td>");
+                        tr.append("<td>" + "<a href=\"/customer?action=edit&&customer_id=" + value.customer_id +"\"" +">Go...</a>"  + "</td>");
                         tr.append("<td>" + value.company_name + "</td>"); 
                         tr.append("<td>" + value.contact_name + "</td>"); 
                         tr.append("<td>" + value.personal_title + "</td>"); 

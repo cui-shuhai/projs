@@ -171,9 +171,6 @@ void AddLeadInterface::ProcessPost()
 	if(boost::iequals(m["submit"], "add")){
 	try {
 
-		auto content=rq_->content.string();
-		std::map<std::string, std::string> m;
-		utils::parse_kye_value(content, m);
 		string id = utils::create_uuid();
 		lead_table c( id, m["company_name"], m["contact_name"], m["personal_title"], 
 				m["first_name"], m["last_name"], m["phone"], m["email"], 
