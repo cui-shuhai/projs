@@ -7,7 +7,6 @@
 #include "AddLeadInterface.h"
 #include "AddContactInterface.h"
 #include "AddContactRequest.h"
-#include "AddLeadContactInterface.h"
 #include "IcrmIndex.h"
 #include "AddActivityInterface.h"
 //#include "AddActivityRequest.h"
@@ -26,8 +25,6 @@
 #include "UploadDocumentInterface.h"
 #include "UploadDocumentRequest.h"
 #include "AddEmployeeInterface.h"
-#include "AddEmployeeRequest.h"
-#include "ListEmployeeRequest.h"
 #include "ListTaskRequest.h"
 #include "ListCampaignRequest.h"
 #include "ListCaseRequest.h"
@@ -53,8 +50,6 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 		return unique_ptr<AddContactInterface>( new AddContactInterface(rs, rq));
 	if(name == "AddContactRequest")
 		return unique_ptr<AddContactRequest>( new AddContactRequest(rs, rq));
-	if(name == "AddLeadContactInterface")
-		return unique_ptr<AddLeadContactInterface>( new AddLeadContactInterface(rs, rq));
 	if(name == "IcrmIndex")
 		return unique_ptr<IcrmIndex>( new IcrmIndex(rs, rq));
 	if(name == "SearchCustomerInterface")
@@ -97,10 +92,6 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 		return unique_ptr<UploadDocumentRequest>( new UploadDocumentRequest(rs, rq));	
 	if(name == "AddEmployeeInterface")
 		return unique_ptr<AddEmployeeInterface>( new AddEmployeeInterface(rs, rq));	
-	if(name == "AddEmployeeRequest")
-		return unique_ptr<AddEmployeeRequest>( new AddEmployeeRequest(rs, rq));	
-	if(name == "ListEmployeeRequest")
-		return unique_ptr<ListEmployeeRequest>( new ListEmployeeRequest(rs, rq));	
 	if(name == "ListTaskRequest")
 		return unique_ptr<ListTaskRequest>( new ListTaskRequest(rs, rq));	
 	if(name == "ListCampaignRequest")
