@@ -1,0 +1,67 @@
+{% include web/header.html %}
+
+{% block meat %}
+
+<form action="vendor" method="post">
+	  <fieldset>
+	    <legend>Add vendor:</legend>
+<table>
+<tr>
+</tr><tr>
+<td>Vendor_id:</td><td><input type=text" name="vendor_id", value=""></td>
+</tr><tr>
+<td>Account_num:</td><td><input type=text" name="account_num", value=""></td>
+</tr><tr>
+<td>Contact:</td><td><input type=text" name="contact", value=""></td>
+</tr><tr>
+<td>Company_name:</td><td><input type=text" name="company_name", value=""></td>
+</tr><tr>
+<td>Credit_rating</td> <td><select name="credit_rating" style="width:150px;">
+{% block credit_rating %}
+<option value="{{ credit_rating_value }}" > {{ credit_rating_show }} </option>
+{% endblock %}
+</select> </td>
+</tr><tr>
+<td>Vendor_status</td> <td><select name="vendor_status" style="width:150px;">
+{% block vendor_status %}
+<option value="{{ vendor_status_value }}" > {{ vendor_status_show }} </option>
+{% endblock %}
+</select> </td>
+</tr><tr>
+<td>Active_flag</td> <td><select name="active_flag" style="width:150px;">
+{% block active_flag %}
+<option value="{{ active_flag_value }}" > {{ active_flag_show }} </option>
+{% endblock %}
+</select> </td>
+</tr><tr>
+<td>Web_service_url:</td><td><input type=text" name="web_service_url", value=""></td>
+</tr><tr>
+<td>Last_update:</td><td><input type=text" name="last_update", value=""></td>
+	    <td><input type="submit"  name="submit" value="save"></td>
+</tr>
+
+<!--
+CREATE TABLE 'vendor_rating'(
+rating_name char(20) PRIMARY KEY,
+description varchar(20)
+);
+
+INSERT INTO 'vendor_rate'(rate_name ) VALUES
+( "Superior"),
+( "Excellent"),
+( "Above average"),
+( "Average"),
+( "Below average")
+
+CREATE TABLE 'vendor_status'(
+status_name char(20) PRIMARY KEY,
+description varchar(20)
+);
+
+CREATE TABLE 'vendor_flag'(
+flag_name char(20) PRIMARY KEY,
+description varchar(20)
+);
+//-->
+
+{% include web/footer.html %}

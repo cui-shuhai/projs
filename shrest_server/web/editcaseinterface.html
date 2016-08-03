@@ -1,0 +1,37 @@
+{% include web/header.html %}
+
+{% block meat %}
+
+<form action="cases" method="post">
+
+<input type="hidden" id="case_id"  name="case_id" value="{{ case_id }}">
+<legend>Lead to edit :</legend>
+<table>
+<td>Assign_to</td><td><input tupe="text" name="assign_to"  value="={{ assign_to }}" ></td>
+</tr><tr>
+<td>Contact</td><td><input tupe="text" name="contact"  value="={{ contact }}" ></td>
+</tr><tr>
+<td>Subject</td><td><input tupe="text" name="subject"  value="={{ subject }}" ></td>
+</tr><tr>
+<td>Priority</td><td><input tupe="text" name="priority"  value="={{ priority }}" ></td>
+</tr><tr>
+<td>Case_status</td><td><input tupe="text" name="case_status"  value="={{ case_status }}" ></td>
+</tr><tr>
+<td>Type</td><td><input tupe="text" name="type"  value="={{ type }}" ></td>
+</tr><tr>
+<td>Reason</td><td><input tupe="text" name="reason"  value="={{ reason }}" ></td>
+</tr><tr>
+<td>Last_activity</td><td><input tupe="text" name="last_activity"  value="={{ last_activity }}" ></td>
+</tr><tr>
+<td>Next_activity</td><td><input tupe="text" name="next_activity"  value="={{ next_activity }}" ></td>
+	    <td><input type="submit"  name="submit" value="save"></td>
+</tr>
+</table>
+
+
+	  </fieldset>
+</form>
+{% endblock %}
+ 
+
+{% include web/footer.html %}

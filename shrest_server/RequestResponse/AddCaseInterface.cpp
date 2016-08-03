@@ -115,7 +115,7 @@ void AddCaseInterface::ProcessGet(){
 		t.block("meat")[0].set("contact", case_tbl["contact"]);
 		t.block("meat")[0].set("subject", case_tbl["subject"]);
 		t.block("meat")[0].set("priority", case_tbl["priority"]);
-		t.block("meat")[0].set("status", case_tbl["status"]);
+		t.block("meat")[0].set("case_status", case_tbl["case_status"]);
 		t.block("meat")[0].set("type", case_tbl["type"]);
 		t.block("meat")[0].set("reason", case_tbl["reason"]);
 		t.block("meat")[0].set("last_activity", case_tbl["last_activity"]);
@@ -148,7 +148,7 @@ void AddCaseInterface::ProcessPost()
 	try {
 
 		string id = utils::create_uuid();
-		case_table c( id, m["assign_to"], m["contact"], m["subject"], m["priority"], m["status"], m["type"], m["reason"], m["last_activity"], m["next_activity"]);
+		case_table c( id, m["assign_to"], m["contact"], m["subject"], m["priority"], m["case_status"], m["type"], m["reason"], m["last_activity"], m["next_activity"]);
 
 		c.add_case_table();
 
@@ -178,7 +178,7 @@ void AddCaseInterface::ProcessPost()
 		auto content=rq_->content.string();
 		std::map<std::string, std::string> m;
 		utils::parse_kye_value(content, m);
-		case_table c( m["case_id"], m["assign_to"], m["contact"], m["subject"], m["priority"], m["status"], m["type"], m["reason"], m["last_activity"], m["next_activity"]);
+		case_table c( m["case_id"], m["assign_to"], m["contact"], m["subject"], m["priority"], m["case_status"], m["type"], m["reason"], m["last_activity"], m["next_activity"]);
 
 		c.update_case_table();
 

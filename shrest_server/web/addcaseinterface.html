@@ -2,31 +2,33 @@
 
 {% block meat %}
 
-<form action="campaign" method="post">
+<form action="cases" method="post">
 
-<input type="hidden" id="campaign_id"  name="campaign_id" value="">
-<legend>Add campaign :</legend>
+<legend>Add cases :</legend>
 <table>
 <tr>
-<td>Campaign_id</td><td><input type="text" name="campaign_id" value=""> </td>
+<td>Assign_to</td><td><input tupe="text" name="assign_to" value="" ></td>
 </tr><tr>
-<td>Campaign_name</td><td><input type="text" name="campaign_name" value=""> </td>
+<td>Contact</td><td><input tupe="text" name="contact" value="" ></td>
 </tr><tr>
-<td>Assign_to</td><td><input type="text" name="assign_to" value=""> </td>
+<td>Subject</td><td><input tupe="text" name="subject" value="" ></td>
 </tr><tr>
-<td>Campaign_status</td><td><input type="text" name="campaign_status" value=""> </td>
+<td>Priority</td><td><input tupe="text" name="priority" value="" ></td>
 </tr><tr>
-<td>Creator_id</td><td><input type="text" name="creator_id" value=""> </td>
+<td>Case_status</td><td><input tupe="text" name="case_status" value="" ></td>
 </tr><tr>
-<td>Start_date</td><td><input type="text" name="start_date" value=""> </td>
+<td>Type</td><td><input tupe="text" name="type" value="" ></td>
 </tr><tr>
-<td>Close_date</td><td><input type="text" name="close_date" value=""> </td>
+<td>Reason</td><td><input tupe="text" name="reason" value="" ></td>
 </tr><tr>
-<td>Description</td><td><input type="text" name="description" value=""> </td>
+<td>Last_activity</td><td><input tupe="text" name="last_activity" value="" ></td>
 </tr><tr>
-	    <td><input type="submit"  name="submit" value="save"></td>
+<td>Next_activity</td><td><input tupe="text" name="next_activity" value="" ></td>
+</tr><tr>
+	    <td><input type="submit"  name="submit" value="Add"></td>
 </tr>
 </table>
+
 
 
 	  </fieldset>

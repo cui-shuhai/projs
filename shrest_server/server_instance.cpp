@@ -292,14 +292,14 @@ int main() {
     };
 	LOG("Adding [listcampaignrequest, GET] API");
 
-     server.resource["^/case$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+     server.resource["^/cases$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
 
 	auto processor = RequestResponseFactory::CreateProcessor("AddCaseInterface", response, request);	
 	processor->Process();        
     };
 	LOG("Adding [listcaserequest, GET] API");
 
-     server.resource["^/case$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
+     server.resource["^/cases$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
 
 	auto processor = RequestResponseFactory::CreateProcessor("AddCaseInterface", response, request);	
 	processor->Process();        

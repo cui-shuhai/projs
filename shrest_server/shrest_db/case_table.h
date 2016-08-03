@@ -12,7 +12,7 @@ class case_table : public SqlAccessor{
 public:
 	case_table();
 	case_table(string id);
-	case_table( string case_id, string assign_to, string contact, string subject, string priority, string status, string type, string reason, string last_activity, string next_activity);
+	case_table( string case_id, string assign_to, string contact, string subject, string priority, string case_status, string type, string reason, string last_activity, string next_activity);
 	~case_table();
 	
 	string get_case_id(){ return case_id; }
@@ -20,7 +20,7 @@ public:
 	string get_contact(){ return contact; }
 	string get_subject(){ return subject; }
 	string get_priority(){ return priority; }
-	string get_status(){ return status; }
+	string get_case_status(){ return case_status; }
 	string get_type(){ return type; }
 	string get_reason(){ return reason; }
 	string get_last_activity(){ return last_activity; }
@@ -31,7 +31,7 @@ public:
 	void set_contact(string contact_){ contact_ = contact; }
 	void set_subject(string subject_){ subject_ = subject; }
 	void set_priority(string priority_){ priority_ = priority; }
-	void set_status(string status_){ status_ = status; }
+	void set_case_status(string case_status_){ case_status_ = case_status; }
 	void set_type(string type_){ type_ = type; }
 	void set_reason(string reason_){ reason_ = reason; }
 	void set_last_activity(string last_activity_){ last_activity_ = last_activity; }
@@ -48,7 +48,7 @@ private:
 	string contact;
 	string subject;
 	string priority;
-	string status;
+	string case_status;
 	string type;
 	string reason;
 	string last_activity;

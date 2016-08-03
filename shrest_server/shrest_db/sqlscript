@@ -445,7 +445,7 @@ CREATE TABLE 'case_tbl'(
 	'contact' char(36),
 	'subject' varchar(100),
 	'priority' char(20),
-	'status' char(20),
+	'case_status' char(20),
 	'type' char(20),
 	'reason' char(20),
 	'last_activity' DATE,

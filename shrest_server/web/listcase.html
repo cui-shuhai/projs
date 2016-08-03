@@ -1,28 +1,72 @@
 {% include web/header.html %}
 
-Current cases list:
-<table style="width:100%"  border="1">
-<tr>
-	<th>Subject</th>
-	<th>Status </th>
-	<th>Priority</th>
-	<th>Last act</th>
-	<th>Next act</th>
-	<th>View detail</th>
-</tr>
-{% block meat %}
-<tr>
+<h3>Current cases list: </h3>
 
-<td>{{ subject }}</td>
-<td>{{ status }}</td>
-<td>{{ priority }}</td>
-<td>{{ last_activity }}</td>
-<td>{{ next_activity }}</td>
-<td>	<a href="/case/{{ case_id }}">View detail...</a></td>
-</tr>
 
-{% endblock %}
+<fieldset>
+<legend>XXXXX</legend>
+
+<table id="case_table" border="1">
+
 </table>
+<br><br>
+<a href="/cases?action=add">
+<button id="add_case"   type="button">Add Case</button>
+</a>
+
+</fieldset>
+
+<script>
+
+function listCases() {
+
+  
+	$.getJSON("/cases", {"action":"list", "directory": "case_content"}, function(jsonData) {
+
+		var sourceTable= $( "#case_table" );
+		tr = $('<tr/>');
+		tr.append("<th>" + "Click Edit..."  + "</th>");
+		tr.append("<th>" + "Assign_to" + "</th>");
+		tr.append("<th>" + "Contact" + "</th>");
+		tr.append("<th>" + "Subject" + "</th>");
+		tr.append("<th>" + "Priority" + "</th>");
+		tr.append("<th>" + "Case_status" + "</th>");
+		tr.append("<th>" + "Type" + "</th>");
+		tr.append("<th>" + "Reason" + "</th>");
+		tr.append("<th>" + "Last_activity" + "</th>");
+		tr.append("<th>" + "Next_activity" + "</th>");
+		sourceTable.append(tr);
+
+		$.each(jsonData.cases ,function(key, value) {
+
+
+			tr = $('<tr/>');
+                          tr.append("<td>" + "<a href=\"/cases?action=edit?directory=case&case_id=" + value.case_id +"\"" +">Go...</a>"  + "</td>");
+			tr.append("<td>" + value.assign_to + "</td>");
+			tr.append("<td>" + value.contact + "</td>");
+			tr.append("<td>" + value.subject + "</td>");
+			tr.append("<td>" + value.priority + "</td>");
+			tr.append("<td>" + value.case_status + "</td>");
+			tr.append("<td>" + value.type + "</td>");
+			tr.append("<td>" + value.reason + "</td>");
+			tr.append("<td>" + value.last_activity + "</td>");
+			tr.append("<td>" + value.next_activity + "</td>");
+			sourceTable.append(tr);
+		});
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	alert(XMLHttpRequest.responseText);
+	});
+}
+
+
+$( document ).ready( function(){
+	listCases();
+});
+ 
+</script>
+ 
+
 
 {% include web/footer.html %}
  
