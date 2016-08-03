@@ -203,8 +203,7 @@ void customer_table::get_customer_instance(std::map<string, string> &customer){
 void customer_table::update_customer_table(){
 
 	stringstream ss;
-	 ss <<  "UPDATE customer SET ";
-	ss << "customer_id =" << "\"" << customer_id << "\"" << ",";
+	ss <<  "UPDATE customer SET ";
 	ss << "company_name =" << "\"" << company_name << "\"" << ",";
 	ss << "contact_name =" << "\"" << contact_name << "\"" << ",";
 	ss << "personal_title =" << "\"" << personal_title << "\"" << ",";
@@ -219,7 +218,7 @@ void customer_table::update_customer_table(){
 	ss << "bill_addr =" << "\"" << bill_addr << "\"" << ",";
 	ss << "ship_addr =" << "\"" << ship_addr << "\"" << ",";
 	ss << "post_code =" << "\"" << post_code << "\"" ;
-	ss << " WHERE customer_id = " << 	customer_id ;
+	ss << " WHERE customer_id = " << "\"" << customer_id <<  "\"" ;
 
 	auto sql = ss.str();
 	command c(*conn, sql);

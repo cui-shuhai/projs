@@ -1,66 +1,8 @@
 
 {% include web/header.html %}
 
-<h3>Leads and contacts list</h3>
-
-<table id="customer_table" border="1">
-
-</table>
- 
-<script>
-function listCustomers() {
-  
-	$.getJSON("/listcustomer", { "directory": "customer_content"}, function(jsonData) {
-
-		var bHeader = true;
-
-		var sourceTable= $( "#customer_table" );
-
-		$.each(jsonData.customer ,function(key, value) {
-			if(bHeader){
-				bHeader = false;
-				tr = $('<tr/>');
-				var keys = Object.keys(value);
-				Object.keys(value).forEach(function(k) {
-				  tr.append("<th>" + k + "</th>");});
-				sourceTable.append(tr);
-			}
-
-			tr = $('<tr/>');
-                          tr.append("<td>" + value.customer_id + "</td>");
-                          tr.append("<td>" + value.company_name + "</td>");
-                          tr.append("<td>" + value.contact_name + "</td>");
-                          tr.append("<td>" + value.personal_title + "</td>");
-                          tr.append("<td>" + value.first_name + "</td>");
-                          tr.append("<td>" + value.last_name + "</td>");
-                          tr.append("<td>" + value.phone + "</td>");
-                          tr.append("<td>" + value.email + "</td>");
-                          tr.append("<td>" + value.street_addr + "</td>");
-                          tr.append("<td>" + value.city + "</td>");
-                          tr.append("<td>" + value.state + "</td>");
-                          tr.append("<td>" + value.post_code + "</td>");
-                          tr.append("<td>" + value.country + "</td>");
-                          tr.append("<td>" + value.bill_addr + "</td>");
-                          tr.append("<td>" + value.ship_addr + "</td>");
-                          tr.append("<td>" + value.customer_source_description + "</td>");
-                          tr.append("<td>" + value.customer_status_description + "</td>");
-                          tr.append("<td>" + value.customer_rating_description + "</td>");
-			sourceTable.append(tr);
-		});
-	})
-	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
-	alert(XMLHttpRequest.responseText);
-	});
-}
-
-
-$( document ).ready( function(){
-	listCustomers();
-});
- 
-</script>
+<h3>New Customer added </h3>
  
 {% include web/footer.html %}
    
-
 

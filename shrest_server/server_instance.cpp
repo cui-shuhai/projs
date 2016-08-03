@@ -222,9 +222,16 @@ int main() {
 	LOG("Adding [ListContactrequest, GET] API");
 
  	//listopportunity 
-     server.resource["^/listopportunity$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+     server.resource["^/opportunity$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
 
-	auto processor = RequestResponseFactory::CreateProcessor("ListOpportunityRequest", response, request);	
+	auto processor = RequestResponseFactory::CreateProcessor("AddOpportunityInterface", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [ListOpportunityrequest, GET] API");
+
+     server.resource["^/opportunity$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("AddOpportunityInterface", response, request);	
 	processor->Process();        
     };
 	LOG("Adding [ListOpportunityrequest, GET] API");
@@ -270,10 +277,17 @@ int main() {
     };
 	LOG("Adding [ListTaskrequest, POST] API");
 
- 	//Add listcampaignrequest request
-     server.resource["^/listcampaign$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+ 	//Add listampaignrequest request
+     server.resource["^/campaign$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
 
-	auto processor = RequestResponseFactory::CreateProcessor("ListCampaignRequest", response, request);	
+	auto processor = RequestResponseFactory::CreateProcessor("AddCampaignInterface", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [listcampaignrequest, GET] API");
+ 	//Add listcampaignrequest request
+     server.resource["^/campaign$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("AddCampaignInterface", response, request);	
 	processor->Process();        
     };
 	LOG("Adding [listcampaignrequest, GET] API");

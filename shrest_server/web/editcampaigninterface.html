@@ -1,0 +1,37 @@
+{% include web/header.html %}
+
+{% block meat %}
+
+<form action="campaign" method="post">
+
+<input type="hidden" id="campaign_id"  name="campaign_id" value="{{ campaign_id }}">
+<legend>Lead to edit :</legend>
+<table>
+<tr>
+<td>Campaign_id</td><td><input type="text" name="campaign_id" value="{{ campaign_id }}"> </td>
+</tr><tr>
+<td>Campaign_name</td><td><input type="text" name="campaign_name" value="{{ campaign_name }}"> </td>
+</tr><tr>
+<td>Assign_to</td><td><input type="text" name="assign_to" value="{{ assign_to }}"> </td>
+</tr><tr>
+<td>Campaign_status</td><td><input type="text" name="campaign_status" value="{{ campaign_status }}"> </td>
+</tr><tr>
+<td>Creator_id</td><td><input type="text" name="creator_id" value="{{ creator_id }}"> </td>
+</tr><tr>
+<td>Start_date</td><td><input type="text" name="start_date" value="{{ start_date }}"> </td>
+</tr><tr>
+<td>Close_date</td><td><input type="text" name="close_date" value="{{ close_date }}"> </td>
+</tr><tr>
+<td>Description</td><td><input type="text" name="description" value="{{ description }}"> </td>
+</tr><tr>
+	    <td><input type="submit"  name="submit" value="save"></td>
+</tr>
+</table>
+
+
+	  </fieldset>
+</form>
+{% endblock %}
+ 
+
+{% include web/footer.html %}

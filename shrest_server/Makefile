@@ -20,9 +20,9 @@ SOURCE=server_instance.cpp \
 	RequestResponse/AddTaskRequest.cpp \
 	RequestResponse/ListTaskRequest.cpp \
 	RequestResponse/ListContactRequest.cpp \
-	RequestResponse/ListCampaignRequest.cpp \
+	RequestResponse/AddCampaignInterface.cpp \
 	RequestResponse/ListCaseRequest.cpp \
-	RequestResponse/ListOpportunityRequest.cpp \
+	RequestResponse/AddOpportunityInterface.cpp \
 	RequestResponse/AddUserInterface.cpp \
 	RequestResponse/AddUserRequest.cpp \
 	RequestResponse/ListUserRequest.cpp \

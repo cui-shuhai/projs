@@ -1,27 +1,68 @@
 {% include web/header.html %}
 
+
+<h3>
 Current campaign list:<br><br>
-<table style="width:100%"  border="1">
-<tr>
-	<th>Name</th>
-	<th>Status </th>
-	<th>Description</th>
-	<th>Start</th>
-	<th>Detail...</th>
-</tr>
+</h3>
 
-{% block meat %}
 
-<tr>
-<td>{{ campaign_name }}</td>
-<td>{{ status }}</td>
-<td>{{ description }}</td>
-<td>{{ start_date }}</td>
-<td><a href="/campaign/{{ campaign_id }}">View detail...</a></td>
-</tr>
+<fieldset>
+<legend>XXXXX</legend>
 
-{% endblock %}
+<table  id="campaign_table" style="width:100%"  border="1">
 </table>
+
+<a href="/campaign?action=add"
+<button id="add_campaign" type="button"> Add Campaign </button>
+</a>
+
+</fieldset>
+
+<script>
+
+function listcampaign(){
+
+	$.getJSON("/campaign", {"action":"list", "directory": "campaign_content"}, function(jsonData) {
+	var sourceTable = $( "#campaign_table" );
+	tr =$('<tr/>');
+	tr.append("<th>" + "Campaign_id" + "</th>");
+	tr.append("<th>" + "Campaign_name" + "</th>");
+	tr.append("<th>" + "Assign_to" + "</th>");
+	tr.append("<th>" + "Campaign_status" + "</th>");
+	tr.append("<th>" + "Creator_id" + "</th>");
+	tr.append("<th>" + "Start_date" + "</th>");
+	tr.append("<th>" + "Close_date" + "</th>");
+	tr.append("<th>" + "Description" + "</th>");
+	sourceTable.append(tr);
+
+
+	$.each(jsonData.campaign ,function(key, value) {
+
+
+			tr = $('<tr/>');
+                        gr.append("<td>" + "<a href=\"/campaign?action=edit&directory=campaign&campaign_id=" + value.campaign_id +"\"" +">Go...</a>"  + "</td>");
+			tr.append("<th>" + value.campaign_id + "</th>");
+			tr.append("<th>" + value.campaign_name + "</th>");
+			tr.append("<th>" + value.assign_to + "</th>");
+			tr.append("<th>" + value.campaign_status + "</th>");
+			tr.append("<th>" + value.creator_id + "</th>");
+			tr.append("<th>" + value.start_date + "</th>");
+			tr.append("<th>" + value.close_date + "</th>");
+			tr.append("<th>" + value.description + "</th>");
+			sourceTable.append(tr);
+		});
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	alert(XMLHttpRequest.responseText);
+	});
+}
+
+$( document ).ready( function(){
+	listcampaign();
+});
+ 
+
+</script>
 
 {% include web/footer.html %}
  

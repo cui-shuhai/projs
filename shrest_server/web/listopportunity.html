@@ -1,27 +1,67 @@
 {% include web/header.html %}
 
-Current opportunities list:<br><br>
-<table style="width:100%"  border="1">
-<tr>
-	<th>Name</th>
-	<th>Pipeline</th>
-	<th>Amount </th>
-	<th>Close date</th>
-	<th>Detail</th>
-</tr>
+<h3>Current opportunities list:</h3>
 
-{% block meat %}
 
-<tr>
-<td>{{ opportunity_name }}</td>
-<td>{{ pipeline }}</td>
-<td>{{ amount }}</td>
-<td>{{ close_date }}</td>
-<td>	<a href="/ativity/{{ opportunity }}">View detail...</a></td>
-</tr>
-{% endblock %}
+<fieldset>
+<legend>XXXXX</legend>
 
+<table  id="opportunity_table" style="width:100%"  border="1">
 </table>
+
+<a href="/opportunity?action=add"
+<button id="add_opportunity" type="button"> Add Opportunity </button>
+</a>
+
+</fieldset>
+
+<script>
+
+function listopportunity(){
+
+	$.getJSON("/opportunity", {"action":"list", "directory": "opportunity_content"}, function(jsonData) {
+	var sourceTable = $( "#opportunity_table" );
+	tr =$('<tr/>');
+	tr.append("<th>" + "Opportunity_id" + "</th>");
+	tr.append("<th>" + "Opportunity_name" + "</th>");
+	tr.append("<th>" + "Assign_to" + "</th>");
+	tr.append("<th>" + "Contact_id" + "</th>");
+	tr.append("<th>" + "Creator_id" + "</th>");
+	tr.append("<th>" + "Close_date" + "</th>");
+	tr.append("<th>" + "Pipeline" + "</th>");
+	tr.append("<th>" + "Amount" + "</th>");
+	tr.append("<th>" + "Probablity" + "</th>");
+	sourceTable.append(tr);
+
+
+	$.each(jsonData.opportunity ,function(key, value) {
+
+
+			tr = $('<tr/>');
+                        gr.append("<td>" + "<a href=\"/opportunity?action=edit&directory=opportunity&opportunity_id=" + value.opportunity_id +"\"" +">Go...</a>"  + "</td>");
+			tr.append("<td>" + value.opportunity_id + "</td>");
+			tr.append("<td>" + value.opportunity_name + "</td>");
+			tr.append("<td>" + value.assign_to + "</td>");
+			tr.append("<td>" + value.contact_id + "</td>");
+			tr.append("<td>" + value.creator_id + "</td>");
+			tr.append("<td>" + value.close_date + "</td>");
+			tr.append("<td>" + value.pipeline + "</td>");
+			tr.append("<td>" + value.amount + "</td>");
+			tr.append("<td>" + value.probablity + "</td>");
+			sourceTable.append(tr);
+		});
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	alert(XMLHttpRequest.responseText);
+	});
+}
+
+$( document ).ready( function(){
+	listopportunity();
+});
+ 
+
+</script>
 
 {% include web/footer.html %}
  

@@ -26,10 +26,10 @@
 #include "UploadDocumentRequest.h"
 #include "AddEmployeeInterface.h"
 #include "ListTaskRequest.h"
-#include "ListCampaignRequest.h"
+#include "AddCampaignInterface.h"
 #include "ListCaseRequest.h"
 #include "ListContactRequest.h"
-#include "ListOpportunityRequest.h"
+#include "AddOpportunityInterface.h"
 #include "LoginRequest.h"
 #include "LogoutRequest.h"
 #include "SearchContactActivity.h"
@@ -94,14 +94,14 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 		return unique_ptr<AddEmployeeInterface>( new AddEmployeeInterface(rs, rq));	
 	if(name == "ListTaskRequest")
 		return unique_ptr<ListTaskRequest>( new ListTaskRequest(rs, rq));	
-	if(name == "ListCampaignRequest")
-		return unique_ptr<ListCampaignRequest>( new ListCampaignRequest(rs, rq));	
+	if(name == "AddCampaignInterface")
+		return unique_ptr<AddCampaignInterface>( new AddCampaignInterface(rs, rq));	
 	if(name == "ListCaseRequest")
 		return unique_ptr<ListCaseRequest>( new ListCaseRequest(rs, rq));	
 	if(name == "ListContactRequest")
 		return unique_ptr<ListContactRequest>( new ListContactRequest(rs, rq));	
-	if(name == "ListOpportunityRequest")
-		return unique_ptr<ListOpportunityRequest>( new ListOpportunityRequest(rs, rq));	
+	if(name == "AddOpportunityInterface")
+		return unique_ptr<AddOpportunityInterface>( new AddOpportunityInterface(rs, rq));	
 	if(name == "LoginRequest")
 		return unique_ptr<LoginRequest>( new LoginRequest(rs, rq));	
 	if(name == "LogoutRequest")

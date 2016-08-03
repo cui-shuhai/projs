@@ -11,39 +11,41 @@ class opportunity_table : public SqlAccessor{
 
 public:
 	opportunity_table();
-	opportunity_table( int opportunity_, string opportunity_name_, int assign_to_, int contact_id_, int creator_id_, string close_date_, int pipeline_, double amount_, int probablity_);
+	opportunity_table( string opportunity_id_, string opportunity_name_, string assign_to_, string contact_id_, string creator_id_, string close_date_, string pipeline_, double amount_, string probablity_);
 	~opportunity_table();
 	
 	void add_opportunity_table();
-	int get_opportunity_tableId();
+	void update_opportunity_table();
+	void get_opportunity_instance(std::map<string, string> &opportunity);
+	void get_opportunity_records( string source, string &result );
 
-	int get_opportunity(){ return opportunity; }
+	string get_opportunity_id(){ return opportunity_id; }
 	string get_opportunity_name(){ return opportunity_name; }
-	int get_assign_to(){ return assign_to; }
-	int get_contact_id(){ return contact_id; }
-	int get_creator_id(){ return creator_id; }
+	string get_assign_to(){ return assign_to; }
+	string get_contact_id(){ return contact_id; }
+	string get_creator_id(){ return creator_id; }
 	string get_close_date(){ return close_date; }
-	int get_pipeline(){ return pipeline; }
+	string get_pipeline(){ return pipeline; }
 	double get_amount(){ return amount; }
-	int get_probablity(){ return probablity; }
+	string get_probablity(){ return probablity; }
 
-	void set_opportunity(int opportunity_){ opportunity = opportunity_; }
+	void set_opportunity_id(string opportunity_id_){ opportunity_id = opportunity_id_; }
 	void set_opportunity_name(string opportunity_name_){ opportunity_name = opportunity_name_; }
-	void set_assign_to(int assign_to_){ assign_to = assign_to_; }
-	void set_contact_id(int contact_id_){ contact_id = contact_id_; }
-	void set_creator_id(int creator_id_){ creator_id = creator_id_; }
+	void set_assign_to(string assign_to_){ assign_to = assign_to_; }
+	void set_contact_id(string contact_id_){ contact_id = contact_id_; }
+	void set_creator_id(string creator_id_){ creator_id = creator_id_; }
 	void set_close_date(string close_date_){ close_date = close_date_; }
-	void set_pipeline(int pipeline_){ pipeline = pipeline_; }
+	void set_pipeline(string pipeline_){ pipeline = pipeline_; }
 	void set_amount(double amount_){ amount = amount_; }
-	void set_probablity(int probablity_){ probablity = probablity_; }
+	void set_probablity(string probablity_){ probablity = probablity_; }
 private:
-	int opportunity;
+	string opportunity_id;
 	string opportunity_name;
-	int assign_to;
-	int contact_id;
-	int creator_id;
+	string assign_to;
+	string contact_id;
+	string creator_id;
 	string close_date;
-	int pipeline;
+	string pipeline;
 	double amount;
-	int probablity;
+	string probablity;
 };

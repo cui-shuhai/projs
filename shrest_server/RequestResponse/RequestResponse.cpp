@@ -71,8 +71,9 @@ LOG(rq_->method, rq_->path);
 
 		//Campaigns
 		if(true){
-			string campaign_sql = "SELECT campaign_name, status, start_date, close_date, description FROM campaign WHERE assign_to = ";
-			campaign_sql.append(user_id).append(" ORDER BY status");
+			string campaign_sql = "SELECT campaign_id, campaign_name, assign_to, campaign_status, creator_id, start_date, close_date, description "
+	" FROM campaign WHERE assign_to = ";
+			campaign_sql.append(user_id).append(" ORDER BY campaign_status");
 		
 			campaign_table ct;
 			auto cp_query = ct.BuildQuery(campaign_sql);
@@ -96,7 +97,7 @@ LOG(rq_->method, rq_->path);
 	 		for ( int i=0; i < rows; i++, res->next_row() ) {
 				block.set("compaien_name", res->get_string(0));
 				block.set("description", res->get_string(1));
-				block.set("status", res->get_string(2));
+				block.set("campaign_status", res->get_string(2));
 				block.set("start_date", res->get_string(3));
 				block.set("close_date", res->get_string(4));
 			}
@@ -104,7 +105,7 @@ LOG(rq_->method, rq_->path);
 	
 		//Opportunities
 		if(true){
-			string opportunity_sql = "SELECT opportunity_name, first_name, last_name, opportunity.contact_id, pipeline, amount, probability, close_date FROM opportunity JOIN contact ON opportunity.contact_id = contact.contact_id WHERE assign_to = ";
+			string opportunity_sql = "SELECT opportunity_name, first_name, last_name, opportunity.contact_id, pipeline, amount, probablity, close_date FROM opportunity JOIN contact ON opportunity.contact_id = contact.contact_id WHERE assign_to = ";
 			opportunity_sql.append(user_id).append(" ORDER BY pipeline");
 		
 			activity_table ot;

@@ -375,7 +375,7 @@ INSERT INTO 'opportunity_pipeline'(pipeline_name,  description) VALUES
 ( "Closed" , "either Closed Won or Closed Lost");
 
 CREATE TABLE 'opportunity'(
-	'opportunity' char(36) PRIMARY KEY,
+	'opportunity_id' char(36) PRIMARY KEY,
 	'opportunity_name' varchar(50),
 	'assign_to'  char(36),
 	'contact_id' char(36),
@@ -383,7 +383,7 @@ CREATE TABLE 'opportunity'(
 	'close_date' DATE,
 	'pipeline' char(20),
 	'amount' decimal(8,2),
-	'probability' char(20),
+	'probablity' char(20),
 	FOREIGN KEY(assign_to) REFERENCES employee(employee_id),
 	FOREIGN KEY(contact_id) REFERENCES contact(contact_id),
 	FOREIGN KEY(creator_id) REFERENCES employee(employee_id),
@@ -409,7 +409,7 @@ CREATE TABLE 'campaign'(
 	'campaign_id' char(36) PRIMARY KEY,
 	'campaign_name' varchar(50),
 	'assign_to'  char(36),
-	'status' char(20),
+	'campaign_status' char(20),
 	'creator_id' char(36),
 	'start_date' DATE,
 	'close_date' DATE,

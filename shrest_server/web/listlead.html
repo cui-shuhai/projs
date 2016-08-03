@@ -43,14 +43,6 @@ function listLeads() {
 
 		$.each(jsonData.lead ,function(key, value) {
 
-//			if(bHeader){
-//				bHeader = false;
-//				tr = $('<tr/>');
-//				var keys = Object.keys(value);
-//				Object.keys(value).forEach(function(k) {
-//				  tr.append("<th>" + k + "</th>");});
-//				sourceTable.append(tr);
-//			}
 
 			tr = $('<tr/>');
                           tr.append("<td>" + "<a href=\"/lead?action=edit?directory=lead&lead_id=" + value.lead_id +"\"" +">Go...</a>"  + "</td>");

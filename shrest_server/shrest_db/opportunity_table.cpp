@@ -20,9 +20,9 @@ opportunity_table::opportunity_table():SqlAccessor()
 {
 }
 
-opportunity_table::opportunity_table( int opportunity_, string opportunity_name_, int assign_to_, int contact_id_, int creator_id_, string close_date_, int pipeline_, double amount_, int probablity_):
+opportunity_table::opportunity_table( string opportunity_id_, string opportunity_name_, string assign_to_, string contact_id_, string creator_id_, string close_date_, string pipeline_, double amount_, string probablity_):
 	SqlAccessor(),
-	opportunity{opportunity_},
+	opportunity_id{opportunity_id_},
 	opportunity_name{opportunity_name_},
 	assign_to{assign_to_},
 	contact_id{contact_id_},
@@ -54,10 +54,88 @@ void opportunity_table::add_opportunity_table(){
 	string id_sql = "SELECT last_insert_rowid()";
 	query id_query(*conn, id_sql);
 	auto id_res = id_query.emit_result();
-	opportunity = id_res->get_int(0);
+	opportunity_id = id_res->get_string(0);
 }
 
-int opportunity_table::get_opportunity_tableId()
-{	
-	return opportunity;
+void opportunity_table::get_opportunity_instance(std::map<string, string> &opportunity){
+
+
+	string sql = "SELECT opportunity_name, assign_to, "
+		"contact_id, creator_id, close_date, pipeline, amount, probablity, "
+	" FROM opportunity  WHERE opportunity_id = ";
+
+		sql.append("'").append( opportunity_id ).append("'");
+		query q(*conn, sql);
+		LOG("sql", sql);
+		auto res = q.emit_result();
+	
+		opportunity["opportunity_id"] = opportunity_id; 
+		opportunity["opportunity_name"] = res->get_string(0);
+		opportunity["assign_to"] = res->get_string(1);
+		opportunity["contact_id"] = res->get_string(2);
+		opportunity["creator_id"] = res->get_string(3);
+		opportunity["close_date"] = res->get_string(4);
+		opportunity["pipeline"] = res->get_string(5);
+		opportunity["amount"] = to_string(res->get_double(6));
+		opportunity["probablity"] = res->get_string(7);
+}
+
+void opportunity_table::update_opportunity_table(){
+
+	stringstream ss;
+	ss <<  "UPDATE opportunity SET ";
+	ss << "opportunity_name =" << "\"" << opportunity_name << "\"" << ","; 
+	ss << "assign_to =" << "\"" << assign_to << "\"" << ","; 
+	ss << "contact_id =" << "\"" << contact_id << "\"" << ","; 
+	ss << "creator_id =" << "\"" << creator_id << "\"" << ","; 
+	ss << "close_date =" << "\"" << close_date << "\"" << ","; 
+	ss << "pipeline =" << "\"" << pipeline << "\"" << ","; 
+	ss << "amount =" << "\"" << amount << "\"" << ","; 
+	ss << "probablity =" << "\"" << probablity << "\""; 
+	ss << " WHERE opportunity_id = " << "\"" <<  opportunity_id << "\"";
+
+
+	auto sql = ss.str();
+	command c(*conn, sql);
+	c.emit();
+
+}
+
+void opportunity_table::get_opportunity_records( string source, string &result ){
+
+	string sql = "SELECT opportunity_id, opportunity_name, assign_to, "
+		"contact_id, creator_id, close_date, pipeline, amount, probablity  "
+	" FROM opportunity "; 
+
+		if(!source.empty())
+		sql.append("WHERE opportunity_id = ").append(source);
+		query q(*conn, sql);
+		LOG("sql", sql);
+		auto res = q.emit_result();
+	
+		stringstream ss;
+
+		bool first = true;
+		ss << "{ \"opportunity\":[ ";
+		do{
+			if(first)
+				first = false;
+			else{
+				ss << ", ";
+			}
+			ss << "{" ;
+			ss << "\"opportunity_id\"" << ":" << "\"" <<  opportunity_id << "\"" << ","; 
+			ss << "\"opportunity_name\"" << ":" << "\"" <<  res->get_string(0) << "\"" << ",";
+			ss << "\"assign_to\"" << ":" << "\"" <<  res->get_string(1) << "\"" << ",";
+			ss << "\"contact_id\"" << ":" << "\"" <<  res->get_string(2) << "\"" << ",";
+			ss << "\"creator_id\"" << ":" << "\"" <<  res->get_string(3) << "\"" << ",";
+			ss << "\"close_date\"" << ":" << "\"" <<  res->get_string(4) << "\"" << ",";
+			ss << "\"pipeline\"" << ":" << "\"" <<  res->get_string(5) << "\"" << ",";
+			ss << "\"amount\"" << ":" << "\"" <<  to_string(res->get_double(6)) << "\"" << ",";
+			ss << "\"probablity\"" << ":" << "\"" <<  res->get_string(7) << "\""; 
+			ss << "}";
+		} while(res->next_row());
+
+		ss << " ] }";
+		result = ss.str();
 }

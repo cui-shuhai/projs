@@ -269,7 +269,7 @@ void lead_table::update_lead_table(){
 	ss << "lead_source =" << "\"" << lead_source <<"\"" << ",";
 	ss << "lead_status =" << "\"" << lead_status <<"\"" << ",";
 	ss << "lead_rating =" << "\"" << lead_rating <<"\"" ;
-	ss << " WHERE lead_id = " << 	lead_id ;
+	ss << " WHERE lead_id = " <<  "\"" << 	lead_id <<  "\"" ;
 
 
 	auto sql = ss.str();

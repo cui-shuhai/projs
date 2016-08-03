@@ -57,9 +57,84 @@ void AddOpportunityInterface::ProcessGet(){
 		return;
 	}
 	if(boost::iequals(m["action"], "edit")){
+	try {
+		stringstream cs;
+
+		auto id = m["opportunity_id"];
+		opportunity_table ot;
+
+		std::map<string, string> opportunity;
+		ot.set_opportunity_id(id);
+		ot.get_opportunity_instance(opportunity);
+
+		LoaderFile loader; 
+
+		Template t( loader );
+		t.load("web/editopportunityinterface.html");
+		t.block("meat").repeat(1);
+
+		t.block("meat")[0].set("opportunity_id", opportunity["opportunity_id"]);
+		t.block("meat")[0].set("opportunity_name", opportunity["opportunity_name"]);
+		t.block("meat")[0].set("assign_to", opportunity["assign_to"]);
+		t.block("meat")[0].set("contact_id", opportunity["contact_id"]);
+		t.block("meat")[0].set("creator_id", opportunity["creator_id"]);
+		t.block("meat")[0].set("close_date", opportunity["close_date"]);
+		t.block("meat")[0].set("pipeline", opportunity["pipeline"]);
+		t.block("meat")[0].set("amount", opportunity["amount"]);
+		t.block("meat")[0].set("probablity", opportunity["probablity"]);
+		t.render( cs ); 
+		
+		
+		cs.seekp(0, ios::end);
+		string page = cs.str();
+		rs_ <<  cs.rdbuf();
+		rs_.flush();
+		
+	}
+	catch(exception& e) {
+		rs_ << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n" << e.what();
+	}
 
 	}
 	if(boost::iequals(m["action"], "list")){
+	try {
+		
+		stringstream cs;
+
+		string jstr;
+		if(m.size() == 1){ //list 
+			LoaderFile loader; 
+			Template t( loader );
+			t.load( "web/listopportunity.html" );
+			t.render( cs ); 
+		}
+		else{ //for adding opportunity filling options 
+			string result;
+			opportunity_table ot;
+
+			string directory = m["directory"];
+			std::vector<string> resultset;
+
+			if(directory.compare("opportunity_content") == 0){
+				ot.get_opportunity_records("", jstr);
+			}
+
+			utils::build_raw_response( jstr);
+			rs_ << jstr;
+			return;
+			return;
+		}
+		
+		cs.seekp(0, ios::end);
+		rs_ <<  cs.rdbuf();
+		rs_.flush();
+		
+	}
+	catch(exception& e) {
+		rs_ << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n" << e.what();
+	}
+
+		return;
 
 	}
 }
@@ -78,9 +153,9 @@ void AddOpportunityInterface::ProcessPost(){
 		auto content=rq_->content.string();
 		std::map<std::string, std::string> m;
 		utils::parse_kye_value(content, m);
-		opportunity_table c( 0, m["opportunity_name"], m["due_date"],stoi( m["status"] ), m["description"], stoi(m["assignee"]), stoi(m["assigner"]), stoi(m["creator"]));
+		opportunity_table c( utils::create_uuid() , m["opportunity_name"], m["assign_to"], m["contact_id"], m["creator_id"], m["close_date"], m["pipeline"], stod(m["amount"]), m["probablity"]);
+
 		c.add_opportunity_table();
-		auto id = c.get_opportunity_tableId();
 
 		LoaderFile loader; // Let's use the default loader that loads files from disk.
 
@@ -89,7 +164,7 @@ void AddOpportunityInterface::ProcessPost(){
 		t.load( "web/addopportunityresponse.html" );
 
 		t.block("meat").repeat(1);
-		t.block("meat")[0].set("opportunity_id", to_string(id));
+		t.block("meat")[0].set("opportunity_id", c.get_opportunity_id());
 		t.block("meat")[0].set("opportunity_name", m["opportunity_name"]);
 		t.block("meat")[0].set("due_date", m["due_date"]);
 		t.block("meat")[0].set("status", m["status"]);

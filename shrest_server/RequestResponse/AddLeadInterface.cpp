@@ -7,7 +7,7 @@
 #include "lead_table.h"
 #include "contact_table.h"
 #include "AddLeadInterface.h"
-
+ 
 #include "shrest_utils.h"
 
 using namespace std;
@@ -31,15 +31,13 @@ void AddLeadInterface::ProcessGet()
 			if(m.size() == 1)
 			{
 				stringstream content_stream;
-				LoaderFile loader; // Let's use the default loader that loads files from disk.
+				LoaderFile loader; 
 
 				Template t( loader );
 
 				t.load( "web/addleadinterface.html" );
 
-				t.render( content_stream ); // Render the template with the variables we've set above
-		 
-				//find length of content_stream (length received using content_stream.tellp())
+				t.render( content_stream ); 
 				
 				content_stream.seekp(0, ios::end);
 				rs_ <<  content_stream.rdbuf();

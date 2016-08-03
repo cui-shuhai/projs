@@ -1,0 +1,57 @@
+{% include web/header.html %}
+
+{% block meat %}
+<form action="/activity" method="post">
+	  <fieldset>
+	    <legend>Adding opportunity:</legend>
+<table>
+<tr>
+<td>Opportunity_id:</td>
+<td><input type="text" name="Opportunity_id" value=""></td>
+</tr><tr>
+<td>Opportunity_name:</td>
+<td><input type="text" name="Opportunity_name" value=""></td>
+
+</tr><tr>
+<td>Assign_to:</td>
+<td><input type="text" name="Assign_to" value=""></td>
+
+</tr><tr>
+<td>Contact_id:</td>
+<td><input type="text" name="Contact_id" value=""></td>
+</tr><tr>
+
+<td>Creator_id:</td>
+<td><input type="text" name="Creator_id" value=""></td>
+</tr><tr>
+
+<td>Close_date:</td>
+<td><input type="text" name="Close_date" value=""></td>
+</tr><tr>
+
+<td>Pipeline:</td>
+<td><input type="text" name="Pipeline" value=""></td>
+</tr><tr>
+
+<td>Amount:</td>
+<td><input type="text" name="Amount" value=""></td>
+</tr><tr>
+
+<td>Probablity:</td>
+<td>
+	    <select name ="opportunity_probablity" style="width: 150px;">
+	{% block priorityblock %}
+		<option value="{{ opportunity_probablity_value }}"> {{ opportunity_probablity_show }}</option>
+</td>
+</tr>
+
+</table>
+	    <TEXTAREA NAME="note" COLS=50 ROWS=6></TEXTAREA><br><br>	
+	    <button type="submit" id="submit" name="submit" value="add">Add </button>
+	  </fieldset>
+</form>
+{% endblock %}
+
+
+{% include web/footer.html %}
+
