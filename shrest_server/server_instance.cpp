@@ -141,7 +141,7 @@ int main() {
     };
 	LOG("Adding [adduserrequest, POST] API");
 
- 	//Add listcaserequest request
+ 	//Add listcase
      server.resource["^/listuser$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
 
 	auto processor = RequestResponseFactory::CreateProcessor("ListUserRequest", response, request);	
@@ -292,13 +292,19 @@ int main() {
     };
 	LOG("Adding [listcampaignrequest, GET] API");
 
- 	//Add listcaserequest request
-     server.resource["^/listcase$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+     server.resource["^/case$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
 
-	auto processor = RequestResponseFactory::CreateProcessor("ListCaseRequest", response, request);	
+	auto processor = RequestResponseFactory::CreateProcessor("AddCaseInterface", response, request);	
 	processor->Process();        
     };
 	LOG("Adding [listcaserequest, GET] API");
+
+     server.resource["^/case$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("AddCaseInterface", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [caserequest, POST] API");
 
 	//Add login request
      server.resource["^/loginrequest$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {

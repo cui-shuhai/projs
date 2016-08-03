@@ -17,6 +17,7 @@ SOURCE=server_instance.cpp \
 	RequestResponse/AddTransactionInterface.cpp \
 	RequestResponse/AddTransactionRequest.cpp \
 	RequestResponse/AddTaskInterface.cpp \
+	RequestResponse/AddCaseInterface.cpp \
 	RequestResponse/AddTaskRequest.cpp \
 	RequestResponse/ListTaskRequest.cpp \
 	RequestResponse/ListContactRequest.cpp \

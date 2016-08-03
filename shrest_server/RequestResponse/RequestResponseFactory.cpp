@@ -17,6 +17,7 @@
 #include "AddTransactionInterface.h"
 #include "AddTransactionRequest.h"
 #include "AddTaskInterface.h"
+#include "AddCaseInterface.h"
 #include "AddTaskRequest.h"
 #include "AddUserInterface.h"
 #include "AddUserRequest.h"
@@ -76,6 +77,8 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 		return unique_ptr<SearchContactActivity>( new SearchContactActivity(rs, rq));	
 	if(name == "AddTaskInterface")
 		return unique_ptr<AddTaskInterface>( new AddTaskInterface(rs, rq));	
+	if(name == "AddCaseInterface")
+		return unique_ptr<AddCaseInterface>( new AddCaseInterface(rs, rq));	
 	if(name == "AddTaskRequest")
 		return unique_ptr<AddTaskRequest>( new AddTaskRequest(rs, rq));	
 	if(name == "AddUserInterface")

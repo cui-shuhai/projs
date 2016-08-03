@@ -101,23 +101,25 @@ void AddCaseInterface::ProcessGet(){
 		auto id = m["case_id"];
 		case_table ct;
 
-		std::map<string, string> case;
+		std::map<string, string> case_tbl;
 		ct.set_case_id(id);
-		ct.get_case_instance(case);
+		ct.get_case_instance(case_tbl);
 
 		LoaderFile loader; 
 
 		Template t( loader );
 		t.load("web/editcaseinterface.html");
 		t.block("meat").repeat(1);
-		t.block("meat")[0].set("case_id", case["case_id"]);
-		t.block("meat")[0].set("case_name", case["case_name"]);
-		t.block("meat")[0].set("assign_to", case["assign_to"]);
-		t.block("meat")[0].set("case_status", case["case_status"]);
-		t.block("meat")[0].set("creator_id", case["creator_id"]);
-		t.block("meat")[0].set("start_date", case["start_date"]);
-		t.block("meat")[0].set("close_date", case["close_date"]);
-		t.block("meat")[0].set("description", case["description"]);
+		t.block("meat")[0].set("case_id", case_tbl["case_id"]);
+		t.block("meat")[0].set("assign_to", case_tbl["assign_to"]);
+		t.block("meat")[0].set("contact", case_tbl["contact"]);
+		t.block("meat")[0].set("subject", case_tbl["subject"]);
+		t.block("meat")[0].set("priority", case_tbl["priority"]);
+		t.block("meat")[0].set("status", case_tbl["status"]);
+		t.block("meat")[0].set("type", case_tbl["type"]);
+		t.block("meat")[0].set("reason", case_tbl["reason"]);
+		t.block("meat")[0].set("last_activity", case_tbl["last_activity"]);
+		t.block("meat")[0].set("next_activity", case_tbl["next_activity"]);
 
 		t.render( cs ); 
 		
@@ -146,7 +148,7 @@ void AddCaseInterface::ProcessPost()
 	try {
 
 		string id = utils::create_uuid();
-		case_table c( id, m["case_name"], m["assign_to"], m["case_status"], m["creator_id"], m["start_date"], m["close_date"], m["description"] );
+		case_table c( id, m["assign_to"], m["contact"], m["subject"], m["priority"], m["status"], m["type"], m["reason"], m["last_activity"], m["next_activity"]);
 
 		c.add_case_table();
 
@@ -176,7 +178,7 @@ void AddCaseInterface::ProcessPost()
 		auto content=rq_->content.string();
 		std::map<std::string, std::string> m;
 		utils::parse_kye_value(content, m);
-		case_table c( m["case_id"], m["case_name"], m["assign_to"], m["case_status"], m["creator_id"], m["start_date"], m["close_date"], m["description"] );
+		case_table c( m["case_id"], m["assign_to"], m["contact"], m["subject"], m["priority"], m["status"], m["type"], m["reason"], m["last_activity"], m["next_activity"]);
 
 		c.update_case_table();
 
