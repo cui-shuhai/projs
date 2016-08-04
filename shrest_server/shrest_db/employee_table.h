@@ -35,9 +35,11 @@ public:
 	string get_created_by(){ return created_by; }
 	
 	void add_employee_table();
+	void update_employee_table();
 	void get_department_managers(std::map<string, string> &managers);
 	void get_employee_list(std::map<string, string> &employees);
 	void get_employee_records( string source, string &result );
+	void get_employee_instance( string source, string &result );
 
 private:
 	string employee_id;

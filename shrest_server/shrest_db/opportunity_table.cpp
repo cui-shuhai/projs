@@ -38,7 +38,7 @@ opportunity_table::~opportunity_table(){
 }
 void opportunity_table::add_opportunity_table(){
 
-	string sql = "INSERT INTO 'opportunity'(opportunity_name, assign_to, contact_id, creator_id, close_date, pipeline, amount, probablity) VALUES( ?, ?, ?, ?, ?, ?, ?, ?)"; 
+	string sql = "INSERT INTO 'opportunity'(opportunity_name, assign_to, contact_id, creator_id, close_date, pipeline, amount, probablity, opportunity_id) VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?)"; 
 
 	command c(*conn, sql);
 	c.bind(1, opportunity_name);
@@ -49,19 +49,16 @@ void opportunity_table::add_opportunity_table(){
 	c.bind(6, pipeline);
 	c.bind(7, amount);
 	c.bind(8, probablity);
+	c.bind(9, opportunity_id);
 
 	c.emit();
-	string id_sql = "SELECT last_insert_rowid()";
-	query id_query(*conn, id_sql);
-	auto id_res = id_query.emit_result();
-	opportunity_id = id_res->get_string(0);
 }
 
 void opportunity_table::get_opportunity_instance(std::map<string, string> &opportunity){
 
 
 	string sql = "SELECT opportunity_name, assign_to, "
-		"contact_id, creator_id, close_date, pipeline, amount, probablity, "
+		"contact_id, creator_id, close_date, pipeline, amount, probablity  "
 	" FROM opportunity  WHERE opportunity_id = ";
 
 		sql.append("'").append( opportunity_id ).append("'");
@@ -103,8 +100,8 @@ void opportunity_table::update_opportunity_table(){
 
 void opportunity_table::get_opportunity_records( string source, string &result ){
 
-	string sql = "SELECT opportunity_id, opportunity_name, assign_to, "
-		"contact_id, creator_id, close_date, pipeline, amount, probablity  "
+	string sql = "SELECT opportunity_name, assign_to, "
+		"contact_id, creator_id, close_date, pipeline, amount, probablity , opportunity_id  "
 	" FROM opportunity "; 
 
 		if(!source.empty())
@@ -124,7 +121,7 @@ void opportunity_table::get_opportunity_records( string source, string &result )
 				ss << ", ";
 			}
 			ss << "{" ;
-			ss << "\"opportunity_id\"" << ":" << "\"" <<  opportunity_id << "\"" << ","; 
+			ss << "\"opportunity_id\"" << ":" << "\"" <<  res->get_string(8) << "\"" << ","; 
 			ss << "\"opportunity_name\"" << ":" << "\"" <<  res->get_string(0) << "\"" << ",";
 			ss << "\"assign_to\"" << ":" << "\"" <<  res->get_string(1) << "\"" << ",";
 			ss << "\"contact_id\"" << ":" << "\"" <<  res->get_string(2) << "\"" << ",";

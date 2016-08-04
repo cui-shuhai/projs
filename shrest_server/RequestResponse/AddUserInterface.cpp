@@ -113,9 +113,28 @@ void AddUserInterface::ProcessGet(){
 
 	}
 	if(boost::iequals(m["action"], "edit")){
+	try {
+		stringstream cs;
+
+		LoaderFile loader; 
+		Template t( loader );
+		t.load("web/edituserinterface.html");
+		t.block("meat").repeat(1);
+		t.block("meat")[0].set("user_id", m["user_id"]);
+		t.render( cs ); 
+		
+		
+		cs.seekp(0, ios::end);
+		string page = cs.str();
+		rs_ <<  cs.rdbuf();
+		rs_.flush();
+		
+	}
+	catch(exception& e) {
+		rs_ << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n" << e.what();
+	}
 	}
 	if(boost::iequals(m["action"], "list")){
-
 	try {
 		
 		std::map<string, string> m;
@@ -139,6 +158,18 @@ void AddUserInterface::ProcessGet(){
 
 			if(directory.compare("user_content") == 0){
 				ut.get_user_records("", jstr);
+			}
+			else if(directory.compare("user_roles") == 0){
+				std::vector<string> results;
+				employee_role er;
+				er.get_employee_roles(results);
+				utils::build_json(results, jstr);
+			}
+			else if(directory.compare("user_profiles") == 0){
+				std::vector<string> results;
+				employee_profile er;
+				er.get_employee_profiles(results);
+				utils::build_json(results, jstr);
 			}
 
 			utils::build_raw_response( jstr);

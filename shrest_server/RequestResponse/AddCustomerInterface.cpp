@@ -18,84 +18,37 @@ AddCustomerInterface::AddCustomerInterface(HttpServer::Response &rs, ShRequest r
 }
 
 void AddCustomerInterface::ProcessGet(){
+
 	std::map<string, string> m;
 	string  params= rq_->get_params;
 	utils::parse_get_params(params, m);
 
 	if(boost::iequals(m["action"], "add")){
-     try {
+	     try {
 
-        	stringstream content_stream;
-		LoaderFile loader; // Let's use the default loader that loads files from disk.
+		if(m.size() == 1)
+		{
+			stringstream content_stream;
+			LoaderFile loader; 
 
-		Template t( loader );
+			Template t( loader );
 
-		t.load( "web/addcustomerinterface.html" );
-           
-		//t.set( "text", "Hello, world" ); 
+			t.load( "web/addcustomerinterface.html" );
 
-		t.render( content_stream ); // Render the template with the variables we've set above
- 
-		//find length of content_stream (length received using content_stream.tellp())
-		
-		content_stream.seekp(0, ios::end);
-		rs_ <<  content_stream.rdbuf();
-		rs_.flush();
-    }
-    catch(exception& e) {
-        rs_ << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n" << e.what();
-    }
-	return;
-	}
-
-	
-	if(boost::iequals(m["action"], "edit")){
-	try {
-		stringstream cs;
-
-		auto id = m["customer_id"];
-		customer_table ct;
-
-		std::map<string, string> customer;
-		ct.set_customer_id(id);
-		ct.get_customer_instance(customer);
-
-		LoaderFile loader; 
-
-		Template t( loader );
-		t.load("web/editcustomerinterface.html");
-		t.block("meat").repeat(1);
-		t.block("meat")[0].set("customer_id", customer["customer_id"]);
-		t.block("meat")[0].set("company_name", customer["company_name"]);
-		t.block("meat")[0].set("contact_name", customer["contact_name"]);
-		t.block("meat")[0].set("personal_title", customer["personal_title"]);
-		t.block("meat")[0].set("first_name", customer["first_name"]);
-		t.block("meat")[0].set("last_name", customer["last_name"]);
-		t.block("meat")[0].set("phone", customer["phone"]);
-		t.block("meat")[0].set("email", customer["email"]);
-		t.block("meat")[0].set("street_addr", customer["street_addr"]);
-		t.block("meat")[0].set("city", customer["city"]);
-		t.block("meat")[0].set("state", customer["state"]);
-		t.block("meat")[0].set("post_code", customer["post_code"]);
-		t.block("meat")[0].set("country", customer["country"]);
-		t.block("meat")[0].set("bill_addr", customer["bill_addr"]);
-		t.block("meat")[0].set("ship_addr", customer["ship_addr"]);
-
-		t.render( cs ); 
-		
-		
-		cs.seekp(0, ios::end);
-		string page = cs.str();
-		rs_ <<  cs.rdbuf();
-		rs_.flush();
-		
-	}
-	catch(exception& e) {
+			t.render( content_stream );
+			
+			content_stream.seekp(0, ios::end);
+			rs_ <<  content_stream.rdbuf();
+			rs_.flush();
+		}
+	    }
+	    catch(exception& e) {
 		rs_ << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n" << e.what();
-	}
+	    }
 		return;
 	}
 
+	
 	if(boost::iequals(m["action"], "list")){
 	try {
 		stringstream cs;
@@ -122,6 +75,13 @@ void AddCustomerInterface::ProcessGet(){
 				customer_table ct;
 				ct.get_last_names("", jstr);
 			}
+			else if(directory.compare("edit_customer") == 0){
+				customer_table ct;
+				ct.set_customer_id(m["customer_id"]);
+				std::map<string, string> result;
+				ct.get_customer_instance(result);
+				utils::build_json(result, jstr); 
+			}
 
 
 			utils::build_raw_response( jstr);
@@ -138,6 +98,58 @@ void AddCustomerInterface::ProcessGet(){
 		rs_ << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n" << e.what();
 	}
 	}
+
+	if(boost::iequals(m["action"], "edit")){
+	try {
+		stringstream cs;
+
+		auto id = m["customer_id"];
+		/*
+		customer_table ct;
+
+		std::map<string, string> customer;
+		ct.set_customer_id(id);
+		ct.get_customer_instance(customer);
+		*/
+
+		LoaderFile loader; 
+
+		Template t( loader );
+		t.load("web/editcustomerinterface.html");
+		t.block("meat").repeat(1);
+		t.block("meat")[0].set("customer_id", m["customer_id"]);
+		/*
+		t.block("meat")[0].set("company_name", customer["company_name"]);
+		t.block("meat")[0].set("contact_name", customer["contact_name"]);
+		t.block("meat")[0].set("personal_title", customer["personal_title"]);
+		t.block("meat")[0].set("first_name", customer["first_name"]);
+		t.block("meat")[0].set("last_name", customer["last_name"]);
+		t.block("meat")[0].set("phone", customer["phone"]);
+		t.block("meat")[0].set("email", customer["email"]);
+		t.block("meat")[0].set("street_addr", customer["street_addr"]);
+		t.block("meat")[0].set("city", customer["city"]);
+		t.block("meat")[0].set("state", customer["state"]);
+		t.block("meat")[0].set("post_code", customer["post_code"]);
+		t.block("meat")[0].set("country", customer["country"]);
+		t.block("meat")[0].set("bill_addr", customer["bill_addr"]);
+		t.block("meat")[0].set("ship_addr", customer["ship_addr"]);
+		*/
+
+		t.render( cs ); 
+		
+		
+		cs.seekp(0, ios::end);
+		string page = cs.str();
+		rs_ <<  cs.rdbuf();
+		rs_.flush();
+		
+	}
+	catch(exception& e) {
+		rs_ << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n" << e.what();
+	}
+		return;
+	}
+
 }
 
 void AddCustomerInterface::ProcessPost(){
@@ -157,6 +169,7 @@ void AddCustomerInterface::ProcessPost(){
 			m["first_name"], m["last_name"], m["phone"], m["email"], 
 			m["street_addr"], m["city"], m["state"], m["post_code"], m["country"], 
 			m["bill_addr"], m["ship_addr"]);
+
 		c.add_customer_table();
 
 		contact_table ct; 
@@ -170,16 +183,14 @@ void AddCustomerInterface::ProcessPost(){
 
 		stringstream cs;		
 
-		LoaderFile loader; // Let's use the default loader that loads files from disk.
+		//LoaderFile loader; 
 
-		Template t( loader );
+		//Template t( loader );
 
-		t.load( "web/addcustomerrequest.html" );
+		//t.load( "web/addcustomerrequest.html" );
 
-
-		t.render( cs ); // Render the template with the variables we've set above
- 
-		//find length of content_stream (length received using content_stream.tellp())
+		//t.render( cs ); 
+		cs << "new customer added" << endl;
 		
 		cs.seekp(0, ios::end);
 		rs_ <<  cs.rdbuf();
@@ -202,14 +213,14 @@ void AddCustomerInterface::ProcessPost(){
 
 		c.update_customer_table();
 
-		LoaderFile loader; // Let's use the default loader that loads files from disk.
+		LoaderFile loader; 
 
 		Template t( loader );
 
 		stringstream cs;
 
 		cs << "customer saved" << endl;
-		t.render( cs ); // Render the template with the variables we've set above
+		t.render( cs ); 
  
 		
 		cs.seekp(0, ios::end);

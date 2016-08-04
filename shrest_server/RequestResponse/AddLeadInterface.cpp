@@ -53,8 +53,8 @@ void AddLeadInterface::ProcessGet()
 	try {
 		
 		stringstream cs;
-
 		string jstr;
+
 		if(m.size() == 1){ //list lead
 			LoaderFile loader; 
 			Template t( loader );
@@ -88,6 +88,12 @@ void AddLeadInterface::ProcessGet()
 				lt.get_lead_for_customer(result);
 				utils::build_json(result, jstr); 
 			}
+			else if(directory.compare("edit_lead") == 0){
+				lt.set_lead_id(m["lead_id"]);
+				std::map<string, string> result;
+				lt.get_lead_instance(result);
+				utils::build_json(result, jstr); 
+			}
 
 			utils::build_raw_response( jstr);
 			rs_ << jstr;
@@ -110,43 +116,20 @@ void AddLeadInterface::ProcessGet()
 	try {
 		stringstream cs;
 
-		auto id = m["lead_id"];
-		lead_table lt;
+		//lead_table lt;
 
-		std::map<string, string> lead;
-		lt.set_lead_id(id);
-		lt.get_lead_instance(lead);
-/*
-                 t.block("meat")[0].set("lead_source_description", lt_get_lead_source_description());
-                 t.block("meat")[0].set("lead_status_description", lt_get_lead_status_description());
-                 t.block("meat")[0].set("lead_rating_description", lt_get_lead_rating_description());
-*/
+		//std::map<string, string> lead;
+		//lt.set_lead_id(id);
+		//lt.get_lead_instance(lead);
 		LoaderFile loader; 
 
 		Template t( loader );
 		t.load("web/editleadinterface.html");
 		t.block("meat").repeat(1);
-		t.block("meat")[0].set("lead_id", lead["lead_id"]);
-		t.block("meat")[0].set("company_name", lead["company_name"]);
-		t.block("meat")[0].set("contact_name", lead["contact_name"]);
-		t.block("meat")[0].set("personal_title", lead["personal_title"]);
-		t.block("meat")[0].set("first_name", lead["first_name"]);
-		t.block("meat")[0].set("last_name", lead["last_name"]);
-		t.block("meat")[0].set("phone", lead["phone"]);
-		t.block("meat")[0].set("email", lead["email"]);
-		t.block("meat")[0].set("street_addr", lead["street_addr"]);
-		t.block("meat")[0].set("city", lead["city"]);
-		t.block("meat")[0].set("state", lead["state"]);
-		t.block("meat")[0].set("post_code", lead["post_code"]);
-		t.block("meat")[0].set("country", lead["country"]);
-		t.block("meat")[0].set("bill_addr", lead["bill_addr"]);
-		t.block("meat")[0].set("ship_addr", lead["ship_addr"]);
-
+		t.block("meat")[0].set("lead_id", m["lead_id"]);
 		t.render( cs ); 
 		
-		
 		cs.seekp(0, ios::end);
-		string page = cs.str();
 		rs_ <<  cs.rdbuf();
 		rs_.flush();
 		
@@ -187,14 +170,14 @@ void AddLeadInterface::ProcessPost()
 
 		ct.add_contact_table();
 
-		LoaderFile loader; // Let's use the default loader that loads files from disk.
+		//LoaderFile loader; 
 
-		Template t( loader );
+		//Template t( loader );
 
+		//t.render( cs ); 
 		stringstream cs;
 
 		cs << "new lead added" << endl;
-		t.render( cs ); // Render the template with the variables we've set above
  
 		
 		cs.seekp(0, ios::end);
@@ -210,26 +193,22 @@ void AddLeadInterface::ProcessPost()
 	if(boost::iequals(m["submit"], "save")){
 	try {
 
-		auto content=rq_->content.string();
-		std::map<std::string, std::string> m;
-		utils::parse_kye_value(content, m);
 		lead_table c( m["lead_id"], m["company_name"], m["contact_name"], m["personal_title"], 
 				m["first_name"], m["last_name"], m["phone"], m["email"], 
 				m["street_addr"], m["city"], m["state"], m["post_code"], 
 				m["country"], m["bill_addr"], m["ship_addr"], 
 				"web", "active", "normal");
-				//stoi(m["lead_source"]), stoi(m["lead_status"]), stoi(m["lead_rating"]));
 
 		c.update_lead_table();
 
-		LoaderFile loader; // Let's use the default loader that loads files from disk.
+		LoaderFile loader; 
 
 		Template t( loader );
 
 		stringstream cs;
 
 		cs << "lead saved" << endl;
-		t.render( cs ); // Render the template with the variables we've set above
+		t.render( cs ); 
  
 		
 		cs.seekp(0, ios::end);

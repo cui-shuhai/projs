@@ -8,26 +8,26 @@
 <legend>Customer to edit:</legend>
 <table>
 <tr>
-	<td>Company Name:</td><td><input type="text" name="company_name" value="{{ company_name }}"> </td>
-	<td>Contact Name:</td><td><input type="text" name="contact_name" value="{{ contact_name }}"> </td>
+	<td>Company Name:</td><td><input type="text" name="company_name" value=""> </td>
+	<td>Contact Name:</td><td><input type="text" name="contact_name" value=""> </td>
 </tr><tr>
-	<td>Mr/Ms:</td><td><input type="text" name="personal_title" value="{{ personal_title }}"> </td>
-	<td>First Name:</td><td><input type="text" name="first_name" value="{{ first_name }}"> </td>
+	<td>Mr/Ms:</td><td><input type="text" name="personal_title" value=""> </td>
+	<td>First Name:</td><td><input type="text" name="first_name" value=""> </td>
 </tr><tr>
-	<td>Last Name:</td><td><input type="text" name="last_name" value="{{ last_name }}"> </td>
-	<td>Phone:</td><td><input type="text" name="phone" value="{{ phone }}"> </td>
+	<td>Last Name:</td><td><input type="text" name="last_name" value=""> </td>
+	<td>Phone:</td><td><input type="text" name="phone" value=""> </td>
 </tr><tr>
-	<td>Email:</td><td><input type="text" name="email" value="{{ email }}"> </td>
-	<td>Street Addr:</td><td><input type="text" name="street_addr" value="{{ street_addr }}"> </td>
+	<td>Email:</td><td><input type="text" name="email" value=""> </td>
+	<td>Street Addr:</td><td><input type="text" name="street_addr" value=""> </td>
 </tr><tr>
-	<td>City:</td><td><input type="text" name="city" value="{{ city }}"> </td>
-	<td>State:</td><td><input type="text" name="state" value="{{ state }}"> </td>
+	<td>City:</td><td><input type="text" name="city" value=""> </td>
+	<td>State:</td><td><input type="text" name="state" value=""> </td>
 </tr><tr>
-	<td>Post Code:</td><td><input type="text" name="post_code" value="{{ post_code }}"> </td>
-	<td>Country:</td><td><input type="text" name="country" value="{{ country }}"> </td>
+	<td>Post Code:</td><td><input type="text" name="post_code" value=""> </td>
+	<td>Country:</td><td><input type="text" name="country" value=""> </td>
 </tr><tr>
-	<td>Bill Addr:</td><td><input type="text" name="bill_addr" value="{{ bill_addr }}"> </td>
-	<td>Ship Addr:</td><td><input type="text" name="ship_addr" value="{{ ship_addr }}"> </td>
+	<td>Bill Addr:</td><td><input type="text" name="bill_addr" value=""> </td>
+	<td>Ship Addr:</td><td><input type="text" name="ship_addr" value=""> </td>
 </tr><tr>
 	    <td><input type="submit"  name="submit" value="save"></td>
 </tr>
@@ -43,10 +43,44 @@ function addcontact(){
 
 	var id  = $("#customer_id").val();
 	var cp = $("input[name=company_name]").val();
-	var url="/contact?action=add&directory=edit_customer&customer_id=";
+	var url="/contact?action=add&directory=customer&customer_id=";
 	url = url + id + '&' + "company=" + cp;
-	window.open(url, "myWindow", "width=500,height=200");
+	window.location = url;
 }
+
+function fill_form() {
+  
+	var customer_id = $("#customer_id").val();
+	var qjson = {};
+	qjson["action"] = "list";
+	qjson["directory"] = "edit_customer";
+	qjson["customer_id"] = customer_id;
+	$.getJSON("/customer", qjson, function(jsonData) {
+	var customerValues = jsonData ;
+	$("input[name='customer_id']").value(customerValues["customer_id"]);
+	$("input[name='company_name']").value(customerValues["company_name"]);
+	$("input[name='contact_name']").value(customerValues["contact_name"]);
+	$("input[name='personal_title']").value(customerValues["personal_title"]);
+	$("input[name='first_name']").value(customerValues["first_name"]);
+	$("input[name='last_name']").value(customerValues["last_name"]);
+	$("input[name='phone']").value(customerValues["phone"]);
+	$("input[name='email']").value(customerValues["email"]);
+	$("input[name='street_addr']").value(customerValues["street_addr"]);
+	$("input[name='city']").value(customerValues["city"]);
+	$("input[name='state']").value(customerValues["state"]);
+	$("input[name='post_code']").value(customerValues["post_code"]);
+	$("input[name='country']").value(customerValues["country"]);
+	$("input[name='bill_addr']").value(customerValues["bill_addr"]);
+	$("input[name='ship_addr']").value(customerValues["ship_addr"]);
+})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) { })
+//	alert(XMLHttpRequest.responseText);
+}
+
+$( document ).ready( function() {
+	fill_form();
+	});
+ 
 </script>
 
 {% include web/footer.html %}

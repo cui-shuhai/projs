@@ -6,7 +6,6 @@ SOURCE=server_instance.cpp \
 	RequestResponse/AddVendorInterface.cpp \
 	RequestResponse/AddLeadInterface.cpp \
 	RequestResponse/AddContactInterface.cpp \
-	RequestResponse/AddContactRequest.cpp \
 	RequestResponse/JsonPostRequest.cpp \
 	RequestResponse/PieGetRequest.cpp \
 	RequestResponse/IcrmIndex.cpp \
@@ -17,16 +16,14 @@ SOURCE=server_instance.cpp \
 	RequestResponse/AddTransactionInterface.cpp \
 	RequestResponse/AddTransactionRequest.cpp \
 	RequestResponse/AddTaskInterface.cpp \
+	RequestResponse/AddOrderInterface.cpp \
 	RequestResponse/AddCaseInterface.cpp \
 	RequestResponse/AddTaskRequest.cpp \
 	RequestResponse/ListTaskRequest.cpp \
-	RequestResponse/ListContactRequest.cpp \
 	RequestResponse/AddCampaignInterface.cpp \
 	RequestResponse/ListCaseRequest.cpp \
 	RequestResponse/AddOpportunityInterface.cpp \
 	RequestResponse/AddUserInterface.cpp \
-	RequestResponse/AddUserRequest.cpp \
-	RequestResponse/ListUserRequest.cpp \
 	RequestResponse/UploadDocumentInterface.cpp \
 	RequestResponse/UploadDocumentRequest.cpp \
 	RequestResponse/AddEmployeeInterface.cpp \
@@ -53,6 +50,7 @@ SOURCE=server_instance.cpp \
 	shrest_db/campaign_table.cpp \
 	shrest_db/company_table.cpp \
 	shrest_db/case_table.cpp \
+	shrest_db/order_table.cpp \
 	shrest_db/case_status.cpp \
 	shrest_db/case_priority.cpp \
 	shrest_db/case_type.cpp \

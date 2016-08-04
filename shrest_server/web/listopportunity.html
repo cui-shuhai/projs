@@ -2,7 +2,6 @@
 
 <h3>Current opportunities list:</h3>
 
-
 <fieldset>
 <legend>XXXXX</legend>
 
@@ -22,7 +21,7 @@ function listopportunity(){
 	$.getJSON("/opportunity", {"action":"list", "directory": "opportunity_content"}, function(jsonData) {
 	var sourceTable = $( "#opportunity_table" );
 	tr =$('<tr/>');
-	tr.append("<th>" + "Opportunity_id" + "</th>");
+	tr.append("<th>" + "Edit..." + "</th>");
 	tr.append("<th>" + "Opportunity_name" + "</th>");
 	tr.append("<th>" + "Assign_to" + "</th>");
 	tr.append("<th>" + "Contact_id" + "</th>");
@@ -38,8 +37,7 @@ function listopportunity(){
 
 
 			tr = $('<tr/>');
-                        gr.append("<td>" + "<a href=\"/opportunity?action=edit&directory=opportunity&opportunity_id=" + value.opportunity_id +"\"" +">Go...</a>"  + "</td>");
-			tr.append("<td>" + value.opportunity_id + "</td>");
+                        tr.append("<td>" + "<a href=\"/opportunity?action=edit&directory=opportunity&opportunity_id=" + value.opportunity_id +"\"" +">Go...</a>"  + "</td>");
 			tr.append("<td>" + value.opportunity_name + "</td>");
 			tr.append("<td>" + value.assign_to + "</td>");
 			tr.append("<td>" + value.contact_id + "</td>");
@@ -59,7 +57,6 @@ function listopportunity(){
 $( document ).ready( function(){
 	listopportunity();
 });
- 
 
 </script>
 

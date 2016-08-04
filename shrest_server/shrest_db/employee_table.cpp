@@ -110,12 +110,53 @@ void employee_table::get_department_managers(std::map<string , string> &managers
 	auto res = q.emit_result();
 
 	do{
-		string manager = res->get_string(1) + " " + res->get_string(2) +":" + res->get_string(3);
+		string manager = res->get_string(1) + " " + res->get_string(2);
 		managers[res->get_string(0)] = manager;
 	} while(res->next_row());
 }
 
-void employee_table::get_employee_records( string source, string &result ){
+void employee_table::get_employee_instance( string source, string &result ){
+
+		string sql = "SELECT employee_id, first_name, last_name, age, address, mobile_phone, office_phone, home_phone, email, job_title, department_name, reports_to, create_date, created_by FROM employee WHERE employee_id = ";
+
+		if(!source.empty())
+		sql.append("'").append(source).append("'");
+		query q(*conn, sql);
+		LOG("sql", sql);
+		auto res = q.emit_result();
+	
+		stringstream ss;
+
+		bool first = true;
+		ss << "{ \"recordset\":[ ";
+		do{
+			if(first)
+				first = false;
+			else{
+				ss << ", ";
+			}
+			ss << "{" ;
+			ss << "\"employee_id\"" << ":" << "\"" << res->get_string(0) << "\"" << ",";
+			ss << "\"first_name\"" << ":" << "\"" << res->get_string(1) << "\"" << ",";
+			ss << "\"last_name\"" << ":" << "\"" << res->get_string(2) << "\"" << ",";
+			ss << "\"age\"" << ":" << "\"" << to_string(res->get_int(3)) << "\"" << ",";
+			ss << "\"address\"" << ":" << "\"" << res->get_string(4) << "\"" << ",";
+			ss << "\"mobile_phone\"" << ":" << "\"" << res->get_string(5) << "\"" << ",";
+			ss << "\"office_phone\"" << ":" << "\"" << res->get_string(6) << "\"" << ",";
+			ss << "\"home_phone\"" << ":" << "\"" << res->get_string(7) << "\"" << ",";
+			ss << "\"email\"" << ":" << "\"" << res->get_string(8) << "\"" << ",";
+			ss << "\"job_title\"" << ":" << "\"" << res->get_string(9) << "\"" << ",";
+			ss << "\"department_name\"" << ":" << "\"" << res->get_string(10) << "\"" << ",";
+			ss << "\"reports_to\"" << ":" << "\"" << res->get_string(11) << "\"" << ",";
+			ss << "\"create_date\"" << ":" << "\"" << res->get_string(12) << "\"" << ",";
+			ss << "\"created_by\"" << ":" << "\"" << res->get_string(13) << "\""; 
+			ss << "}";
+		} while(res->next_row());
+
+		ss << " ] }";
+		result = ss.str();
+}
+void employee_table::get_employee_records(string source, string &result ){
 
 		string sql = "SELECT employee_id, first_name, last_name, age, address, mobile_phone, office_phone, home_phone, email, job_title, department_name, reports_to, create_date, created_by FROM employee ";
 
@@ -155,4 +196,27 @@ void employee_table::get_employee_records( string source, string &result ){
 
 		ss << " ] }";
 		result = ss.str();
+}
+void employee_table::update_employee_table()
+{
+	stringstream ss;
+	ss <<  "UPDATE employee SET ";
+	ss << "first_name =" << "\"" << first_name << "\"" << ",";
+	ss << "last_name =" << "\"" << last_name << "\"" << ",";
+	ss << "age =" << "\"" << age << "\"" << ",";
+	ss << "address =" << "\"" << address << "\"" << ",";
+	ss << "mobile_phone =" << "\"" << mobile_phone << "\"" << ",";
+	ss << "office_phone =" << "\"" << office_phone << "\"" << ",";
+	ss << "home_phone =" << "\"" << home_phone << "\"" << ",";
+	ss << "email =" << "\"" << email << "\"" << ",";
+	ss << "job_title =" << "\"" << job_title << "\"" << ",";
+	ss << "department_name =" << "\"" << department_name << "\"" << ",";
+	ss << "reports_to =" << "\"" << reports_to << "\"" << ",";
+	ss << "create_date =" << "\"" << create_date << "\"" << ",";
+	ss << "created_by =" << "\"" << created_by << "\"" ;
+	ss << " WHERE employee_id =" << "\"" << employee_id << "\"" ;
+
+	string sql = ss.str();
+	command c(*conn, sql);
+	c.emit();
 }

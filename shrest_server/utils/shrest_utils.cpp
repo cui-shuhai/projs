@@ -62,19 +62,18 @@ void utils::build_json(std::map<std::string, std::string> &m, string &result)
 	stringstream ss;
 
 	bool first = true;
-	ss << "{ \"recordset\":[ ";
+	ss << "{ "; //\"recordset\":[ ";
 	for( const auto &v : m ){
 		if(first)
 			first = false;
 		else{
 			ss << ", ";
 		}
-		ss << "{" ;
-		ss << "\"key\"" <<  ":" << "\"" << v.first << "\""  << ", "; 
-		ss << "\"value\"" << ":" << "\"" << v.second << "\"" ; 
-		ss << "}";
-	} 
-	ss << " ] }";
+		ss << "\"" <<  v.first << "\""  << ": "; 
+		ss << "\"" << v.second << "\"" ; 
+	}
+	ss << "  }";
+	//ss << " ] }";
 	result = ss.str();
 
 }

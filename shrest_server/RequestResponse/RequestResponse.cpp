@@ -73,14 +73,14 @@ LOG(rq_->method, rq_->path);
 		if(true){
 			string campaign_sql = "SELECT campaign_id, campaign_name, assign_to, campaign_status, creator_id, start_date, close_date, description "
 	" FROM campaign WHERE assign_to = ";
-			campaign_sql.append(user_id).append(" ORDER BY campaign_status");
+			campaign_sql.append("'").append(user_id).append("'").append(" ORDER BY campaign_status");
 		
 			campaign_table ct;
 			auto cp_query = ct.BuildQuery(campaign_sql);
 			auto res = cp_query->emit_result();
 
 			string count_sql = "SELECT count(*) FROM campaign WHERE assign_to = ";
-			count_sql.append(user_id);
+			count_sql.append("'").append(user_id).append("'");
 
 			auto count_query = ct.BuildQuery(count_sql);
 			auto count_res = count_query->emit_result();
@@ -106,14 +106,14 @@ LOG(rq_->method, rq_->path);
 		//Opportunities
 		if(true){
 			string opportunity_sql = "SELECT opportunity_name, first_name, last_name, opportunity.contact_id, pipeline, amount, probablity, close_date FROM opportunity JOIN contact ON opportunity.contact_id = contact.contact_id WHERE assign_to = ";
-			opportunity_sql.append(user_id).append(" ORDER BY pipeline");
+			opportunity_sql.append("'").append(user_id).append("'").append(" ORDER BY pipeline");
 		
 			activity_table ot;
 			auto ot_query = ot.BuildQuery(opportunity_sql);
 			auto res = ot_query->emit_result();
 
 			string count_sql = "SELECT count(1) FROM opportunity JOIN contact ON opportunity.contact_id = contact.contact_id WHERE assign_to = ";
-			count_sql.append(user_id);
+			count_sql.append("'").append(user_id).append("'");
 
 			auto count_query = ot.BuildQuery(count_sql);
 			auto count_res = count_query->emit_result();
@@ -142,14 +142,14 @@ LOG(rq_->method, rq_->path);
 			string activity_sql = "SELECT  activity_name, activity_type, "
 						"activity_status, activity_priority, note, when_created " 
 						" FROM activity   WHERE who_preside = ";
-			activity_sql.append(user_id).append(" ORDER BY when_created");
+			activity_sql.append("'").append(user_id).append("'").append(" ORDER BY when_created");
 		
 			activity_table at;
 			auto at_query = at.BuildQuery(activity_sql);
 			auto res = at_query->emit_result();
 
 			string count_sql = "SELECT count(1) FROM activity  WHERE who_preside = ";
-			count_sql.append(user_id);
+			count_sql.append("'").append(user_id).append("'");
 
 			auto count_query = at.BuildQuery(count_sql);
 			auto count_res = count_query->emit_result();
@@ -176,14 +176,14 @@ LOG(rq_->method, rq_->path);
 		if(true){
 			string task_sql = "SELECT task_name, task.description, task_status.description, due_date  " 
 " FROM task INNER JOIN task_status ON task.status = task_status.status_id WHERE task.assignee = ";
-			task_sql.append(user_id).append(" ORDER BY due_date");
+			task_sql.append("'").append(user_id).append("'").append(" ORDER BY due_date");
 		
 			task_table tt;
 			auto tt_query = tt.BuildQuery(task_sql);
 			auto res = tt_query->emit_result();
 
 			string count_sql = "SELECT count(1)  FROM task INNER JOIN task_status ON task.status = task_status.status_id WHERE task.assignee = ";
-			count_sql.append(user_id);
+			count_sql.append("'").append(user_id).append("'");
 
 			auto count_query = tt.BuildQuery(count_sql);
 			auto count_res = count_query->emit_result();

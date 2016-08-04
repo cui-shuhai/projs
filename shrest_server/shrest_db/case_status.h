@@ -13,14 +13,14 @@ class case_status : public SqlAccessor{
 
 public:
 	case_status();
-	case_status(int status, string description);
+	case_status(string status, string description);
 	~case_status();
 	
 	void add_case_status();
-	void get_case_statuss( std::map<int, string> &m);
+	void get_case_statuss( std::map<string, string> &m);
 
 private:
-	int status;
+	string status_name;
 	string description;
 };
 

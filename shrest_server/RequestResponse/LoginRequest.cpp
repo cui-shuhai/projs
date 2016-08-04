@@ -42,6 +42,7 @@ void LoginRequest::Process(){
 		user_table ut(m["username"]);
 		ut.set_pass_word(m["password"]);
 		if(!ut.check_login_exist()){
+			LOG("login failed");
 			LoaderFile loader; // Let's use the default loader that loads files from disk.
 			Template t( loader );
 			t.load( "web/loginfailure.html" );
@@ -57,6 +58,7 @@ void LoginRequest::Process(){
 
 		auto sessionId = utils::create_uuid();
 
+		LOG("Add or update to seesion table: ", m["username"]);
 		cookie_table ct(sessionId, m["username"], m["password"]);
 
 		ct.add_cookie_table();

@@ -1,0 +1,67 @@
+{% include web/header.html %}
+
+{% block meat %}
+
+<form action="employee" method="post">
+	  <fieldset>
+	    <legend>Add employee:</legend>
+<table>
+<tr>
+	    <td> First Name: </td>
+	    <td> <input type="text" name="first_name" value=""> </td>
+</tr><tr>
+	    <td> Last Name: </td>
+	    <td> <input type="text" name="last_name" value=""> </td>
+</tr><tr>
+	<td> Title: </td>
+	    <td> <select name ="job_title" style="width: 150px;"> 
+	 {% block titles %} 
+		 <option value="{{ title_value }}"> {{ title_show }}</option> 
+	 {% endblock %} 
+ 	     </select> </td>
+</tr><tr>
+	    <td> Department: </td>
+	    <td> <select name ="department" style="width: 150px;"> 
+	 {% block departments %} 
+		 <option value="{{ department_value }}"> {{ department_show }}</option> 
+	 {% endblock %} 
+ 	    </select> </td>
+</tr><tr>
+	    <td> Report to: </td>
+	    <td> <select name ="report_to" style="width: 150px;"> 
+	 {% block report_to %} 
+		 <option value="{{ report_to_value }}"> {{ report_to_show }}</option> 
+	 {% endblock %} 
+ 	    </select> </td>
+</tr><tr>
+	    <td> Age: </td>
+	    <td> <select name ="age" style="width: 150px;"> 
+	 {% block ages %} 
+		 <option value="{{ age_value }}"> {{ age_show }}</option> 
+	 {% endblock %} 
+ 	    </select>  </td>
+</tr><tr>
+	    <td> Address: </td>
+	    <td> <input type="text" name="address" value=""> </td>
+</tr><tr>
+	    <td> Mobile: </td>
+	    <td> <input type="text" name="mobile_phone" value=""> </td>
+</tr><tr>
+	    <td> Office phone: </td>
+	    <td> <input type="text" name="office_phone" value=""> </td>
+</tr><tr>
+	    <td> Home Phone: </td>
+	    <td> <input type="text" name="home_phone" value=""> </td>
+</tr><tr>
+	    <td> Email: </td>
+	    <td> <input type="text" name="email" value=""> </td>
+</tr><tr>
+	    <td> <input type="submit" id="submit"  name="submit" value="add"> </td>
+</table>
+	  </fieldset>
+</form>
+
+{% endblock %}
+
+
+{% include web/footer.html %}

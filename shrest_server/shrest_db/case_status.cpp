@@ -21,9 +21,9 @@ case_status::case_status():SqlAccessor()
 {
 }
 
-case_status::case_status(int status_, string description_):
+case_status::case_status(string status_name_, string description_):
 	SqlAccessor(),
-	status{status_},
+	status_name{status_name_},
 	description{description_}
 {
 }
@@ -33,24 +33,24 @@ case_status::~case_status(){
 
 void case_status::add_case_status(){
 
-	auto sql = "INSERT INTO 'case_status'(status, description) VALUES(?, ?)";
+	auto sql = "INSERT INTO 'case_status'(status_name, description) VALUES(?, ?)";
 
 	command c(*conn, sql);
-	c.bind(1, status);
+	c.bind(1, status_name);
 	c.bind(2, description);
 
 	c.emit();
 
 }
 
-void case_status::get_case_statuss( map<int, string> &m)
+void case_status::get_case_statuss( map<string, string> &m)
 {	
-	string sql = "SELECT status, description FROM case_status";
+	string sql = "SELECT status_name, description FROM case_status";
 	
 	query q(*conn, sql);
 	auto res = q.emit_result();
 
 	do{
-		m[res->get_int(0)] = res->get_string(1);
+		m[res->get_string(0)] = res->get_string(1);
 	} while(res->next_row());
 }

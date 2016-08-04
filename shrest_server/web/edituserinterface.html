@@ -2,16 +2,12 @@
 
 {% block meat %}
 
-<form id="add_form"  action="user" method="post">
+<form id="edit_form"  action="user" method="post">
 	  <fieldset>
-	    <legend>Select user to add login account</legend>
+	    <legend>Edit user </legend>
+<input type="hidden" id="user_id"  name="user_id" value="{{ user_id }}">
 <table>
 <tr>
-  	<td>Select User:</td><td>
-	    <select id="user_id" name ="new_user" style="width: 150px;">
- 	    </select>
-	    </td>
-</tr><tr>
 <td>Login ID:</td><td>
 	    <input type="text" name="login_name" value="">
 	    </td>
@@ -45,7 +41,7 @@
 {% endblock %}
 
 <script>
-function fill_users() {
+function fill_user() {
   
 	$.getJSON("/user", {"action":"list",  "directory": "all_users"}, function(jsonData) {
 		var sourceValues = $( "#user_id" );
@@ -82,14 +78,14 @@ function fill_profiles() {
 }
 
 function validateFormInput(){
-	//var email = $("#add_form input[name=email]").val();
+	//var email = $("#edit_form input[name=email]").val();
 //verify tmail
 	
 	return true;
 }
 
 $( document ).ready( function(){
-	fill_users();
+	fill_user();
 	fill_roles();
 	fill_profiles();
 });

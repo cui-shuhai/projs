@@ -21,9 +21,9 @@ case_type::case_type():SqlAccessor()
 {
 }
 
-case_type::case_type(int type_, string description_):
+case_type::case_type(string type_name_, string description_):
 	SqlAccessor(),
-	type{type_},
+	type_name{type_name_},
 	description{description_}
 {
 }
@@ -33,24 +33,24 @@ case_type::~case_type(){
 
 void case_type::add_case_type(){
 
-	auto sql = "INSERT INTO 'case_type'(type, description) VALUES(?, ?)";
+	auto sql = "INSERT INTO 'case_type'(type_name, description) VALUES(?, ?)";
 
 	command c(*conn, sql);
-	c.bind(1, type);
+	c.bind(1, type_name);
 	c.bind(2, description);
 
 	c.emit();
 
 }
 
-void case_type::get_case_types( map<int, string> &m)
+void case_type::get_case_types( map<string, string> &m)
 {	
-	string sql = "SELECT type, description FROM case_type";
+	string sql = "SELECT type_name, description FROM case_type";
 	
 	query q(*conn, sql);
 	auto res = q.emit_result();
 
 	do{
-		m[res->get_int(0)] = res->get_string(1);
+		m[res->get_string(0)] = res->get_string(1);
 	} while(res->next_row());
 }

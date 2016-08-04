@@ -72,7 +72,7 @@ void case_table::update_case_table()
 
 
 	stringstream ss;
-	 ss <<  "UPDATE cast_tbl SET ";
+	 ss <<  "UPDATE case_tbl SET ";
 		ss << "case_id = " << "\"" << case_id << "\"" << ","; 
 		ss << "assign_to = " << "\"" << assign_to << "\"" << ","; 
 		ss << "contact = " << "\"" << contact << "\"" << ","; 

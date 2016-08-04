@@ -4,6 +4,7 @@
 #define BOOST_SPIRIT_THREADSAFE
 #include <boost/regex.hpp>//g++4.8 regex implementation has some errors but fixed fin 4.9
 
+#include <string>
 #include <sqlite/transaction.hpp>
 #include <sqlite/connection.hpp>
 #include <sqlite/query.hpp>
@@ -72,16 +73,7 @@ void AddOpportunityInterface::ProcessGet(){
 		Template t( loader );
 		t.load("web/editopportunityinterface.html");
 		t.block("meat").repeat(1);
-
 		t.block("meat")[0].set("opportunity_id", opportunity["opportunity_id"]);
-		t.block("meat")[0].set("opportunity_name", opportunity["opportunity_name"]);
-		t.block("meat")[0].set("assign_to", opportunity["assign_to"]);
-		t.block("meat")[0].set("contact_id", opportunity["contact_id"]);
-		t.block("meat")[0].set("creator_id", opportunity["creator_id"]);
-		t.block("meat")[0].set("close_date", opportunity["close_date"]);
-		t.block("meat")[0].set("pipeline", opportunity["pipeline"]);
-		t.block("meat")[0].set("amount", opportunity["amount"]);
-		t.block("meat")[0].set("probablity", opportunity["probablity"]);
 		t.render( cs ); 
 		
 		
@@ -149,14 +141,15 @@ void AddOpportunityInterface::ProcessPost(){
 	if(boost::iequals(m["submit"], "add")){
 
 	try {
-
-		auto content=rq_->content.string();
-		std::map<std::string, std::string> m;
-		utils::parse_kye_value(content, m);
-		opportunity_table c( utils::create_uuid() , m["opportunity_name"], m["assign_to"], m["contact_id"], m["creator_id"], m["close_date"], m["pipeline"], stod(m["amount"]), m["probablity"]);
+		string amt = m["amount"];
+		auto amount = std::stod(amt);
+		//opportunity_table c( utils::create_uuid() , m["opportunity_name"], m["assign_to"], m["contact_id"], m["creator_id"], m["close_date"], m["pipeline"], stod(m["amount"]), m["probablity"]);
+		opportunity_table c( utils::create_uuid() , m["opportunity_name"], m["assign_to"], m["contact_id"], m["creator_id"], m["close_date"], m["pipeline"], amount, m["probablity"]);
 
 		c.add_opportunity_table();
+		stringstream cs;
 
+/*
 		LoaderFile loader; // Let's use the default loader that loads files from disk.
 
 		Template t( loader );
@@ -172,10 +165,11 @@ void AddOpportunityInterface::ProcessPost(){
 		t.block("meat")[0].set("assignee", m["assignee"]);
 		t.block("meat")[0].set("assigner", m["assigner"]);
 		t.block("meat")[0].set("creator", m["creator"]);
-	
-
-		stringstream cs;
 		t.render( cs ); // Render the template with the variables we've set above
+	
+*/
+
+		cs << "opportunity added" << endl;
  
 		
 		cs.seekp(0, ios::end);
@@ -189,5 +183,29 @@ void AddOpportunityInterface::ProcessPost(){
 		return;
 	}
 	if(boost::iequals(m["submit"], "save")){
+	try {
+
+		opportunity_table ot( m["opportunity_id"] , m["opportunity_name"], m["assign_to"], m["contact_id"], m["creator_id"], m["close_date"], m["pipeline"], stod(m["amount"]), m["probablity"]);
+
+		ot.update_opportunity_table();
+
+		LoaderFile loader; 
+
+		Template t( loader );
+
+		stringstream cs;
+
+		cs << "opportunity saved" << endl;
+		t.render( cs ); 
+ 
+		
+		cs.seekp(0, ios::end);
+		rs_ <<  cs.rdbuf();
+		rs_.flush();
+		
+	}
+	catch(exception& e) {
+		rs_ << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n" << e.what();
+	}
 	}
 }

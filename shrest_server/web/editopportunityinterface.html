@@ -1,0 +1,66 @@
+{% include web/header.html %}
+
+{% block meat %}
+
+<form action="opportunity" method="post">
+
+<input type="hidden" id="opportunity_id"  name="opportunity_id" value="{{ opportunity_id }}">
+<legend>Opportunity to edit :</legend>
+
+<table>
+<tr>
+<td>Opportunity_name: </td><td><input type="text" name="opportunity_name" value=""> </td>
+<td>Assign_to: </td><td><input type="text" name="assign_to" value=""> </td>
+</tr><tr>
+<td>Contact_id: </td><td><input type="text" name="contact_id" value=""> </td>
+<td>Creator_id: </td><td><input type="text" name="creator_id" value=""> </td>
+</tr><tr>
+<td>Close_date: </td><td><input type="text" name="close_date" value=""> </td>
+<td>Pipeline: </td><td><input type="text" name="pipeline" value=""> </td>
+</tr><tr>
+<td>Amount: </td><td><input type="text" name="amount" value=""> </td>
+<td>Probablity: </td><td><input type="text" name="probablity" value=""> </td>
+</tr><tr>
+<td><input type="submit"  name="submit" value="save"></td>
+</tr>
+</table>
+
+	  </fieldset>
+</form>
+{% endblock %}
+<br><br>
+
+ 
+<script>
+
+
+function fill_form() {
+  
+	var opportunity_id = $("#opportunity_id").val();
+	var qjson = {};
+	qjson["action"] = "list";
+	qjson["directory"] = "edit_opportunity";
+	qjson["opportunity_id"] = opportunity_id;
+	$.getJSON("/opportunity", qjson, function(jsonData) {
+	var opportunityValues = jsonData ;
+	$("input[name='opportunity_id']").val(opportunityValues["opportunity_id"]);
+	$("input[name='opportunity_name']").val(opportunityValues["opportunity_name"]);
+	$("input[name='assign_to']").val(opportunityValues["assign_to"]);
+	$("input[name='contact_id']").val(opportunityValues["contact_id"]);
+	$("input[name='creator_id']").val(opportunityValues["creator_id"]);
+	$("input[name='close_date']").val(opportunityValues["close_date"]);
+	$("input[name='pipeline']").val(opportunityValues["pipeline"]);
+	$("input[name='amount']").val(opportunityValues["amount"]);
+	$("input[name='probablity']").val(opportunityValues["probablity"]);
+})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) { })
+//	alert(XMLHttpRequest.responseText);
+}
+
+$( document ).ready( function() {
+	fill_form();
+	});
+ 
+</script>
+
+{% include web/footer.html %}

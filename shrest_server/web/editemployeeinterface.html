@@ -1,8 +1,11 @@
 {% include web/header.html %}
 
-<form action="employee" id="add_form"  method="post">
+<form action="employee" id="edit_form"  method="post">
 	  <fieldset>
-	    <legend>Add employee:</legend>
+	    <legend>Edit employee:</legend>
+{% block meat %}
+<input type="hidden" id="employee_id"  name="employee_id" value="{{ employee_id }}">
+{% endblock %}
 <table>
 <tr>
 	    <td> First Name: </td>
@@ -12,22 +15,22 @@
 	    <td> <input type="text" name="last_name" value=""> </td>
 </tr><tr>
 	<td> Title: </td>
-	    <td> <select name ="job_title" id="job_title_id" style="width: 150px;"> 
+	    <td> <select name ="job_title" style="width: 150px;"> 
  	     </select> </td>
 </tr><tr>
 	    <td> Department: </td>
-	    <td> <select id ="department_id" name ="department" style="width: 150px;"> 
+	    <td> <select name ="department" style="width: 150px;"> 
  	    </select> </td>
 </tr><tr>
 	    <td> Report to: </td>
-	    <td> <select  id ="report_to_id" name ="report_to" style="width: 150px;"> 
+	    <td> <select name ="report_to" style="width: 150px;"> 
  	    </select> </td>
 </tr><tr>
 	    <td> Age: </td>
-	    <td> <select  id ="age_id" name ="age" style="width: 150px;"> 
+	    <td> <select name ="age" style="width: 150px;"> 
  	    </select>  </td>
 </tr><tr>
-	    <td> Address: </td>
+	    <td> Editress: </td>
 	    <td> <input type="text" name="address" value=""> </td>
 </tr><tr>
 	    <td> Mobile: </td>
@@ -40,19 +43,39 @@
 	    <td> <input type="text" name="home_phone" value=""> </td>
 </tr><tr>
 	    <td> Email: </td>
-	    <td> <input type="email" name="email" value=""> </td>
+	    <td> <input type="text" name="email" value=""> </td>
 </tr><tr>
-	    <td> <input type="submit" onclick="return validateFormInput();"  id="submit"  name="submit" value="add"> </td>
+	    <td> <input type="submit" onclick="return validateFormInput();"  id="submit"  name="submit" value="save"> </td>
 </table>
 	  </fieldset>
 </form>
 
 <script>
-function fill_job_title() {
+function fill_instace(){
+  
+	var employee_id = $("#employee_id").value();
+	$.getJSON("/employee", {"action":"list",  "directory": "employee_instance", "employee_id" : employee_id }, function(jsonData) {
+		var recordset = jsonData.recordset;
+		$("#edit_form input[name=first_name]").value = recordset["first_name"];
+
+		fill_job_title( recordset["job_title"] );
+		fill_department( recordset["department"] );
+		fill_report_to( recordset["report_to"] );
+		fill_age( recordset["age"] );
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) { })
+	alert(XMLHttpRequest.responseText);
+}
+
+
+function fill_job_title( current_val ) {
   
 	$.getJSON("/employee", {"action":"list",  "directory": "job_title"}, function(jsonData) {
 		var sourceValues = $( "#job_title_id" );
 		$.each(jsonData.recordset,function(key, value) {
+if(current_val == value)
+		sourceValues.append('<option value=' + key + " selected" +  '>' + value + '</option>');
+else
 		sourceValues.append('<option value=' + key + '>' + value + '</option>');
 		});
 	})
@@ -60,7 +83,7 @@ function fill_job_title() {
 	alert(XMLHttpRequest.responseText);
 }
 
-function fill_department() {
+function fill_department( current_val ) {
   
 	$.getJSON("/employee", { "action":"list", "directory": "department_name" }, function(jsonData) {
 	var statusValues = $( "#department_id" );
@@ -72,19 +95,19 @@ function fill_department() {
 	alert(XMLHttpRequest.responseText);
 }
 
-function fill_report_to() {
+function fill_report_to( current_val ) {
   
 	$.getJSON("/employee", { "action":"list", "directory": "report_to" }, function(jsonData) {
 	var ratingValues = $( "#report_to_id" );
 	$.each(jsonData.recordset,function(key, value) {
-	ratingValues.append('<option value=' + value.key + '>' + value.value + '</option>');
+	ratingValues.append('<option value=' + key + '>' + value + '</option>');
 	});
 	})
 	 .error(function (XMLHttpRequest, textStatus, errorThrown) { })
 	alert(XMLHttpRequest.responseText);
 }
 
-function fill_age() {
+function fill_age( current_val ) {
   
 	var ratingValues = $( "#age_id" );
 	var i = 0;
@@ -93,17 +116,14 @@ function fill_age() {
 }
 
 function validateFormInput(){
-	var email = $("#add_form input[name=email]").val();
+	var email = $("#edit_form input[name=email]").val();
 //verify tmail
 	
 	return true;
 }
 
 $( document ).ready( function(){
-	fill_job_title();
-	fill_department();
-	fill_report_to();
-	fill_age();
+	fill_instace();
 });
  
 </script>

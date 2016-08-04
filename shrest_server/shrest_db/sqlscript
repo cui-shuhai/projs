@@ -346,11 +346,16 @@ CREATE TABLE 'product'(
 
 CREATE TABLE 'order'( 
 	'order_id' char(36) PRIMARY KEY,
-	'customer_id' int,
-	'product_id' int,
+	'customer_id' char(36),
+	'product_id' char(36),
 	'order_amount' decimal(8,2),
-	'date' date NOT NULL,
-	'order_status' int
+	'order_date' date NOT NULL,
+	'order_status' char(20)
+);
+
+CREATE TABLE 'order_status'( 
+	'status_name' char(20) PRIMARY KEY,
+	'description' char(30)
 );
 
 CREATE TABLE 'cookie'( 
@@ -420,22 +425,22 @@ CREATE TABLE 'campaign'(
 	
 
 CREATE TABLE 'case_status'(
-	'status' char(20) PRIMARY KEY,
+	'tatusi_name' char(20) PRIMARY KEY,
 	'description' varchar(20)
 );
 
 CREATE TABLE 'case_priority'(
-	'priority' char(20) PRIMARY KEY,
+	'priority_name' char(20) PRIMARY KEY,
 	'description' varchar(20)
 );
 
 CREATE TABLE 'case_type'(
-	'type' char(20) PRIMARY KEY,
+	'type_name' char(20) PRIMARY KEY,
 	'description' varchar(20)
 );
 
 CREATE TABLE 'case_reason'(
-	'reason' char(20) PRIMARY KEY,
+	'reason_name' char(20) PRIMARY KEY,
 	'description' varchar(20)
 );
 

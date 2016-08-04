@@ -112,9 +112,8 @@ void user_table::get_user_list( map<string, string> &m){
 		m[res->get_string(2)] = res->get_string(0) + res->get_string(1);
 	} while(res->next_row());
 }
+
 void user_table::get_user_records( string source, string &result ){
-
-
 
 		string sql = "SELECT login_name, pass_word, employee_id, role_name, profile_name, create_date, creator_id FROM crm_user ";
 
@@ -127,7 +126,7 @@ void user_table::get_user_records( string source, string &result ){
 		stringstream ss;
 
 		bool first = true;
-		ss << "{ \"user\":[ ";
+		ss << "{ \"recordset\":[ ";
 		do{
 			if(first)
 				first = false;

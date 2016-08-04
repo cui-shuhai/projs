@@ -114,7 +114,39 @@ void AddCaseInterface::ProcessGet(){
 		t.block("meat")[0].set("assign_to", case_tbl["assign_to"]);
 		t.block("meat")[0].set("contact", case_tbl["contact"]);
 		t.block("meat")[0].set("subject", case_tbl["subject"]);
+		/*{
+			std::map<string, string> values;
+			priority cs;
+			cs.get_case_priority(values);
+			Block & block = t.block( "meat" )[ 0 ].block( "priority" );
+			auto rows = values.size();
+			block.repeat(rows);
+			int i = 0;
+			for(const auto &v :values)
+			{
+				block[i].set("priority_value", v.first);
+				block[i].set("priority_show", v.first);
+			}
+		}
+		*/
 		t.block("meat")[0].set("priority", case_tbl["priority"]);
+		/*
+		{
+			std::map<string, string> values;
+			case_status cs;
+			cs.get_case_statuss(values);
+			Block & block = t.block( "meat" )[ 0 ].block( "case_status" );
+			auto rows = values.size();
+			block.repeat(rows);
+			int i = 0;
+			for(const auto &v :values)
+			{
+				block[i].set("case_status_value", v.first);
+				block[i].set("case_status_show", v.first);
+			}
+		}
+		*/
+
 		t.block("meat")[0].set("case_status", case_tbl["case_status"]);
 		t.block("meat")[0].set("type", case_tbl["type"]);
 		t.block("meat")[0].set("reason", case_tbl["reason"]);

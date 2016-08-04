@@ -38,21 +38,12 @@
  
 <script>
 function fill_customer() {
-  
-	$.getJSON("/lead", {"action":"list", "directory": "add_customer" }, function(jsonData) {
-	var leadValues = $( "#origin_id" );
-	$.each(jsonData.recordset,function(key, value) {
-	leadValues.append('<option value=' + value.key + '>' + value.value + '</option>');
-	});
-	})
-	.error(function() { alert("error"); });
 }
 
 $( document ).ready( function() {
 	fill_customer();
 	});
  
-//$( "#origin_id" ).change( fill_customer );
 </script>
 
 {% include web/footer.html %}

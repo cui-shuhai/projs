@@ -13,14 +13,14 @@ class case_priority : public SqlAccessor{
 
 public:
 	case_priority();
-	case_priority(int priority, string description);
+	case_priority(string priority_name, string description);
 	~case_priority();
 	
 	void add_case_priority();
-	void get_case_prioritys( std::map<int, string> &m);
+	void get_case_prioritys( std::map<string, string> &m);
 
 private:
-	int priority;
+	string priority_name;
 	string description;
 };
 

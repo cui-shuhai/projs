@@ -1,0 +1,64 @@
+{% include web/header.html %}
+
+<h3>Current orders list: </h3>
+
+
+<fieldset>
+<legend>XXXXX</legend>
+
+<table id="order_table" border="1">
+
+</table>
+<br><br>
+<a href="/orders?action=add">
+<button id="add_order"   type="button">Add Case</button>
+</a>
+
+</fieldset>
+
+<script>
+
+function listCases() {
+
+  
+	$.getJSON("/order", {"action":"list", "directory": "order_content"}, function(jsonData) {
+
+		var sourceTable= $( "#order_table" );
+		tr = $('<tr/>');
+		tr.append("<th>" + "Click Edit..."  + "</th>")
+		tr.append("<th>" + "Customer_id" + "</th>");
+		tr.append("<th>" + "Product_id" + "</th>");
+		tr.append("<th>" + "Order_amount" + "</th>");
+		tr.append("<th>" + "Order_date" + "</th>");
+		tr.append("<th>" + "Order_status" + "</th>");
+		sourceTable.append(tr);
+
+		$.each(jsonData.orders ,function(key, value) {
+
+
+			tr = $('<tr/>');
+                         tr.append("<td>" + "<a href=\"/orders?action=edit&directory=order&order_id=" + value.order_id +"\"" +">Go...</a>"  + "</td>");
+			tr.append("<td>" + value.Customer_id + "</td>");
+			tr.append("<td>" + value.Product_id + "</td>");
+			tr.append("<td>" + value.Order_amount + "</td>");
+			tr.append("<td>" + value.Order_date + "</td>");
+			tr.append("<td>" + value.Order_status + "</td>");
+			sourceTable.append(tr);
+		});
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	alert(XMLHttpRequest.responseText);
+	});
+}
+
+
+$( document ).ready( function(){
+	listCases();
+});
+ 
+</script>
+ 
+
+
+{% include web/footer.html %}
+ 

@@ -21,9 +21,9 @@ case_reason::case_reason():SqlAccessor()
 {
 }
 
-case_reason::case_reason(int reason_, string description_):
+case_reason::case_reason(string reason_name_, string description_):
 	SqlAccessor(),
-	reason{reason_},
+	reason_name{reason_name_},
 	description{description_}
 {
 }
@@ -33,24 +33,24 @@ case_reason::~case_reason(){
 
 void case_reason::add_case_reason(){
 
-	auto sql = "INSERT INTO 'case_reason'(reason, description) VALUES(?, ?)";
+	auto sql = "INSERT INTO 'case_reason'(reason_name, description) VALUES(?, ?)";
 
 	command c(*conn, sql);
-	c.bind(1, reason);
+	c.bind(1, reason_name);
 	c.bind(2, description);
 
 	c.emit();
 
 }
 
-void case_reason::get_case_reasons( map<int, string> &m)
+void case_reason::get_case_reasons( map<string, string> &m)
 {	
-	string sql = "SELECT reason, description FROM case_reason";
+	string sql = "SELECT reason_name, description FROM case_reason";
 	
 	query q(*conn, sql);
 	auto res = q.emit_result();
 
 	do{
-		m[res->get_int(0)] = res->get_string(1);
+		m[res->get_string(0)] = res->get_string(1);
 	} while(res->next_row());
 }

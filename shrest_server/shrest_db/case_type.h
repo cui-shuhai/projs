@@ -13,14 +13,14 @@ class case_type : public SqlAccessor{
 
 public:
 	case_type();
-	case_type(int type, string description);
+	case_type(string type_name, string description);
 	~case_type();
 	
 	void add_case_type();
-	void get_case_types( std::map<int, string> &m);
+	void get_case_types( std::map<string, string> &m);
 
 private:
-	int type;
+	string type_name;
 	string description;
 };
 

@@ -10,7 +10,7 @@
 </table>
 <br><br>
 <a href="/addemployee">
-<button id="add_employee"  style="float:right" type="button">Add Employee</button>
+<button id="add_employee"   type="button">Add Employee</button>
 </a>
 
 </fieldset>
@@ -18,7 +18,7 @@
 <script>
 function listEmployees() {
   
-	$.getJSON("/listemployee", { "directory": "employee_content"}, function(jsonData) {
+	$.getJSON("/employee", { "action":"list", "directory": "employee_content"}, function(jsonData) {
 
 	var sourceTable= $( "#employee_table" );
 	tr = $('<tr/>');
@@ -44,7 +44,7 @@ function listEmployees() {
 
 
 		tr = $('<tr/>');
-		tr.append("<td>" + "<a href=\"/editemployee?from=employee&employee_id=" + value.employee_id +"\"" +">Go...</a>"  + "</td>");
+		tr.append("<td>" + "<a href=\"/employee?action=edit&from=employee&employee_id=" + value.employee_id +"\"" +">Go...</a>"  + "</td>");
 		tr.append("<td>" + value.first_name + "</td>");
 		tr.append("<td>" + value.last_name + "</td>");
 		tr.append("<td>" + value.age + "</td>");
@@ -56,10 +56,10 @@ function listEmployees() {
 		tr.append("<td>" + value.job_title + "</td>");
 		tr.append("<td>" + value.department_name + "</td>");
 		//tr.append("<td>" + value.reports_to + "</td>");
-		tr.append("<td>" + "<a href=\"/displaymployee?from=employee&employee_id=" + value.reports_to +"\"" +">View manager...</a>"  + "</td>");
+		tr.append("<td>" + "<a href=\"/employee?action=display&employee&employee_id=" + value.reports_to +"\"" +">View manager...</a>"  + "</td>");
 		tr.append("<td>" + value.create_date + "</td>");
 	//	tr.append("<td>" + value.created_by + "</td>");
-		tr.append("<td>" + "<a href=\"/displaymployee?from=employee&employee_id=" + value.created_by +"\"" +">Go...</a>"  + "</td>");
+		tr.append("<td>" + "<a href=\"/employee?action=display&employee&employee_id=" + value.created_by +"\"" +">Go...</a>"  + "</td>");
 		sourceTable.append(tr);
 		});
 	})

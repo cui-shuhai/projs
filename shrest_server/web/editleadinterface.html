@@ -8,26 +8,26 @@
 <legend>Lead to edit :</legend>
 <table>
 <tr>
-	<td>Company Name:</td><td><input type="text" name="company_name" value="{{ company_name }}"> </td>
-	<td>Contact Name:</td><td><input type="text" name="contact_name" value="{{ contact_name }}"> </td>
+	<td>Company Name:</td><td><input type="text" name="company_name" value=""> </td>
+	<td>Contact Name:</td><td><input type="text" name="contact_name" value=""> </td>
 </tr><tr>
-	<td>Mr/Ms:</td><td><input type="text" name="personal_title" value="{{ personal_title }}"> </td>
-	<td>First Name:</td><td><input type="text" name="first_name" value="{{ first_name }}"> </td>
+	<td>Mr/Ms:</td><td><input type="text" name="personal_title" value=""> </td>
+	<td>First Name:</td><td><input type="text" name="first_name" value=""> </td>
 </tr><tr>
-	<td>Last Name:</td><td><input type="text" name="last_name" value="{{ last_name }}"> </td>
-	<td>Phone:</td><td><input type="text" name="phone" value="{{ phone }}"> </td>
+	<td>Last Name:</td><td><input type="text" name="last_name" value=""> </td>
+	<td>Phone:</td><td><input type="text" name="phone" value=""> </td>
 </tr><tr>
-	<td>Email:</td><td><input type="text" name="email" value="{{ email }}"> </td>
-	<td>Street Addr:</td><td><input type="text" name="street_addr" value="{{ street_addr }}"> </td>
+	<td>Email:</td><td><input type="text" name="email" value=""> </td>
+	<td>Street Addr:</td><td><input type="text" name="street_addr" value=""> </td>
 </tr><tr>
-	<td>City:</td><td><input type="text" name="city" value="{{ city }}"> </td>
-	<td>State:</td><td><input type="text" name="state" value="{{ state }}"> </td>
+	<td>City:</td><td><input type="text" name="city" value=""> </td>
+	<td>State:</td><td><input type="text" name="state" value=""> </td>
 </tr><tr>
-	<td>Post Code:</td><td><input type="text" name="post_code" value="{{ post_code }}"> </td>
-	<td>Country:</td><td><input type="text" name="country" value="{{ country }}"> </td>
+	<td>Post Code:</td><td><input type="text" name="post_code" value=""> </td>
+	<td>Country:</td><td><input type="text" name="country" value=""> </td>
 </tr><tr>
-	<td>Bill Addr:</td><td><input type="text" name="bill_addr" value="{{ bill_addr }}"> </td>
-	<td>Ship Addr:</td><td><input type="text" name="ship_addr" value="{{ ship_addr }}"> </td>
+	<td>Bill Addr:</td><td><input type="text" name="bill_addr" value=""> </td>
+	<td>Ship Addr:</td><td><input type="text" name="ship_addr" value=""> </td>
 </tr><tr>
 	    <td><input type="submit"  name="submit" value="save"></td>
 </tr>
@@ -38,48 +38,6 @@
 {% endblock %}
 <button id="add contact"  onclick="addcontact();" value="Add Lead Contact">  Add Lead Contact </button>
 <br><br>
-<!--
-<form action="/addcontact" method="post">
-Company name:<input type="text" name="company_name" value=""><br><br>
-<table>
-<tr>
-<td>Status:</td> <td> <input type="text" name="status" value=""></td>
-<td>FirstName:</td> <td> <input type="text" name="firstName" value=""></td>
-</tr><tr>
-<td>LastName:</td> <td> <input type="text" name="lastName" value=""></td>
-<td>Address:</td> <td> <input type="text" name="address" value=""></td>
-</tr><tr>
-<td>Primary phone:</td> <td> <input type="text" name="primary_phone" value=""></td>
-<td>Alt phone:</td> <td> <input type="text" name="alt_phone" value=""></td>
-</tr><tr>
-<td>Mobile phone:</td> <td> <input type="text" name="mobile_phone" value=""></td>
-<td>Fax:</td> <td> <input type="text" name="fax" value=""></td>
-</tr><tr>
-<td>Email:</td> <td> <input type="text" name="email" value=""></td>
-<td>Twitter:</td> <td> <input type="text" name="twitter" value=""></td>
-</tr><tr>
-<td>Linkedin:</td> <td> <input type="text" name="linkedin" value=""></td>
-<td>Facebook:</td> <td> <input type="text" name="facebook" value=""></td>
-</tr><tr>
-<td>Job title:</td> <td> <input type="text" name="job_title" value=""></td>
-<td>Company id:</td> <td> <input type="text" name="company_id" value=""></td>
-</tr><tr>
-<td>When met:</td> <td> <input type="text" name="when_met" value=""></td>
-<td>Where met:</td> <td> <input type="text" name="where_met" value=""></td>
-</tr><tr>
-<td>Time zone:</td> <td> <input type="text" name="time_zone" value=""></td>
-<td>Main contact:</td> <td> <input type="text" name="main_contact" value=""></td>
-</tr><tr>
-<td>Out of_marketing:</td> <td> <input type="text" name="out_of_marketing" value=""></td>
-<td>Out of_billing:</td> <td> <input type="text" name="out_of_billing" value=""></td>
-</tr><tr>
-<td>Extra info:</td> <td> <input type="text" name="extra_info" value=""></td>
-<td>	    <input type="submit" value="   Submit  "></td>
-</tr>
-</table>
-	  </fieldset>
-</form>
-//-->
 
  
 <script>
@@ -88,26 +46,44 @@ function addcontact(){
 
 	var id  = $("#lead_id").val();
 	var cp = $("input[name=company_name]").val();
-	var url="/addcontact?directory=edit_lead&lead_id=";
+	var url="/contact?action=add&category=lead&source_id=";
 	url = url + id + '&' + "company=" + cp;
-	window.open(url, "myWindow", "width=500,height=200");
+	window.location = url;
+	//window.open(url, "myWindow", "width=500,height=200");
+
+function fill_form() {
+  
+	var lead_id = $("#lead_id").val();
+	var qjson = {};
+	qjson["action"] = "list";
+	qjson["directory"] = "edit_lead";
+	qjson["lead_id"] = lead_id;
+	$.getJSON("/lead", qjson, function(jsonData) {
+	var leadValues = jsonData ;
+		
+	$("input[name='company_name']").val(leadValues["company_name"]);
+	$("input[name='contact_name']").val(leadValues["contact_name"]);
+	$("input[name='personal_title']").val(leadValues["personal_title"]);
+	$("input[name='first_name']").val(leadValues["first_name"]);
+	$("input[name='last_name']").val(leadValues["last_name"]);
+	$("input[name='phone']").val(leadValues["phone"]);
+	$("input[name='email']").val(leadValues["email"]);
+	$("input[name='street_addr']").val(leadValues["street_addr"]);
+	$("input[name='city']").val(leadValues["city"]);
+	$("input[name='state']").val(leadValues["state"]);
+	$("input[name='post_code']").val(leadValues["post_code"]);
+	$("input[name='country']").val(leadValues["country"]);
+	$("input[name='bill_addr']").val(leadValues["bill_addr"]);
+	$("input[name='ship_addr']").val(leadValues["ship_addr"]);
+})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) { })
+//	alert(XMLHttpRequest.responseText);
 }
-//function fill_customer() {
-//  
-//	$.getJSON("/listlead", { "directory": "add_customer" }, function(jsonData) {
-//	var leadValues = $( "#origin_id" );
-//	$.each(jsonData.recordset,function(key, value) {
-//	leadValues.append('<option value=' + value.key + '>' + value.value + '</option>');
-//	});
-//	})
-//	.error(function() { alert("error"); });
-//}
-//
-//$( document ).ready( function() {
-//	fill_customer();
-//	});
+
+$( document ).ready( function() {
+	fill_form();
+	});
  
-//$( "#origin_id" ).change( fill_customer );
 </script>
 
 {% include web/footer.html %}

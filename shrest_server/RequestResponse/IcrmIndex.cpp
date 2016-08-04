@@ -31,7 +31,9 @@ void IcrmIndex::Process(){
 		auto content=rq_->content.string();
 		auto cookies = rq_->cookies;
 		
+		//check cookie to find name/pwd
 		if(!cookies.empty()){
+			LOG("key:" , cookies);
 			string key;
 			if(GetSession(key)){
 				cookie_table ct{key};
@@ -49,15 +51,13 @@ void IcrmIndex::Process(){
 			}	   	
 		}
 		
-		
 		stringstream content_stream;
-		LoaderFile loader; // Let's use the default loader that loads files from disk.
+		LoaderFile loader; 
 		Template t( loader );
 		t.load( "web/login.html" );        
 
-		t.render( content_stream ); // Render the template with the variables we've set above
+		t.render( content_stream ); 
  
-		//find length of content_stream (length received using content_stream.tellp())
 		content_stream.seekp(0, ios::end);
 
 		rs_ <<  content_stream.rdbuf();
