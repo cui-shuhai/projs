@@ -147,3 +147,23 @@ void user_table::get_user_records( string source, string &result ){
 		ss << " ] }";
 		result = ss.str();
 }
+
+void user_table::update_user_table(){
+
+	stringstream ss;
+	 ss <<  "UPDATE crm_user SET ";
+	//ss << "login_name =" << "\"" << login_name << "\"" << ",";
+	//ss << "pass_word =" << "\"" << pass_word << "\"" << ",";
+	ss << "employee_id =" << "\"" << employee_id << "\"" << ",";
+	ss << "role_name =" << "\"" << role_name << "\"" << ",";
+	ss << "profile_name =" << "\"" << profile_name << "\"" << ",";
+	ss << "create_date =" << "\"" << create_date << "\"" << ",";
+	ss << "creator_id =" << "\"" << creator_id << "\"" ;
+	ss << " WHERE login_name = " <<  "\"" << 	login_name <<  "\"" ;
+
+
+	auto sql = ss.str();
+	command c(*conn, sql);
+	c.emit();
+
+}

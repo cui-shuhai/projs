@@ -18,10 +18,7 @@ SOURCE=server_instance.cpp \
 	RequestResponse/AddTaskInterface.cpp \
 	RequestResponse/AddOrderInterface.cpp \
 	RequestResponse/AddCaseInterface.cpp \
-	RequestResponse/AddTaskRequest.cpp \
-	RequestResponse/ListTaskRequest.cpp \
 	RequestResponse/AddCampaignInterface.cpp \
-	RequestResponse/ListCaseRequest.cpp \
 	RequestResponse/AddOpportunityInterface.cpp \
 	RequestResponse/AddUserInterface.cpp \
 	RequestResponse/UploadDocumentInterface.cpp \

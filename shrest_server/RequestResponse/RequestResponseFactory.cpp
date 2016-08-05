@@ -15,16 +15,13 @@
 #include "AddTaskInterface.h"
 #include "AddOrderInterface.h"
 #include "AddCaseInterface.h"
-#include "AddTaskRequest.h"
 #include "AddUserInterface.h"
 #include "AddVendorInterface.h"
 #include "CustomerizeRequest.h"
 #include "UploadDocumentInterface.h"
 #include "UploadDocumentRequest.h"
 #include "AddEmployeeInterface.h"
-#include "ListTaskRequest.h"
 #include "AddCampaignInterface.h"
-#include "ListCaseRequest.h"
 #include "AddOpportunityInterface.h"
 #include "LoginRequest.h"
 #include "LogoutRequest.h"
@@ -76,12 +73,8 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 		return unique_ptr<UploadDocumentRequest>( new UploadDocumentRequest(rs, rq));	
 	if(name == "AddEmployeeInterface")
 		return unique_ptr<AddEmployeeInterface>( new AddEmployeeInterface(rs, rq));	
-	if(name == "ListTaskRequest")
-		return unique_ptr<ListTaskRequest>( new ListTaskRequest(rs, rq));	
 	if(name == "AddCampaignInterface")
 		return unique_ptr<AddCampaignInterface>( new AddCampaignInterface(rs, rq));	
-	if(name == "ListCaseRequest")
-		return unique_ptr<ListCaseRequest>( new ListCaseRequest(rs, rq));	
 	if(name == "AddOpportunityInterface")
 		return unique_ptr<AddOpportunityInterface>( new AddOpportunityInterface(rs, rq));	
 	if(name == "LoginRequest")

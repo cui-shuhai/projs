@@ -9,8 +9,8 @@
 
 </table>
 <br><br>
-<a href="/adduser">
-<button id="add_user"  style="float:right" type="button">Add User</button>
+<a href="/user?action=add">
+<button id="add_user"   type="button">Add User</button>
 </a>
 
 </fieldset>
@@ -18,7 +18,7 @@
 <script>
 function listUsers() {
   
-	$.getJSON("/listuser", { "directory": "user_content"}, function(jsonData) {
+	$.getJSON("/user", { "directory": "user_content"}, function(jsonData) {
 	var sourceTable= $( "#user_table" );
 	tr = $('<tr/>');
 	tr.append("<th>" + "login_name" + "</th>"); 

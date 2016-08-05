@@ -202,14 +202,8 @@ void AddEmployeeInterface::ProcessPost(){
 	
 		e.update_employee_table();
 
-		LoaderFile loader; // Let's use the default loader that loads files from disk.
-
-		Template t( loader );
 
 		cs << "employee updated" << endl;
-		//t.load( "web/addemployeeresponse.html" );
-
-		t.render( cs ); // Render the template with the variables we've set above
 		
 		cs.seekp(0, ios::end);
 		rs_ <<  cs.rdbuf();

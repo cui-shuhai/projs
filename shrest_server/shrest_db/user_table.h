@@ -21,6 +21,7 @@ public:
 	void add_user_table();
 	bool change_user_password(const string & loginName, const string &password) const;
 	bool update_user(const string& loginName, const string &pass, string employeeId, string rl, string p);
+	void update_user_table();
 
 	bool check_user_exist();
 	bool check_login_exist();

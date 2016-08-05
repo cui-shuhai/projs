@@ -344,7 +344,7 @@ CREATE TABLE 'product'(
 	'active_for_sale' bool
 );
 
-CREATE TABLE 'order'( 
+CREATE TABLE 'customer_order'( 
 	'order_id' char(36) PRIMARY KEY,
 	'customer_id' char(36),
 	'product_id' char(36),

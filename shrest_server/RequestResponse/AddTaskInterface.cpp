@@ -57,9 +57,73 @@ void AddTaskInterface::ProcessGet(){
 		return;
 	}
 	if(boost::iequals(m["action"], "edit")){
+	try {
+		stringstream cs;
+
+		LoaderFile loader; 
+		Template t( loader );
+		t.load("web/edittaskinterface.html");
+		t.block("meat").repeat(1);
+		t.block("meat")[0].set("task_id", m["task_id"]);
+		t.render( cs ); 
+		
+		
+		cs.seekp(0, ios::end);
+		string page = cs.str();
+		rs_ <<  cs.rdbuf();
+		rs_.flush();
+		
+	}
+	catch(exception& e) {
+		rs_ << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n" << e.what();
+	}
 
 	}
 	if(boost::iequals(m["action"], "list")){
+	try {
+		
+		stringstream cs;
+
+		string jstr;
+		if(m.size() == 1){ //list employee
+			LoaderFile loader; 
+			Template t( loader );
+			t.load( "web/listtask.html" );
+			t.render( cs ); 
+		}
+		else{ //for adding employee
+			string result;
+
+			string directory = m["directory"];
+			std::map<int, string> resultset;
+
+			if(directory.compare("task_content") == 0){
+				task_table tt;
+				string empty_str;
+				string resultset;
+				tt.get_task_records(empty_str, jstr);
+			}
+			else if(directory.compare("edit_task") == 0){
+				task_table tt;
+				std::map<string, string> result;
+				tt.set_task_id(m["task_id"]);
+				tt.get_task_instance(result);
+				utils::build_json(result, jstr);
+			}
+
+			utils::build_raw_response( jstr);
+			rs_ << jstr;
+			return;
+		}
+		
+		cs.seekp(0, ios::end);
+		rs_ <<  cs.rdbuf();
+		rs_.flush();
+		
+	}
+	catch(exception& e) {
+		rs_ << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n" << e.what();
+	}
 
 	}
 }
@@ -74,34 +138,15 @@ void AddTaskInterface::ProcessPost(){
 	if(boost::iequals(m["submit"], "add")){
 
 	try {
+		string id = utils::create_uuid();
 
-		auto content=rq_->content.string();
-		std::map<std::string, std::string> m;
-		utils::parse_kye_value(content, m);
-		task_table c( 0, m["task_name"], m["due_date"],stoi( m["status"] ), m["description"], stoi(m["assignee"]), stoi(m["assigner"]), stoi(m["creator"]));
-		c.add_task_table();
-		auto id = c.get_task_tableId();
+		task_table tt( id, m["task_name"], m["due_date"], m["status"], m["description"], m["assignee"], m["assigner"], m["creator"]);
+		tt.add_task_table();
 
-		LoaderFile loader; // Let's use the default loader that loads files from disk.
-
-		Template t( loader );
-
-		t.load( "web/addtaskresponse.html" );
-
-		t.block("meat").repeat(1);
-		t.block("meat")[0].set("task_id", to_string(id));
-		t.block("meat")[0].set("task_name", m["task_name"]);
-		t.block("meat")[0].set("due_date", m["due_date"]);
-		t.block("meat")[0].set("status", m["status"]);
-		t.block("meat")[0].set("description", m["description"]);
-		t.block("meat")[0].set("assignee", m["assignee"]);
-		t.block("meat")[0].set("assigner", m["assigner"]);
-		t.block("meat")[0].set("creator", m["creator"]);
 	
 
 		stringstream cs;
-		t.render( cs ); // Render the template with the variables we've set above
- 
+		cs << "task added" << endl; 
 		
 		cs.seekp(0, ios::end);
 		rs_ <<  cs.rdbuf();
@@ -114,5 +159,23 @@ void AddTaskInterface::ProcessPost(){
 		return;
 	}
 	if(boost::iequals(m["submit"], "save")){
+	try {
+
+		task_table tt( m["task_id"], m["task_name"], m["due_date"], m["status"], m["description"], m["assignee"], m["assigner"], m["creator"]);
+	
+		tt.update_task_table();
+
+		stringstream cs;
+
+		cs << "task updated" << endl;
+		
+		cs.seekp(0, ios::end);
+		rs_ <<  cs.rdbuf();
+		rs_.flush();
+		
+	}
+	catch(exception& e) {
+		rs_ << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n" << e.what();
+	}
 	}
 }

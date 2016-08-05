@@ -36,7 +36,8 @@ void CustomerizeRequest::Process(){
 
 		LoaderFile loader; 
 		Template t( loader );
-		t.load("web/customize.html");
+		t.load("web/desktop.html");
+		//t.load("web/customize.html");
 		t.render( cs ); 
 		
 		cs.seekp(0, ios::end);

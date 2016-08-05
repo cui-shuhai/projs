@@ -43,63 +43,11 @@ void AddUserInterface::ProcessGet(){
 	try {		
 		stringstream cs;
 				
-		LoaderFile loader; // Let's use the default loader that loads files from disk.
+		LoaderFile loader; 
 		Template t( loader );
 		t.load( "web/adduserinterface.html" );
-		t.block("meat").repeat(1); 
-		
-		if(true){
-			employee_table et;
-			std::map<string, string> employees;
-			et.get_employee_list(employees);
-			auto rows = employees.size();
 
-			Block & block = t.block( "meat" )[ 0 ].block( "user_block" );
-			block.repeat(rows);
-			int i = 0;
-			for(const auto & v : employees){
-				block[i].set("user_value", v.first);
-				block[i].set("user_show", v.second);
-				++i;
-			}
-		}
-
-		//role
-		if(true){
-			employee_role rt;
-			std::vector<string> roles;
-			rt.get_employee_roles(roles);
-			auto rows = roles.size();
-
-			Block & block = t.block( "meat" )[ 0 ].block( "role_block" );
-			block.repeat(rows);
-			int i = 0;
-			for(const auto & v : roles){
-				block[i].set("role_value", v);
-				block[i].set("role_show", v);
-				++i;
-			}
-		}
-
-		//profile
-		if(true){
-			employee_profile pt;
-			std::vector<string> profiles;
-			pt.get_employee_profiles(profiles);
-			auto rows = profiles.size();
-
-			Block & block = t.block( "meat" )[ 0 ].block( "profile_block" );
-			block.repeat(rows);
-			int i = 0;
-			for(const auto & v : profiles){
-				block[i].set("profile_value", v);
-				block[i].set("profile_show", v);
-				++i;
-			}
-		}
-
-		t.render( cs ); // Render the template with the variables we've set above
- 
+		t.render( cs ); 
 		
 		cs.seekp(0, ios::end);
 		rs_ <<  cs.rdbuf();
@@ -143,7 +91,7 @@ void AddUserInterface::ProcessGet(){
 		utils::parse_get_params(params, m);
 
 		string jstr;
-		if(m.size() == 0){ //list user
+		if(m.size() == 1){ //list user
 			LoaderFile loader; 
 			Template t( loader );
 			t.load( "web/listuser.html" );
@@ -238,5 +186,28 @@ void AddUserInterface::ProcessPost(){
 		return;
 	}
 	if(boost::iequals(m["submit"], "save")){
+	try{
+		user_table ut(m["login_name"], m["pass_word"], m["new_user"] , m["role_name"], m["profile_name"],m["create_date"] , m["creator_id"]);
+
+		ut.update_user_table();
+
+		LoaderFile loader; 
+
+		Template t( loader );
+
+		stringstream cs;
+
+		cs << "user saved" << endl;
+		t.render( cs ); 
+ 
+		
+		cs.seekp(0, ios::end);
+		rs_ <<  cs.rdbuf();
+		rs_.flush();
+		
+	}
+	catch(exception& e) {
+		rs_ << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n" << e.what();
+	}
 	}
 }
