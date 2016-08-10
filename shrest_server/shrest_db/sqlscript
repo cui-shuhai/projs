@@ -459,37 +459,37 @@ CREATE TABLE 'case_tbl'(
 	FOREIGN KEY(contact) REFERENCES contact(contact_id)
 );
 
-CREATE TABLE 'vendor'(
-'vendor_id' char(36) PRIMARY KEY,
+CREATE TABLE 'supplier'(
+'supplier_id' char(36) PRIMARY KEY,
 'account_num' varchar(20),
 'contact' char(36),
 'company_name' varchar(20),
 'credit_rating' char(20),
-'vendor_status' char(20), 
+'supplier_status' char(20), 
 'active_flag' char(20),
 'web_service_url' varchar(20),
 'last_update' date,
-FOREIGN KEY(credit_rating) REFERENCES vendor_rate(rate)
+FOREIGN KEY(credit_rating) REFERENCES supplier_rate(rate)
 );
 
-CREATE TABLE 'vendor_rating'(
+CREATE TABLE 'supplier_rating'(
 rating_name char(20) PRIMARY KEY,
 description varchar(20)
 );
 
-INSERT INTO 'vendor_rate'(rate_name ) VALUES
+INSERT INTO 'supplier_rate'(rate_name ) VALUES
 ( "Superior"),
 ( "Excellent"),
 ( "Above average"),
 ( "Average"),
 ( "Below average")
 
-CREATE TABLE 'vendor_status'(
+CREATE TABLE 'supplier_status'(
 status_name char(20) PRIMARY KEY,
 description varchar(20)
 );
 
-CREATE TABLE 'vendor_flag'(
+CREATE TABLE 'supplier_flag'(
 flag_name char(20) PRIMARY KEY,
 description varchar(20)
 );

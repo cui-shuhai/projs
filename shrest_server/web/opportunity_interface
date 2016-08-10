@@ -1,0 +1,398 @@
+<!-------------------------Search Header -------------------------//-->
+
+<fieldset>
+ <form id="search_opportunity" action="/opportunity", method="post">
+
+<table id="opportunity_search" >
+<tr>
+<td colspan="1" > <label for="opportunity_id">Opportunity_id:</lable</td>
+<td colspan="1" > <label for="opportunity_name">Opportunity_name:</lable</td>
+<td colspan="1" > <label for="assign_to">Assign_to:</lable</td>
+<td colspan="1" > <label for="contact_id">Contact_id:</lable</td>
+<td colspan="1" > <label for="creator_id">Creator_id:</lable</td>
+<td colspan="1" > <label for="close_date">Close_date:</lable</td>
+<td colspan="1" > <label for="pipeline">Pipeline:</lable</td>
+<td colspan="1" > <label for="amount">Amount:</lable</td>
+<td colspan="1" > <label for="probablity">Probablity:</lable</td>
+<td colspan="1" ></td>
+</tr> <tr>
+<td><input type="text" name="opportunity_id" id="txtopportunity_idAutoComplete" list="opportunity_idDatalist" value="" > <datalist id="opportunity_idDatalist"> </datalist></td>
+<td><input type="text" name="opportunity_name" id="txtopportunity_nameAutoComplete" list="opportunity_nameDatalist" value="" > <datalist id="opportunity_nameDatalist"> </datalist></td>
+<td><input type="text" name="assign_to" id="txtassign_toAutoComplete" list="assign_toDatalist" value="" > <datalist id="assign_toDatalist"> </datalist></td>
+<td><input type="text" name="contact_id" id="txtcontact_idAutoComplete" list="contact_idDatalist" value="" > <datalist id="contact_idDatalist"> </datalist></td>
+<td><input type="text" name="creator_id" id="txtcreator_idAutoComplete" list="creator_idDatalist" value="" > <datalist id="creator_idDatalist"> </datalist></td>
+<td><input type="text" name="close_date" id="txtclose_dateAutoComplete" list="close_dateDatalist" value="" > <datalist id="close_dateDatalist"> </datalist></td>
+<td><input type="text" name="pipeline" id="txtpipelineAutoComplete" list="pipelineDatalist" value="" > <datalist id="pipelineDatalist"> </datalist></td>
+<td><input type="text" name="amount" id="txtamountAutoComplete" list="amountDatalist" value="" > <datalist id="amountDatalist"> </datalist></td>
+<td><input type="text" name="probablity" id="txtprobablityAutoComplete" list="probablityDatalist" value="" > <datalist id="probablityDatalist"> </datalist></td>
+<td>    <input type="text" name="last_name" id="txtAutoComplete" list="lastnamelist" value="" > <datalist id="lastnamelist"> </datalist></td>
+<td><input type="submit"   name="submit" value="Search"></td>
+</tr>
+</table>
+</form>
+</fieldset>
+
+<script>
+
+
+
+$("#search_opportunity").submit(function(e){
+	var opportunity_id_value = $("#search_opportunity_id");
+	var opportunity_name_value = $("#search_opportunity_name");
+	var assign_to_value = $("#search_assign_to");
+	var contact_id_value = $("#search_contact_id");
+	var creator_id_value = $("#search_creator_id");
+	var close_date_value = $("#search_close_date");
+	var pipeline_value = $("#search_pipeline");
+	var amount_value = $("#search_amount");
+	var probablity_value = $("#search_probablity");
+
+	var query_filter = {};
+	query_filter["action"] = "list";
+	query_filter["directory"]="opportunity_content";
+
+	if(typeof opportunity_id_value.val() != "undefined" && opportunity_id.val().length != 0)
+		query_filter["opportunity_id;"] = opportunity_id;_value.val();
+	if(typeof opportunity_id_value.val() != "undefined" && opportunity_name.val().length != 0)
+		query_filter["opportunity_name;"] = opportunity_name;_value.val();
+	if(typeof opportunity_id_value.val() != "undefined" && assign_to.val().length != 0)
+		query_filter["assign_to;"] = assign_to;_value.val();
+	if(typeof opportunity_id_value.val() != "undefined" && contact_id.val().length != 0)
+		query_filter["contact_id;"] = contact_id;_value.val();
+	if(typeof opportunity_id_value.val() != "undefined" && creator_id.val().length != 0)
+		query_filter["creator_id;"] = creator_id;_value.val();
+	if(typeof opportunity_id_value.val() != "undefined" && close_date.val().length != 0)
+		query_filter["close_date;"] = close_date;_value.val();
+	if(typeof opportunity_id_value.val() != "undefined" && pipeline.val().length != 0)
+		query_filter["pipeline;"] = pipeline;_value.val();
+	if(typeof opportunity_id_value.val() != "undefined" && amount.val().length != 0)
+		query_filter["amount;"] = amount;_value.val();
+	if(typeof opportunity_id_value.val() != "undefined" && probablity.val().length != 0)
+		query_filter["probablity;"] = probablity;_value.val();
+
+	//$('#opportunity_table tbody > tr').remove();
+	$('#opportunity_table').empty();
+
+	$.getJSON("/opportunity", query_filter, function(jsonData) {
+		var sourceTable= $( "#opportunity_table" );
+		tr = $('<tr/>');
+		tr.append("<th>" + "Click Edit..." + "</th>"); 
+		tr.append("<th>" + "opportunity_id" + "</th>");
+		tr.append("<th>" + "opportunity_name" + "</th>");
+		tr.append("<th>" + "assign_to" + "</th>");
+		tr.append("<th>" + "contact_id" + "</th>");
+		tr.append("<th>" + "creator_id" + "</th>");
+		tr.append("<th>" + "close_date" + "</th>");
+		tr.append("<th>" + "pipeline" + "</th>");
+		tr.append("<th>" + "amount" + "</th>");
+		tr.append("<th>" + "probablity" + "</th>");
+		sourceTable.append(tr);
+
+		$.each(jsonData.customer ,function(key, value) {
+			tr = $('<tr class="edit_customer_link" />');
+                        tr.append("<td>" + "<a href=\"/opportunity?action=edit&&opportunity_id=" + value.opportunity_id +"\"" +">Go...</a>"  + "</td>");
+			tr.append("<td>" + "Click Edit..." + "</td>"); 
+			tr.append("<td>" + "opportunity_id" + "</td>");
+			tr.append("<td>" + "opportunity_name" + "</td>");
+			tr.append("<td>" + "assign_to" + "</td>");
+			tr.append("<td>" + "contact_id" + "</td>");
+			tr.append("<td>" + "creator_id" + "</td>");
+			tr.append("<td>" + "close_date" + "</td>");
+			tr.append("<td>" + "pipeline" + "</td>");
+			tr.append("<td>" + "amount" + "</td>");
+			tr.append("<td>" + "probablity" + "</td>");
+			sourceTable.append(tr);
+		});
+
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	//alert(XMLHttpRequest.responseText);
+	});
+	return false;
+}
+);
+
+</script>
+
+<!-------------------------List Table-------------------------//-->
+
+<fieldset>
+<legend>List Opportunity</legend>
+<table id="opportunity_table" border="1">
+</table>
+<br><br>
+</fieldset>
+
+<script>
+function listOpportunitys() {
+  
+	$.getJSON("/opportunity", {"action":"list",  "directory": "opportunity_content"}, function(jsonData) {
+
+		$( "#opportunity_table tr" ).remove();
+		$('#opportunity_table').empty();
+
+		var sourceTable= $( "#opportunity_table" );
+
+
+		tr = $('<tr/>');
+		tr.append("<th>" + "Click Edit..."  + "</th>");
+		tr.append("<th>" + "Opportunity_id" + "</th>");
+		tr.append("<th>" + "Opportunity_id" + "</th>");
+		tr.append("<th>" + "Opportunity_id" + "</th>");
+		tr.append("<th>" + "Opportunity_id" + "</th>");
+		tr.append("<th>" + "Opportunity_id" + "</th>");
+		tr.append("<th>" + "Opportunity_id" + "</th>");
+		tr.append("<th>" + "Opportunity_id" + "</th>");
+		tr.append("<th>" + "Opportunity_id" + "</th>");
+		tr.append("<th>" + "Opportunity_id" + "</th>");
+		sourceTable.append(tr);
+
+		var opportunity_id_value = $("#search_opportunity_id");
+		var opportunity_name_value = $("#search_opportunity_name");
+		var assign_to_value = $("#search_assign_to");
+		var contact_id_value = $("#search_contact_id");
+		var creator_id_value = $("#search_creator_id");
+		var close_date_value = $("#search_close_date");
+		var pipeline_value = $("#search_pipeline");
+		var amount_value = $("#search_amount");
+		var probablity_value = $("#search_probablity");
+
+
+		opportunity_id_value.empty();
+		opportunity_name_value.empty();
+		assign_to_value.empty();
+		contact_id_value.empty();
+		creator_id_value.empty();
+		close_date_value.empty();
+		pipeline_value.empty();
+		amount_value.empty();
+		probablity_value.empty();
+
+		opportunity_id_value.append('<option value=' + '' + '>' + "" + '</option>');
+		opportunity_id_value.append('<option value=' + '' + '>' + "" + '</option>');
+		opportunity_id_value.append('<option value=' + '' + '>' + "" + '</option>');
+		opportunity_id_value.append('<option value=' + '' + '>' + "" + '</option>');
+		opportunity_id_value.append('<option value=' + '' + '>' + "" + '</option>');
+		opportunity_id_value.append('<option value=' + '' + '>' + "" + '</option>');
+		opportunity_id_value.append('<option value=' + '' + '>' + "" + '</option>');
+		opportunity_id_value.append('<option value=' + '' + '>' + "" + '</option>');
+		opportunity_id_value.append('<option value=' + '' + '>' + "" + '</option>');
+
+		$.each(jsonData.opportunity ,function(key, value) {
+
+			tr = $('<tr class="edit_customer_link" />');
+                        tr.append("<td>" + "<a href=\"/opportunity?action=edit&&opportunity_id=" + value.opportunity_id +"\"" +">Go...</a>"  + "</td>");
+			tr.append("<td>" + "opportunity_id" + "</td>");
+			tr.append("<td>" + "opportunity_name" + "</td>");
+			tr.append("<td>" + "assign_to" + "</td>");
+			tr.append("<td>" + "contact_id" + "</td>");
+			tr.append("<td>" + "creator_id" + "</td>");
+			tr.append("<td>" + "close_date" + "</td>");
+			tr.append("<td>" + "pipeline" + "</td>");
+			tr.append("<td>" + "amount" + "</td>");
+			tr.append("<td>" + "probablity" + "</td>");
+			sourceTable.append(tr);
+
+			$('#opportunity_idDatalist').append("<option value='" + value.opportunity_id  + "'>");
+			$('#opportunity_nameDatalist').append("<option value='" + value.opportunity_name  + "'>");
+			$('#assign_toDatalist').append("<option value='" + value.assign_to  + "'>");
+			$('#contact_idDatalist').append("<option value='" + value.contact_id  + "'>");
+			$('#creator_idDatalist').append("<option value='" + value.creator_id  + "'>");
+			$('#close_dateDatalist').append("<option value='" + value.close_date  + "'>");
+			$('#pipelineDatalist').append("<option value='" + value.pipeline  + "'>");
+			$('#amountDatalist').append("<option value='" + value.amount  + "'>");
+			$('#probablityDatalist').append("<option value='" + value.probablity  + "'>");
+
+
+		});
+
+		opportunity_id_value.trigger('change', true);
+		opportunity_name_value.trigger('change', true);
+		assign_to_value.trigger('change', true);
+		contact_id_value.trigger('change', true);
+		creator_id_value.trigger('change', true);
+		close_date_value.trigger('change', true);
+		pipeline_value.trigger('change', true);
+		amount_value.trigger('change', true);
+		probablity_value.trigger('change', true);
+
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	alert(XMLHttpRequest.responseText);
+	});
+}
+
+function edit_opportunity_link_click(l){
+	var url = $(l).attr('href');
+	$("#edit_opportunity_form").show();
+	fill_edit_form(url);	
+	return false;
+}
+
+
+</script>
+ 
+
+<!-------------------------Edit -------------------------//-->
+
+
+<form action="opportunity" id="edit_opportunity_form" method="post">
+
+<input type="hidden" id="opportunity_id"  name="opportunity_id" value="{{ opportunity_id }}">
+<legend>Opportunity to edit :</legend>
+
+<table>
+<tr>
+<td><label for="contact_id"> Edit:</label></td>
+<td><input type="text" id="contact_id"  name="contact_id" value="" readonly="readonly" ></td>
+</tr><tr>
+<td>Opportunity_name: </td><td><input type="text" name="opportunity_name" value=""> </td>
+<td>Assign_to: </td><td><input type="text" name="assign_to" value=""> </td>
+</tr><tr>
+<td>Contact_id: </td><td><input type="text" name="contact_id" value=""> </td>
+<td>Creator_id: </td><td><input type="text" name="creator_id" value=""> </td>
+</tr><tr>
+<td>Close_date: </td><td><input type="text" name="close_date" value=""> </td>
+<td>Pipeline: </td><td><input type="text" name="pipeline" value=""> </td>
+</tr><tr>
+<td>Amount: </td><td><input type="text" name="amount" value=""> </td>
+<td>Probablity: </td><td><input type="text" name="probablity" value=""> </td>
+</tr><tr>
+<td><input type="submit"  name="submit" value="save"></td>
+</tr>
+</table>
+
+	  </fieldset>
+</form>
+
+
+<!---------------------------Add Opportunity --------------------//-->
+
+<fieldset>
+<form action="/opportunity" method="post">
+	    <legend>Adding opportunity:</legend>
+<table>
+<tr>
+<td>Opportunity_name:</td>
+<td><input type="text" name="opportunity_name" value=""></td>
+
+</tr><tr>
+<td>Assign_to:</td>
+<td><input type="text" name="assign_to" value=""></td>
+
+</tr><tr>
+<td>Contact_id:</td>
+<td><input type="text" name="contact_id" value=""></td>
+</tr><tr>
+
+<td>Creator_id:</td>
+<td><input type="text" name="creator_id" value=""></td>
+</tr><tr>
+
+<td>Close_date:</td>
+<td><input type="text" name="close_date" value=""></td>
+</tr><tr>
+
+<td>Pipeline:</td>
+<td><input type="text" name="pipeline" value=""></td>
+</tr><tr>
+
+<td>Amount:</td>
+<td><input type="text" name="amount" value=""></td>
+</tr><tr>
+
+<td>Probablity:</td>
+<td>
+	    <select name ="opportunity_probablity" style="width: 150px;"></select>
+</td>
+</tr>
+
+</table>
+	    <TEXTAREA NAME="note" COLS=50 ROWS=6></TEXTAREA><br><br>	
+	    <button type="submit" id="submit" name="submit" value="add">Add </button>
+</form>
+</fieldset>
+
+<script>
+
+function addopportunity(){
+
+	$("#add_opportunity_customer_id").val($("#edit_customer_id").val());
+	$("#add_opportunity_form").show();
+	return false;
+}
+
+
+function fill_edit_form( lid ) {
+  
+	$("#edit_opportunity_form input[name='opportunity_id']").val(lid);
+	$("#edit_opportunity_form input[name='opportunity_id']").trigger('change', true);
+
+	var qjson = {};
+	qjson["action"] = "list";
+	qjson["directory"] = "edit_opportunity_desktop";
+	qjson["opportunity_id"] = lid;
+	$.getJSON("/opportunity", qjson, function(jsonData) {
+	var opportunityValues = jsonData ;
+
+	$("#edit_opportunity_form input[name='opportunity_id']").val(opportunity_Values["opportunity_id"]);
+	$("#edit_opportunity_form input[name='opportunity_name']").val(opportunity_Values["opportunity_name"]);
+	$("#edit_opportunity_form input[name='assign_to']").val(opportunity_Values["assign_to"]);
+	$("#edit_opportunity_form input[name='contact_id']").val(opportunity_Values["contact_id"]);
+	$("#edit_opportunity_form input[name='creator_id']").val(opportunity_Values["creator_id"]);
+	$("#edit_opportunity_form input[name='close_date']").val(opportunity_Values["close_date"]);
+	$("#edit_opportunity_form input[name='pipeline']").val(opportunity_Values["pipeline"]);
+	$("#edit_opportunity_form input[name='amount']").val(opportunity_Values["amount"]);
+	$("#edit_opportunity_form input[name='probablity']").val(opportunity_Values["probablity"]);
+
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) { })
+	alert(XMLHttpRequest.responseText);
+}
+ 
+
+$("#edit_opportunity_form").submit(function(e){
+	var button_name = $("#edit_customer_from").context.activeElement.name;
+
+	var opportunity_data = {};
+	opportunity_data["opportunity_id"] = $("#edit_opportunity_form input[name='opportunity_id']").val();
+	opportunity_data["opportunity_name"] = $("#edit_opportunity_form input[name='opportunity_name']").val();
+	opportunity_data["assign_to"] = $("#edit_opportunity_form input[name='assign_to']").val();
+	opportunity_data["contact_id"] = $("#edit_opportunity_form input[name='contact_id']").val();
+	opportunity_data["creator_id"] = $("#edit_opportunity_form input[name='creator_id']").val();
+	opportunity_data["close_date"] = $("#edit_opportunity_form input[name='close_date']").val();
+	opportunity_data["pipeline"] = $("#edit_opportunity_form input[name='pipeline']").val();
+	opportunity_data["amount"] = $("#edit_opportunity_form input[name='amount']").val();
+	opportunity_data["probablity"] = $("#edit_opportunity_form input[name='probablity']").val();
+
+	 $.post("/opportunity", opportunity_data, function(data, status){
+		//alert("Data: " + data + "\nStatus: " + status);
+	    })
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	//alert(XMLHttpRequest.responseText);
+	});
+
+	if(button_name == "submit")
+	{
+		$("#edit_opportunity_form").hide();
+		$("#opportunity_list_add_button").show();
+	}
+	return false;
+});
+</script>
+<script>
+
+
+function init_opportunity_page(){
+	$("#edit_opportunity_form").hide();
+	$("#add_opportunity_form").hide();
+	listOpportunitys();
+};
+
+$(document).ready( function(){
+init_opportunity_page();
+});
+
+</script>
+ 
+

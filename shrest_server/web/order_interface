@@ -1,0 +1,325 @@
+<!-------------------------Search Header -------------------------//-->
+
+<fieldset>
+ <form id="search_order" action="/order", method="post">
+
+<table id="order_search" >
+<tr>
+<td colspan="1" > <label for=" order_id"> order_id:</lable</td>
+<td colspan="1" > <label for=" customer_id"> customer_id:</lable</td>
+<td colspan="1" > <label for=" product_id"> product_id:</lable</td>
+<td colspan="1" > <label for=" order_amount"> order_amount:</lable</td>
+<td colspan="1" > <label for=" order_date"> order_date:</lable</td>
+<td colspan="1" > <label for=" order_status"> order_status:</lable</td>
+<td colspan="1" ></td>
+</tr> <tr>
+
+<td><input type="text" name=" order_id" id="txt order_idAutoComplete" list=" order_id_data_list" value="" > <datalist id=" order_id_ata_list"> </datalist></td>
+<td><input type="text" name=" customer_id" id="txt customer_idAutoComplete" list=" customer_id_data_list" value="" > <datalist id=" customer_id_ata_list"> </datalist></td>
+<td><input type="text" name=" product_id" id="txt product_idAutoComplete" list=" product_id_data_list" value="" > <datalist id=" product_id_ata_list"> </datalist></td>
+<td><input type="text" name=" order_amount" id="txt order_amountAutoComplete" list=" order_amount_data_list" value="" > <datalist id=" order_amount_ata_list"> </datalist></td>
+<td><input type="text" name=" order_date" id="txt order_dateAutoComplete" list=" order_date_data_list" value="" > <datalist id=" order_date_ata_list"> </datalist></td>
+<td><input type="text" name=" order_status" id="txt order_statusAutoComplete" list=" order_status_data_list" value="" > <datalist id=" order_status_ata_list"> </datalist></td>
+<td><input type="submit"   name="submit" value="Search"></td>
+</tr>
+</table>
+</form>
+</fieldset>
+
+<script>
+
+
+$("#search_order").submit(function(e){
+	var  order_id_value = $("#search_ order_id");
+	var  customer_id_value = $("#search_ customer_id");
+	var  product_id_value = $("#search_ product_id");
+	var  order_amount_value = $("#search_ order_amount");
+	var  order_date_value = $("#search_ order_date");
+	var  order_status_value = $("#search_ order_status");
+
+	var query_filter = {};
+	query_filter["action"] = "list";
+	query_filter["directory"]="order_content";
+
+	if(typeof order_id_value.val() != "undefined"  && order_id_value.val().length != 0)
+		query_filter["order_id"] = order_id_value.val();
+	if(typeof order_id_value.val() != "undefined"  && customer_id_value.val().length != 0)
+		query_filter["customer_id"] = customer_id_value.val();
+	if(typeof order_id_value.val() != "undefined"  && product_id_value.val().length != 0)
+		query_filter["product_id"] = product_id_value.val();
+	if(typeof order_id_value.val() != "undefined"  && order_amount_value.val().length != 0)
+		query_filter["order_amount"] = order_amount_value.val();
+	if(typeof order_id_value.val() != "undefined"  && order_date_value.val().length != 0)
+		query_filter["order_date"] = order_date_value.val();
+	if(typeof order_id_value.val() != "undefined"  && order_status_value.val().length != 0)
+		query_filter["order_status"] = order_status_value.val();
+
+	//$('#order_table tbody > tr').remove();
+	$('#order_table').empty();
+
+	$.getJSON("/order", query_filter, function(jsonData) {
+		var sourceTable= $( "#order_table" );
+		tr = $('<tr/>');
+		tr.append("<th>" + "Click Edit..." + "</th>"); 
+		tr.append("<th>" + " order_id" + "</th>");
+		tr.append("<th>" + " customer_id" + "</th>");
+		tr.append("<th>" + " product_id" + "</th>");
+		tr.append("<th>" + " order_amount" + "</th>");
+		tr.append("<th>" + " order_date" + "</th>");
+		tr.append("<th>" + " order_status" + "</th>");
+		sourceTable.append(tr);
+
+		$.each(jsonData.customer ,function(key, value) {
+			tr = $('<tr class="edit_customer_link" />');
+                        tr.append("<td>" + "<a href=\"/order?action=edit&&order_id=" + value.order_id +"\"" +">Go...</a>"  + "</td>");
+			tr.append("<td>" + "Click Edit..." + "</td>"); 
+			tr.append("<td>" + " order_id" + "</td>");
+			tr.append("<td>" + " customer_id" + "</td>");
+			tr.append("<td>" + " product_id" + "</td>");
+			tr.append("<td>" + " order_amount" + "</td>");
+			tr.append("<td>" + " order_date" + "</td>");
+			tr.append("<td>" + " order_status" + "</td>");
+			sourceTable.append(tr);
+		});
+
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	//alert(XMLHttpRequest.responseText);
+	});
+	return false;
+}
+);
+
+</script>
+
+<!-------------------------List Table-------------------------//-->
+
+<fieldset>
+<legend>List Order</legend>
+<table id="order_table" border="1">
+</table>
+<br><br>
+</fieldset>
+
+<script>
+function listOrders() {
+  
+	$.getJSON("/order", {"action":"list",  "directory": "order_content"}, function(jsonData) {
+
+		$( "#order_table tr" ).remove();
+		$('#order_table').empty();
+
+		var sourceTable= $( "#order_table" );
+
+
+		tr = $('<tr/>');
+		tr.append("<th>" + "Click Edit..."  + "</th>");
+		tr.append("<th>" + " order_id" + "</th>");
+		tr.append("<th>" + " customer_id" + "</th>");
+		tr.append("<th>" + " product_id" + "</th>");
+		tr.append("<th>" + " order_amount" + "</th>");
+		tr.append("<th>" + " order_date" + "</th>");
+		tr.append("<th>" + " order_status" + "</th>");
+		sourceTable.append(tr);
+
+		var order_id_value = $("#search_order_id");
+		var customer_id_value = $("#search_customer_id");
+		var product_id_value = $("#search_product_id");
+		var order_amount_value = $("#search_order_amount");
+		var order_date_value = $("#search_order_date");
+		var order_status_value = $("#search_order_status");
+
+
+		order_id_value.empty();
+		customer_id_value.empty();
+		product_id_value.empty();
+		order_amount_value.empty();
+		order_date_value.empty();
+		order_status_value.empty();
+
+
+		order_id_value.append('<option value=' + '' + '>' + "" + '</option>');
+		customer_id_value.append('<option value=' + '' + '>' + "" + '</option>');
+		product_id_value.append('<option value=' + '' + '>' + "" + '</option>');
+		order_amount_value.append('<option value=' + '' + '>' + "" + '</option>');
+		order_date_value.append('<option value=' + '' + '>' + "" + '</option>');
+		order_status_value.append('<option value=' + '' + '>' + "" + '</option>');
+
+		$.each(jsonData.order ,function(key, value) {
+
+
+			tr = $('<tr class="edit_customer_link" />');
+                        tr.append("<td>" + "<a href=\"/order?action=edit&&order_id=" + value.order_id +"\"" +">Go...</a>"  + "</td>");
+			tr.append("<td>" + "order_id" + "</td>");
+			tr.append("<td>" + "customer_id" + "</td>");
+			tr.append("<td>" + "product_id" + "</td>");
+			tr.append("<td>" + "order_amount" + "</td>");
+			tr.append("<td>" + "order_date" + "</td>");
+			tr.append("<td>" + "order_status" + "</td>");
+			sourceTable.append(tr);
+
+			$('#order_id_data_list').append("<option value='" + value.order_id  + "'>");
+			$('#customer_id_data_list').append("<option value='" + value.customer_id  + "'>");
+			$('#product_id_data_list').append("<option value='" + value.product_id  + "'>");
+			$('#order_amount_data_list').append("<option value='" + value.order_amount  + "'>");
+			$('#order_date_data_list').append("<option value='" + value.order_date  + "'>");
+			$('#order_status_data_list').append("<option value='" + value.order_status  + "'>");
+
+
+		});
+
+		order_id_value.trigger('change', true);
+		customer_id_value.trigger('change', true);
+		product_id_value.trigger('change', true);
+		order_amount_value.trigger('change', true);
+		order_date_value.trigger('change', true);
+		order_status_value.trigger('change', true);
+
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	alert(XMLHttpRequest.responseText);
+	});
+}
+
+function edit_order_link_click(l){
+	var url = $(l).attr('href');
+	$("#edit_order_form").show();
+	fill_edit_form(url);	
+	return false;
+}
+
+
+</script>
+ 
+
+<!-------------------------Edit -------------------------//-->
+
+
+
+<form action="order" id="edit_order_form" method="post">
+
+<table>
+<tr>
+<td>Order_id</td><td><input type="text" id="order_id" name="order_id" value"" > </td>
+</tr><tr>
+<td>Customer_id</td><td><input type="text" id="customer_id" name="customer_id" value"" > </td>
+</tr><tr>
+<td>Product_id</td><td><input type="text" id="product_id" name="product_id" value"" > </td>
+</tr><tr>
+<td>Order_amount</td><td><input type="text" id="order_amount" name="order_amount" value"" > </td>
+</tr><tr>
+<td>Order_date</td><td><input type="text" id="order_date" name="order_date" value"" > </td>
+</tr><tr>
+<td>Order_status</td><td><input type="text" id="order_status" name="order_status" value"" > </td>
+</tr><tr>
+<td><input type="submit"  name="submit" value="save"></td>
+</tr>
+</table>
+
+	  </fieldset>
+</form>
+
+
+<!---------------------------Add Order --------------------//-->
+
+<fieldset>
+<form action="/order" method="post">
+	    <legend>Adding order:</legend>
+
+<table>
+<tr>
+<td>Order_id</td><td><input type="text" id="order_id" name="order_id" value"" > </td>
+</tr><tr>
+<td>Customer_id</td><td><input type="text" id="customer_id" name="customer_id" value"" > </td>
+</tr><tr>
+<td>Product_id</td><td><input type="text" id="product_id" name="product_id" value"" > </td>
+</tr><tr>
+<td>Order_amount</td><td><input type="text" id="order_amount" name="order_amount" value"" > </td>
+</tr><tr>
+<td>Order_date</td><td><input type="text" id="order_date" name="order_date" value"" > </td>
+</tr><tr>
+<td>Order_status</td><td><input type="text" id="order_status" name="order_status" value"" > </td>
+</tr><tr>
+<td><input type="submit"  name="submit" value="save"></td>
+</tr>
+</table>
+</form>
+</fieldset>
+
+<script>
+
+function addorder(){
+
+	$("#add_order_customer_id").val($("#edit_customer_id").val());
+	$("#add_order_form").show();
+	return false;
+}
+
+
+function fill_edit_form( lid ) {
+  
+	$("#edit_order_form input[name='order_id']").val(lid);
+	$("#edit_order_form input[name='order_id']").trigger('change', true);
+
+	var qjson = {};
+	qjson["action"] = "list";
+	qjson["directory"] = "edit_order_desktop";
+	qjson["order_id"] = lid;
+	$.getJSON("/order", qjson, function(jsonData) {
+	var orderValues = jsonData ;
+
+	$("#edit_order_form input[name='order_id']").val(order_Values["order_id"]);
+	$("#edit_order_form input[name='customer_id']").val(order_Values["customer_id"]);
+	$("#edit_order_form input[name='product_id']").val(order_Values["product_id"]);
+	$("#edit_order_form input[name='order_amount']").val(order_Values["order_amount"]);
+	$("#edit_order_form input[name='order_date']").val(order_Values["order_date"]);
+	$("#edit_order_form input[name='order_status']").val(order_Values["order_status"]);
+
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) { })
+	alert(XMLHttpRequest.responseText);
+}
+ 
+
+$("#edit_order_form").submit(function(e){
+	var button_name = $("#edit_customer_from").context.activeElement.name;
+
+	var order_data = {};
+	order_data["order_id"] = $("#edit_order_form input[name='order_id']").val();
+	order_data["customer_id"] = $("#edit_order_form input[name='customer_id']").val();
+	order_data["product_id"] = $("#edit_order_form input[name='product_id']").val();
+	order_data["order_amount"] = $("#edit_order_form input[name='order_amount']").val();
+	order_data["order_date"] = $("#edit_order_form input[name='order_date']").val();
+	order_data["order_status"] = $("#edit_order_form input[name='order_status']").val();
+
+	 $.post("/order", order_data, function(data, status){
+		//alert("Data: " + data + "\nStatus: " + status);
+	    })
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	//alert(XMLHttpRequest.responseText);
+	});
+
+	if(button_name == "submit")
+	{
+		$("#edit_order_form").hide();
+		$("#order_list_add_button").show();
+	}
+	return false;
+});
+</script>
+<script>
+
+
+function init_order_page(){
+	$("#edit_order_form").hide();
+	$("#add_order_form").hide();
+	listOrders();
+};
+
+$(document).ready( function(){
+init_order_page();
+});
+
+</script>
+ 
+

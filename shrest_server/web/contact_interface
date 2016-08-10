@@ -55,27 +55,27 @@ $("#search_contact").submit(function(e){
 	query_filter["directory"] = "contact_content";
 
 	if(typeof contact_id_value.val() != "undefined" && contact_id_value.val().length != 0)
-		query_filter["	contact_id"] = contact_id_value.val();
+		query_filter["contact_id"] = contact_id_value.val();
 	if(typeof status_value.val() != "undefined" && status_value.val().length != 0)
-		query_filter["	status"] = status_value.val();
+		query_filter["status"] = status_value.val();
 	if(typeof first_name_value.val() != "undefined" && first_name_value.val().length != 0)
-		query_filter["	first_name"] = first_name_value.val();
+		query_filter["first_name"] = first_name_value.val();
 	if(typeof last_name_value.val() != "undefined" && last_name_value.val().length != 0)
-		query_filter["	last_name"] = last_name_value.val();
+		query_filter["last_name"] = last_name_value.val();
 	if(typeof contact_from_value.val() != "undefined" && contact_from_value.val().length != 0)
-		query_filter["	contact_from"] = contact_from_value.val();
+		query_filter["contact_from"] = contact_from_value.val();
 	if(typeof address_value.val() != "undefined" && address_value.val().length != 0)
-		query_filter["	address"] = address_value.val();
+		query_filter["address"] = address_value.val();
 	if(typeof primary_phone_value.val() != "undefined" && primary_phone_value.val().length != 0)
-		query_filter["	primary_phone"] = primary_phone_value.val();
+		query_filter["primary_phone"] = primary_phone_value.val();
 	if(typeof email_value.val() != "undefined" && email_value.val().length != 0)
-		query_filter["	email"] = email_value.val();
+		query_filter["email"] = email_value.val();
 	if(typeof job_title_value.val() != "undefined" && job_title_value.val().length != 0)
-		query_filter["	job_title"] = job_title_value.val();
+		query_filter["job_title"] = job_title_value.val();
 	if(typeof company_id_value.val() != "undefined" && company_id_value.val().length != 0)
-		query_filter["	company_id"] = company_id_value.val();
+		query_filter["company_id"] = company_id_value.val();
 	if(typeof main_contact_value.val() != "undefined" && main_contact_value.val().length != 0)
-		query_filter["	main_contact"] = main_contact_value.val();
+		query_filter["main_contact"] = main_contact_value.val();
   
 	//$('#customer_table tbody > tr').remove();
 	$('#contact_table').empty();
@@ -160,7 +160,7 @@ $("#search_contact").submit(function(e){
 </fieldset>
 
 <script>
-function listContacts() {
+function listContacts(){
   
 	$.getJSON("/contact", {"action":"list",  "directory": "contact_content"}, function(jsonData) {
 
@@ -192,17 +192,17 @@ function listContacts() {
 		company_id_value.empty();
 		main_contact_value.empty();
 
-		contact_id_value.append("'<option value=' + '' + '>' + "" + '</option>');
-		status_value.append("'<option value=' + '' + '>' + "" + '</option>');
-		first_name_value.append("'<option value=' + '' + '>' + "" + '</option>');
-		last_name_value.append("'<option value=' + '' + '>' + "" + '</option>');
-		contact_from_value.append("'<option value=' + '' + '>' + "" + '</option>');
-		address_value.append("'<option value=' + '' + '>' + "" + '</option>');
-		primary_phone_value.append("'<option value=' + '' + '>' + "" + '</option>');
-		email_value.append("'<option value=' + '' + '>' + "" + '</option>');
-		job_title_value.append("'<option value=' + '' + '>' + "" + '</option>');
-		company_id_value.append("'<option value=' + '' + '>' + "" + '</option>');
-		main_contact_value.append("'<option value=' + '' + '>' + "" + '</option>');
+		contact_id_value.append('<option value=' + '' + '>' + "" + '</option>');
+		status_value.append('<option value=' + '' + '>' + "" + '</option>');
+		first_name_value.append('<option value=' + '' + '>' + "" + '</option>');
+		last_name_value.append('<option value=' + '' + '>' + "" + '</option>');
+		contact_from_value.append('<option value=' + '' + '>' + "" + '</option>');
+		address_value.append('<option value=' + '' + '>' + "" + '</option>');
+		primary_phone_value.append('<option value=' + '' + '>' + "" + '</option>');
+		email_value.append('<option value=' + '' + '>' + "" + '</option>');
+		job_title_value.append('<option value=' + '' + '>' + "" + '</option>');
+		company_id_value.append('<option value=' + '' + '>' + "" + '</option>');
+		main_contact_value.append('<option value=' + '' + '>' + "" + '</option>');
 
 		tr = $('<tr/>');
 		tr.append("<th>" + "Click Edit..."  + "</th>");
@@ -262,17 +262,17 @@ function listContacts() {
                         tr.append("<td>" +  value.contact_id + "</td>");
 			sourceTable.append(tr);
 
-			contact_id_value.append("<option value=' + value.contact_id + '>' + value.& + '</option>');
-			status_value.append("<option value=' + value.status + '>' + value.& + '</option>');
-			first_name_value.append("<option value=' + value.first_name + '>' + value.& + '</option>');
-			last_name_value.append("<option value=' + value.last_name + '>' + value.& + '</option>');
-			contact_from_value.append("<option value=' + value.contact_from + '>' + value.& + '</option>');
-			address_value.append("<option value=' + value.address + '>' + value.& + '</option>');
-			primary_phone_value.append("<option value=' + value.primary_phone + '>' + value.& + '</option>');
-			email_value.append("<option value=' + value.email + '>' + value.& + '</option>');
-			job_title_value.append("<option value=' + value.job_title + '>' + value.& + '</option>');
-			company_id_value.append("<option value=' + value.company_id + '>' + value.& + '</option>');
-			main_contact_value.append("<option value=' + value.main_contact + '>' + value.& + '</option>');
+			contact_id_value.append('<option value=' + value.contact_id + '>' + value.contact_id + '</option>');
+			status_value.append('<option value=' + value.status + '>' + value.status + '</option>');
+			first_name_value.append('<option value=' + value.first_name + '>' + value.first_name + '</option>');
+			last_name_value.append('<option value=' + value.last_name + '>' + value.last_name + '</option>');
+			contact_from_value.append('<option value=' + value.contact_from + '>' + value.contact_from + '</option>');
+			address_value.append('<option value=' + value.address + '>' + value.address + '</option>');
+			primary_phone_value.append('<option value=' + value.primary_phone + '>' + value.primary_phone + '</option>');
+			email_value.append('<option value=' + value.email + '>' + value.email + '</option>');
+			job_title_value.append('<option value=' + value.job_title + '>' + value.job_title + '</option>');
+			company_id_value.append('<option value=' + value.company_id + '>' + value.company_id + '</option>');
+			main_contact_value.append('<option value=' + value.main_contact + '>' + value.main_contact + '</option>');
 		});
 
 		contact_id_value.trigger('change', true);
@@ -443,9 +443,6 @@ $("#edit_customer_form").submit(function(e){
 	}
 	return false;
 });
-</script>
-<script>
-
 
 function init_contact_page(){
 	$("#edit_contact_form").hide();

@@ -51,7 +51,8 @@ $(function () {
     <li><a href="#drmtab_contact">Contact</a></li>
     <li><a href="#drmtab_activity">Activity</a></li>
     <li><a href="#drmtab_campaign">Campaign</a></li>
-    <li><a href="#drmtab_vendor">Vendor</a></li>
+    <li><a href="#drmtab_opportunity">Opportunity</a></li>
+    <li><a href="#drmtab_supplier">Supplier</a></li>
     <li><a href="#drmtab_order">Order</a></li>
     <li><a href="#drmtab_product">Product</a></li>
     <li><a href="#drmtab_employee">Employee</a></li>
@@ -67,19 +68,23 @@ $(function () {
 	{% include web/contact_interface %}
 	</div>
 	<div id="drmtab_activity" >
-"xxx"
+	{% include web/activity_interface %}
 	</div>
 	<div id="drmtab_campaign" >
-"xxx"
+	{% include web/campaign_interface %}
 	</div>
-	<div id="drmtab_vendor" >
-	    "drmtab_vendor"
+	<div id="drmtab_opportunity" >
+	{% include web/opportunity_interface %}
+	</div>
+	<div id="drmtab_supplier" >
+	{% include web/supplier_interface %}
 	</div>
 	<div id="drmtab_order" >
+	{% include web/order_interface %}
 	    "drmtab_order"
 	</div>
 	<div id="drmtab_product" >
-	    "drmtab_product"
+	{% include web/product_interface %}
 	</div>
 	<div id="drmtab_employee" >
 	    "drmtab_employee"

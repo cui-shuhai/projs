@@ -1,0 +1,336 @@
+<!-------------------------Search Header -------------------------//-->
+<fieldset>
+ <form id="search_activity" action="/activity", method="post">
+
+<table id="activity_search" >
+<tr>
+<td colspan="1" > <label for="activity_id">Activity_id:</lable</td>
+<td colspan="1" > <label for="activity_name">Activity_name:</lable</td>
+<td colspan="1" > <label for="activity_type">Activity_type:</lable</td>
+<td colspan="1" > <label for="activity_status">Activity_status:</lable</td>
+<td colspan="1" > <label for="activity_priority">Activity_priority:</lable</td>
+<td colspan="1" > <label for="who_preside">Who_preside:</lable</td>
+<td colspan="1" > <label for="when_created">When_created:</lable</td>
+<td colspan="1" ></td>
+</tr> <tr>
+<td><select id="search_activity_id" value="" name="activity_id" style="width: 120px;"> </select></td>
+<td><select id="search_activity_name" value="" name="activity_name" style="width: 120px;"> </select></td>
+<td><select id="search_activity_type" value="" name="activity_type" style="width: 120px;"> </select></td>
+<td><select id="search_activity_status" value="" name="activity_status" style="width: 120px;"> </select></td>
+<td><select id="search_activity_priority" value="" name="activity_priority" style="width: 120px;"> </select></td>
+<td><select id="search_who_preside" value="" name="who_preside" style="width: 120px;"> </select></td>
+<td><select id="search_when_created" value="" name="when_created" style="width: 120px;"> </select></td>
+<td><input type="submit"   name="submit" value="Search"></td>
+</tr>
+</table>
+</form>
+
+</fieldset>
+
+<script>
+
+$("#search_activity").submit(function(e){
+	var activity_id_value = $("#search_activity_id");
+	var activity_name_value = $("#search_activity_name");
+	var activity_type_value = $("#search_activity_type");
+	var activity_status_value = $("#search_activity_status");
+	var activity_priority_value = $("#search_activity_priority");
+	var who_preside_value = $("#search_who_preside");
+	var when_created_value = $("#search_when_created");
+
+	var query_filter = {};
+	query_filter["action"] = "list";
+	query_filter["directory"] = "activity_content";
+
+
+	if(typeof activity_id_value.val() != "undefined" && activity_id_value.val().length != 0)
+		query_filter["activity_id"] = activity_id_value.val();
+	if(typeof activity_name_value.val() != "undefined" && activity_name_value.val().length != 0)
+		query_filter["activity_name"] = activity_name_value.val();
+	if(typeof activity_type_value.val() != "undefined" && activity_type_value.val().length != 0)
+		query_filter["activity_type"] = activity_type_value.val();
+	if(typeof activity_status_value.val() != "undefined" && activity_status_value.val().length != 0)
+		query_filter["activity_status"] = activity_status_value.val();
+	if(typeof activity_priority_value.val() != "undefined" && activity_priority_value.val().length != 0)
+		query_filter["activity_priority"] = activity_priority_value.val();
+	if(typeof who_preside_value.val() != "undefined" && who_preside_value.val().length != 0)
+		query_filter["who_preside"] = who_preside_value.val();
+	if(typeof when_created_value.val() != "undefined" && when_created_value.val().length != 0)
+		query_filter["when_created"] = when_created_value.val();
+
+  
+	//$('#activity_table tbody > tr').remove();
+	$('#activity_table').empty();
+
+
+	$.getJSON("/activity", query_filter, function(jsonData) {
+		var sourceTable= $( "#activity_table" );
+		tr = $('<tr/>');
+		tr.append("<th>" + "Click Edit..." + "</th>"); 
+		tr.append("<th>" + "Activity_id" + "</th>");
+		tr.append("<th>" + "Activity_name" + "</th>");
+		tr.append("<th>" + "Activity_type" + "</th>");
+		tr.append("<th>" + "Activity_status" + "</th>");
+		tr.append("<th>" + "Activity_priority" + "</th>");
+		tr.append("<th>" + "Who_preside" + "</th>");
+		tr.append("<th>" + "When_created" + "</th>");
+		tr.append("<th>" + "Note" + "</th>");
+		sourceTable.append(tr);
+
+
+		$.each(jsonData.customer ,function(key, value) {
+			tr = $('<tr class="edit_customer_link" />');
+                        tr.append("<td>" + "<a href=\"/activity?action=edit&&activity_id=" + value.activity_id +"\"" +">Go...</a>"  + "</td>");
+			tr.append("<td>" + "Activity_id" + "</td>");
+			tr.append("<td>" + "Activity_name" + "</td>");
+			tr.append("<td>" + "Activity_type" + "</td>");
+			tr.append("<td>" + "Activity_status" + "</td>");
+			tr.append("<td>" + "Activity_priority" + "</td>");
+			tr.append("<td>" + "Who_preside" + "</td>");
+			tr.append("<td>" + "When_created" + "</td>");
+			sourceTable.append(tr);
+		});
+
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	//alert(XMLHttpRequest.responseText);
+	});
+	return false;
+}
+);
+
+</script>
+
+<!-------------------------List Table-------------------------//-->
+
+<fieldset>
+<legend>List Activity</legend>
+<table id="activity_table" border="1">
+</table>
+<br><br>
+</fieldset>
+
+<script>
+function listActivities() {
+  
+	$.getJSON("/activity", {"action":"list",  "directory": "activity_content"}, function(jsonData) {
+
+		$( "#activity_table tr" ).remove();
+		$('#activity_table').empty();
+
+		var sourceTable= $( "#activity_table" );
+
+
+		tr = $('<tr/>');
+		tr.append("<th>" + "Click Edit..."  + "</th>");
+		tr.append("<th>" + "activity_id" + "</th>");
+		tr.append("<th>" + "activity_name" + "</th>");
+		tr.append("<th>" + "activity_type" + "</th>");
+		tr.append("<th>" + "activity_status" + "</th>");
+		tr.append("<th>" + "activity_priority" + "</th>");
+		tr.append("<th>" + "who_preside" + "</th>");
+		tr.append("<th>" + "when_created" + "</th>");
+		tr.append("<th>" + "note" + "</th>");
+		sourceTable.append(tr);
+
+		var activity_id_value = $("#search_activity_id");
+		var activity_name_value = $("#search_activity_name");
+		var activity_type_value = $("#search_activity_type");
+		var activity_status_value = $("#search_activity_status");
+		var activity_priority_value = $("#search_activity_priority");
+		var who_preside_value = $("#search_who_preside");
+		var when_created_value = $("#search_when_created");
+
+		activity_id_value.empty();
+		activity_name_value.empty();
+		activity_type_value.empty();
+		activity_status_value.empty();
+		activity_priority_value.empty();
+		who_preside_value.empty();
+		when_created_value.empty();
+
+		activity_id_value.append('<option value=' + '' + '>' + "" + '</option>');;
+		activity_name_value.append('<option value=' + '' + '>' + "" + '</option>');;
+		activity_type_value.append('<option value=' + '' + '>' + "" + '</option>');;
+		activity_status_value.append('<option value=' + '' + '>' + "" + '</option>');;
+		activity_priority_value.append('<option value=' + '' + '>' + "" + '</option>');;
+		who_preside_value.append('<option value=' + '' + '>' + "" + '</option>');;
+		when_created_value.append('<option value=' + '' + '>' + "" + '</option>');;
+
+
+		$.each(jsonData.activity ,function(key, value) {
+
+			tr = $('<tr/>');
+                        tr.append("<td>" + "<a onclick=\"return edit_activity_link_click(this); return true;\" href="+ "\"" +  value.activity_id +"\"" +">Go...</a>"  + "</td>");
+			tr.append("<td>" + value.activity_id + "</td>");
+			tr.append("<td>" + value.activity_name + "</td>");
+			tr.append("<td>" + value.activity_type + "</td>");
+			tr.append("<td>" + value.activity_status + "</td>");
+			tr.append("<td>" + value.activity_priority + "</td>");
+			tr.append("<td>" + value.who_preside + "</td>");
+			tr.append("<td>" + value.when_created + "</td>");
+			tr.append("<td>" + value.note + "</td>");
+			sourceTable.append(tr);
+
+			activity_id_value.append('<option alue=' + value.activity_id + '>' + value.activity_id + '</option>');
+			activity_name_value.append('<option alue=' + value.activity_name + '>' + value.activity_name + '</option>');
+			activity_type_value.append('<option alue=' + value.activity_type + '>' + value.activity_type + '</option>');
+			activity_status_value.append('<option alue=' + value.activity_status + '>' + value.activity_status + '</option>');
+			activity_priority_value.append('<option alue=' + value.activity_priority + '>' + value.activity_priority + '</option>');
+			who_preside_value.append('<option alue=' + value.who_preside + '>' + value.who_preside + '</option>');
+			when_created_value.append('<option alue=' + value.when_created + '>' + value.when_created + '</option>');
+		});
+
+		activity_id_value.trigger('change', true);
+		activity_name_value.trigger('change', true);
+		activity_type_value.trigger('change', true);
+		activity_status_value.trigger('change', true);
+		activity_priority_value.trigger('change', true);
+		who_preside_value.trigger('change', true);
+		when_created_value.trigger('change', true);
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	alert(XMLHttpRequest.responseText);
+	});
+}
+
+function edit_activity_link_click(l){
+	var url = $(l).attr('href');
+	$("#edit_activity_form").show();
+	fill_edit_form(url);	
+	return false;
+}
+
+
+</script>
+ 
+
+<!-------------------------Edit -------------------------//-->
+
+
+<form action="/activity" id="edit_activity_form"  method="post">
+<table id="activity_edit_table" >
+<tr>
+<td><label for="activity_id"> Edit:</label></td>
+<td><input type="text" id="activity_id"  name="activity_id" value="" readonly="readonly" ></td>
+</tr><tr>
+<td>Status:</td> <td> <input type="text" name="status" value=""></td>
+<td>FirstName:</td> <td> <input type="text" name="first_name" value=""></td>
+</tr><tr>
+<td>LastName:</td> <td> <input type="text" name="last_name" value=""></td>
+<td>Address:</td> <td> <input type="text" name="address" value=""></td>
+</tr><tr>
+<td>Primary phone:</td> <td> <input type="text" name="primary_phone" value=""></td>
+<td>Alt phone:</td> <td> <input type="text" name="alt_phone" value=""></td>
+</tr><tr>
+<td>Mobile phone:</td> <td> <input type="text" name="mobile_phone" value=""></td>
+<td>Fax:</td> <td> <input type="text" name="fax" value=""></td>
+</tr><tr>
+<td>Email:</td> <td> <input type="text" name="email" value=""></td>
+<td>Twitter:</td> <td> <input type="text" name="twitter" value=""></td>
+</tr><tr>
+<td>Linkedin:</td> <td> <input type="text" name="linkedin" value=""></td>
+<td>Facebook:</td> <td> <input type="text" name="facebook" value=""></td>
+</tr><tr>
+<td>Job title:</td> <td> <input type="text" name="job_title" value=""></td>
+<td>Company id:</td> <td> <input type="text" name="company_id" value=""></td>
+</tr><tr>
+<td>When met:</td> <td> <input type="text" name="when_met" value=""></td>
+<td>Where met:</td> <td> <input type="text" name="where_met" value=""></td>
+</tr><tr>
+<td>Time zone:</td> <td> <input type="text" name="time_zone" value=""></td>
+<td>Main activity:</td> <td> <input type="text" name="main_activity" value=""></td>
+</tr><tr>
+<td>Out of_marketing:</td> <td> <input type="text" name="out_of_marketing" value=""></td>
+<td>Out of_billing:</td> <td> <input type="text" name="out_of_billing" value=""></td>
+</tr><tr>
+<td>Extra info:</td> <td> <input type="text" name="extra_info" value=""></td>
+<td>	    <input type="submit" value="save"></td>
+</tr>
+</table>
+
+	  </fieldset>
+</form>
+<script>
+
+function addactivity(){
+
+	$("#add_activity_customer_id").val($("#edit_customer_id").val());
+	$("#add_activity_form").show();
+	return false;
+}
+
+
+function fill_edit_form( lid ) {
+  
+	$("#edit_activity_form input[name='activity_id']").val(lid);
+	$("#edit_activity_form input[name='activity_id']").trigger('change', true);
+
+	var qjson = {};
+	qjson["action"] = "list";
+	qjson["directory"] = "edit_activity_desktop";
+	qjson["activity_id"] = lid;
+	$.getJSON("/activity", qjson, function(jsonData) {
+	var activityValues = jsonData ;
+
+	$("#edit_activity_form input[name='activity_id']").val(activity_Values["activity_id"]);
+	$("#edit_activity_form input[name='activity_name']").val(activity_Values["activity_name"]);
+	$("#edit_activity_form input[name='activity_type']").val(activity_Values["activity_type"]);
+	$("#edit_activity_form input[name='activity_status']").val(activity_Values["activity_status"]);
+	$("#edit_activity_form input[name='activity_priority']").val(activity_Values["activity_priority"]);
+	$("#edit_activity_form input[name='who_preside']").val(activity_Values["who_preside"]);
+	$("#edit_activity_form input[name='when_created']").val(activity_Values["when_created"]);
+	$("#edit_activity_form input[name='note']").val(activity_Values["note"]);
+
+
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) { })
+	alert(XMLHttpRequest.responseText);
+}
+ 
+
+$("#edit_activity_form").submit(function(e){
+	var cmdVal = $("#edit_activity_form input[name='submit']").val();
+	var button_name = $("#edit_customer_from").context.activeElement.name;
+
+	var activity_data = {};
+
+	activity_data["activity_id"] = $("#edit_activity_form input[name='activity_id']").val();
+	activity_data["activity_name"] = $("#edit_activity_form input[name='activity_name']").val();
+	activity_data["activity_type"] = $("#edit_activity_form input[name='activity_type']").val();
+	activity_data["activity_status"] = $("#edit_activity_form input[name='activity_status']").val();
+	activity_data["activity_priority"] = $("#edit_activity_form input[name='activity_priority']").val();
+	activity_data["who_preside"] = $("#edit_activity_form input[name='who_preside']").val();
+	activity_data["when_created"] = $("#edit_activity_form input[name='when_created']").val();
+	activity_data["note"] = $("#edit_activity_form input[name='note']").val();
+
+	 $.post("/activity", activity_data, function(data, status){
+		//alert("Data: " + data + "\nStatus: " + status);
+	    })
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	//alert(XMLHttpRequest.responseText);
+	});
+
+	if(button_name == "submit")
+	{
+		$("#edit_activity_form").hide();
+		$("#activity_list_add_button").show();
+	}
+	return false;
+});
+</script>
+<script>
+
+
+function init_activity_page(){
+	$("#edit_activity_form").hide();
+	listActivities();
+};
+
+$(document).ready( function(){
+init_activity_page();
+});
+
+</script>
+ 
+
