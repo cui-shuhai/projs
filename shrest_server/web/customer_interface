@@ -1,0 +1,451 @@
+<!-- List 
+<fieldset>
+ <form id="search_customer" action="/customer", method="post">
+
+<table id="customer_search" >
+<tr>
+<td colspan="2" ><label for="customer_id"> Customer Name:</label> </td>
+<td colspan="2" ><label for="company_name"> Company:</label> </td>
+<td colspan="2" ><label for="personal_title"> Title:</label> </td>
+<td colspan="2" ><label for="contact"> Contact:</label> </td>
+<td colspan="2" ><label for="city"> City:</label> </td>
+<td colspan="2" ><label for="country"> Country:</label> </td>
+<td colspan="2" ></td>
+</tr>
+<tr>
+<td><select id="search_customer_id"  value="" name="customer_id"  style="width: 120px;" ></select><td>
+<td><select id="search_company_ value="" name" name="company_name"  style="width: 120px;" ></select><td>
+<td><select id="search_personal_title"  value="" name="personal_title"  style="width: 120px;" ></select><td>
+<td><select id="search_contact"  value="" name="contact"  style="width: 120px;" ></select><td>
+<td><select id="search_city"  value="" name="city"  style="width: 120px;" ></select><td>
+<td><select id="search_country"  value="" name="country"  style="width: 120px;" ></select><td>
+<td><input type="submit"   name="submit" value="Search"></td>
+</tr>
+</table>
+</form>
+
+
+<table id="list_customer_table" border="1">
+</table>
+<br><br>
+<button id="customer_list_add_button" onclick="on_add_customer();"  type="button">Add Customer</button>
+</fieldset>
+
+<script>
+
+
+function on_add_customer()
+{
+	$("#add_customer_form").show();
+	$("#customer_list_add_button").hide();
+}
+
+$("#search_customer").submit(function(e){
+	var customer_id_value = $("#search_customer_id"); 
+	var company_name_value = $("#search_company_name"); 
+	var personal_title_value = $("#search_personal_title"); 
+	var contact_name_value = $("#search_contact_name"); 
+	var city_value = $("#search_city"); 
+	var country_value = $("#search_country"); 
+
+	var query_filter = {};
+	query_filter["action"] = "list";
+	query_filter["directory"] = "customer_content";
+	if(typeof customer_id_value.val() != "undefined" && customer_id_value.val().length != 0 )
+		query_filter["customer_id"] = customer_id_value.val();
+	if(typeof company_name_value.val() != "undefined" &&  company_name_value.val().length != 0)
+		query_filter["company_name"] = company_name_value.val();
+	if(typeof personal_title_value.val() != "undefined" && personal_title_value.val().length != 0)
+		query_filter["personal_title"] = personal_title_value.val();
+	if(typeof contact_name_value.val() != "undefined" &&  contact_name_value.val().length != 0)
+		query_filter["contact_name"] = contact_name_value.val();
+	if(typeof city_value.val() != "undefined" &&  city_value.val().length != 0)
+		query_filter["city"] = city_value.val();
+	if(typeof country_value.val() != "undefined" && country_value.val().lenght != 0)
+		query_filter["country"] = country_value.val();
+  
+	$('#customer_table tbody > tr').remove();
+
+	$.getJSON("/customer", query_filter, function(jsonData) {
+		var sourceTable= $( "#customer_table" );
+		tr = $('<tr/>');
+		tr.append("<th>" + "Click Edit..." + "</th>"); 
+		tr.append("<th>" + "Company_name" + "</th>"); 
+		tr.append("<th>" + "Contact_name" + "</th>"); 
+		tr.append("<th>" + "Personal_title" + "</th>"); 
+		tr.append("<th>" + "First_name" + "</th>"); 
+		tr.append("<th>" + "Last_name" + "</th>"); 
+		tr.append("<th>" + "Phone" + "</th>"); 
+		tr.append("<th>" + "Email" + "</th>"); 
+		tr.append("<th>" + "Street_addr" + "</th>"); 
+		tr.append("<th>" + "City" + "</th>"); 
+		tr.append("<th>" + "State" + "</th>"); 
+		tr.append("<th>" + "Country" + "</th>"); 
+		tr.append("<th>" + "Bill_addr" + "</th>"); 
+		tr.append("<th>" + "Ship_addr" + "</th>"); 
+		tr.append("<th>" + "Post_code" + "</th>"); 
+		sourceTable.append(tr);
+
+		$.each(jsonData.customer ,function(key, value) {
+			tr = $('<tr class="edit_customer_link" />');
+                        tr.append("<td>" + "<a href=\"/customer?action=edit&&customer_id=" + value.customer_id +"\"" +">Go...</a>"  + "</td>");
+                        tr.append("<td>" + value.company_name + "</td>"); 
+                        tr.append("<td>" + value.contact_name + "</td>"); 
+                        tr.append("<td>" + value.personal_title + "</td>"); 
+                        tr.append("<td>" + value.first_name + "</td>"); 
+                        tr.append("<td>" + value.last_name + "</td>"); 
+                        tr.append("<td>" + value.phone + "</td>"); 
+                        tr.append("<td>" + value.email + "</td>"); 
+                        tr.append("<td>" + value.street_addr + "</td>"); 
+                        tr.append("<td>" + value.city + "</td>"); 
+                        tr.append("<td>" + value.state + "</td>"); 
+                        tr.append("<td>" + value.country + "</td>"); 
+                        tr.append("<td>" + value.bill_addr + "</td>"); 
+                        tr.append("<td>" + value.ship_addr + "</td>"); 
+                        tr.append("<td>" + value.post_code + "</td>"); 
+			sourceTable.append(tr);
+		});
+
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	//alert(XMLHttpRequest.responseText);
+	});
+	return false;
+}
+);
+
+function edit_customer_link_click(l){
+	var url = $(l).attr('href');
+	$("#customer_list_add_button").hide();
+	$("#add_customer_form").hide();
+	$("#edit_customer_form").show();
+	fill_edit_form(url);	
+	return false;
+}
+
+function listCustomers() {
+
+	$.getJSON("/customer", {"action" : "list",  "directory": "customer_content"}, function(jsonData) {
+
+		var bHeader = true;
+
+		var sourceTable= $( "#customer_table" );
+		tr = $('<tr/>');
+		tr.append("<th>" + "Click Edit..." + "</th>"); 
+		tr.append("<th>" + "Company_name" + "</th>"); 
+		tr.append("<th>" + "Contact_name" + "</th>"); 
+		tr.append("<th>" + "Personal_title" + "</th>"); 
+		tr.append("<th>" + "First_name" + "</th>"); 
+		tr.append("<th>" + "Last_name" + "</th>"); 
+		tr.append("<th>" + "Phone" + "</th>"); 
+		tr.append("<th>" + "Email" + "</th>"); 
+		tr.append("<th>" + "Street_addr" + "</th>"); 
+		tr.append("<th>" + "City" + "</th>"); 
+		tr.append("<th>" + "State" + "</th>"); 
+		tr.append("<th>" + "Country" + "</th>"); 
+		tr.append("<th>" + "Bill_addr" + "</th>"); 
+		tr.append("<th>" + "Ship_addr" + "</th>"); 
+		tr.append("<th>" + "Post_code" + "</th>"); 
+		sourceTable.append(tr);
+
+		$.each(jsonData.customer ,function(key, value) {
+
+			tr = $('<tr/>');
+                        tr.append("<td>" + "<a href=\"/customer?action=edit&&customer_id=" + value.customer_id +"\"" +">Go...</a>"  + "</td>");
+                        tr.append("<td>" + value.company_name + "</td>"); 
+                        tr.append("<td>" + value.contact_name + "</td>"); 
+                        tr.append("<td>" + value.personal_title + "</td>"); 
+                        tr.append("<td>" + value.first_name + "</td>"); 
+                        tr.append("<td>" + value.last_name + "</td>"); 
+                        tr.append("<td>" + value.phone + "</td>"); 
+                        tr.append("<td>" + value.email + "</td>"); 
+                        tr.append("<td>" + value.street_addr + "</td>"); 
+                        tr.append("<td>" + value.city + "</td>"); 
+                        tr.append("<td>" + value.state + "</td>"); 
+                        tr.append("<td>" + value.country + "</td>"); 
+                        tr.append("<td>" + value.bill_addr + "</td>"); 
+                        tr.append("<td>" + value.ship_addr + "</td>"); 
+                        tr.append("<td>" + value.post_code + "</td>"); 
+			sourceTable.append(tr);
+		});
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	alert(XMLHttpRequest.responseText);
+	});
+}
+
+</script>
+ 
+
+<!-- Edit Customer //-->
+
+<fieldset>
+<form action="/customer" id="edit_customer_form"  method="post">
+<table>
+</tr><tr>
+	<td>Email:</td><td><input type="text" name="email" value=""> </td>
+	<td>Street Addr:</td><td><input type="text" name="street_addr" value=""> </td>
+</tr><tr>
+	<td>City:</td><td><input type="text" name="city" value=""> </td>
+	<td>State:</td><td><input type="text" name="state" value=""> </td>
+</tr><tr>
+	<td>Post Code:</td><td><input type="text" name="post_code" value=""> </td>
+	<td>Country:</td><td><input type="text" name="country" value=""> </td>
+</tr><tr>
+	<td>Bill Addr:</td><td><input type="text" name="bill_addr" value=""> </td>
+	<td>Ship Addr:</td><td><input type="text" name="ship_addr" value=""> </td>
+</tr><tr>
+	    <td><input type="submit"  name="submit" value="save"></td>
+</tr>
+</table>
+</form>
+</fieldset>
+
+<br><br>
+
+<script>
+
+function addcontact(){
+
+	$("#add_contact_customer_id").val($("#edit_customer_id").val());
+	$("#add_contact_form").show();
+	return false;
+}
+
+
+function fill_edit_form( lid ) {
+  
+	$("#edit_customer_form input[name='customer_id']").val(lid);
+	$("#edit_customer_form input[name='customer_id']").trigger('change', true);
+
+	var qjson = {};
+	qjson["action"] = "list";
+	qjson["directory"] = "edit_customer_desktop";
+	qjson["customer_id"] = lid;
+	$.getJSON("/customer", qjson, function(jsonData) {
+	var customerValues = jsonData ;
+	$("#edit_customer_form input[name='customer_id']").value(customerValues["customer_id"]);
+	$("#edit_customer_form input[name='company_name']").value(customerValues["company_name"]);
+	$("#edit_customer_form input[name='contact_name']").value(customerValues["contact_name"]);
+	$("#edit_customer_form input[name='personal_title']").value(customerValues["personal_title"]);
+	$("#edit_customer_form input[name='first_name']").value(customerValues["first_name"]);
+	$("#edit_customer_form input[name='last_name']").value(customerValues["last_name"]);
+	$("#edit_customer_form input[name='phone']").value(customerValues["phone"]);
+	$("#edit_customer_form input[name='email']").value(customerValues["email"]);
+	$("#edit_customer_form input[name='street_addr']").value(customerValues["street_addr"]);
+	$("#edit_customer_form input[name='city']").value(customerValues["city"]);
+	$("#edit_customer_form input[name='state']").value(customerValues["state"]);
+	$("#edit_customer_form input[name='post_code']").value(customerValues["post_code"]);
+	$("#edit_customer_form input[name='country']").value(customerValues["country"]);
+	$("#edit_customer_form input[name='bill_addr']").value(customerValues["bill_addr"]);
+	$("#edit_customer_form input[name='ship_addr']").value(customerValues["ship_addr"]);
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) { })
+	alert(XMLHttpRequest.responseText);
+}
+ 
+</script>
+
+<!-- Add Customer  //-->
+
+
+
+<fieldset>
+<form action="/customer"  id="add_customer_form" method="post">
+<table>
+<tr>
+	<td>Company Name:</td><td><input type="text" name="company_name" value=""> </td>
+	<td>Contact Name:</td><td><input type="text" name="contact_name" value=""> </td>
+</tr><tr>
+	<td>Mr/Ms:</td><td><input type="text" name="personal_title" value=""> </td>
+	<td>First Name:</td><td><input type="text" name="first_name" value=""> </td>
+</tr><tr>
+	<td>Last Name:</td><td><input type="text" name="last_name" value=""> </td>
+	<td>Phone:</td><td><input type="text" name="phone" value=""> </td>
+</tr><tr>
+	<td>Email:</td><td><input type="text" name="email" value=""> </td>
+	<td>Street Addr:</td><td><input type="text" name="street_addr" value=""> </td>
+</tr><tr>
+	<td>City:</td><td><input type="text" name="city" value=""> </td>
+	<td>State:</td><td><input type="text" name="state" value=""> </td>
+</tr><tr>
+	<td>Post Code:</td><td><input type="text" name="post_code" value=""> </td>
+	<td>Country:</td><td><input type="text" name="country" value=""> </td>
+</tr><tr>
+	<td>Bill Addr:</td><td><input type="text" name="bill_addr" value=""> </td>
+	<td>Ship Addr:</td><td><input type="text" name="ship_addr" value=""> </td>
+</tr><tr>
+	    <td><input type="submit" name="submit" id="submit" value="add"></td>
+</tr>
+</table>
+</form>
+
+</fieldse>
+<fieldse>
+
+
+<form action="/contact" id="add_contact_form" method="post">
+<input type="hidden" id="add_contact_customer_id"  name="edit_customer_id" value="">
+<table>
+<tr>
+<td>Contact ID:</td> <td> <input type="text" name="contact_id" value=""></td>
+<td>Status:</td> <td> <input type="text" name="status" value=""></td>
+</tr><tr>
+<td>FirstName:</td> <td> <input type="text" name="first_name" value=""></td>
+<td>LastName:</td> <td> <input type="text" name="last_name" value=""></td>
+</tr><tr>
+<td>Address:</td> <td> <input type="text" name="address" value=""></td>
+<td>Primary phone:</td> <td> <input type="text" name="primary_phone" value=""></td>
+</tr><tr>
+<td>Alt phone:</td> <td> <input type="text" name="alt_phone" value=""></td>
+<td>Mobile phone:</td> <td> <input type="text" name="mobile_phone" value=""></td>
+</tr><tr>
+<td>Fax:</td> <td> <input type="text" name="fax" value=""></td>
+<td>Email:</td> <td> <input type="text" name="email" value=""></td>
+</tr><tr>
+<td>Twitter:</td> <td> <input type="text" name="twitter" value=""></td>
+<td>Linkedin:</td> <td> <input type="text" name="linkedin" value=""></td>
+</tr><tr>
+<td>Facebook:</td> <td> <input type="text" name="facebook" value=""></td>
+<td>Job title:</td> <td> <input type="text" name="job_title" value=""></td>
+<!--
+<td>Company id:</td> <td> <input type="text" name="company_id" value=""></td>
+</tr><tr>
+<td>When met:</td> <td> <input type="text" name="when_met" value=""></td>
+<td>Where met:</td> <td> <input type="text" name="where_met" value=""></td>
+</tr><tr>
+<td>Time zone:</td> <td> <input type="text" name="time_zone" value=""></td>
+<td>Main contact:</td> <td> <input type="text" name="main_contact" value=""></td>
+</tr><tr>
+<td>Out of_marketing:</td> <td> <input type="text" name="out_of_marketing" value=""></td>
+<td>Out of_billing:</td> <td> <input type="text" name="out_of_billing" value=""></td>
+</tr><tr>
+<td>Extra info:</td> <td> <input type="text" name="extra_info" value=""></td>
+<td>	    <input type="submit" name="submit"  value="Add"></td>
+</tr>
+</table>
+
+</form>
+</fieldset>
+
+ 
+<script>
+
+$("#add_customer_form").submit(function(e){
+	var cmdVal = $("#add_customer_form input[name='submit']").val();
+	//save
+	var customer_data = {};
+	customer_data["customer_id"] = $("#add_customer_form input[name='customer_id']").val();
+	customer_data["company_name"] = $("#add_customer_form input[name='company_name']").val();
+	customer_data["contact_name"] = $("#add_customer_form input[name='contact_name']").val();
+	customer_data["personal_title"] = $("#add_customer_form input[name='personal_title']").val();
+	customer_data["first_name"] = $("#add_customer_form input[name='first_name']").val();
+	customer_data["last_name"] = $("#add_customer_form input[name='last_name']").val();
+	customer_data["phone"] = $("#add_customer_form input[name='phone']").val();
+	customer_data["email"] = $("#add_customer_form input[name='email']").val();
+	customer_data["street_addr"] = $("#add_customer_form input[name='street_addr']").val();
+	customer_data["city"] = $("#add_customer_form input[name='city']").val();
+	customer_data["state"] = $("#add_customer_form input[name='state']").val();
+	customer_data["post_code"] = $("#add_customer_form input[name='post_code']").val();
+	customer_data["country"] = $("#add_customer_form input[name='country']").val();
+	customer_data["bill_addr"] = $("#add_customer_form input[name='bill_addr']").val();
+	customer_data["ship_addr"] = $("#add_customer_form input[name='ship_addr']").val();
+	 $.post("/customer", customer_data, function(data, status){
+		//alert("Data: " + data + "\nStatus: " + status);
+	    })
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	//alert(XMLHttpRequest.responseText);
+	});
+
+	if(cmdVal == "Save_Close")
+	{
+		$("#add_customer_form").hide();
+		$("#customer_list_add_button").show();
+	}
+	return false;
+});
+
+$("#edit_customer_form").submit(function(e){
+	var cmdVal = $("#edit_customer_form input[name='submit']").val();
+	//save
+	var customer_data = {};
+	customer_data["customer_id"] = $("#add_customer_form input[name='customer_id']").val();
+	customer_data["company_name"] = $("#add_customer_form input[name='company_name']").val();
+	customer_data["contact_name"] = $("#add_customer_form input[name='contact_name']").val();
+	customer_data["personal_title"] = $("#add_customer_form input[name='personal_title']").val();
+	customer_data["first_name"] = $("#add_customer_form input[name='first_name']").val();
+	customer_data["last_name"] = $("#add_customer_form input[name='last_name']").val();
+	customer_data["phone"] = $("#add_customer_form input[name='phone']").val();
+	customer_data["email"] = $("#add_customer_form input[name='email']").val();
+	customer_data["street_addr"] = $("#add_customer_form input[name='street_addr']").val();
+	customer_data["city"] = $("#add_customer_form input[name='city']").val();
+	customer_data["state"] = $("#add_customer_form input[name='state']").val();
+	customer_data["post_code"] = $("#add_customer_form input[name='post_code']").val();
+	customer_data["country"] = $("#add_customer_form input[name='country']").val();
+	customer_data["bill_addr"] = $("#add_customer_form input[name='bill_addr']").val();
+	customer_data["ship_addr"] = $("#add_customer_form input[name='ship_addr']").val();
+	 $.post("/customer", customer_data, function(data, status){
+		//alert("Data: " + data + "\nStatus: " + status);
+	    })
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	//alert(XMLHttpRequest.responseText);
+	});
+
+	if(cmdVal == "Save")
+	{
+		$("#edit_customer_form").hide();
+		$("#customer_list_add_button").show();
+	}
+	else if(cmdVal == "Add_Customer_Contact")
+	{
+		$("#add_contact_form").show();
+	}
+	return false;
+});
+
+$("#add_contact_form").submit(function(e){
+	var cmdVal = $("#add_contact_form input[name='submit']").val();
+	//save
+	var contact_data = {};
+	contact_data["contact_id"] = $("#add_contact_form input[name='contact_id']").val();
+	contact_data["status"] = $("#add_contact_form input[name='status']").val();
+	contact_data["first_name"] = $("#add_contact_form input[name='first_name']").val();
+	contact_data["last_name"] = $("#add_contact_form input[name='last_name']").val();
+	contact_data["contact_from"] = $("#add_contact_form input[name='contact_from']").val();
+	contact_data["address"] = $("#add_contact_form input[name='address']").val();
+	contact_data["primary_phone"] = $("#add_contact_form input[name='primary_phone']").val();
+	contact_data["alt_phone"] = $("#add_contact_form input[name='alt_phone']").val();
+	contact_data["mobile_phone"] = $("#add_contact_form input[name='mobile_phone']").val();
+	contact_data["fax"] = $("#add_contact_form input[name='fax']").val();
+	contact_data["email"] = $("#add_contact_form input[name='email']").val();
+	contact_data["twitter"] = $("#add_contact_form input[name='twitter']").val();
+	contact_data["linkedin"] = $("#add_contact_form input[name='linkedin']").val();
+	contact_data["facebook"] = $("#add_contact_form input[name='facebook']").val();
+	contact_data["job_title"] = $("#add_contact_form input[name='job_title']").val();
+	contact_data["company_id"] = $("#add_contact_form input[name='company_id']").val();
+	contact_data["when_met"] = $("#add_contact_form input[name='when_met']").val();
+	contact_data["where_met"] = $("#add_contact_form input[name='where_met']").val();
+	contact_data["time_zone"] = $("#add_contact_form input[name='time_zone']").val();
+	contact_data["main_contact"] = $("#add_contact_form input[name='main_contact']").val();
+	contact_data["out_of_marketing"] = $("#add_contact_form input[name='out_of_marketing']").val();
+	contact_data["out_of_billing"] = $("#add_contact_form input[name='out_of_billing']").val();
+	contact_data["extra_info"] = $("#add_contact_form input[name='extra_info']").val();
+	$.post("/contact", contact_data, function(data, status){
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	//alert(XMLHttpRequest.responseText);
+	});
+});
+
+function init_customer_page(){
+	$("#edit_customer_form").hide();
+	$("#add_contact_form").hide();
+	$("#add_customer_form").hide();
+	listCustomers();
+};
+
+init_customer_page();
+
+</script>
+ 
+

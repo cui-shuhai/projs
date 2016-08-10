@@ -11,6 +11,7 @@
   <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 
 <script>
+/*
 $(function () {
  $('#drmtabs').tabs({
  activate: function (event, ui) {
@@ -20,7 +21,20 @@ $(function () {
  } }
  });
 });
+*/
+$(function () {
+	$('#drmtabs').tabs({
+	activate: function (event, ui) {
+	var $activeTab = $('#drmtabs').tabs('option', 'active');
 
+	ui.oldPanel.hide();
+	ui.newPanel.show();
+
+	if ($activeTab == 4) {
+	alert( $activeTab) ; 
+	} }
+	});
+});
 </script>
 </head>
 <body>
@@ -42,16 +56,20 @@ $(function () {
 	{% include web/lead_interface %}
 	</div>
 	<div id="drmtab_customer" >
-	"xxxxx"
+<!--
+{% include web/customer_interface %}
+-->
 	</div>
 	<div id="drmtab_contact" >
-	    "drmtab_contact"
+	<!--{% include web/lead_interface %} -->
 	</div>
 	<div id="drmtab_activity" >
-	    "drmtab_activity"
+	<!-- {% include web/lead_interface %} -->
 	</div>
 	<div id="drmtab_campaign" >
-	    "drmtab_campaign"
+<!--
+	{% include web/lead_interface %}
+-->
 	</div>
 	<div id="drmtab_vendor" >
 	    "drmtab_vendor"
