@@ -171,7 +171,7 @@ void lead_table::get_lead_records( string source, string &result ){
 	" FROM lead ";
 
 		if(!source.empty())
-		sql.append("WHERE lead_source = ").append(source);
+		sql.append("WHERE  ").append(source);
 		query q(*conn, sql);
 		LOG("sql", sql);
 		auto res = q.emit_result();

@@ -101,10 +101,12 @@ void utils::build_raw_response(string &content){
 
 	stringstream ss;
 
-	if(content.length() == 0)
-	ss << "HTTP/1.1 200 OK\r\n" << "Content-Type: application/javascript"  << "\r\n" << "Content-Length: " << content.length() << "\r\n\r\n" ;
+	if(content.length() == 0){
+		ss << "HTTP/1.1 200 OK\r\n" << "Content-Type: application/json"  << "\r\n" << "Content-Length: " << content.length() << "\r\n\r\n" ;
+	//ss << "HTTP/1.1 200 OK\r\n" << "Content-Type: application/javascript"  << "\r\n" << "Content-Length: " << content.length() << "\r\n\r\n" ;
+	}
 	else
-	ss << "HTTP/1.1 200 OK\r\n" << "Content-Type: application/javascript"  << "\r\n" << "Content-Length: " << content.length() << "\r\n\r\n" << content;
+	ss << "HTTP/1.1 200 OK\r\n" << "Content-Type: application/json"  << "\r\n" << "Content-Length: " << content.length() << "\r\n\r\n" << content;
 	content = ss.str();
 }
 

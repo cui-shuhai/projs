@@ -40,7 +40,7 @@ function listcampaign(){
 
 
 			tr = $('<tr/>');
-                        gr.append("<td>" + "<a href=\"/campaign?action=edit&directory=campaign&campaign_id=" + value.campaign_id +"\"" +">Go...</a>"  + "</td>");
+                        tr.append("<td>" + "<a href=\"/campaign?action=edit&directory=campaign&campaign_id=" + value.campaign_id +"\"" +">Go...</a>"  + "</td>");
 			tr.append("<th>" + value.campaign_id + "</th>");
 			tr.append("<th>" + value.campaign_name + "</th>");
 			tr.append("<th>" + value.assign_to + "</th>");

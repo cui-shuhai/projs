@@ -85,10 +85,7 @@ void AddUserInterface::ProcessGet(){
 	if(boost::iequals(m["action"], "list")){
 	try {
 		
-		std::map<string, string> m;
 		stringstream cs;
-		string  params= rq_->get_params;
-		utils::parse_get_params(params, m);
 
 		string jstr;
 		if(m.size() == 1){ //list user

@@ -81,14 +81,32 @@ void AddLeadInterface::ProcessGet()
 				utils::build_json(resultset, jstr); 
 			}
 			else if(directory.compare("lead_content") == 0){
-				lt.get_lead_records("", jstr);
+				string filter;
+				stringstream ss;
+				bool first = true;
+				for( const auto & v : m )
+				{
+					if(v.first.compare("action") == 0)
+						continue;
+					if(v.first.compare("directory") == 0)
+						continue;
+
+					if(first)
+						first = ! first;
+					else 
+						ss << " AND ";
+					ss << v.first <<  " = " << "'" << v.second << "'" ;
+	
+				}
+				filter = ss.str();
+				lt.get_lead_records(filter , jstr);
 			}
 			else if(directory.compare("add_customer") == 0){
 				std::map<string, string> result;
 				lt.get_lead_for_customer(result);
 				utils::build_json(result, jstr); 
 			}
-			else if(directory.compare("edit_lead") == 0){
+			else if(directory.compare("edit_lead") == 0 || directory.compare("edit_lead_desktop") == 0){
 				lt.set_lead_id(m["lead_id"]);
 				std::map<string, string> result;
 				lt.get_lead_instance(result);
@@ -97,6 +115,9 @@ void AddLeadInterface::ProcessGet()
 
 			utils::build_raw_response( jstr);
 			rs_ << jstr;
+
+			LOG( "response : ", jstr);
+			rs_.flush();
 			return;
 		}
 		
@@ -153,7 +174,7 @@ void AddLeadInterface::ProcessPost()
 	try {
 
 		string id = utils::create_uuid();
-		lead_table c( id, m["company_name"], m["contact_name"], m["personal_title"], 
+		lead_table c( m["lead_id"], m["company_name"], m["contact_name"], m["personal_title"], 
 				m["first_name"], m["last_name"], m["phone"], m["email"], 
 				m["street_addr"], m["city"], m["state"], m["post_code"], 
 				m["country"], m["bill_addr"], m["ship_addr"], 
@@ -190,7 +211,8 @@ void AddLeadInterface::ProcessPost()
 	}
 		return;
 	}
-	if(boost::iequals(m["submit"], "save")){
+	else{
+	//if(boost::iequals(m["submit"], "save")){
 	try {
 
 		lead_table c( m["lead_id"], m["company_name"], m["contact_name"], m["personal_title"], 
@@ -201,15 +223,10 @@ void AddLeadInterface::ProcessPost()
 
 		c.update_lead_table();
 
-		LoaderFile loader; 
-
-		Template t( loader );
 
 		stringstream cs;
 
 		cs << "lead saved" << endl;
-		t.render( cs ); 
- 
 		
 		cs.seekp(0, ios::end);
 		rs_ <<  cs.rdbuf();

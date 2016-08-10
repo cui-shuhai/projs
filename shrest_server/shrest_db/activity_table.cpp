@@ -38,23 +38,26 @@ activity_table::~activity_table(){
 
 void activity_table::add_activity_table(){
 
-	string sql = "INSERT INTO 'activity'( activity_name, "
+	stringstream ss;
+	string sql = "INSERT INTO 'activity'( activity_id, activity_name, "
 		"activity_type,  activity_status,  activity_priority,  "
-		"who_preside,  when_created,  note, activity_id) "
-		" VALUES(?, ?, ?,  ?, ?, ?, ?, ?)";
+		"who_preside,  when_created,  note) "
+		" VALUES( "; 
 
+	ss << sql;
+	ss << "'" <<  activity_id << "'" << ",";
+	ss << "'" <<  activity_name << "'" << ",";
+	ss << "'" <<  activity_type << "'" << ",";
+	ss << "'" <<  activity_status << "'" << ",";
+	ss << "'" <<  activity_priority << "'" << ",";
+	ss << "'" <<  who_preside << "'" << ",";
+	ss << "'" <<  when_created << "'" << ",";
+	ss << "'" <<  note << "'" << ",";
+	ss << "'" <<  activity_id << "'" << ")";
 
+	sql = ss.str();
+	LOG("add activity: ", sql);
 	command c(*conn, sql);
-
-	c.bind(1, activity_name);
-	c.bind(2, activity_type);
-	c.bind(3, activity_status);
-	c.bind(4, activity_priority);
-	c.bind(5, who_preside);
-	c.bind(6, when_created);
-	c.bind(7, note);
-	c.bind(8, activity_id);
-
 	c.emit();
 }
 

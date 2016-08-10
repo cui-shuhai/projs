@@ -61,41 +61,43 @@ contact_table::~contact_table(){
 
 void contact_table::add_contact_table(){
 
-	auto sql = "INSERT INTO 'contact'("
+	stringstream ss;
+	string sql = "INSERT INTO 'contact'(contact_id,  "
 		"status, first_name, last_name, contact_from, "
 		"address, primary_phone, alt_phone, mobile_phone, fax, email, "
 		"twitter, linkedin, facebook, job_title, company_id, "
 		"when_met, where_met, time_zone, main_contact, "
-		"out_of_marketing, out_of_billing, extra_info, contact_id )  VALUES( "
-		"?, ?, ?, ?, ?, ?, ?, ?, "
-		"?, ?, ?, ?, ?, ?, ?, ?, "
-		"?, ?, ?, ?, ?, ?, ? )";
+		"out_of_marketing, out_of_billing, extra_info )  VALUES(  ";
 
+	ss << sql;
+	ss << "'" <<  contact_id << "'" << ",";
+	ss << "'" <<  status << "'" << ",";
+	ss << "'" <<  first_name << "'" << ",";
+	ss << "'" <<  last_name << "'" << ",";
+	ss << "'" <<  contact_from << "'" << ",";
+	ss << "'" <<  address << "'" << ",";
+	ss << "'" <<  primary_phone << "'" << ",";
+	ss << "'" <<  alt_phone << "'" << ",";
+	ss << "'" <<  mobile_phone << "'" << ",";
+	ss << "'" <<  fax << "'" << ",";
+	ss << "'" <<  email << "'" << ",";
+	ss << "'" <<  twitter << "'" << ",";
+	ss << "'" <<  linkedin << "'" << ",";
+	ss << "'" <<  facebook << "'" << ",";
+	ss << "'" <<  job_title << "'" << ",";
+	ss << "'" <<  company_id << "'" << ",";
+	ss << "'" <<  when_met << "'" << ",";
+	ss << "'" <<  where_met << "'" << ",";
+	ss << "'" <<  time_zone << "'" << ",";
+	ss << "'" <<  main_contact << "'" << ",";
+	ss << "'" <<  out_of_marketing << "'" << ",";
+	ss << "'" <<  out_of_billing << "'" << ",";
+	ss << "'" <<  extra_info << "'" << ")";
+
+	sql = ss.str();
 	command c(*conn, sql);
-	c.bind(1, status);
-	c.bind(2, first_name);
-	c.bind(3, last_name);
-	c.bind(4, contact_from);
-	c.bind(5, address);
-	c.bind(6, primary_phone);
-	c.bind(7, alt_phone);
-	c.bind(8, mobile_phone);
-	c.bind(9, fax);
-	c.bind(10, email);
-	c.bind(11, twitter);
-	c.bind(12, linkedin);
-	c.bind(13, facebook);
-	c.bind(14, job_title);
-	c.bind(15, company_id);
-	c.bind(16, when_met);
-	c.bind(17, where_met);
-	c.bind(18, time_zone);
-	c.bind(19, main_contact);
-	c.bind(20, out_of_marketing);
-	c.bind(21, out_of_billing);
-	c.bind(22, extra_info);
-	c.bind(23, contact_id);
 
+	LOG("add contact: " , sql );
 	c.emit();
 }
 

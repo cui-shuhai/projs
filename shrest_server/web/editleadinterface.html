@@ -50,6 +50,7 @@ function addcontact(){
 	url = url + id + '&' + "company=" + cp;
 	window.location = url;
 	//window.open(url, "myWindow", "width=500,height=200");
+}
 
 function fill_form() {
   
@@ -75,9 +76,9 @@ function fill_form() {
 	$("input[name='country']").val(leadValues["country"]);
 	$("input[name='bill_addr']").val(leadValues["bill_addr"]);
 	$("input[name='ship_addr']").val(leadValues["ship_addr"]);
-})
-	 .error(function (XMLHttpRequest, textStatus, errorThrown) { })
-//	alert(XMLHttpRequest.responseText);
+	});
+	 //.error(function (XMLHttpRequest, textStatus, errorThrown) { })
+	//alert(XMLHttpRequest.responseText);
 }
 
 $( document ).ready( function() {

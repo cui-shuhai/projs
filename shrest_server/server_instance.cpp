@@ -46,14 +46,6 @@ int main() {
     };
 	LOG("Adding [string, POST] API");
     
-    //POST-example for the path /json, responds firstName+" "+lastName from the posted json
-    //Responds with an appropriate error message if the posted json is not valid, or if firstName or lastName is missing
-    //Example posted json:
-    //{
-    //  "firstName": "John",
-    //  "lastName": "Smith",
-    //  "age": 25
-    //}
     server.resource["^/json$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
 
 	auto processor = RequestResponseFactory::CreateProcessor("JsonPost", response, request);	
@@ -67,11 +59,18 @@ int main() {
 	auto processor = RequestResponseFactory::CreateProcessor("AddCustomerInterface", response, request);	
 	processor->Process();        
     };
-	LOG("Adding [addcustomer, GET] API");
+	LOG("Adding [customer, GET] API");
      //customer post
      server.resource["^/customer$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
 
 	auto processor = RequestResponseFactory::CreateProcessor("AddCustomerInterface", response, request);	
+	processor->Process();        
+    };
+	LOG("Adding [customer, POST] API");
+     //---------------
+     server.resource["^/desktop$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+
+	auto processor = RequestResponseFactory::CreateProcessor("CustomerizeRequest", response, request);	
 	processor->Process();        
     };
 	LOG("Adding [customer, POST] API");
@@ -82,7 +81,7 @@ int main() {
 	auto processor = RequestResponseFactory::CreateProcessor("AddVendorInterface", response, request);	
 	processor->Process();        
     };
-	LOG("Adding [addvendorinterface, GET] API");
+	LOG("Adding [vendorinterface, GET] API");
      //AddVendorInterface to test Template
      server.resource["^/vendor$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
 
@@ -122,14 +121,6 @@ int main() {
     };
 	LOG("Adding [addcontact, POST] API");
 
-     //AddLeadContactInterface to test Template
-     server.resource["^/addleadcontact$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
-
-	auto processor = RequestResponseFactory::CreateProcessor("AddLeadContactInterface", response, request);	
-	processor->Process();        
-    };
-	LOG("Adding [addleadcontact, GET] API");
-
 	
     //AddCustomerInterface to test Template
      server.resource["^/user$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
@@ -139,21 +130,7 @@ int main() {
     };
 	LOG("Adding [adduser, GET] API");
 
-    //AddCustomerRequest to connecting to mysql
-     server.resource["^/adduserrequest$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
 
-	auto processor = RequestResponseFactory::CreateProcessor("AddUserRequest", response, request);	
-	processor->Process();        
-    };
-	LOG("Adding [adduserrequest, POST] API");
-
- 	//Add 
-     server.resource["^/listuser$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
-
-	auto processor = RequestResponseFactory::CreateProcessor("ListUserRequest", response, request);	
-	processor->Process();        
-    };
-	LOG("Adding [listuserrequest, GET] API");
     //-----------
      server.resource["^/uploaddocument$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
 
@@ -219,13 +196,6 @@ int main() {
     };
 	LOG("Adding [addactivityrequest, POST] API");
 
- 	//listcontact 
-     server.resource["^/listcontact.*$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
-
-	auto processor = RequestResponseFactory::CreateProcessor("ListContactRequest", response, request);	
-	processor->Process();        
-    };
-	LOG("Adding [ListContactrequest, GET] API");
 
  	//listopportunity 
      server.resource["^/opportunity$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
@@ -290,13 +260,6 @@ int main() {
     };
 	LOG("Adding [order, POST] API");
 
- 	//Add transaction request
-     server.resource["^/listtask$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
-
-	auto processor = RequestResponseFactory::CreateProcessor("ListTaskRequest", response, request);	
-	processor->Process();        
-    };
-	LOG("Adding [ListTaskrequest, POST] API");
 
  	//Add listampaignrequest request
      server.resource["^/campaign$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {

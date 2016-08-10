@@ -10,6 +10,13 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 
+<style type="text/css">
+jQuery('tr:even').addClass('even');
+table tr.even {
+background: #CCC;
+}
+</style>
+
 <script>
 $(function () {
  $('#drmtabs').tabs({
@@ -38,36 +45,39 @@ $(function () {
     <li><a href="#drmtab_employee">Employee</a></li>
     <li><a href="#drmtab_user">User</a></li>
   </ul>
-	<div id="drmtab_lead" >
-	{% include web/lead_interface %}
-	</div>
-	<div id="drmtab_customer" >
-	"xxxxx"
-	</div>
-	<div id="drmtab_contact" >
-	    "drmtab_contact"
-	</div>
-	<div id="drmtab_activity" >
-	    "drmtab_activity"
-	</div>
-	<div id="drmtab_campaign" >
-	    "drmtab_campaign"
-	</div>
-	<div id="drmtab_vendor" >
-	    "drmtab_vendor"
-	</div>
-	<div id="drmtab_order" >
-	    "drmtab_order"
-	</div>
-	<div id="drmtab_product" >
-	    "drmtab_product"
-	</div>
-	<div id="drmtab_employee" >
-	    "drmtab_employee"
-	</div>
-	<div id="drmtab_user" >
-	    "drmtab_user"
-	</div>
+<div id=    "drmtab_lead" >
+<!--
+{% include web/lead_interface %}
+//-->
+</div>
+<div id=    "drmtab_customer" >
+<!--
+{% include web/customer_interface %}
+//-->
+</div>
+<div id=    "drmtab_contact" >
+    "drmtab_contact"
+</div>
+<div id=    "drmtab_activity" >
+    "drmtab_activity"
+</div>
+<div id=    "drmtab_campaign" >
+    "drmtab_campaign"
+</div>
+<div id=    "drmtab_vendor" >
+    "drmtab_vendor"
+</div>
+<div id=    "drmtab_order" >
+    "drmtab_order"
+</div>
+<div id=    "drmtab_product" >
+    "drmtab_product"
+</div>
+<div id=    "drmtab_employee" >
+    "drmtab_employee"
+</div>
+<div id=    "drmtab_user" >
+    "drmtab_user"
 </div>
 </body>
 </html>

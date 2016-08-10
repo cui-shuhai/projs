@@ -49,29 +49,32 @@ customer_table::~customer_table(){
 
 void customer_table::add_customer_table(){
 
-	auto sql = "INSERT INTO 'customer'("
+	stringstream ss;
+	string sql = "INSERT INTO 'customer'( customer_id, "
 		"company_name, contact_name, personal_title, first_name, last_name, phone, email, "
-		"street_addr, city, state, post_code, country, bill_addr, ship_addr , customer_id)"
-		"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		"street_addr, city, state, post_code, country, bill_addr, ship_addr)"
+		"VALUES(  ";
 
+	ss << sql;
+	ss << "'" <<  customer_id << "'" << ",";
+	ss << "'" <<  company_name << "'" << ",";
+	ss << "'" <<  contact_name << "'" << ",";
+	ss << "'" <<  personal_title << "'" << ",";
+	ss << "'" <<  first_name << "'" << ",";
+	ss << "'" <<  last_name << "'" << ",";
+	ss << "'" <<  phone << "'" << ",";
+	ss << "'" <<  email << "'" << ",";
+	ss << "'" <<  street_addr << "'" << ",";
+	ss << "'" <<  city << "'" << ",";
+	ss << "'" <<  state << "'" << ",";
+	ss << "'" <<  post_code << "'" << ",";
+	ss << "'" <<  country << "'" << ",";
+	ss << "'" <<  bill_addr << "'" << ",";
+	ss << "'" <<  ship_addr << "'" << ")";
+
+	sql= ss.str();
+	LOG("addcustomer: ", sql);
 	command c(*conn, sql);
-
-	c.bind(1, company_name);
-	c.bind(2, contact_name);
-	c.bind(3, personal_title);
-	c.bind(4, first_name);
-	c.bind(5, last_name);
-	c.bind(6, phone);
-	c.bind(7, email);
-	c.bind(8, street_addr);
-	c.bind(9, city);
-	c.bind(10, state);
-	c.bind(11, post_code);
-	c.bind(12, country);
-	c.bind(13, bill_addr);
-	c.bind(14, ship_addr);
-	c.bind(15, customer_id);
-
 	c.emit();
 
 	//t.commit();

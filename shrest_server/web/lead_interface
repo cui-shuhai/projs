@@ -1,0 +1,553 @@
+<!-- List //-->
+<fieldset>
+ <form id="search_lead" action="/lead", method="post">
+
+<table id="lead_search" >
+<tr>
+<td colspan="2" ><label for="lead_id"> Lead Name:</label> </td>
+<td colspan="2" ><label for="company_name"> Company:</label> </td>
+<td colspan="2" ><label for="personal_title"> Title:</label> </td>
+<td colspan="2" ><label for="contact"> Contact:</label> </td>
+<td colspan="2" ><label for="city"> City:</label> </td>
+<td colspan="2" ><label for="country"> Country:</label> </td>
+<td colspan="2" ></td>
+</tr>
+<tr>
+<td><select id="search_lead_id"  value="" name="lead_id"  style="width: 120px;" ></select><td>
+<td><select id="search_company_ value="" name" name="company_name"  style="width: 120px;" ></select><td>
+<td><select id="search_personal_title"  value="" name="personal_title"  style="width: 120px;" ></select><td>
+<td><select id="search_contact"  value="" name="contact"  style="width: 120px;" ></select><td>
+<td><select id="search_city"  value="" name="city"  style="width: 120px;" ></select><td>
+<td><select id="search_country"  value="" name="country"  style="width: 120px;" ></select><td>
+<td><input type="submit"   name="submit" value="Search"></td>
+</tr>
+</table>
+</form>
+
+
+<table id="lead_table" border="1">
+</table>
+<br><br>
+<button id="lead_list_add_button" onclick="on_add_lead();"  type="button">Add Lead</button>
+</fieldset>
+
+<script>
+
+
+function on_add_lead()
+{
+	fillLeadSource();
+	fillLeadStatus();
+	fillLeadRating();
+	var lead_source_value = $("#lead_source_id"); 
+	var lead_status_value = $("#lead_status_id"); 
+	var lead_rating_value = $("#lead_rating_id"); 
+	lead_source_value.trigger('change', true);
+	lead_status_value.trigger('change', true);
+	lead_rating_value.trigger('change', true);
+	$("#add_lead_form").show();
+	$("#lead_list_add_button").hide();
+}
+
+$("#search_lead").submit(function(e){
+	var lead_id_value = $("#search_lead_id"); 
+	var company_name_value = $("#search_company_name"); 
+	var personal_title_value = $("#search_personal_title"); 
+	var contact_name_value = $("#search_contact_name"); 
+	var city_value = $("#search_city"); 
+	var country_value = $("#search_country"); 
+
+	var query_filter = {};
+	query_filter["action"] = "list";
+	query_filter["directory"] = "lead_content";
+	if(typeof lead_id_value.val() != "undefined" && lead_id_value.val().length != 0 )
+		query_filter["lead_id"] = lead_id_value.val();
+	if(typeof company_name_value.val() != "undefined" &&  company_name_value.val().length != 0)
+		query_filter["company_name"] = company_name_value.val();
+	if(typeof personal_title_value.val() != "undefined" && personal_title_value.val().length != 0)
+		query_filter["personal_title"] = personal_title_value.val();
+	if(typeof contact_name_value.val() != "undefined" &&  contact_name_value.val().length != 0)
+		query_filter["contact_name"] = contact_name_value.val();
+	if(typeof city_value.val() != "undefined" &&  city_value.val().length != 0)
+		query_filter["city"] = city_value.val();
+	if(typeof country_value.val() != "undefined" && country_value.val().lenght != 0)
+		query_filter["country"] = country_value.val();
+  
+	$('#lead_table tbody > tr').remove();
+
+	$.getJSON("/lead", query_filter, function(jsonData) {
+		var sourceTable= $( "#lead_table" );
+		tr = $('<tr/>');
+		tr.append("<th>" + "Click Edit..."  + "</th>");
+		tr.append("<th>" + "Company" + "</th>");
+		tr.append("<th>" + "Contact" + "</th>");
+		tr.append("<th>" + "Title" + "</th>");
+		tr.append("<th>" + "First Name" + "</th>");
+		tr.append("<th>" + "Last Name" + "</th>");
+		tr.append("<th>" + "Phone" + "</th>");
+		tr.append("<th>" + "Email" + "</th>");
+		tr.append("<th>" + "Street_addr" + "</th>");
+		tr.append("<th>" + "City" + "</th>");
+		tr.append("<th>" + "State" + "</th>");
+		tr.append("<th>" + "Post Code" + "</th>");
+		tr.append("<th>" + "Country" + "</th>");
+		sourceTable.append(tr);
+
+		$.each(jsonData.lead ,function(key, value) {
+			tr = $('<tr class="edit_lead_link" />');
+                          tr.append("<td>" + "<a onclick=\"return edit_lead_link_click(this); return true;\" href="+ "\"" +  value.lead_id +"\"" +">Go...</a>"  + "</td>");
+                          tr.append("<td>" + value.company_name + "</td>");
+                          tr.append("<td>" + value.contact_name + "</td>");
+                          tr.append("<td>" + value.personal_title + "</td>");
+                          tr.append("<td>" + value.first_name + "</td>");
+                          tr.append("<td>" + value.last_name + "</td>");
+                          tr.append("<td>" + value.phone + "</td>");
+                          tr.append("<td>" + value.email + "</td>");
+                          tr.append("<td>" + value.street_addr + "</td>");
+                          tr.append("<td>" + value.city + "</td>");
+                          tr.append("<td>" + value.state + "</td>");
+                          tr.append("<td>" + value.post_code + "</td>");
+                          tr.append("<td>" + value.country + "</td>");
+			sourceTable.append(tr);
+		});
+
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	//alert(XMLHttpRequest.responseText);
+	});
+	return false;
+}
+);
+
+function edit_lead_link_click(l){
+	var url = $(l).attr('href');
+	$("#lead_list_add_button").hide();
+	$("#add_lead_form").hide();
+	$("#edit_lead_form").show();
+	fill_edit_form(url);	
+	return false;
+}
+
+function listLeads() {
+  
+	$.getJSON("/lead", {"action":"list", "directory": "lead_content"}, function(jsonData) {
+
+		var bHeader = true;
+
+		var sourceTable= $( "#lead_table" );
+		tr = $('<tr/>');
+		tr.append("<th>" + "Click Edit..."  + "</th>");
+		tr.append("<th>" + "Company" + "</th>");
+		tr.append("<th>" + "Contact" + "</th>");
+		tr.append("<th>" + "Title" + "</th>");
+		tr.append("<th>" + "First Name" + "</th>");
+		tr.append("<th>" + "Last Name" + "</th>");
+		tr.append("<th>" + "Phone" + "</th>");
+		tr.append("<th>" + "Email" + "</th>");
+		tr.append("<th>" + "Street_addr" + "</th>");
+		tr.append("<th>" + "City" + "</th>");
+		tr.append("<th>" + "State" + "</th>");
+		tr.append("<th>" + "Post Code" + "</th>");
+		tr.append("<th>" + "Country" + "</th>");
+		sourceTable.append(tr);
+
+		var lead_id_values = $("#search_lead_id"); 
+		var company_name_values = $("#search_company_name"); 
+		var personal_title_values = $("#search_personal_title"); 
+		var contact_name_values = $("#search_contact_name"); 
+		var city_values = $("#search_city"); 
+		var country_values = $("#search_country"); 
+
+		lead_id_values.append('<option value=' + '' + '>' + "" + '</option>');
+		company_name_values.append('<option value=' + '' + '>' + "" + '</option>');
+		personal_title_values.append('<option value=' + '' + '>' + "" + '</option>');
+		contact_name_values.append('<option value=' + '' + '>' + "" + '</option>');
+		city_values.append('<option value=' + '' + '>' + "" + '</option>');
+		country_values.append('<option value=' + '' + '>' + "" + '</option>');
+
+		$.each(jsonData.lead ,function(key, value) {
+			tr = $('<tr/>');
+                          tr.append("<td>" + "<a onclick=\"return edit_lead_link_click(this);\"" + " href="+ "\"" +  value.lead_id +"\"" +">Go...</a>"  + "</td>");
+                          tr.append("<td>" + value.company_name + "</td>");
+                          tr.append("<td>" + value.contact_name + "</td>");
+                          tr.append("<td>" + value.personal_title + "</td>");
+                          tr.append("<td>" + value.first_name + "</td>");
+                          tr.append("<td>" + value.last_name + "</td>");
+                          tr.append("<td>" + value.phone + "</td>");
+                          tr.append("<td>" + value.email + "</td>");
+                          tr.append("<td>" + value.street_addr + "</td>");
+                          tr.append("<td>" + value.city + "</td>");
+                          tr.append("<td>" + value.state + "</td>");
+                          tr.append("<td>" + value.post_code + "</td>");
+                          tr.append("<td>" + value.country + "</td>");
+			sourceTable.append(tr);
+
+			lead_id_values.append('<option value=' + value.lead_id  + '>' + value.lead_id + '</option>');
+			company_name_values.append('<option value=' + value.company_name  + '>' + value.company_name + '</option>');
+			personal_title_values.append('<option value=' + value.personal_title  + '>' + value.personal_title + '</option>');
+			contact_name_values.append('<option value=' + value.contact_name  + '>' + value.contact_name + '</option>');
+			city_values.append('<option value=' + value.city  + '>' + value.city + '</option>');
+			country_values.append('<option value=' + value.country  + '>' + value.country + '</option>');
+		});
+
+		lead_id_values.trigger('change', true);
+		company_name_values.trigger('change', true);
+		personal_title_values.trigger('change', true);
+		contact_name_values.trigger('change', true);
+		city_values.trigger('change', true);
+		country_values.trigger('change', true);
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	//alert(XMLHttpRequest.responseText);
+	});
+}
+
+</script>
+ 
+<!-- Edit Lead //-->
+
+<fieldset>
+<form action="lead" id="edit_lead_form"  method="post">
+<table>
+<tr>
+	<td><label for="lead_id"> Edit:</label></td>
+	<td><input type="text" id="lead_id"  name="lead_id" value="" readonly="readonly" ></td>
+</tr><tr>
+	<td>Company Name:</td><td><input type="text" name="company_name" value=""> </td>
+	<td>Contact Name:</td><td><input type="text" name="contact_name" value=""> </td>
+</tr><tr>
+	<td>Mr/Ms:</td><td><input type="text" name="personal_title" value=""> </td>
+	<td>First Name:</td><td><input type="text" name="first_name" value=""> </td>
+</tr><tr>
+	<td>Last Name:</td><td><input type="text" name="last_name" value=""> </td>
+	<td>Phone:</td><td><input type="text" name="phone" value=""> </td>
+</tr><tr>
+	<td>Email:</td><td><input type="text" name="email" value=""> </td>
+	<td>Street Addr:</td><td><input type="text" name="street_addr" value=""> </td>
+</tr><tr>
+	<td>City:</td><td><input type="text" name="city" value=""> </td>
+	<td>State:</td><td><input type="text" name="state" value=""> </td>
+</tr><tr>
+	<td>Post Code:</td><td><input type="text" name="post_code" value=""> </td>
+	<td>Country:</td><td><input type="text" name="country" value=""> </td>
+</tr><tr>
+	<td>Bill Addr:</td><td><input type="text" name="bill_addr" value=""> </td>
+	<td>Ship Addr:</td><td><input type="text" name="ship_addr" value=""> </td>
+<td></td>
+</tr><tr>
+	    <td><input type="submit"  name="submit" value="Save"></td>
+	<td><button type="submit"  name="addcontact" value="Add_Lead_Contact">  Add Lead Contact </button></td>
+	<!-- <td><button id="add contact"  onclick="return addcontact();" value="Add_Contact">  Add Lead Contact </button></td> //-->
+</tr>
+</table>
+</form>
+</fieldset>
+
+<br><br>
+
+ 
+<script>
+
+function addcontact(){
+
+	$("#add_contact_lead_id").val($("#edit_lead_id").val());
+	$("#add_contact_form").show();
+	return false;
+}
+
+
+function fill_edit_form( lid ) {
+  
+	$("#edit_lead_form input[name='lead_id']").val(lid);
+	$("#edit_lead_form input[name='lead_id']").trigger('change', true);
+
+	var qjson = {};
+	qjson["action"] = "list";
+	qjson["directory"] = "edit_lead_desktop";
+	qjson["lead_id"] = lid;
+	$.getJSON("/lead", qjson, function(jsonData) {
+	var leadValues = jsonData ;
+
+	$("#edit_lead_form input[name='company_name']").val(leadValues["company_name"]);
+	$("#edit_lead_form input[name='contact_name']").val(leadValues["contact_name"]);
+	$("#edit_lead_form input[name='personal_title']").val(leadValues["personal_title"]);
+	$("#edit_lead_form input[name='first_name']").val(leadValues["first_name"]);
+	$("#edit_lead_form input[name='last_name']").val(leadValues["last_name"]);
+	$("#edit_lead_form input[name='phone']").val(leadValues["phone"]);
+	$("#edit_lead_form input[name='email']").val(leadValues["email"]);
+	$("#edit_lead_form input[name='street_addr']").val(leadValues["street_addr"]);
+	$("#edit_lead_form input[name='city']").val(leadValues["city"]);
+	$("#edit_lead_form input[name='state']").val(leadValues["state"]);
+	$("#edit_lead_form input[name='post_code']").val(leadValues["post_code"]);
+	$("#edit_lead_form input[name='country']").val(leadValues["country"]);
+	$("#edit_lead_form input[name='bill_addr']").val(leadValues["bill_addr"]);
+	$("#edit_lead_form input[name='ship_addr']").val(leadValues["ship_addr"]);
+})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) { })
+	alert(XMLHttpRequest.responseText);
+}
+ 
+</script>
+
+<!-- Add Lead  //-->
+
+
+
+<fieldset>
+<form action="lead"  id="add_lead_form" method="post">
+<table>
+<tr>
+<td>	Lead Name : </td> <td> <input type="text" name="lead_id"  value="" required> </td>
+<td>	Company name : </td> <td> <input type="text" name="company_name"  value=""> </td>
+</tr> <tr>
+<td>	Contact name : </td> <td> <input type="text" name="contact_name"  value="" required> </td>
+<td>	Personal title : </td> <td> <input type="text" name="personal_title"  value=""> </td>
+</tr> <tr>
+<td>	First name : </td> <td> <input type="text" name="first_name"  value=""> </td>
+<td>	Last name : </td> <td> <input type="text" name="last_name"  value=""> </td>
+</tr> <tr>
+<td>	Phone : </td> <td> <input type="text" name="phone"  value=""> </td>
+<td>	<label for="email"> Email :</label> </td> <td> <input type="email" name="email" id="email"  value="" required> </td>
+</tr> <tr>
+<td>	Street addr : </td> <td> <input type="text" name="street_addr"  value=""> </td>
+<td>	City : </td> <td> <input type="text" name="city"  value=""> </td>
+</tr> <tr>
+<td>	State : </td> <td> <input type="text" name="state"  value=""> </td>
+<td>	Post code : </td> <td> <input type="text" name="post_code"  value=""> </td>
+</tr> <tr>
+<td>	Country : </td> <td> <input type="text" name="country"  value=""> </td>
+<td>	Bill addr : </td> <td> <input type="text" name="bill_addr"  value=""> </td>
+</tr> <tr>
+<td>	Ship addr : </td> <td> <input type="text" name="ship_addr"  value=""> </td>
+	<td>Lead source : </td> <td> 
+    <select name ="lead_source" id="lead_source_id" style="width: 180px;">
+    </select>
+</td> </tr>
+<td> Lead status : </td> <td>
+    <select name ="lead_status" id="lead_status_id" style="width: 180px;">
+    </select> </td>
+</tr><tr>
+ <td> Lead rating : </td> <td> 
+    <select name ="lead_rating" id="lead_rating_id" style="width: 180px;">
+    </select> </td>
+</tr><tr>
+<td> <input type="submit" name="submit" value="Save_Add">
+</td><td> <input type="submit" name="submit" value="Save_Close">
+</td> </tr>
+</table>
+</form>
+</fieldset>
+
+<form action="/contact" id="add_contact_form" method="post">
+<input type="hidden" id="add_contact_lead_id"  name="edit_lead_id" value="">
+<table>
+<tr>
+<td>Contact ID:</td> <td> <input type="text" name="contact_id" value=""></td>
+<td>Status:</td> <td> <input type="text" name="status" value=""></td>
+</tr><tr>
+<td>FirstName:</td> <td> <input type="text" name="first_name" value=""></td>
+<td>LastName:</td> <td> <input type="text" name="last_name" value=""></td>
+</tr><tr>
+<td>Address:</td> <td> <input type="text" name="address" value=""></td>
+<td>Primary phone:</td> <td> <input type="text" name="primary_phone" value=""></td>
+</tr><tr>
+<td>Alt phone:</td> <td> <input type="text" name="alt_phone" value=""></td>
+<td>Mobile phone:</td> <td> <input type="text" name="mobile_phone" value=""></td>
+</tr><tr>
+<td>Fax:</td> <td> <input type="text" name="fax" value=""></td>
+<td>Email:</td> <td> <input type="text" name="email" value=""></td>
+</tr><tr>
+<td>Twitter:</td> <td> <input type="text" name="twitter" value=""></td>
+<td>Linkedin:</td> <td> <input type="text" name="linkedin" value=""></td>
+</tr><tr>
+<td>Facebook:</td> <td> <input type="text" name="facebook" value=""></td>
+<td>Job title:</td> <td> <input type="text" name="job_title" value=""></td>
+<!--
+<td>Company id:</td> <td> <input type="text" name="company_id" value=""></td>
+//-->
+</tr><tr>
+<td>When met:</td> <td> <input type="text" name="when_met" value=""></td>
+<td>Where met:</td> <td> <input type="text" name="where_met" value=""></td>
+</tr><tr>
+<td>Time zone:</td> <td> <input type="text" name="time_zone" value=""></td>
+<td>Main contact:</td> <td> <input type="text" name="main_contact" value=""></td>
+</tr><tr>
+<td>Out of_marketing:</td> <td> <input type="text" name="out_of_marketing" value=""></td>
+<td>Out of_billing:</td> <td> <input type="text" name="out_of_billing" value=""></td>
+</tr><tr>
+<td>Extra info:</td> <td> <input type="text" name="extra_info" value=""></td>
+<td>	    <input type="submit" name="submit"  value="Add"></td>
+</tr>
+</table>
+
+	  </fieldset>
+</form>
+
+ 
+<script>
+
+$("#add_lead_form").submit(function(e){
+	var cmdVal = $("#add_lead_form input[name='submit']").val();
+	//save
+	var lead_data = {};
+	
+	lead_data["lead_id"] = $("#add_lead_form imput[name='lead_id']").val();
+	lead_data["company_name"] = $("#add_lead_form imput[name='company_name']").val();
+	lead_data["contact_name"] = $("#add_lead_form imput[name='contact_name']").val();
+	lead_data["personal_title"] = $("#add_lead_form imput[name='personal_title']").val();
+	lead_data["first_name"] = $("#add_lead_form imput[name='first_name']").val();
+	lead_data["last_name"] = $("#add_lead_form imput[name='last_name']").val();
+	lead_data["phone"] = $("#add_lead_form imput[name='phone']").val();
+	lead_data["email"] = $("#add_lead_form imput[name='email']").val();
+	lead_data["street_addr"] = $("#add_lead_form imput[name='street_addr']").val();
+	lead_data["city"] = $("#add_lead_form imput[name='city']").val();
+	lead_data["state"] = $("#add_lead_form imput[name='state']").val();
+	lead_data["post_code"] = $("#add_lead_form imput[name='post_code']").val();
+	lead_data["country"] = $("#add_lead_form imput[name='country']").val();
+	lead_data["bill_addr"] = $("#add_lead_form imput[name='bill_addr']").val();
+	lead_data["ship_addr"] = $("#add_lead_form imput[name='ship_addr']").val();
+	lead_data["lead_source"] = $("#add_lead_form imput[name='lead_source']").val();
+	lead_data["lead_status"] = $("#add_lead_form imput[name='lead_status']").val();
+	lead_data["lead_rating"] = $("#add_lead_form imput[name='lead_rating']").val();
+	 $.post("/lead", lead_data, function(data, status){
+		//alert("Data: " + data + "\nStatus: " + status);
+	    })
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	//alert(XMLHttpRequest.responseText);
+	});
+
+	if(cmdVal == "Save_Close")
+	{
+		$("#add_lead_form").hide();
+		$("#lead_list_add_button").show();
+	}
+	return false;
+});
+
+$("#edit_lead_form").submit(function(e){
+	var cmdVal = $("#edit_lead_form input[name='submit']").val();
+	//save
+	var lead_data = {};
+	
+	lead_data["lead_id"] = $("#edit_lead_form imput[name='lead_id']").val();
+	lead_data["company_name"] = $("#edit_lead_form imput[name='company_name']").val();
+	lead_data["contact_name"] = $("#edit_lead_form imput[name='contact_name']").val();
+	lead_data["personal_title"] = $("#edit_lead_form imput[name='personal_title']").val();
+	lead_data["first_name"] = $("#edit_lead_form imput[name='first_name']").val();
+	lead_data["last_name"] = $("#edit_lead_form imput[name='last_name']").val();
+	lead_data["phone"] = $("#edit_lead_form imput[name='phone']").val();
+	lead_data["email"] = $("#edit_lead_form imput[name='email']").val();
+	lead_data["street_addr"] = $("#edit_lead_form imput[name='street_addr']").val();
+	lead_data["city"] = $("#edit_lead_form imput[name='city']").val();
+	lead_data["state"] = $("#edit_lead_form imput[name='state']").val();
+	lead_data["post_code"] = $("#edit_lead_form imput[name='post_code']").val();
+	lead_data["country"] = $("#edit_lead_form imput[name='country']").val();
+	lead_data["bill_addr"] = $("#edit_lead_form imput[name='bill_addr']").val();
+	lead_data["ship_addr"] = $("#edit_lead_form imput[name='ship_addr']").val();
+	lead_data["lead_source"] = $("#edit_lead_form imput[name='lead_source']").val();
+	lead_data["lead_status"] = $("#edit_lead_form imput[name='lead_status']").val();
+	lead_data["lead_rating"] = $("#edit_lead_form imput[name='lead_rating']").val();
+	 $.post("/lead", lead_data, function(data, status){
+		//alert("Data: " + data + "\nStatus: " + status);
+	    })
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	//alert(XMLHttpRequest.responseText);
+	});
+
+	if(cmdVal == "Save")
+	{
+		$("#edit_lead_form").hide();
+		$("#lead_list_add_button").show();
+	}
+	else if(cmdVal == "Add_Lead_Contact")
+	{
+		$("#add_contact_form").show();
+	}
+	return false;
+});
+
+$("#add_contact_form").submit(function(e){
+	var cmdVal = $("#add_contact_form input[name='submit']").val();
+	//save
+	var contact_data = {};
+	contact_data["contact_id"] = $("#add_contact_form input[name='contact_id']").val();
+	contact_data["status"] = $("#add_contact_form input[name='status']").val();
+	contact_data["first_name"] = $("#add_contact_form input[name='first_name']").val();
+	contact_data["last_name"] = $("#add_contact_form input[name='last_name']").val();
+	contact_data["contact_from"] = $("#add_contact_form input[name='contact_from']").val();
+	contact_data["address"] = $("#add_contact_form input[name='address']").val();
+	contact_data["primary_phone"] = $("#add_contact_form input[name='primary_phone']").val();
+	contact_data["alt_phone"] = $("#add_contact_form input[name='alt_phone']").val();
+	contact_data["mobile_phone"] = $("#add_contact_form input[name='mobile_phone']").val();
+	contact_data["fax"] = $("#add_contact_form input[name='fax']").val();
+	contact_data["email"] = $("#add_contact_form input[name='email']").val();
+	contact_data["twitter"] = $("#add_contact_form input[name='twitter']").val();
+	contact_data["linkedin"] = $("#add_contact_form input[name='linkedin']").val();
+	contact_data["facebook"] = $("#add_contact_form input[name='facebook']").val();
+	contact_data["job_title"] = $("#add_contact_form input[name='job_title']").val();
+	contact_data["company_id"] = $("#add_contact_form input[name='company_id']").val();
+	contact_data["when_met"] = $("#add_contact_form input[name='when_met']").val();
+	contact_data["where_met"] = $("#add_contact_form input[name='where_met']").val();
+	contact_data["time_zone"] = $("#add_contact_form input[name='time_zone']").val();
+	contact_data["main_contact"] = $("#add_contact_form input[name='main_contact']").val();
+	contact_data["out_of_marketing"] = $("#add_contact_form input[name='out_of_marketing']").val();
+	contact_data["out_of_billing"] = $("#add_contact_form input[name='out_of_billing']").val();
+	contact_data["extra_info"] = $("#add_contact_form input[name='extra_info']").val();
+	$.post("/contact", contact_data, function(data, status){
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	//alert(XMLHttpRequest.responseText);
+	});
+});
+
+function fillLeadSource() {
+  
+	$.getJSON("/lead", {"action":"list",  "directory": "lead_source"}, function(jsonData) {
+		var sourceValues = $( "#lead_source_id" );
+		$.each(jsonData.recordset,function(key, value) {
+		sourceValues.append('<option value=' + key + '>' + value + '</option>');
+		});
+	})
+	//.error(function() { alert("json error"); });
+}
+
+function fillLeadStatus() {
+  
+	$.getJSON("/lead", { "action":"list", "directory": "lead_status" }, function(jsonData) {
+	var statusValues = $( "#lead_status_id" );
+	$.each(jsonData.recordset,function(key, value) {
+	statusValues.append('<option value=' + key + '>' + value + '</option>');
+	});
+	})
+	//.error(function() { alert("json error"); });
+}
+
+function fillLeadRating() {
+  
+	$.getJSON("/lead", { "action":"list", "directory": "lead_rating" }, function(jsonData) {
+	var ratingValues = $( "#lead_rating_id" );
+	$.each(jsonData.recordset,function(key, value) {
+	ratingValues.append('<option value=' + key + '>' + value + '</option>');
+	});
+	})
+//	.error(function() { alert("json error"); });
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	//alert(XMLHttpRequest.responseText);
+
+})
+}
+ 
+
+function init_table_page(){
+	$("#edit_lead_form").hide();
+	$("#add_contact_form").hide();
+	$("#add_lead_form").hide();
+	listLeads();
+};
+
+init_table_page();
+
+</script>
+
+ 
+

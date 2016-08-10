@@ -143,17 +143,12 @@ void AddContactInterface::ProcessPost(){
 		if( true) //!ct.check_contact_exist())
 		{
 			ct.add_contact_table();
-
 		//	t.load( "web/addcontactresponse.html" );
 		}
 		else
 		{
 		//	t.load( "web/addcontactwarning.html" );
 		}
-
-		//t.block("meat").repeat(1);
-		//t.block("meat")[0].set("login_name",m["login_name"]);
-
 
 		stringstream cs;
 		//t.render( cs ); 
@@ -169,8 +164,27 @@ void AddContactInterface::ProcessPost(){
 	}
 		return;
 	}
-	if(boost::iequals(m["submit"], "save")){
+	//if(boost::iequals(m["submit"], "save")){
+	else{
 	try {
+		contact_table ct( m["contact_id"], m["status"], m["first_name"], m["last_name"], m["category"], m["address"], m["primary_phone"], m["alt_phone"], m["mobile_phone"], m["fax"], m["email"], m["twitter"], m["linkedin"], m["facebook"], m["job_title"], m["source_id"], m["when_met"], m["where_met"], m["time_zone"], m["main_contact"], m["out_of_marketing"], m["out_of_billing"], m["extra_info"] );
+		if( true) //!ct.check_contact_exist())
+		{
+			ct.add_contact_table();
+		//	t.load( "web/addcontactresponse.html" );
+		}
+		else
+		{
+		//	t.load( "web/addcontactwarning.html" );
+		}
+
+		stringstream cs;
+		//t.render( cs ); 
+		
+		cs << "new contact added" << endl;
+		cs.seekp(0, ios::end);
+		rs_ <<  cs.rdbuf();
+		rs_.flush();
 
 		
 	}
