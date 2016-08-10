@@ -1,6 +1,5 @@
 
 <!-------------------------Search Header -------------------------//-->
-<fieldset>
  <form id="search_lead" action="/lead", method="post">
 
 <table id="lead_search" >
@@ -96,13 +95,13 @@ $("#search_lead").submit(function(e){
 	//alert(XMLHttpRequest.responseText);
 	});
 	return false;
-}
-);
+});
 
 </script>
 
 <!-------------------------List Table-------------------------//-->
 
+<fieldset>
 <table id="lead_table" border="1">
 </table>
 <br><br>
@@ -112,7 +111,6 @@ $("#search_lead").submit(function(e){
 <script>
 
 function listLeads() {
-  
 
 	$.getJSON("/lead", {"action":"list", "directory": "lead_content"}, function(jsonData) {
 
@@ -478,6 +476,7 @@ $("#add_lead_form").submit(function(e){
 </script>
 <!-------------------------Add Contact-------------------------//-->
 
+<fieldset>
 <form action="/contact" id="add_contact_form" method="post">
 <input type="hidden" id="add_contact_lead_id"  name="edit_lead_id" value="">
 <table>
@@ -517,8 +516,8 @@ $("#add_lead_form").submit(function(e){
 </tr>
 </table>
 
-	  </fieldset>
 </form>
+  </fieldset>
 
  
 <script>
@@ -573,7 +572,7 @@ $(document).ready( function(){
 init_table_page();
 });
 
-listLeads();
+//listLeads();
 </script>
 
  

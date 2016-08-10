@@ -28,10 +28,15 @@ $(function () {
 	var $activeTab = $('#drmtabs').tabs('option', 'active');
 
 	ui.oldPanel.hide();
+	ui.oldPanel.removeClass('active');
+	ui.oldPanel.removeClass('current');
 	ui.newPanel.show();
+	ui.newPanel.addClass('active');
+	ui.newPanel.addClass('current');
 
-	if ($activeTab == 4) {
-	alert( $activeTab) ; 
+	if ($activeTab == 1) {
+	//init_customer_page();
+	//alert( $activeTab) ; 
 	} }
 	});
 });
@@ -56,20 +61,16 @@ $(function () {
 	{% include web/lead_interface %}
 	</div>
 	<div id="drmtab_customer" >
-<!--
-{% include web/customer_interface %}
--->
+	{% include web/customer_interface %}
 	</div>
 	<div id="drmtab_contact" >
-	<!--{% include web/lead_interface %} -->
+	{% include web/contact_interface %}
 	</div>
 	<div id="drmtab_activity" >
-	<!-- {% include web/lead_interface %} -->
+"xxx"
 	</div>
 	<div id="drmtab_campaign" >
-<!--
-	{% include web/lead_interface %}
--->
+"xxx"
 	</div>
 	<div id="drmtab_vendor" >
 	    "drmtab_vendor"
