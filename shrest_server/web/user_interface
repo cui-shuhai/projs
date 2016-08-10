@@ -1,0 +1,366 @@
+<!-------------------------Search Header -------------------------//-->
+login_name
+pass_word
+employee_id
+role_name
+profile_name
+create_date
+creator_id
+
+<fieldset>
+ <form id="search_user" action="/user", method="post">
+
+
+
+<table id="user_search" >
+<tr>
+<td colspan="1" > <label for="login_name">login_name:</lable</td>
+<td colspan="1" > <label for="employee_id">employee_id:</lable</td>
+<td colspan="1" > <label for="role_name">role_name:</lable</td>
+<td colspan="1" > <label for="profile_name">profile_name:</lable</td>
+<td colspan="1" > <label for="create_date">create_date:</lable</td>
+<td colspan="1" > <label for="creator_id">creator_id:</lable</td>
+<td colspan="1" ></td>
+</tr> <tr>
+<td><input type="text" name="login_name" id="txtlogin_nameAutoComplete" list="login_name_data_list" value="" > <datalist id="login_name_data_list"> </datalist></td>
+<td><input type="text" name="employee_id" id="txtemployee_idAutoComplete" list="employee_id_data_list" value="" > <datalist id="employee_id_data_list"> </datalist></td>
+<td><input type="text" name="role_name" id="txtrole_nameAutoComplete" list="role_name_data_list" value="" > <datalist id="role_name_data_list"> </datalist></td>
+<td><input type="text" name="profile_name" id="txtprofile_nameAutoComplete" list="profile_name_data_list" value="" > <datalist id="profile_name_data_list"> </datalist></td>
+<td><input type="text" name="create_date" id="txtcreate_dateAutoComplete" list="create_date_data_list" value="" > <datalist id="create_date_data_list"> </datalist></td>
+<td><input type="text" name="creator_id" id="txtcreator_idAutoComplete" list="creator_id_data_list" value="" > <datalist id="creator_id_data_list"> </datalist></td>
+<td><input type="submit"   name="submit" value="Search"></td>
+</tr>
+</table>
+</form>
+</fieldset>
+
+<script>
+
+
+
+$("#search_user").submit(function(e){
+
+	var  login_name_value = $("#search_login_name");
+	var  employee_id_value = $("#search_employee_id");
+	var  role_name_value = $("#search_role_name");
+	var  profile_name_value = $("#search_profile_name");
+	var  create_date_value = $("#search_create_date");
+	var  creator_id_value = $("#search_creator_id");
+
+	var query_filter = {};
+	query_filter["action"] = "list";
+	query_filter["directory"]="user_content";
+
+	if(typeof login_name_value.val() != "undefined"  && login_name_value.val().length != 0) 
+		query_filter["login_name"] = login_name_value.val();
+	if(typeof pass_word_value.val() != "undefined"  && pass_word_value.val().length != 0) 
+		query_filter["pass_word"] = pass_word_value.val();
+	if(typeof employee_id_value.val() != "undefined"  && employee_id_value.val().length != 0) 
+		query_filter["employee_id"] = employee_id_value.val();
+	if(typeof role_name_value.val() != "undefined"  && role_name_value.val().length != 0) 
+		query_filter["role_name"] = role_name_value.val();
+	if(typeof profile_name_value.val() != "undefined"  && profile_name_value.val().length != 0) 
+		query_filter["profile_name"] = profile_name_value.val();
+	if(typeof create_date_value.val() != "undefined"  && create_date_value.val().length != 0) 
+		query_filter["create_date"] = create_date_value.val();
+	if(typeof creator_id_value.val() != "undefined"  && creator_id_value.val().length != 0) 
+		query_filter["creator_id"] = creator_id_value.val();
+
+	//$('#user_table tbody > tr').remove();
+	$('#user_table').empty();
+
+	$.getJSON("/user", query_filter, function(jsonData) {
+		var sourceTable= $( "#user_table" );
+		tr = $('<tr/>');
+		tr.append("<th>" + "login_name" + "</th>");
+		tr.append("<th>" + "employee_id" + "</th>");
+		tr.append("<th>" + "role_name" + "</th>");
+		tr.append("<th>" + "profile_name" + "</th>");
+		tr.append("<th>" + "create_date" + "</th>");
+		tr.append("<th>" + "creator_id" + "</th>");
+		tr.append("<th>" + "Click Edit..." + "</th>"); 
+		sourceTable.append(tr);
+
+		$.each(jsonData.customer ,function(key, value) {
+			tr = $('<tr class="edit_customer_link" />');
+                        tr.append("<td>" + "<a href=\"/user?action=edit&&user_id=" + value.user_id +"\"" +">Go...</a>"  + "</td>");
+			tr.append("<td>" + "login_name" + "</td>");
+			tr.append("<td>" + "employee_id" + "</td>");
+			tr.append("<td>" + "role_name" + "</td>");
+			tr.append("<td>" + "profile_name" + "</td>");
+			tr.append("<td>" + "create_date" + "</td>");
+			tr.append("<td>" + "creator_id" + "</td>");
+			tr.append("<td>" + "Click Edit..." + "</td>"); 
+			sourceTable.append(tr);
+		});
+
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	//alert(XMLHttpRequest.responseText);
+	});
+	return false;
+}
+);
+
+</script>
+
+<!-------------------------List Table-------------------------//-->
+
+<fieldset>
+<legend>List Employee</legend>
+<table id="user_table" buser="1">
+</table>
+<br><br>
+</fieldset>
+
+<script>
+function listUsers() {
+  
+	$.getJSON("/user", {"action":"list",  "directory": "user_content"}, function(jsonData) {
+
+		$( "#user_table tr" ).remove();
+		$('#user_table').empty();
+
+		var sourceTable= $( "#user_table" );
+
+		tr = $('<tr/>');
+		tr.append("<th>" + "Click Edit..."  + "</th>");
+		tr.append("<th>" + "login_name" + "</th>");
+		tr.append("<th>" + "employee_id" + "</th>");
+		tr.append("<th>" + "role_name" + "</th>");
+		tr.append("<th>" + "profile_name" + "</th>");
+		tr.append("<th>" + "create_date" + "</th>");
+		tr.append("<th>" + "creator_id" + "</th>");
+		sourceTable.append(tr);
+
+
+		var login_name_value = $("#search_login_name");
+		var pass_word_value = $("#search_pass_word");
+		var employee_id_value = $("#search_employee_id");
+		var role_name_value = $("#search_role_name");
+		var profile_name_value = $("#search_profile_name");
+		var create_date_value = $("#search_create_date");
+		var creator_id_value = $("#search_creator_id");
+
+		login_name_value.empty();
+		pass_word_value.empty();
+		employee_id_value.empty();
+		role_name_value.empty();
+		profile_name_value.empty();
+		create_date_value.empty();
+		creator_id_value.empty();
+
+		login_name_value.append('<option value=' + '' + '>' + "" + '</option>');
+		pass_word_value.append('<option value=' + '' + '>' + "" + '</option>');
+		employee_id_value.append('<option value=' + '' + '>' + "" + '</option>');
+		role_name_value.append('<option value=' + '' + '>' + "" + '</option>');
+		profile_name_value.append('<option value=' + '' + '>' + "" + '</option>');
+		create_date_value.append('<option value=' + '' + '>' + "" + '</option>');
+		creator_id_value.append('<option value=' + '' + '>' + "" + '</option>');
+
+		$.each(jsonData.user ,function(key, value) {
+			tr = $('<tr class="edit_customer_link" />');
+                        tr.append("<td>" + "<a href=\"/user?action=edit&&user_id=" + value.user_id +"\"" +">Go...</a>"  + "</td>");
+			tr.append("<td>" + "login_name" + "</td>");
+			tr.append("<td>" + "employee_id" + "</td>");
+			tr.append("<td>" + "role_name" + "</td>");
+			tr.append("<td>" + "profile_name" + "</td>");
+			tr.append("<td>" + "create_date" + "</td>");
+			tr.append("<td>" + "creator_id" + "</td>");
+			sourceTable.append(tr);
+
+			$('#login_name_data_list').append("<option value='" + value.login_name  + "'>");
+			$('#employee_id_data_list').append("<option value='" + value.employee_id  + "'>");
+			$('#role_name_data_list').append("<option value='" + value.role_name  + "'>");
+			$('#profile_name_data_list').append("<option value='" + value.profile_name  + "'>");
+			$('#create_date_data_list').append("<option value='" + value.create_date  + "'>");
+			$('#creator_id_data_list').append("<option value='" + value.creator_id  + "'>");
+
+		});
+
+		login_name_value.trigger('change', true);
+		employee_id_value.trigger('change', true);
+		role_name_value.trigger('change', true);
+		profile_name_value.trigger('change', true);
+		create_date_value.trigger('change', true);
+		creator_id_value.trigger('change', true);
+
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	alert(XMLHttpRequest.responseText);
+	});
+}
+
+function edit_user_link_click(l){
+	var url = $(l).attr('href');
+	$("#edit_user_form").show();
+	fill_edit_form(url);	
+	return false;
+}
+
+
+</script>
+ 
+
+<!-------------------------Edit -------------------------//-->
+
+
+<form id="edit_form"  action="user" method="post">
+	  <fieldset>
+	    <legend>Edit user </legend>
+<input type="hidden" id="user_id"  name="user_id" value="{{ user_id }}">
+<table>
+<tr>
+<td>Login ID:</td><td>
+	    <input type="text" name="login_name" value="">
+	    </td>
+</tr><tr>
+<td>Password:</td><td>
+	    <input type="text" name="pass_word" value="">
+	    </td>
+</tr><tr>
+<td>Repeat Passord:</td><td>
+	    <input type="text" name="pass_word" value="">
+	    </td>
+</tr><tr>
+<td> Role:</td><td>
+	    <select id="role_id" name = "role_id" style="width: 150px;">
+	    </select>
+	    </td>
+</tr><tr>
+<td>Profile:</td><td>
+	    <select id="profile_id" name = "profile_id" style="width: 150px;">
+	    </select>
+</td>
+</tr><tr>
+<td>
+	    <input type="submit" value="add" >
+</td>
+</table>
+	  </fieldset>
+</form>
+
+<!---------------------------Add User--------------------//-->
+
+<fieldset>
+
+<form id="add_form"  action="user" method="post">
+	  <fieldset>
+	    <legend>Select user to add login account</legend>
+<table>
+<tr>
+  	<td>Select User:</td><td>
+	    <select id="user_id" name ="new_user" style="width: 150px;">
+ 	    </select>
+	    </td>
+</tr><tr>
+<td>Login ID:</td><td>
+	    <input type="text" name="login_name" value="">
+	    </td>
+</tr><tr>
+<td>Password:</td><td>
+	    <input type="text" name="pass_word" value="">
+	    </td>
+</tr><tr>
+<td>Repeat Passord:</td><td>
+	    <input type="text" name="pass_word" value="">
+	    </td>
+</tr><tr>
+<td> Role:</td><td>
+	    <select id="role_id" name = "role_id" style="width: 150px;">
+	    </select>
+	    </td>
+</tr><tr>
+<td>Profile:</td><td>
+	    <select id="profile_id" name = "profile_id" style="width: 150px;">
+	    </select>
+</td>
+</tr><tr>
+<td>
+	    <input type="submit" value="add" >
+</td>
+</table>
+	  </fieldset>
+</form>
+
+</fieldset>
+
+<script>
+
+function adduser(){
+
+	$("#add_user_customer_id").val($("#edit_customer_id").val());
+	$("#add_user_form").show();
+	return false;
+}
+
+
+function fill_edit_form( lid ) {
+  
+	$("#edit_user_form input[name='user_id']").val(lid);
+	$("#edit_user_form input[name='user_id']").trigger('change', true);
+
+	var qjson = {};
+	qjson["action"] = "list";
+	qjson["directory"] = "edit_user_desktop";
+	qjson["user_id"] = lid;
+	$.getJSON("/user", qjson, function(jsonData) {
+	var userValues = jsonData ;
+
+	$("#edit_user_form input[name='login_name']").val(user_Values["login_name"]);
+	$("#edit_user_form input[name='pass_word']").val(user_Values["pass_word"]);
+	$("#edit_user_form input[name='employee_id']").val(user_Values["employee_id"]);
+	$("#edit_user_form input[name='role_name']").val(user_Values["role_name"]);
+	$("#edit_user_form input[name='profile_name']").val(user_Values["profile_name"]);
+	$("#edit_user_form input[name='create_date']").val(user_Values["create_date"]);
+	$("#edit_user_form input[name='creator_id']").val(user_Values["creator_id"]);
+
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) { })
+	alert(XMLHttpRequest.responseText);
+}
+ 
+
+$("#edit_user_form").submit(function(e){
+	var button_name = $("#edit_customer_from").context.activeElement.name;
+
+	var user_data = {};
+	user_data["login_name"] = $("#edit_user_form input[name='login_name']").val();
+	user_data["pass_word"] = $("#edit_user_form input[name='pass_word']").val();
+	user_data["employee_id"] = $("#edit_user_form input[name='employee_id']").val();
+	user_data["role_name"] = $("#edit_user_form input[name='role_name']").val();
+	user_data["profile_name"] = $("#edit_user_form input[name='profile_name']").val();
+	user_data["create_date"] = $("#edit_user_form input[name='create_date']").val();
+	user_data["creator_id"] = $("#edit_user_form input[name='creator_id']").val();
+
+	 $.post("/user", user_data, function(data, status){
+		//alert("Data: " + data + "\nStatus: " + status);
+	    })
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	//alert(XMLHttpRequest.responseText);
+	});
+
+	if(button_name == "submit")
+	{
+		$("#edit_user_form").hide();
+		$("#user_list_add_button").show();
+	}
+	return false;
+});
+</script>
+<script>
+
+
+function init_user_page(){
+	$("#edit_user_form").hide();
+	$("#add_user_form").hide();
+	listUsers();
+};
+
+$(document).ready( function(){
+init_user_page();
+});
+
+</script>
+ 
+

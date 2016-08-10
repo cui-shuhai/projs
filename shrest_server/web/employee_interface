@@ -1,0 +1,493 @@
+<!-------------------------Search Header -------------------------//-->
+employee_id
+first_name
+last_name
+age
+address
+mobile_phone
+office_phone
+home_phone
+email
+job_title
+department_name
+reports_to
+create_date
+created_by
+
+
+employee_id
+first_name
+last_name
+address
+office_phone
+email
+job_title
+department_name
+reports_to
+create_date
+created_by
+
+<fieldset>
+ <form id="search_employee" action="/employee", method="post">
+
+<table id="employee_search" >
+<tr>
+<td colspan="1" > <label for="employee_id"> employee_id:</lable</td>
+<td colspan="1" > <label for="first_name"> first_name:</lable</td>
+<td colspan="1" > <label for="last_name"> last_name:</lable</td>
+<td colspan="1" > <label for="address"> address:</lable</td>
+<td colspan="1" > <label for="office_phone"> office_phone:</lable</td>
+<td colspan="1" > <label for="email"> email:</lable</td>
+<td colspan="1" > <label for="job_title"> job_title:</lable</td>
+<td colspan="1" > <label for="department_name"> department_name:</lable</td>
+<td colspan="1" > <label for="reports_to"> reports_to:</lable</td>
+<td colspan="1" > <label for="create_date"> create_date:</lable</td>
+<td colspan="1" > <label for="created_by"> created_by:</lable</td>
+<td colspan="1" ></td>
+</tr> <tr>
+<td><input type="text" name="employee_id" id="txtemployee_idAutoComplete" list="employee_id_data_list" value="" > <datalist id="employee_id_data_list"> </datalist></td>
+<td><input type="text" name="first_name" id="txtfirst_nameAutoComplete" list="first_name_data_list" value="" > <datalist id="first_name_data_list"> </datalist></td>
+<td><input type="text" name="last_name" id="txtlast_nameAutoComplete" list="last_name_data_list" value="" > <datalist id="last_name_data_list"> </datalist></td>
+<td><input type="text" name="address" id="txtaddressAutoComplete" list="address_data_list" value="" > <datalist id="address_data_list"> </datalist></td>
+<td><input type="text" name="office_phone" id="txtoffice_phoneAutoComplete" list="office_phone_data_list" value="" > <datalist id="office_phone_data_list"> </datalist></td>
+<td><input type="text" name="email" id="txtemailAutoComplete" list="email_data_list" value="" > <datalist id="email_data_list"> </datalist></td>
+<td><input type="text" name="job_title" id="txtjob_titleAutoComplete" list="job_title_data_list" value="" > <datalist id="job_title_data_list"> </datalist></td>
+<td><input type="text" name="department_name" id="txtdepartment_nameAutoComplete" list="department_name_data_list" value="" > <datalist id="department_name_data_list"> </datalist></td>
+<td><input type="text" name="reports_to" id="txtreports_toAutoComplete" list="reports_to_data_list" value="" > <datalist id="reports_to_data_list"> </datalist></td>
+<td><input type="text" name="create_date" id="txtcreate_dateAutoComplete" list="create_date_data_list" value="" > <datalist id="create_date_data_list"> </datalist></td>
+<td><input type="text" name="created_by" id="txtcreated_byAutoComplete" list="created_by_data_list" value="" > <datalist id="created_by_data_list"> </datalist></td>
+<td><input type="submit"   name="submit" value="Search"></td>
+</tr>
+</table>
+</form>
+</fieldset>
+
+<script>
+
+
+
+$("#search_employee").submit(function(e){
+
+	var  employee_id_value = $("#search_employee_id");
+	var  first_name_value = $("#search_first_name");
+	var  last_name_value = $("#search_last_name");
+	var  address_value = $("#search_address");
+	var  office_phone_value = $("#search_office_phone");
+	var  email_value = $("#search_email");
+	var  job_title_value = $("#search_job_title");
+	var  department_name_value = $("#search_department_name");
+	var  reports_to_value = $("#search_reports_to");
+	var  create_date_value = $("#search_create_date");
+	var  created_by_value = $("#search_created_by");
+
+	var query_filter = {};
+	query_filter["action"] = "list";
+	query_filter["directory"]="employee_content";
+
+	if(typeof employee_id_value.val() != "undefined"  && employee_id_value.val().length != 0) 
+		query_filter["employee_id"] = employee_id_value.val();
+	if(typeof first_name_value.val() != "undefined"  && first_name_value.val().length != 0) 
+		query_filter["first_name"] = first_name_value.val();
+	if(typeof last_name_value.val() != "undefined"  && last_name_value.val().length != 0) 
+		query_filter["last_name"] = last_name_value.val();
+	if(typeof address_value.val() != "undefined"  && address_value.val().length != 0) 
+		query_filter["address"] = address_value.val();
+	if(typeof office_phone_value.val() != "undefined"  && office_phone_value.val().length != 0) 
+		query_filter["office_phone"] = office_phone_value.val();
+	if(typeof email_value.val() != "undefined"  && email_value.val().length != 0) 
+		query_filter["email"] = email_value.val();
+	if(typeof job_title_value.val() != "undefined"  && job_title_value.val().length != 0) 
+		query_filter["job_title"] = job_title_value.val();
+	if(typeof department_name_value.val() != "undefined"  && department_name_value.val().length != 0) 
+		query_filter["department_name"] = department_name_value.val();
+
+	//$('#employee_table tbody > tr').remove();
+	$('#employee_table').empty();
+
+	$.getJSON("/employee", query_filter, function(jsonData) {
+		var sourceTable= $( "#employee_table" );
+		tr = $('<tr/>');
+		tr.append("<th>" + "Click Edit..." + "</th>"); 
+		tr.append("<th>" + "employee_id" + "</th>");
+		tr.append("<th>" + "first_name" + "</th>");
+		tr.append("<th>" + "last_name" + "</th>");
+		tr.append("<th>" + "age" + "</th>");
+		tr.append("<th>" + "address" + "</th>");
+		tr.append("<th>" + "mobile_phone" + "</th>");
+		tr.append("<th>" + "office_phone" + "</th>");
+		tr.append("<th>" + "home_phone" + "</th>");
+		tr.append("<th>" + "email" + "</th>");
+		tr.append("<th>" + "job_title" + "</th>");
+		tr.append("<th>" + "department_name" + "</th>");
+		tr.append("<th>" + "reports_to" + "</th>");
+		tr.append("<th>" + "create_date" + "</th>");
+		tr.append("<th>" + "created_by" + "</th>");
+		sourceTable.append(tr);
+
+		$.each(jsonData.customer ,function(key, value) {
+			tr = $('<tr class="edit_customer_link" />');
+                        tr.append("<td>" + "<a href=\"/employee?action=edit&&employee_id=" + value.employee_id +"\"" +">Go...</a>"  + "</td>");
+			tr.append("<td>" + "employee_id" + "</td>");
+			tr.append("<td>" + "first_name" + "</td>");
+			tr.append("<td>" + "last_name" + "</td>");
+			tr.append("<td>" + "age" + "</td>");
+			tr.append("<td>" + "address" + "</td>");
+			tr.append("<td>" + "mobile_phone" + "</td>");
+			tr.append("<td>" + "office_phone" + "</td>");
+			tr.append("<td>" + "home_phone" + "</td>");
+			tr.append("<td>" + "email" + "</td>");
+			tr.append("<td>" + "job_title" + "</td>");
+			tr.append("<td>" + "department_name" + "</td>");
+			tr.append("<td>" + "reports_to" + "</td>");
+			tr.append("<td>" + "create_date" + "</td>");
+			tr.append("<td>" + "created_by" + "</td>");
+			sourceTable.append(tr);
+		});
+
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	//alert(XMLHttpRequest.responseText);
+	});
+	return false;
+}
+);
+
+</script>
+
+<!-------------------------List Table-------------------------//-->
+
+<fieldset>
+<legend>List Employee</legend>
+<table id="employee_table" bemployee="1">
+</table>
+<br><br>
+</fieldset>
+
+<script>
+function listEmployees() {
+  
+	$.getJSON("/employee", {"action":"list",  "directory": "employee_content"}, function(jsonData) {
+
+		$( "#employee_table tr" ).remove();
+		$('#employee_table').empty();
+
+		var sourceTable= $( "#employee_table" );
+
+
+
+
+		tr = $('<tr/>');
+		tr.append("<th>" + "Click Edit..."  + "</th>");
+		tr.append("<th>" + "employee_id" + "</th>");
+		tr.append("<th>" + "first_name" + "</th>");
+		tr.append("<th>" + "last_name" + "</th>");
+		tr.append("<th>" + "age" + "</th>");
+		tr.append("<th>" + "address" + "</th>");
+		tr.append("<th>" + "mobile_phone" + "</th>");
+		tr.append("<th>" + "office_phone" + "</th>");
+		tr.append("<th>" + "home_phone" + "</th>");
+		tr.append("<th>" + "email" + "</th>");
+		tr.append("<th>" + "job_title" + "</th>");
+		tr.append("<th>" + "department_name" + "</th>");
+		tr.append("<th>" + "reports_to" + "</th>");
+		tr.append("<th>" + "create_date" + "</th>");
+		tr.append("<th>" + "created_by" + "</th>");
+		sourceTable.append(tr);
+
+
+		var employee_id_value = $("#search_employee_id");
+		var first_name_value = $("#search_first_name");
+		var last_name_value = $("#search_last_name");
+		var address_value = $("#search_address");
+		var office_phone_value = $("#search_office_phone");
+		var email_value = $("#search_email");
+		var job_title_value = $("#search_job_title");
+		var department_name_value = $("#search_department_name");
+		var reports_to_value = $("#search_reports_to");
+		var create_date_value = $("#search_create_date");
+		var created_by_value = $("#search_created_by");
+
+		employee_id_value.empty();
+		first_name_value.empty();
+		last_name_value.empty();
+		address_value.empty();
+		office_phone_value.empty();
+		email_value.empty();
+		job_title_value.empty();
+		department_name_value.empty();
+		reports_to_value.empty();
+		create_date_value.empty();
+		created_by_value.empty();
+
+		employee_id_value.append('<option value=' + '' + '>' + "" + '</option>');
+		first_name_value.append('<option value=' + '' + '>' + "" + '</option>');
+		last_name_value.append('<option value=' + '' + '>' + "" + '</option>');
+		address_value.append('<option value=' + '' + '>' + "" + '</option>');
+		office_phone_value.append('<option value=' + '' + '>' + "" + '</option>');
+		email_value.append('<option value=' + '' + '>' + "" + '</option>');
+		job_title_value.append('<option value=' + '' + '>' + "" + '</option>');
+		department_name_value.append('<option value=' + '' + '>' + "" + '</option>');
+		reports_to_value.append('<option value=' + '' + '>' + "" + '</option>');
+		create_date_value.append('<option value=' + '' + '>' + "" + '</option>');
+		created_by_value.append('<option value=' + '' + '>' + "" + '</option>');
+
+		$.each(jsonData.employee ,function(key, value) {
+			tr = $('<tr class="edit_customer_link" />');
+                        tr.append("<td>" + "<a href=\"/employee?action=edit&&employee_id=" + value.employee_id +"\"" +">Go...</a>"  + "</td>");
+			tr.append("<td>" + "employee_id" + "</td>");
+			tr.append("<td>" + "first_name" + "</td>");
+			tr.append("<td>" + "last_name" + "</td>");
+			tr.append("<td>" + "age" + "</td>");
+			tr.append("<td>" + "address" + "</td>");
+			tr.append("<td>" + "mobile_phone" + "</td>");
+			tr.append("<td>" + "office_phone" + "</td>");
+			tr.append("<td>" + "home_phone" + "</td>");
+			tr.append("<td>" + "email" + "</td>");
+			tr.append("<td>" + "job_title" + "</td>");
+			tr.append("<td>" + "department_name" + "</td>");
+			tr.append("<td>" + "reports_to" + "</td>");
+			tr.append("<td>" + "create_date" + "</td>");
+			tr.append("<td>" + "created_by" + "</td>");
+			sourceTable.append(tr);
+
+			$('#employee_id_data_list').append("<option value='" + value.employee_id  + "'>");
+			$('#first_name_data_list').append("<option value='" + value.first_name  + "'>");
+			$('#last_name_data_list').append("<option value='" + value.last_name  + "'>");
+			$('#address_data_list').append("<option value='" + value.address  + "'>");
+			$('#office_phone_data_list').append("<option value='" + value.office_phone  + "'>");
+			$('#email_data_list').append("<option value='" + value.email  + "'>");
+			$('#job_title_data_list').append("<option value='" + value.job_title  + "'>");
+			$('#department_name_data_list').append("<option value='" + value.department_name  + "'>");
+			$('#reports_to_data_list').append("<option value='" + value.reports_to  + "'>");
+			$('#create_date_data_list').append("<option value='" + value.create_date  + "'>");
+			$('#created_by_data_list').append("<option value='" + value.created_by  + "'>");
+
+		});
+
+		employee_id_value.trigger('change', true);
+		first_name_value.trigger('change', true);
+		last_name_value.trigger('change', true);
+		address_value.trigger('change', true);
+		office_phone_value.trigger('change', true);
+		email_value.trigger('change', true);
+		job_title_value.trigger('change', true);
+		department_name_value.trigger('change', true);
+		reports_to_value.trigger('change', true);
+		create_date_value.trigger('change', true);
+		created_by_value.trigger('change', true);
+
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	alert(XMLHttpRequest.responseText);
+	});
+}
+
+function edit_employee_link_click(l){
+	var url = $(l).attr('href');
+	$("#edit_employee_form").show();
+	fill_edit_form(url);	
+	return false;
+}
+
+
+</script>
+ 
+
+<!-------------------------Edit -------------------------//-->
+
+<form action="employee" id="edit_employee_form"  method="post">
+	  <fieldset>
+	    <legend>Edit employee:</legend>
+{% block meat %}
+<input type="hidden" id="employee_id"  name="employee_id" value="">
+{% endblock %}
+<table>
+<tr>
+	    <td> First Name: </td>
+	    <td> <input type="text" name="first_name" value=""> </td>
+</tr><tr>
+	    <td> Last Name: </td>
+	    <td> <input type="text" name="last_name" value=""> </td>
+</tr><tr>
+	<td> Title: </td>
+	    <td> <select name ="job_title" style="width: 150px;"> 
+ 	     </select> </td>
+</tr><tr>
+	    <td> Department: </td>
+	    <td> <select name ="department" style="width: 150px;"> 
+ 	    </select> </td>
+</tr><tr>
+	    <td> Report to: </td>
+	    <td> <select name ="report_to" style="width: 150px;"> 
+ 	    </select> </td>
+</tr><tr>
+	    <td> Age: </td>
+	    <td> <select name ="age" style="width: 150px;"> 
+ 	    </select>  </td>
+</tr><tr>
+	    <td> Editress: </td>
+	    <td> <input type="text" name="address" value=""> </td>
+</tr><tr>
+	    <td> Mobile: </td>
+	    <td> <input type="text" name="mobile_phone" value=""> </td>
+</tr><tr>
+	    <td> Office phone: </td>
+	    <td> <input type="text" name="office_phone" value=""> </td>
+</tr><tr>
+	    <td> Home Phone: </td>
+	    <td> <input type="text" name="home_phone" value=""> </td>
+</tr><tr>
+	    <td> Email: </td>
+	    <td> <input type="text" name="email" value=""> </td>
+</tr><tr>
+	    <td> <input type="submit" id="submit"  name="submit" value="save"> </td>
+</table>
+	  </fieldset>
+</form>
+
+
+<!---------------------------Add Employee --------------------//-->
+
+<fieldset>
+
+<form action="employee" id="add_employee_form"  method="post">
+	  <fieldset>
+	    <legend>Add employee:</legend>
+<table>
+<tr>
+	    <td> First Name: </td>
+	    <td> <input type="text" name="first_name" value=""> </td>
+</tr><tr>
+	    <td> Last Name: </td>
+	    <td> <input type="text" name="last_name" value=""> </td>
+</tr><tr>
+	<td> Title: </td>
+	    <td> <select name ="job_title" id="job_title_id" style="width: 150px;"> 
+ 	     </select> </td>
+</tr><tr>
+	    <td> Department: </td>
+	    <td> <select id ="department_id" name ="department" style="width: 150px;"> 
+ 	    </select> </td>
+</tr><tr>
+	    <td> Report to: </td>
+	    <td> <select  id ="report_to_id" name ="report_to" style="width: 150px;"> 
+ 	    </select> </td>
+</tr><tr>
+	    <td> Age: </td>
+	    <td> <select  id ="age_id" name ="age" style="width: 150px;"> 
+ 	    </select>  </td>
+</tr><tr>
+	    <td> Address: </td>
+	    <td> <input type="text" name="address" value=""> </td>
+</tr><tr>
+	    <td> Mobile: </td>
+	    <td> <input type="text" name="mobile_phone" value=""> </td>
+</tr><tr>
+	    <td> Office phone: </td>
+	    <td> <input type="text" name="office_phone" value=""> </td>
+</tr><tr>
+	    <td> Home Phone: </td>
+	    <td> <input type="text" name="home_phone" value=""> </td>
+</tr><tr>
+	    <td> Email: </td>
+	    <td> <input type="email" name="email" value=""> </td>
+</tr><tr>
+	    <td> <input type="submit" onclick="return validateFormInput();"  id="submit"  name="submit" value="add"> </td>
+</table>
+	  </fieldset>
+</form>
+</fieldset>
+
+<script>
+
+function addemployee(){
+
+	$("#add_employee_customer_id").val($("#edit_customer_id").val());
+	$("#add_employee_form").show();
+	return false;
+}
+
+
+function fill_edit_form( lid ) {
+  
+	$("#edit_employee_form input[name='employee_id']").val(lid);
+	$("#edit_employee_form input[name='employee_id']").trigger('change', true);
+
+	var qjson = {};
+	qjson["action"] = "list";
+	qjson["directory"] = "edit_employee_desktop";
+	qjson["employee_id"] = lid;
+	$.getJSON("/employee", qjson, function(jsonData) {
+	var employeeValues = jsonData ;
+
+	$("#edit_employee_form input[name='employee_id']").val(employee_Values["employee_id"]);
+	$("#edit_employee_form input[name='first_name']").val(employee_Values["first_name"]);
+	$("#edit_employee_form input[name='last_name']").val(employee_Values["last_name"]);
+	$("#edit_employee_form input[name='age']").val(employee_Values["age"]);
+	$("#edit_employee_form input[name='address']").val(employee_Values["address"]);
+	$("#edit_employee_form input[name='mobile_phone']").val(employee_Values["mobile_phone"]);
+	$("#edit_employee_form input[name='office_phone']").val(employee_Values["office_phone"]);
+	$("#edit_employee_form input[name='home_phone']").val(employee_Values["home_phone"]);
+	$("#edit_employee_form input[name='email']").val(employee_Values["email"]);
+	$("#edit_employee_form input[name='job_title']").val(employee_Values["job_title"]);
+	$("#edit_employee_form input[name='department_name']").val(employee_Values["department_name"]);
+	$("#edit_employee_form input[name='reports_to']").val(employee_Values["reports_to"]);
+	$("#edit_employee_form input[name='create_date']").val(employee_Values["create_date"]);
+	$("#edit_employee_form input[name='created_by']").val(employee_Values["created_by"]);
+
+	})
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) { })
+	alert(XMLHttpRequest.responseText);
+}
+ 
+
+$("#edit_employee_form").submit(function(e){
+	var button_name = $("#edit_customer_from").context.activeElement.name;
+
+	var employee_data = {};
+	employee_data["employee_id"] = $("#edit_employee_form input[name='employee_id']").val();
+	employee_data["first_name"] = $("#edit_employee_form input[name='first_name']").val();
+	employee_data["last_name"] = $("#edit_employee_form input[name='last_name']").val();
+	employee_data["age"] = $("#edit_employee_form input[name='age']").val();
+	employee_data["address"] = $("#edit_employee_form input[name='address']").val();
+	employee_data["mobile_phone"] = $("#edit_employee_form input[name='mobile_phone']").val();
+	employee_data["office_phone"] = $("#edit_employee_form input[name='office_phone']").val();
+	employee_data["home_phone"] = $("#edit_employee_form input[name='home_phone']").val();
+	employee_data["email"] = $("#edit_employee_form input[name='email']").val();
+	employee_data["job_title"] = $("#edit_employee_form input[name='job_title']").val();
+	employee_data["department_name"] = $("#edit_employee_form input[name='department_name']").val();
+	employee_data["reports_to"] = $("#edit_employee_form input[name='reports_to']").val();
+	employee_data["create_date"] = $("#edit_employee_form input[name='create_date']").val();
+	employee_data["created_by"] = $("#edit_employee_form input[name='created_by']").val();
+
+	 $.post("/employee", employee_data, function(data, status){
+		//alert("Data: " + data + "\nStatus: " + status);
+	    })
+	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
+	//alert(XMLHttpRequest.responseText);
+	});
+
+	if(button_name == "submit")
+	{
+		$("#edit_employee_form").hide();
+		$("#employee_list_add_button").show();
+	}
+	return false;
+});
+</script>
+<script>
+
+
+function init_employee_page(){
+	$("#edit_employee_form").hide();
+	$("#add_employee_form").hide();
+	listEmployees();
+};
+
+$(document).ready( function(){
+init_employee_page();
+});
+
+</script>
+ 
+
