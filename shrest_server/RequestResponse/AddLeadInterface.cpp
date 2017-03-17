@@ -183,11 +183,11 @@ void AddLeadInterface::ProcessPost()
 		c.add_lead_table();
 
 		contact_table ct; 
-		ct.set_contact_id(utils::create_uuid());
-		ct.set_contact_from("lead");
+		ct.set_contact_id(m["contact_name"]);
+		ct.set_contact_from(m["lead_id"]);
 		ct.set_first_name(m["first_name"]);
 		ct.set_last_name(m["last_name"]);
-		ct.set_company_id(id);
+		ct.set_company_id(m["company_name"]);
 
 		ct.add_contact_table();
 
@@ -198,7 +198,7 @@ void AddLeadInterface::ProcessPost()
 		//t.render( cs ); 
 		stringstream cs;
 
-		cs << "new lead added" << endl;
+		cs << "{'add status': 'OK' }" << endl;
  
 		
 		cs.seekp(0, ios::end);

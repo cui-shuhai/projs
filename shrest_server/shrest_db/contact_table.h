@@ -25,8 +25,13 @@ public:
 	
 	void add_contact_table();
 
+	void get_contact_statuss(std::vector<string> &m);
+	void get_contact_froms(std::vector<string> &m);
 	void get_contact_records( string source, string &result );
 	void get_contact_list(std::map<string, string> &contacts);
+	void get_contact_instance(std::map<string, string> &contact);
+
+
 	string get_contact_id(){ return contact_id; }
 	string get_status(){ return status; }
 	string get_first_name(){ return first_name; }

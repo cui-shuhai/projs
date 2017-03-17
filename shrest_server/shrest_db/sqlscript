@@ -174,7 +174,7 @@ CREATE TABLE lead_rating(
 
 
 INSERT INTO 'lead_rating'( rating_name )
-        VALUES( "high"),("medium");
+        VALUES( "high"),("medium"),("low");
 
 
 
@@ -209,12 +209,12 @@ Opt out of billing means the contact will be flagged to not receive billing mail
 */
 
 CREATE TABLE 'contact_from'(
-	'contact_from' INT PRIMARY KEY,
+	'contact_from' varchar(20) PRIMARY KEY,
 	'description' varchar(20)
 );
 
-INSERT INTO 'contact_from'(contact_from, description)
-VALUES(1, "Lead"), (2, "Customer"), (3, "Vendor"), (4, "Employee"), (5, "Other");
+INSERT INTO 'contact_from'(contact_from )
+VALUES( "Lead"), ( "Customer"), ( "Vendor"), ("Employee"), ( "Other");
 
 CREATE TABLE 'contact'(
 	'contact_id' char(36) PRIMARY KEY,
@@ -304,8 +304,8 @@ CREATE TABLE activity(
 /*lead management status*/
 CREATE TABLE contact_status(
 	'status' char(20) PRIMARY KEY,
-	'description' varchar(20),
-};
+	'description' varchar(20)
+);
 
 INSERT INTO 'contact_status'(status, description )
 	 VALUES( "Not Attempted", "you haven’t tried to reach the lead"),
@@ -477,12 +477,12 @@ rating_name char(20) PRIMARY KEY,
 description varchar(20)
 );
 
-INSERT INTO 'supplier_rate'(rate_name ) VALUES
+INSERT INTO 'supplier_rating'(rating_name ) VALUES
 ( "Superior"),
 ( "Excellent"),
 ( "Above average"),
 ( "Average"),
-( "Below average")
+( "Below average");
 
 CREATE TABLE 'supplier_status'(
 status_name char(20) PRIMARY KEY,

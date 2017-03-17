@@ -18,6 +18,7 @@ public:
 	void update_opportunity_table();
 	void get_opportunity_instance(std::map<string, string> &opportunity);
 	void get_opportunity_records( string source, string &result );
+	void get_opportunity_pipelines(std::vector<string> &m);
 
 	string get_opportunity_id(){ return opportunity_id; }
 	string get_opportunity_name(){ return opportunity_name; }

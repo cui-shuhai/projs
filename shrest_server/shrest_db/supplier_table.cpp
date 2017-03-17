@@ -68,7 +68,7 @@ void supplier_table::add_supplier_table(){
 }
 
 
-string supplier_table::get_supplier_table_count(){
+int supplier_table::get_supplier_table_count(){
 	string count_sql = "SELECT count(1) FROM supplier";
 
 	query count_query(*conn, count_sql);
@@ -92,13 +92,48 @@ void supplier_table::get_supplier_table_profile(std::map<string, string> &m)
 
 void supplier_table::get_supplier_rating(std::map<string, string> &m)
 {
-	string sql = "SELECT rate, description FROM supplier_rate";
+	string sql = "SELECT rating_name, description FROM supplier_rating";
 
 	query q(*conn, sql);
 	auto res = q.emit_result();
 
 	do{
-		m[res->get_int(0)] = res->get_string(1);
+		m[res->get_string(0)] = res->get_string(1);
 	} while(res->next_row());
 }
 
+void supplier_table::get_supplier_rating(std::vector<string> &m)
+{
+	string sql = "SELECT rating_name FROM supplier_rating";
+
+	query q(*conn, sql);
+	auto res = q.emit_result();
+
+	do{
+		m.push_back(res->get_string(0));
+	} while(res->next_row());
+}
+
+void supplier_table::get_supplier_status(std::vector<string> &m)
+{
+	string sql = "SELECT status_name FROM supplier_status";
+
+	query q(*conn, sql);
+	auto res = q.emit_result();
+
+	do{
+		m.push_back(res->get_string(0));
+	} while(res->next_row());
+}
+
+void supplier_table::get_supplier_flag(std::vector<string> &m)
+{
+	string sql = "SELECT flag_name FROM supplier_flag";
+
+	query q(*conn, sql);
+	auto res = q.emit_result();
+
+	do{
+		m.push_back(res->get_string(0));
+	} while(res->next_row());
+}

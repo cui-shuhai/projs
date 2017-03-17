@@ -128,3 +128,15 @@ void campaign_table::update_campaign_table(){
 	c.emit();
 
 }
+
+void campaign_table::get_campaign_statuss(std::vector<string> &m)
+{
+	string sql = "SELECT status_name FROM campaign_status";
+
+	query q(*conn, sql);
+	auto res = q.emit_result();
+
+	do{
+		m.push_back(res->get_string(0));
+	} while(res->next_row());
+}

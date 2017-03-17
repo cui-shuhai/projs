@@ -1,0 +1,15 @@
+<style>
+.current .active{
+	display:block;
+}
+
+.hide .inactive{
+	display: none;
+}
+
+a {
+    color: hotpink;
+}
+tr:nth-child(even) {background: #CCC}
+tr:nth-child(odd) {background: #FFF}
+</style>

@@ -357,9 +357,11 @@ function init_user_page(){
 	listUsers();
 };
 
+/*
 $(document).ready( function(){
 init_user_page();
 });
+*/
 
 </script>
  

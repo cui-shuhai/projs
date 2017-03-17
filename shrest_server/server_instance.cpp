@@ -75,20 +75,20 @@ int main() {
     };
 	LOG("Adding [customer, POST] API");
 
-     //AddVendorInterface to test Template
-     server.resource["^/vendor$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
+     //AddSupplierInterface to test Template
+     server.resource["^/supplier$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {
 
-	auto processor = RequestResponseFactory::CreateProcessor("AddVendorInterface", response, request);	
+	auto processor = RequestResponseFactory::CreateProcessor("AddSupplierInterface", response, request);	
 	processor->Process();        
     };
-	LOG("Adding [vendorinterface, GET] API");
-     //AddVendorInterface to test Template
-     server.resource["^/vendor$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
+	LOG("Adding [supplierinterface, GET] API");
+     //AddSupplierInterface to test Template
+     server.resource["^/supplier$"]["POST"]=[](HttpServer::Response& response, ShRequest request) {
 
-	auto processor = RequestResponseFactory::CreateProcessor("AddVendorInterface", response, request);	
+	auto processor = RequestResponseFactory::CreateProcessor("AddSupplierInterface", response, request);	
 	processor->Process();        
     };
-	LOG("Adding [addvendorinterface, POST] API");
+	LOG("Adding [addsupplierinterface, POST] API");
 
      //AddLeadInterface to test Template
      server.resource["^/lead$"]["GET"]=[](HttpServer::Response& response, ShRequest request) {

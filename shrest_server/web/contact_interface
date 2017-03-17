@@ -1,53 +1,39 @@
 <!-------------------------Search Header -------------------------//-->
-<fieldset>
  <form id="search_contact" action="/contact", method="post">
+
+<datalist id="contact_interface_contact_id_data_list"> </datalist>
+<datalist id="contact_interface_status_data_list"> </datalist>
+<datalist id="contact_interface_contact_from_data_list"> </datalist>
+<datalist id="contact_interface_job_title_data_list"> </datalist>
+<datalist id="contact_interface_main_contact_data_list"> </datalist>
+
 
 <table id="contact_search" >
 <tr>
-<td colspan="1" ><label for="contact_id">Contact_id:</label></td>
-<td colspan="1" ><label for="status">Status:</label></td>
-<td colspan="1" ><label for="first_name">First_name:</label></td>
-<td colspan="1" ><label for="last_name">Last_name:</label></td>
-<td colspan="1" ><label for="contact_from">Contact_from:</label></td>
-<td colspan="1" ><label for="address">Address:</label></td>
-<td colspan="1" ><label for="primary_phone">Primary_phone:</label></td>
-<td colspan="1" ><label for="email">Email:</label></td>
-<td colspan="1" ><label for="job_title">Job_title:</label></td>
-<td colspan="1" ><label for="company_id">Company_id:</label></td>
-<td colspan="1" ><label for="main_contact">Main_contact:</label></td>
+<td colspan="1" ><label for="contact_id">Contact_id</label></td>
+<td colspan="1" ><label for="status">Status</label></td>
+<td colspan="1" ><label for="contact_from">Contact_from</label></td>
+<td colspan="1" ><label for="job_title">Job_title</label></td>
+<td colspan="1" ><label for="main_contact">Main_contact</label></td>
 <td colspan="1" ></td>
 </tr> <tr>
-<td><select id="search_contact_id" value="" name="contact_id" style="width: 120px;"> </select></td>
-<td><select id="search_status" value="" name="status" style="width: 120px;"> </select></td>
-<td><select id="search_first_name" value="" name="first_name" style="width: 120px;"> </select></td>
-<td><select id="search_last_name" value="" name="last_name" style="width: 120px;"> </select></td>
-<td><select id="search_contact_from" value="" name="contact_from" style="width: 120px;"> </select></td>
-<td><select id="search_address" value="" name="address" style="width: 120px;"> </select></td>
-<td><select id="search_primary_phone" value="" name="primary_phone" style="width: 120px;"> </select></td>
-<td><select id="search_email" value="" name="email" style="width: 120px;"> </select></td>
-<td><select id="search_job_title" value="" name="job_title" style="width: 120px;"> </select></td>
-<td><select id="search_company_id" value="" name="company_id" style="width: 120px;"> </select></td>
-<td><select id="search_main_contact" value="" name="main_contact" style="width: 120px;"> </select></td>
+<td><input type="text" name="" id="search_contact_id" list="contact_interface_contact_id_data_list" value=""></td>
+<td><input type="text" name="" id="search_status" list="contact_interface_status_data_list" value=""></td>
+<td><input type="text" name="" id="search_contact_from" list="contact_interface_contact_from_data_list" value=""></td>
+<td><input type="text" name="" id="search_job_title" list="contact_interface_job_title_data_list" value=""></td>
+<td><input type="text" name="" id="search_main_contact" list="contact_interface_main_contact_data_list" value=""></td>
 <td><input type="submit"   name="submit" value="Search"></td>
 </tr>
 </table>
 </form>
 
-</fieldset>
-
-<script>
+<script type="text/javascript">
 
 $("#search_contact").submit(function(e){
 	var contact_id_value = $("#search_contact_id");
 	var status_value = $("#search_status");
-	var first_name_value = $("#search_first_name");
-	var last_name_value = $("#search_last_name");
 	var contact_from_value = $("#search_contact_from");
-	var address_value = $("#search_address");
-	var primary_phone_value = $("#search_primary_phone");
-	var email_value = $("#search_email");
 	var job_title_value = $("#search_job_title");
-	var company_id_value = $("#search_company_id");
 	var main_contact_value = $("#search_main_contact");
 
 	var query_filter = {};
@@ -58,34 +44,21 @@ $("#search_contact").submit(function(e){
 		query_filter["contact_id"] = contact_id_value.val();
 	if(typeof status_value.val() != "undefined" && status_value.val().length != 0)
 		query_filter["status"] = status_value.val();
-	if(typeof first_name_value.val() != "undefined" && first_name_value.val().length != 0)
-		query_filter["first_name"] = first_name_value.val();
-	if(typeof last_name_value.val() != "undefined" && last_name_value.val().length != 0)
-		query_filter["last_name"] = last_name_value.val();
 	if(typeof contact_from_value.val() != "undefined" && contact_from_value.val().length != 0)
 		query_filter["contact_from"] = contact_from_value.val();
-	if(typeof address_value.val() != "undefined" && address_value.val().length != 0)
-		query_filter["address"] = address_value.val();
-	if(typeof primary_phone_value.val() != "undefined" && primary_phone_value.val().length != 0)
-		query_filter["primary_phone"] = primary_phone_value.val();
-	if(typeof email_value.val() != "undefined" && email_value.val().length != 0)
-		query_filter["email"] = email_value.val();
 	if(typeof job_title_value.val() != "undefined" && job_title_value.val().length != 0)
 		query_filter["job_title"] = job_title_value.val();
-	if(typeof company_id_value.val() != "undefined" && company_id_value.val().length != 0)
-		query_filter["company_id"] = company_id_value.val();
 	if(typeof main_contact_value.val() != "undefined" && main_contact_value.val().length != 0)
 		query_filter["main_contact"] = main_contact_value.val();
   
 	//$('#customer_table tbody > tr').remove();
-	$('#contact_table').empty();
+	$('#list_contact_table').empty();
 
 
 	$.getJSON("/customer", query_filter, function(jsonData) {
 		var sourceTable= $( "#customer_table" );
 		tr = $('<tr/>');
-		tr.append("<th>" + "Click Edit..." + "</th>"); 
-		tr.append("<thd>" + "Contact_id" + "</th>");
+		tr.append("<th>" + "Contact Name" + "</th>"); 
 		tr.append("<thd>" + "Status" + "</th>");
 		tr.append("<thd>" + "First_name" + "</th>");
 		tr.append("<thd>" + "Last_name" + "</th>");
@@ -113,8 +86,7 @@ $("#search_contact").submit(function(e){
 
 		$.each(jsonData.customer ,function(key, value) {
 			tr = $('<tr class="edit_customer_link" />');
-                        tr.append("<td>" + "<a href=\"/contact?action=edit&&contact_id=" + value.contact_id +"\"" +">Go...</a>"  + "</td>");
-			tr.append("<td>" + value.contact_id + "</td>");
+                        tr.append("<td>" + "<a onclick=\"return edit_contack_link_click(this);   href=" + "\"" + value.contact_id +"\"" +">" + value.contact_id +"</a>"  + "</td>");
 			tr.append("<td>" + value.status + "</td>");
 			tr.append("<td>" + value.first_name + "</td>");
 			tr.append("<td>" + value.last_name + "</td>");
@@ -153,10 +125,8 @@ $("#search_contact").submit(function(e){
 <!-------------------------List Table-------------------------//-->
 
 <fieldset>
-<legend>List Contact</legend>
 <table id="list_contact_table" border="1">
 </table>
-<br><br>
 </fieldset>
 
 <script>
@@ -164,49 +134,13 @@ function listContacts(){
   
 	$.getJSON("/contact", {"action":"list",  "directory": "contact_content"}, function(jsonData) {
 
-		var sourceTable= $( "#contact_table" );
-		sourceTable= $( "#contact_table tr" ).remove();
-		sourceTable= $( "#contact_table tr" ).remove();
+		$( "#list_contact_table tr" ).remove();
+		$( "#list_contact_table tr" ).empty();
 
-		var contact_id_value = $("#search_contact_id");
-		var status_value = $("#search_status");
-		var first_name_value = $("#search_first_name");
-		var last_name_value = $("#search_last_name");
-		var contact_from_value = $("#search_contact_from");
-		var address_value = $("#search_address");
-		var primary_phone_value = $("#search_primary_phone");
-		var email_value = $("#search_email");
-		var job_title_value = $("#search_job_title");
-		var company_id_value = $("#search_company_id");
-		var main_contact_value = $("#search_main_contact");
-
-		contact_id_value.empty();
-		status_value.empty();
-		first_name_value.empty();
-		last_name_value.empty();
-		contact_from_value.empty();
-		address_value.empty();
-		primary_phone_value.empty();
-		email_value.empty();
-		job_title_value.empty();
-		company_id_value.empty();
-		main_contact_value.empty();
-
-		contact_id_value.append('<option value=' + '' + '>' + "" + '</option>');
-		status_value.append('<option value=' + '' + '>' + "" + '</option>');
-		first_name_value.append('<option value=' + '' + '>' + "" + '</option>');
-		last_name_value.append('<option value=' + '' + '>' + "" + '</option>');
-		contact_from_value.append('<option value=' + '' + '>' + "" + '</option>');
-		address_value.append('<option value=' + '' + '>' + "" + '</option>');
-		primary_phone_value.append('<option value=' + '' + '>' + "" + '</option>');
-		email_value.append('<option value=' + '' + '>' + "" + '</option>');
-		job_title_value.append('<option value=' + '' + '>' + "" + '</option>');
-		company_id_value.append('<option value=' + '' + '>' + "" + '</option>');
-		main_contact_value.append('<option value=' + '' + '>' + "" + '</option>');
+		var sourceTable= $( "#list_contact_table" );
 
 		tr = $('<tr/>');
-		tr.append("<th>" + "Click Edit..."  + "</th>");
-		tr.append("<th>" +  "contact_id" + "</th>");
+		tr.append("<th>" + "Contact Name"  + "</th>");
 		tr.append("<th>" +  "contact_status" + "</th>");
 		tr.append("<th>" +  "first_name" + "</th>");
 		tr.append("<th>" +  "last_name" + "</th>");
@@ -229,14 +163,31 @@ function listContacts(){
 		tr.append("<th>" +  "out_of_marketing" + "</th>");
 		tr.append("<th>" +  "out_of_billing" + "</th>");
 		tr.append("<th>" +  "extra_info" + "</th>");
-		tr.append("<th>" +  "contact_id" + "</th>");
 		sourceTable.append(tr);
+
+		var contact_id_value = $("#contact_interface_contact_id_data_list");
+		var status_value = $("#contact_interface_status_data_list");
+		var contact_from_value = $("#contact_interface_contact_from_data_list");
+		var job_title_value = $("#contact_interface_job_title_data_list");
+		var main_contact_value = $("#contact_interface_main_contact_data_list");
+
+		contact_id_value.empty();
+		status_value.empty();
+		contact_from_value.empty();
+		job_title_value.empty();
+		main_contact_value.empty();
+
+		contact_id_value.append('<option value=' + '' + '>' );
+		status_value.append('<option value=' + '' + '>' );
+		contact_from_value.append('<option value=' + '' + '>' );
+		job_title_value.append('<option value=' + '' + '>' );
+		main_contact_value.append('<option value=' + '' + '>' );
+
 
 		$.each(jsonData.contact ,function(key, value) {
 
 			tr = $('<tr/>');
-                        tr.append("<td>" + "<a onclick=\"return edit_contact_link_click(this); return true;\" href="+ "\"" +  value.contact_id +"\"" +">Go...</a>"  + "</td>");
-                        tr.append("<td>" +  value.contact_id + "</td>");
+                        tr.append("<td>" + "<a onclick=\"return edit_contact_link_click(this); return true;\" href="+ "\"" +  value.contact_id +"\"" +">" +  value.contact_id + "</a>"  + "</td>");
                         tr.append("<td>" +  value.contact_status + "</td>");
                         tr.append("<td>" +  value.first_name + "</td>");
                         tr.append("<td>" +  value.last_name + "</td>");
@@ -259,32 +210,19 @@ function listContacts(){
                         tr.append("<td>" +  value.out_of_marketing + "</td>");
                         tr.append("<td>" +  value.out_of_billing + "</td>");
                         tr.append("<td>" +  value.extra_info + "</td>");
-                        tr.append("<td>" +  value.contact_id + "</td>");
 			sourceTable.append(tr);
 
-			contact_id_value.append('<option value=' + value.contact_id + '>' + value.contact_id + '</option>');
-			status_value.append('<option value=' + value.status + '>' + value.status + '</option>');
-			first_name_value.append('<option value=' + value.first_name + '>' + value.first_name + '</option>');
-			last_name_value.append('<option value=' + value.last_name + '>' + value.last_name + '</option>');
-			contact_from_value.append('<option value=' + value.contact_from + '>' + value.contact_from + '</option>');
-			address_value.append('<option value=' + value.address + '>' + value.address + '</option>');
-			primary_phone_value.append('<option value=' + value.primary_phone + '>' + value.primary_phone + '</option>');
-			email_value.append('<option value=' + value.email + '>' + value.email + '</option>');
-			job_title_value.append('<option value=' + value.job_title + '>' + value.job_title + '</option>');
-			company_id_value.append('<option value=' + value.company_id + '>' + value.company_id + '</option>');
-			main_contact_value.append('<option value=' + value.main_contact + '>' + value.main_contact + '</option>');
+			contact_id_value.append('<option value=' + value.contact_id + '>');
+			status_value.append('<option value=' + value.status + '>');
+			contact_from_value.append('<option value=' + value.contact_from + '>');
+			job_title_value.append('<option value=' + value.job_title + '>');
+			main_contact_value.append('<option value=' + value.main_contact + '>');
 		});
 
 		contact_id_value.trigger('change', true);
 		status_value.trigger('change', true);
-		first_name_value.trigger('change', true);
-		last_name_value.trigger('change', true);
 		contact_from_value.trigger('change', true);
-		address_value.trigger('change', true);
-		primary_phone_value.trigger('change', true);
-		email_value.trigger('change', true);
 		job_title_value.trigger('change', true);
-		company_id_value.trigger('change', true);
 		main_contact_value.trigger('change', true);
 	})
 	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
@@ -295,7 +233,7 @@ function listContacts(){
 function edit_contact_link_click(l){
 	var url = $(l).attr('href');
 	$("#edit_contact_form").show();
-	fill_edit_form(url);	
+	fill_edit_contact_form(url);	
 	return false;
 }
 
@@ -307,41 +245,42 @@ function edit_contact_link_click(l){
 
 
 <form action="/contact" id="edit_contact_form"  method="post">
+<fieldset>
 <tr>
 <td><label for="contact_id"> Edit:</label></td>
 <td><input type="text" id="contact_id"  name="contact_id" value="" readonly="readonly" ></td>
 </tr><tr>
-<td>Status:</td> <td> <input type="text" name="status" value="{{ value= }}"></td>
-<td>FirstName:</td> <td> <input type="text" name="first_name" value="{{ value= }}"></td>
+<td>Status:</td> <td> <input type="text" name="status" value=""></td>
+<td>FirstName:</td> <td> <input type="text" name="first_name" value=""></td>
 </tr><tr>
-<td>LastName:</td> <td> <input type="text" name="last_name" value="{{ value= }}"></td>
-<td>Address:</td> <td> <input type="text" name="address" value="{{ value= }}"></td>
+<td>LastName:</td> <td> <input type="text" name="last_name" value=""></td>
+<td>Address:</td> <td> <input type="text" name="address" value=""></td>
 </tr><tr>
-<td>Primary phone:</td> <td> <input type="text" name="primary_phone" value="{{ value= }}"></td>
-<td>Alt phone:</td> <td> <input type="text" name="alt_phone" value="{{ value= }}"></td>
+<td>Primary phone:</td> <td> <input type="text" name="primary_phone" value=""></td>
+<td>Alt phone:</td> <td> <input type="text" name="alt_phone" value=""></td>
 </tr><tr>
-<td>Mobile phone:</td> <td> <input type="text" name="mobile_phone" value="{{ value= }}"></td>
-<td>Fax:</td> <td> <input type="text" name="fax" value="{{ value= }}"></td>
+<td>Mobile phone:</td> <td> <input type="text" name="mobile_phone" value=""></td>
+<td>Fax:</td> <td> <input type="text" name="fax" value=""></td>
 </tr><tr>
-<td>Email:</td> <td> <input type="text" name="email" value="{{ value= }}"></td>
-<td>Twitter:</td> <td> <input type="text" name="twitter" value="{{ value= }}"></td>
+<td>Email:</td> <td> <input type="text" name="email" value=""></td>
+<td>Twitter:</td> <td> <input type="text" name="twitter" value=""></td>
 </tr><tr>
-<td>Linkedin:</td> <td> <input type="text" name="linkedin" value="{{ value= }}"></td>
-<td>Facebook:</td> <td> <input type="text" name="facebook" value="{{ value= }}"></td>
+<td>Linkedin:</td> <td> <input type="text" name="linkedin" value=""></td>
+<td>Facebook:</td> <td> <input type="text" name="facebook" value=""></td>
 </tr><tr>
-<td>Job title:</td> <td> <input type="text" name="job_title" value="{{ value= }}"></td>
-<td>Company id:</td> <td> <input type="text" name="company_id" value="{{ value= }}"></td>
+<td>Job title:</td> <td> <input type="text" name="job_title" value=""></td>
+<td>Company id:</td> <td> <input type="text" name="company_id" value=""></td>
 </tr><tr>
-<td>When met:</td> <td> <input type="text" name="when_met" value="{{ value= }}"></td>
-<td>Where met:</td> <td> <input type="text" name="where_met" value="{{ value= }}"></td>
+<td>When met:</td> <td> <input type="text" name="when_met" value=""></td>
+<td>Where met:</td> <td> <input type="text" name="where_met" value=""></td>
 </tr><tr>
-<td>Time zone:</td> <td> <input type="text" name="time_zone" value="{{ value= }}"></td>
-<td>Main contact:</td> <td> <input type="text" name="main_contact" value="{{ value= }}"></td>
+<td>Time zone:</td> <td> <input type="text" name="time_zone" value=""></td>
+<td>Main contact:</td> <td> <input type="text" name="main_contact" value=""></td>
 </tr><tr>
-<td>Out of_marketing:</td> <td> <input type="text" name="out_of_marketing" value="{{ value= }}"></td>
-<td>Out of_billing:</td> <td> <input type="text" name="out_of_billing" value="{{ value= }}"></td>
+<td>Out of_marketing:</td> <td> <input type="text" name="out_of_marketing" value=""></td>
+<td>Out of_billing:</td> <td> <input type="text" name="out_of_billing" value=""></td>
 </tr><tr>
-<td>Extra info:</td> <td> <input type="text" name="extra_info" value="{{ value= }}"></td>
+<td>Extra info:</td> <td> <input type="text" name="extra_info" value=""></td>
 <td>	    <input type="submit" value="save"></td>
 </tr>
 </table>
@@ -350,15 +289,8 @@ function edit_contact_link_click(l){
 </form>
 <script>
 
-function addcontact(){
 
-	$("#add_contact_customer_id").val($("#edit_customer_id").val());
-	$("#add_contact_form").show();
-	return false;
-}
-
-
-function fill_edit_form( lid ) {
+function fill_edit_contact_form( lid ) {
   
 	$("#edit_contact_form input[name='contact_id']").val(lid);
 	$("#edit_contact_form input[name='contact_id']").trigger('change', true);
@@ -370,38 +302,37 @@ function fill_edit_form( lid ) {
 	$.getJSON("/contact", qjson, function(jsonData) {
 	var contactValues = jsonData ;
 
-	$("edit_contact_form input[name='contact_status']").value(contactValues["contact_status"]);
-	$("edit_contact_form input[name='first_name']").value(contactValues["first_name"]);
-	$("edit_contact_form input[name='last_name']").value(contactValues["last_name"]);
-	$("edit_contact_form input[name='contact_source']").value(contactValues["contact_source"]);
-	$("edit_contact_form input[name='address']").value(contactValues["address"]);
-	$("edit_contact_form input[name='primary_phone']").value(contactValues["primary_phone"]);
-	$("edit_contact_form input[name='alt_phone']").value(contactValues["alt_phone"]);
-	$("edit_contact_form input[name='mobile_phone']").value(contactValues["mobile_phone"]);
-	$("edit_contact_form input[name='fax']").value(contactValues["fax"]);
-	$("edit_contact_form input[name='email']").value(contactValues["email"]);
-	$("edit_contact_form input[name='twitter']").value(contactValues["twitter"]);
-	$("edit_contact_form input[name='linkedin']").value(contactValues["linkedin"]);
-	$("edit_contact_form input[name='facebook']").value(contactValues["facebook"]);
-	$("edit_contact_form input[name='job_title']").value(contactValues["job_title"]);
-	$("edit_contact_form input[name='company_id']").value(contactValues["company_id"]);
-	$("edit_contact_form input[name='when_met']").value(contactValues["when_met"]);
-	$("edit_contact_form input[name='where_met']").value(contactValues["where_met"]);
-	$("edit_contact_form input[name='time_zone']").value(contactValues["time_zone"]);
-	$("edit_contact_form input[name='main_contact']").value(contactValues["main_contact"]);
-	$("edit_contact_form input[name='out_of_marketing']").value(contactValues["out_of_marketing"]);
-	$("edit_contact_form input[name='out_of_billing']").value(contactValues["out_of_billing"]);
-	$("edit_contact_form input[name='extra_info']").value(contactValues["extra_info"]);
-	$("edit_contact_form input[name='contact_id']").value(contactValues["contact_id"]);
+	$("#edit_contact_form input[name='contact_status']").val(contactValues["contact_status"]);
+	$("#edit_contact_form input[name='first_name']").val(contactValues["first_name"]);
+	$("#edit_contact_form input[name='last_name']").val(contactValues["last_name"]);
+	$("#edit_contact_form input[name='contact_source']").val(contactValues["contact_source"]);
+	$("#edit_contact_form input[name='address']").val(contactValues["address"]);
+	$("#edit_contact_form input[name='primary_phone']").val(contactValues["primary_phone"]);
+	$("#edit_contact_form input[name='alt_phone']").val(contactValues["alt_phone"]);
+	$("#edit_contact_form input[name='mobile_phone']").val(contactValues["mobile_phone"]);
+	$("#edit_contact_form input[name='fax']").val(contactValues["fax"]);
+	$("#edit_contact_form input[name='email']").val(contactValues["email"]);
+	$("#edit_contact_form input[name='twitter']").val(contactValues["twitter"]);
+	$("#edit_contact_form input[name='linkedin']").val(contactValues["linkedin"]);
+	$("#edit_contact_form input[name='facebook']").val(contactValues["facebook"]);
+	$("#edit_contact_form input[name='job_title']").val(contactValues["job_title"]);
+	$("#edit_contact_form input[name='company_id']").val(contactValues["company_id"]);
+	$("#edit_contact_form input[name='when_met']").val(contactValues["when_met"]);
+	$("#edit_contact_form input[name='where_met']").val(contactValues["where_met"]);
+	$("#edit_contact_form input[name='time_zone']").val(contactValues["time_zone"]);
+	$("#edit_contact_form input[name='main_contact']").val(contactValues["main_contact"]);
+	$("#edit_contact_form input[name='out_of_marketing']").val(contactValues["out_of_marketing"]);
+	$("#edit_contact_form input[name='out_of_billing']").val(contactValues["out_of_billing"]);
+	$("#edit_contact_form input[name='extra_info']").val(contactValues["extra_info"]);
+	$("#edit_contact_form input[name='contact_id']").val(contactValues["contact_id"]);
 	})
 	 .error(function (XMLHttpRequest, textStatus, errorThrown) { })
 	alert(XMLHttpRequest.responseText);
 }
  
 
-$("#edit_customer_form").submit(function(e){
-	var cmdVal = $("#edit_customer_form input[name='submit']").val();
-	var button_name = $("#edit_customer_from").context.activeElement.name;
+$("#edit_contact_form").submit(function(e){
+	var button_name = $("#edit_contact_from").context.activeElement.name;
 
 	var contact_data = {};
 
@@ -448,10 +379,11 @@ function init_contact_page(){
 	$("#edit_contact_form").hide();
 	listContacts();
 };
-
+/*
 $(document).ready( function(){
 init_contact_page();
 });
+*/
 
 </script>
  

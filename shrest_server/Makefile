@@ -3,7 +3,7 @@ SOURCE=server_instance.cpp \
 	RequestResponse/RequestResponseFactory.cpp \
 	RequestResponse/RequestResponse.cpp \
 	RequestResponse/AddCustomerInterface.cpp \
-	RequestResponse/AddVendorInterface.cpp \
+	RequestResponse/AddSupplierInterface.cpp \
 	RequestResponse/AddLeadInterface.cpp \
 	RequestResponse/AddContactInterface.cpp \
 	RequestResponse/JsonPostRequest.cpp \
@@ -38,7 +38,7 @@ SOURCE=server_instance.cpp \
 	shrest_db/task_table.cpp \
 	shrest_db/cookie_table.cpp \
 	shrest_db/user_table.cpp \
-	shrest_db/vendor_table.cpp \
+	shrest_db/supplier_table.cpp \
 	shrest_db/employee_table.cpp \
 	shrest_db/employee_title.cpp \
 	shrest_db/employee_department.cpp \

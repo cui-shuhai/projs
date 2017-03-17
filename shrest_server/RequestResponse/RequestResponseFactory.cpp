@@ -3,7 +3,7 @@
 #include "JsonPostRequest.h"
 #include "PieGetRequest.h"
 #include "AddCustomerInterface.h"
-#include "AddVendorInterface.h"
+#include "AddSupplierInterface.h"
 #include "AddLeadInterface.h"
 #include "AddContactInterface.h"
 #include "IcrmIndex.h"
@@ -16,7 +16,6 @@
 #include "AddOrderInterface.h"
 #include "AddCaseInterface.h"
 #include "AddUserInterface.h"
-#include "AddVendorInterface.h"
 #include "CustomerizeRequest.h"
 #include "UploadDocumentInterface.h"
 #include "UploadDocumentRequest.h"
@@ -35,8 +34,6 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 		return unique_ptr<PieGetRequest>( new PieGetRequest(rs, rq));
 	if(name == "AddCustomerInterface")
 		return unique_ptr<AddCustomerInterface>( new AddCustomerInterface(rs, rq));
-	if(name == "AddVendorInterface")
-		return unique_ptr<AddVendorInterface>( new AddVendorInterface(rs, rq));
 	if(name == "AddLeadInterface")
 		return unique_ptr<AddLeadInterface>( new AddLeadInterface(rs, rq));
 	if(name == "AddContactInterface")
@@ -63,8 +60,8 @@ unique_ptr<RequestResponse> RequestResponseFactory::CreateProcessor(string name,
 		return unique_ptr<AddCaseInterface>( new AddCaseInterface(rs, rq));	
 	if(name == "AddUserInterface")
 		return unique_ptr<AddUserInterface>( new AddUserInterface(rs, rq));	
-	if(name == "AddVendorInterface")
-		return unique_ptr<AddVendorInterface>( new AddVendorInterface(rs, rq));	
+	if(name == "AddSupplierInterface")
+		return unique_ptr<AddSupplierInterface>( new AddSupplierInterface(rs, rq));	
 	if(name == "CustomerizeRequest")
 		return unique_ptr<CustomerizeRequest>( new CustomerizeRequest(rs, rq));	
 	if(name == "UploadDocumentInterface")

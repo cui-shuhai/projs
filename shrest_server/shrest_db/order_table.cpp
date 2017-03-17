@@ -142,3 +142,14 @@ void order_table::get_order_records( string source, string &result ){
 		ss << " ] }";
 		result = ss.str();
 }
+void order_table::get_order_statuss(std::vector<string> &m)
+{
+	string sql = "SELECT status_name FROM order_status";
+
+	query q(*conn, sql);
+	auto res = q.emit_result();
+
+	do{
+		m.push_back(res->get_string(0));
+	} while(res->next_row());
+}

@@ -17,9 +17,12 @@ public:
 	~supplier_table();
 
 	void add_supplier_table();
-	string get_supplier_table_count();
+	int get_supplier_table_count();
 	void get_supplier_table_profile(std::map<string, string> &m);
 	void get_supplier_rating(std::map<string, string> &m);
+	void get_supplier_rating(std::vector<string> &m);
+	void get_supplier_status(std::vector<string> &m);
+	void get_supplier_flag(std::vector<string> &m);
 
 	string get_supplier_id(){ return supplier_id;}
 	string get_account_num(){ return account_num;}

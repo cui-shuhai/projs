@@ -107,9 +107,27 @@ void AddContactInterface::ProcessGet(){
 			if(directory.compare("contact_content") == 0){
 				ct.get_contact_records( "", jstr); 
 			}
+			else if(directory.compare("contact_status") == 0){
+				std::vector<string> result;
+				ct.get_contact_statuss(result); 
+				utils::build_json(result, jstr); 
+			}
+			else if(directory.compare("contact_from") == 0){
+					std::vector<string> result;
+				ct.get_contact_froms(result); 
+				utils::build_json(result, jstr); 
+			}
+			else if( directory.compare("edit_contact_desktop") == 0){
+				ct.set_contact_id(m["contact_id"]);
+				std::map<string, string> result;
+				ct.get_contact_instance(result);
+				utils::build_json(result, jstr); 
+			}
 
 			utils::build_raw_response( jstr);
 			rs_ << jstr;
+			LOG( "response : ", jstr);
+			rs_.flush();
 			return;
 		}
 		

@@ -1,10 +1,18 @@
 <!-------------------------Search Header -------------------------//-->
 
-<fieldset>
  <form id="search_opportunity" action="/opportunity", method="post">
 
 <table id="opportunity_search" >
 <tr>
+<datalist id="opportunity_id_data_list"> </datalist>
+<datalist id="opportunity_name_data_list"> </datalist>
+<datalist id="assign_to_data_list"> </datalist>
+<datalist id="contact_id_data_list"> </datalist>
+<datalist id="creator_id_data_list"> </datalist>
+<datalist id="close_date_data_list"> </datalist>
+<datalist id="pipeline_data_list"> </datalist>
+<datalist id="amount_data_list"> </datalist>
+<datalist id="probablity_data_list"> </datalist>
 <td colspan="1" > <label for="opportunity_id">Opportunity_id:</lable</td>
 <td colspan="1" > <label for="opportunity_name">Opportunity_name:</lable</td>
 <td colspan="1" > <label for="assign_to">Assign_to:</lable</td>
@@ -16,25 +24,21 @@
 <td colspan="1" > <label for="probablity">Probablity:</lable</td>
 <td colspan="1" ></td>
 </tr> <tr>
-<td><input type="text" name="opportunity_id" id="txtopportunity_idAutoComplete" list="opportunity_idDatalist" value="" > <datalist id="opportunity_idDatalist"> </datalist></td>
-<td><input type="text" name="opportunity_name" id="txtopportunity_nameAutoComplete" list="opportunity_nameDatalist" value="" > <datalist id="opportunity_nameDatalist"> </datalist></td>
-<td><input type="text" name="assign_to" id="txtassign_toAutoComplete" list="assign_toDatalist" value="" > <datalist id="assign_toDatalist"> </datalist></td>
-<td><input type="text" name="contact_id" id="txtcontact_idAutoComplete" list="contact_idDatalist" value="" > <datalist id="contact_idDatalist"> </datalist></td>
-<td><input type="text" name="creator_id" id="txtcreator_idAutoComplete" list="creator_idDatalist" value="" > <datalist id="creator_idDatalist"> </datalist></td>
-<td><input type="text" name="close_date" id="txtclose_dateAutoComplete" list="close_dateDatalist" value="" > <datalist id="close_dateDatalist"> </datalist></td>
-<td><input type="text" name="pipeline" id="txtpipelineAutoComplete" list="pipelineDatalist" value="" > <datalist id="pipelineDatalist"> </datalist></td>
-<td><input type="text" name="amount" id="txtamountAutoComplete" list="amountDatalist" value="" > <datalist id="amountDatalist"> </datalist></td>
-<td><input type="text" name="probablity" id="txtprobablityAutoComplete" list="probablityDatalist" value="" > <datalist id="probablityDatalist"> </datalist></td>
-<td>    <input type="text" name="last_name" id="txtAutoComplete" list="lastnamelist" value="" > <datalist id="lastnamelist"> </datalist></td>
+<td><input type="text" name="" id="search_opportunity_id" list="opportunity_id_data_list" value=""></td>
+<td><input type="text" name="" id="search_opportunity_name" list="opportunity_name_data_list" value=""></td>
+<td><input type="text" name="" id="search_assign_to" list="assign_to_data_list" value=""></td>
+<td><input type="text" name="" id="search_contact_id" list="contact_id_data_list" value=""></td>
+<td><input type="text" name="" id="search_creator_id" list="creator_id_data_list" value=""></td>
+<td><input type="text" name="" id="search_close_date" list="close_date_data_list" value=""></td>
+<td><input type="text" name="" id="search_pipeline" list="pipeline_data_list" value=""></td>
+<td><input type="text" name="" id="search_amount" list="amount_data_list" value=""></td>
+<td><input type="text" name="" id="search_probablity" list="probablity_data_list" value=""></td>
 <td><input type="submit"   name="submit" value="Search"></td>
 </tr>
 </table>
 </form>
-</fieldset>
 
 <script>
-
-
 
 $("#search_opportunity").submit(function(e){
 	var opportunity_id_value = $("#search_opportunity_id");
@@ -76,8 +80,7 @@ $("#search_opportunity").submit(function(e){
 	$.getJSON("/opportunity", query_filter, function(jsonData) {
 		var sourceTable= $( "#opportunity_table" );
 		tr = $('<tr/>');
-		tr.append("<th>" + "Click Edit..." + "</th>"); 
-		tr.append("<th>" + "opportunity_id" + "</th>");
+		tr.append("<th>" + "Opportunity" + "</th>"); 
 		tr.append("<th>" + "opportunity_name" + "</th>");
 		tr.append("<th>" + "assign_to" + "</th>");
 		tr.append("<th>" + "contact_id" + "</th>");
@@ -90,17 +93,15 @@ $("#search_opportunity").submit(function(e){
 
 		$.each(jsonData.customer ,function(key, value) {
 			tr = $('<tr class="edit_customer_link" />');
-                        tr.append("<td>" + "<a href=\"/opportunity?action=edit&&opportunity_id=" + value.opportunity_id +"\"" +">Go...</a>"  + "</td>");
-			tr.append("<td>" + "Click Edit..." + "</td>"); 
-			tr.append("<td>" + "opportunity_id" + "</td>");
-			tr.append("<td>" + "opportunity_name" + "</td>");
-			tr.append("<td>" + "assign_to" + "</td>");
-			tr.append("<td>" + "contact_id" + "</td>");
-			tr.append("<td>" + "creator_id" + "</td>");
-			tr.append("<td>" + "close_date" + "</td>");
-			tr.append("<td>" + "pipeline" + "</td>");
-			tr.append("<td>" + "amount" + "</td>");
-			tr.append("<td>" + "probablity" + "</td>");
+                        tr.append("<td>" + "<a onclick=\"return edit_opportunity_link_click(this);\" href="+ "\"" +  value.opportunity_id +"\"" +">" + value.opportunity_id + "</a>"  + "</td>");
+			tr.append("<td>" + opportunity_name + "</td>");
+			tr.append("<td>" + assign_to + "</td>");
+			tr.append("<td>" + contact_id + "</td>");
+			tr.append("<td>" + creator_id + "</td>");
+			tr.append("<td>" + close_date + "</td>");
+			tr.append("<td>" + pipeline + "</td>");
+			tr.append("<td>" + amount + "</td>");
+			tr.append("<td>" + probablity + "</td>");
 			sourceTable.append(tr);
 		});
 
@@ -117,10 +118,9 @@ $("#search_opportunity").submit(function(e){
 <!-------------------------List Table-------------------------//-->
 
 <fieldset>
-<legend>List Opportunity</legend>
 <table id="opportunity_table" border="1">
 </table>
-<br><br>
+<button id="opportunity_list_add_button" onclick="on_add_opportunity();"  type="button">Add Opportunity</button>
 </fieldset>
 
 <script>
@@ -135,27 +135,26 @@ function listOpportunitys() {
 
 
 		tr = $('<tr/>');
-		tr.append("<th>" + "Click Edit..."  + "</th>");
-		tr.append("<th>" + "Opportunity_id" + "</th>");
-		tr.append("<th>" + "Opportunity_id" + "</th>");
-		tr.append("<th>" + "Opportunity_id" + "</th>");
-		tr.append("<th>" + "Opportunity_id" + "</th>");
-		tr.append("<th>" + "Opportunity_id" + "</th>");
-		tr.append("<th>" + "Opportunity_id" + "</th>");
-		tr.append("<th>" + "Opportunity_id" + "</th>");
-		tr.append("<th>" + "Opportunity_id" + "</th>");
-		tr.append("<th>" + "Opportunity_id" + "</th>");
+		tr.append("<th>" + "Opportinity"  + "</th>");
+		tr.append("<th>" + "opportunity_name" + "</th>");
+		tr.append("<th>" + "assign_to" + "</th>");
+		tr.append("<th>" + "contact_id" + "</th>");
+		tr.append("<th>" + "creator_id" + "</th>");
+		tr.append("<th>" + "close_date" + "</th>");
+		tr.append("<th>" + "pipeline" + "</th>");
+		tr.append("<th>" + "amount" + "</th>");
+		tr.append("<th>" + "probablity" + "</th>");
 		sourceTable.append(tr);
 
-		var opportunity_id_value = $("#search_opportunity_id");
-		var opportunity_name_value = $("#search_opportunity_name");
-		var assign_to_value = $("#search_assign_to");
-		var contact_id_value = $("#search_contact_id");
-		var creator_id_value = $("#search_creator_id");
-		var close_date_value = $("#search_close_date");
-		var pipeline_value = $("#search_pipeline");
-		var amount_value = $("#search_amount");
-		var probablity_value = $("#search_probablity");
+		var opportunity_id_value = $("#opportunity_id_data_list");
+		var opportunity_name_value = $("#opportunity_name_data_list");
+		var assign_to_value = $("#assign_to_data_list");
+		var contact_id_value = $("#contact_id_data_list");
+		var creator_id_value = $("#creator_id_data_list");
+		var close_date_value = $("#close_date_data_list");
+		var pipeline_value = $("#pipeline_data_list");
+		var amount_value = $("#amount_data_list");
+		var probablity_value = $("#probablity_data_list");
 
 
 		opportunity_id_value.empty();
@@ -168,21 +167,20 @@ function listOpportunitys() {
 		amount_value.empty();
 		probablity_value.empty();
 
-		opportunity_id_value.append('<option value=' + '' + '>' + "" + '</option>');
-		opportunity_id_value.append('<option value=' + '' + '>' + "" + '</option>');
-		opportunity_id_value.append('<option value=' + '' + '>' + "" + '</option>');
-		opportunity_id_value.append('<option value=' + '' + '>' + "" + '</option>');
-		opportunity_id_value.append('<option value=' + '' + '>' + "" + '</option>');
-		opportunity_id_value.append('<option value=' + '' + '>' + "" + '</option>');
-		opportunity_id_value.append('<option value=' + '' + '>' + "" + '</option>');
-		opportunity_id_value.append('<option value=' + '' + '>' + "" + '</option>');
-		opportunity_id_value.append('<option value=' + '' + '>' + "" + '</option>');
+		opportunity_id_value.append('<option value=' + '' + '>');
+		opportunity_id_value.append('<option value=' + '' + '>');
+		opportunity_id_value.append('<option value=' + '' + '>');
+		opportunity_id_value.append('<option value=' + '' + '>');
+		opportunity_id_value.append('<option value=' + '' + '>');
+		opportunity_id_value.append('<option value=' + '' + '>');
+		opportunity_id_value.append('<option value=' + '' + '>');
+		opportunity_id_value.append('<option value=' + '' + '>');
+		opportunity_id_value.append('<option value=' + '' + '>');
 
 		$.each(jsonData.opportunity ,function(key, value) {
 
 			tr = $('<tr class="edit_customer_link" />');
-                        tr.append("<td>" + "<a href=\"/opportunity?action=edit&&opportunity_id=" + value.opportunity_id +"\"" +">Go...</a>"  + "</td>");
-			tr.append("<td>" + "opportunity_id" + "</td>");
+                        tr.append("<td>" + "<a onclick=\"return edit_opportunity_link_click(this);\" href="+ "\"" +  value.opportunity_id +"\"" +">" + value.opportunity_id + "</a>"  + "</td>");
 			tr.append("<td>" + "opportunity_name" + "</td>");
 			tr.append("<td>" + "assign_to" + "</td>");
 			tr.append("<td>" + "contact_id" + "</td>");
@@ -220,6 +218,13 @@ function listOpportunitys() {
 	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
 	alert(XMLHttpRequest.responseText);
 	});
+}
+
+function on_add_opportunity()
+{
+	$("#add_opportunity_form").show();
+	$("#edit_opportunity_form").hide();
+	$("#opportunity_list_add_button").hide();
 }
 
 function edit_opportunity_link_click(l){
@@ -389,9 +394,11 @@ function init_opportunity_page(){
 	listOpportunitys();
 };
 
+/*
 $(document).ready( function(){
 init_opportunity_page();
 });
+*/
 
 </script>
  

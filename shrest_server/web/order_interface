@@ -1,41 +1,45 @@
 <!-------------------------Search Header -------------------------//-->
 
-<fieldset>
  <form id="search_order" action="/order", method="post">
 
+
+
 <table id="order_search" >
+<datalist id="order_id_data_list"> </datalist>
+<datalist id="customer_id_data_list"> </datalist>
+<datalist id="product_id_data_list"> </datalist>
+<datalist id="order_amount_data_list"> </datalist>
+<datalist id="order_date_data_list"> </datalist>
+<datalist id="order_status_data_list"> </datalist>
 <tr>
-<td colspan="1" > <label for=" order_id"> order_id:</lable</td>
-<td colspan="1" > <label for=" customer_id"> customer_id:</lable</td>
-<td colspan="1" > <label for=" product_id"> product_id:</lable</td>
-<td colspan="1" > <label for=" order_amount"> order_amount:</lable</td>
-<td colspan="1" > <label for=" order_date"> order_date:</lable</td>
-<td colspan="1" > <label for=" order_status"> order_status:</lable</td>
+<td colspan="1" > <label for=" order_id"> order_id</lable</td>
+<td colspan="1" > <label for=" customer_id"> customer_id</lable</td>
+<td colspan="1" > <label for=" product_id"> product_id</lable</td>
+<td colspan="1" > <label for=" order_amount"> order_amount</lable</td>
+<td colspan="1" > <label for=" order_date"> order_date</lable</td>
+<td colspan="1" > <label for=" order_status"> order_status</lable</td>
 <td colspan="1" ></td>
 </tr> <tr>
-
-<td><input type="text" name=" order_id" id="txt order_idAutoComplete" list=" order_id_data_list" value="" > <datalist id=" order_id_ata_list"> </datalist></td>
-<td><input type="text" name=" customer_id" id="txt customer_idAutoComplete" list=" customer_id_data_list" value="" > <datalist id=" customer_id_ata_list"> </datalist></td>
-<td><input type="text" name=" product_id" id="txt product_idAutoComplete" list=" product_id_data_list" value="" > <datalist id=" product_id_ata_list"> </datalist></td>
-<td><input type="text" name=" order_amount" id="txt order_amountAutoComplete" list=" order_amount_data_list" value="" > <datalist id=" order_amount_ata_list"> </datalist></td>
-<td><input type="text" name=" order_date" id="txt order_dateAutoComplete" list=" order_date_data_list" value="" > <datalist id=" order_date_ata_list"> </datalist></td>
-<td><input type="text" name=" order_status" id="txt order_statusAutoComplete" list=" order_status_data_list" value="" > <datalist id=" order_status_ata_list"> </datalist></td>
+<td><input type="text" name="" id="search_order_id" list="order_id_data_list" value=""></td>
+<td><input type="text" name="" id="search_customer_id" list="customer_id_data_list" value=""></td>
+<td><input type="text" name="" id="search_product_id" list="product_id_data_list" value=""></td>
+<td><input type="text" name="" id="search_order_amount" list="order_amount_data_list" value=""></td>
+<td><input type="text" name="" id="search_order_date" list="order_date_data_list" value=""></td>
+<td><input type="text" name="" id="search_order_status" list="order_status_data_list" value=""></td>
 <td><input type="submit"   name="submit" value="Search"></td>
 </tr>
 </table>
 </form>
-</fieldset>
-
 <script>
 
 
 $("#search_order").submit(function(e){
-	var  order_id_value = $("#search_ order_id");
-	var  customer_id_value = $("#search_ customer_id");
-	var  product_id_value = $("#search_ product_id");
-	var  order_amount_value = $("#search_ order_amount");
-	var  order_date_value = $("#search_ order_date");
-	var  order_status_value = $("#search_ order_status");
+	var  order_id_value = $("#search_order_id");
+	var  customer_id_value = $("#search_customer_id");
+	var  product_id_value = $("#search_product_id");
+	var  order_amount_value = $("#search_order_amount");
+	var  order_date_value = $("#search_order_date");
+	var  order_status_value = $("#search_order_status");
 
 	var query_filter = {};
 	query_filter["action"] = "list";
@@ -60,25 +64,22 @@ $("#search_order").submit(function(e){
 	$.getJSON("/order", query_filter, function(jsonData) {
 		var sourceTable= $( "#order_table" );
 		tr = $('<tr/>');
-		tr.append("<th>" + "Click Edit..." + "</th>"); 
-		tr.append("<th>" + " order_id" + "</th>");
-		tr.append("<th>" + " customer_id" + "</th>");
-		tr.append("<th>" + " product_id" + "</th>");
-		tr.append("<th>" + " order_amount" + "</th>");
-		tr.append("<th>" + " order_date" + "</th>");
-		tr.append("<th>" + " order_status" + "</th>");
+		tr.append("<th>" + "Order" + "</th>"); 
+		tr.append("<th>" + "customer_id" + "</th>");
+		tr.append("<th>" + "product_id" + "</th>");
+		tr.append("<th>" + "order_amount" + "</th>");
+		tr.append("<th>" + "order_date" + "</th>");
+		tr.append("<th>" + "order_status" + "</th>");
 		sourceTable.append(tr);
 
 		$.each(jsonData.customer ,function(key, value) {
 			tr = $('<tr class="edit_customer_link" />');
-                        tr.append("<td>" + "<a href=\"/order?action=edit&&order_id=" + value.order_id +"\"" +">Go...</a>"  + "</td>");
-			tr.append("<td>" + "Click Edit..." + "</td>"); 
-			tr.append("<td>" + " order_id" + "</td>");
-			tr.append("<td>" + " customer_id" + "</td>");
-			tr.append("<td>" + " product_id" + "</td>");
-			tr.append("<td>" + " order_amount" + "</td>");
-			tr.append("<td>" + " order_date" + "</td>");
-			tr.append("<td>" + " order_status" + "</td>");
+                        tr.append("<td>" + "<a onclick=\"return edit_order_link_click(this); href="+ "\"" +  value.order_id +"\"" +">" + value.order_id + "</a>"  + "</td>");
+			tr.append("<td>" + "customer_id" + "</td>");
+			tr.append("<td>" + "product_id" + "</td>");
+			tr.append("<td>" + "order_amount" + "</td>");
+			tr.append("<td>" + "order_date" + "</td>");
+			tr.append("<td>" + "order_status" + "</td>");
 			sourceTable.append(tr);
 		});
 
@@ -113,13 +114,12 @@ function listOrders() {
 
 
 		tr = $('<tr/>');
-		tr.append("<th>" + "Click Edit..."  + "</th>");
-		tr.append("<th>" + " order_id" + "</th>");
-		tr.append("<th>" + " customer_id" + "</th>");
-		tr.append("<th>" + " product_id" + "</th>");
-		tr.append("<th>" + " order_amount" + "</th>");
-		tr.append("<th>" + " order_date" + "</th>");
-		tr.append("<th>" + " order_status" + "</th>");
+		tr.append("<th>" + "Order" + "</th>");
+		tr.append("<th>" + "customer_id" + "</th>");
+		tr.append("<th>" + "product_id" + "</th>");
+		tr.append("<th>" + "order_amount" + "</th>");
+		tr.append("<th>" + "order_date" + "</th>");
+		tr.append("<th>" + "order_status" + "</th>");
 		sourceTable.append(tr);
 
 		var order_id_value = $("#search_order_id");
@@ -149,8 +149,7 @@ function listOrders() {
 
 
 			tr = $('<tr class="edit_customer_link" />');
-                        tr.append("<td>" + "<a href=\"/order?action=edit&&order_id=" + value.order_id +"\"" +">Go...</a>"  + "</td>");
-			tr.append("<td>" + "order_id" + "</td>");
+                        tr.append("<td>" + "<a onclick=\"return edit_order_link_click(this); href="+ "\"" +  value.order_id +"\"" +">" + value.order_id + "</a>"  + "</td>");
 			tr.append("<td>" + "customer_id" + "</td>");
 			tr.append("<td>" + "product_id" + "</td>");
 			tr.append("<td>" + "order_amount" + "</td>");
@@ -316,9 +315,11 @@ function init_order_page(){
 	listOrders();
 };
 
+/*
 $(document).ready( function(){
 init_order_page();
 });
+*/
 
 </script>
  

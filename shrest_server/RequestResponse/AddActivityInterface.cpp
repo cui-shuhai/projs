@@ -142,8 +142,33 @@ void AddActivityInterface::ProcessGet(){
 				if(boost::iequals(directory, "activity_content")){
 					ct.get_activity_records("", jstr);
 				}
+				else if(directory.compare("edit_activity") == 0 || directory.compare("edit_activity_desktop") == 0){
+					ct.set_activity_id(m["activity_id"]);
+					std::map<string, string> result;
+					ct.get_activity_instance(result);
+					utils::build_json(result, jstr); 
+				}
+				else if(directory.compare("activity_type") == 0){
+					std::vector<string> result;
+					ct.get_activity_type(result);
+					utils::build_json(result, jstr); 
+				}
+				else if(directory.compare("activity_status") == 0){
+					std::vector<string> result;
+					ct.get_activity_status(result);
+					utils::build_json(result, jstr); 
+				}
+				else if(directory.compare("activity_priority") == 0){
+					std::vector<string> result;
+					ct.get_activity_priority(result);
+					utils::build_json(result, jstr); 
+				}
+
 				utils::build_raw_response( jstr);
 				rs_ << jstr;
+				LOG( "response : ", jstr);
+				rs_.flush();
+
 				return;
 			}
 			
@@ -235,7 +260,7 @@ void AddActivityInterface::ProcessPost(){
 	if(boost::iequals(m["submit"], "add")){
 	try {
 
-		activity_table c( utils::create_uuid() , m["activity_name"], 
+		activity_table c( m["activity_id"], m["activity_name"], 
 			 m["activity_type"] ,  m["activity_status"] ,  m["activity_priority"] , 
 			 m["who_preside"] , utils::get_date(), m["note"]);
 
@@ -258,9 +283,11 @@ void AddActivityInterface::ProcessPost(){
 */
 
 
+		//t.render( cs ); // Render the template with the variables we've set above
 		stringstream cs;
-		t.render( cs ); // Render the template with the variables we've set above
+		cs << "{'add status': 'OK' }" << endl;
 		
+LOG("{Add activity : OK}");
 		cs.seekp(0, ios::end);
 		rs_ <<  cs.rdbuf();
 		rs_.flush();

@@ -1,61 +1,45 @@
 <!-------------------------Search Header -------------------------//-->
-employee_id
-first_name
-last_name
-age
-address
-mobile_phone
-office_phone
-home_phone
-email
-job_title
-department_name
-reports_to
-create_date
-created_by
 
 
-employee_id
-first_name
-last_name
-address
-office_phone
-email
-job_title
-department_name
-reports_to
-create_date
-created_by
 
 <fieldset>
  <form id="search_employee" action="/employee", method="post">
 
 <table id="employee_search" >
+<datalist id="employee_id_data_list"> </datalist>
+<datalist id="first_name_data_list"> </datalist>
+<datalist id="last_name_data_list"> </datalist>
+<datalist id="office_phone_data_list"> </datalist>
+<datalist id="email_data_list"> </datalist>
+<datalist id="job_title_data_list"> </datalist>
+<datalist id="department_name_data_list"> </datalist>
+<datalist id="reports_to_data_list"> </datalist>
+<datalist id="create_date_data_list"> </datalist>
+<datalist id="created_by_data_list"> </datalist>
 <tr>
-<td colspan="1" > <label for="employee_id"> employee_id:</lable</td>
-<td colspan="1" > <label for="first_name"> first_name:</lable</td>
-<td colspan="1" > <label for="last_name"> last_name:</lable</td>
-<td colspan="1" > <label for="address"> address:</lable</td>
-<td colspan="1" > <label for="office_phone"> office_phone:</lable</td>
-<td colspan="1" > <label for="email"> email:</lable</td>
-<td colspan="1" > <label for="job_title"> job_title:</lable</td>
-<td colspan="1" > <label for="department_name"> department_name:</lable</td>
-<td colspan="1" > <label for="reports_to"> reports_to:</lable</td>
-<td colspan="1" > <label for="create_date"> create_date:</lable</td>
-<td colspan="1" > <label for="created_by"> created_by:</lable</td>
+<td colspan="1" > <label for="employee_id"> employee_id</lable</td>
+<td colspan="1" > <label for="first_name"> first_name</lable</td>
+<td colspan="1" > <label for="last_name"> last_name</lable</td>
+<td colspan="1" > <label for="office_phone"> office_phone</lable</td>
+<td colspan="1" > <label for="email"> email</lable</td>
+<td colspan="1" > <label for="job_title"> job_title</lable</td>
+<td colspan="1" > <label for="department_name"> department_name</lable</td>
+<td colspan="1" > <label for="reports_to"> reports_to</lable</td>
+<td colspan="1" > <label for="create_date"> create_date</lable</td>
+<td colspan="1" > <label for="created_by"> created_by</lable</td>
 <td colspan="1" ></td>
 </tr> <tr>
-<td><input type="text" name="employee_id" id="txtemployee_idAutoComplete" list="employee_id_data_list" value="" > <datalist id="employee_id_data_list"> </datalist></td>
-<td><input type="text" name="first_name" id="txtfirst_nameAutoComplete" list="first_name_data_list" value="" > <datalist id="first_name_data_list"> </datalist></td>
-<td><input type="text" name="last_name" id="txtlast_nameAutoComplete" list="last_name_data_list" value="" > <datalist id="last_name_data_list"> </datalist></td>
-<td><input type="text" name="address" id="txtaddressAutoComplete" list="address_data_list" value="" > <datalist id="address_data_list"> </datalist></td>
-<td><input type="text" name="office_phone" id="txtoffice_phoneAutoComplete" list="office_phone_data_list" value="" > <datalist id="office_phone_data_list"> </datalist></td>
-<td><input type="text" name="email" id="txtemailAutoComplete" list="email_data_list" value="" > <datalist id="email_data_list"> </datalist></td>
-<td><input type="text" name="job_title" id="txtjob_titleAutoComplete" list="job_title_data_list" value="" > <datalist id="job_title_data_list"> </datalist></td>
-<td><input type="text" name="department_name" id="txtdepartment_nameAutoComplete" list="department_name_data_list" value="" > <datalist id="department_name_data_list"> </datalist></td>
-<td><input type="text" name="reports_to" id="txtreports_toAutoComplete" list="reports_to_data_list" value="" > <datalist id="reports_to_data_list"> </datalist></td>
-<td><input type="text" name="create_date" id="txtcreate_dateAutoComplete" list="create_date_data_list" value="" > <datalist id="create_date_data_list"> </datalist></td>
-<td><input type="text" name="created_by" id="txtcreated_byAutoComplete" list="created_by_data_list" value="" > <datalist id="created_by_data_list"> </datalist></td>
+<td><input type="text" name="" id="search_employee_id" list="employee_id_data_list" value=""></td>
+<td><input type="text" name="" id="search_first_name" list="first_name_data_list" value=""></td>
+<td><input type="text" name="" id="search_last_name" list="last_name_data_list" value=""></td>
+<td><input type="text" name="" id="search_address" list="address_data_list" value=""></td>
+<td><input type="text" name="" id="search_office_phone" list="office_phone_data_list" value=""></td>
+<td><input type="text" name="" id="search_email" list="email_data_list" value=""></td>
+<td><input type="text" name="" id="search_job_title" list="job_title_data_list" value=""></td>
+<td><input type="text" name="" id="search_department_name" list="department_name_data_list" value=""></td>
+<td><input type="text" name="" id="search_reports_to" list="reports_to_data_list" value=""></td>
+<td><input type="text" name="" id="search_create_date" list="create_date_data_list" value=""></td>
+<td><input type="text" name="" id="search_created_by" list="created_by_data_list" value=""></td>
 <td><input type="submit"   name="submit" value="Search"></td>
 </tr>
 </table>
@@ -71,7 +55,6 @@ $("#search_employee").submit(function(e){
 	var  employee_id_value = $("#search_employee_id");
 	var  first_name_value = $("#search_first_name");
 	var  last_name_value = $("#search_last_name");
-	var  address_value = $("#search_address");
 	var  office_phone_value = $("#search_office_phone");
 	var  email_value = $("#search_email");
 	var  job_title_value = $("#search_job_title");
@@ -90,8 +73,6 @@ $("#search_employee").submit(function(e){
 		query_filter["first_name"] = first_name_value.val();
 	if(typeof last_name_value.val() != "undefined"  && last_name_value.val().length != 0) 
 		query_filter["last_name"] = last_name_value.val();
-	if(typeof address_value.val() != "undefined"  && address_value.val().length != 0) 
-		query_filter["address"] = address_value.val();
 	if(typeof office_phone_value.val() != "undefined"  && office_phone_value.val().length != 0) 
 		query_filter["office_phone"] = office_phone_value.val();
 	if(typeof email_value.val() != "undefined"  && email_value.val().length != 0) 
@@ -107,8 +88,7 @@ $("#search_employee").submit(function(e){
 	$.getJSON("/employee", query_filter, function(jsonData) {
 		var sourceTable= $( "#employee_table" );
 		tr = $('<tr/>');
-		tr.append("<th>" + "Click Edit..." + "</th>"); 
-		tr.append("<th>" + "employee_id" + "</th>");
+		tr.append("<th>" + "Employee" + "</th>");
 		tr.append("<th>" + "first_name" + "</th>");
 		tr.append("<th>" + "last_name" + "</th>");
 		tr.append("<th>" + "age" + "</th>");
@@ -126,21 +106,20 @@ $("#search_employee").submit(function(e){
 
 		$.each(jsonData.customer ,function(key, value) {
 			tr = $('<tr class="edit_customer_link" />');
-                        tr.append("<td>" + "<a href=\"/employee?action=edit&&employee_id=" + value.employee_id +"\"" +">Go...</a>"  + "</td>");
-			tr.append("<td>" + "employee_id" + "</td>");
-			tr.append("<td>" + "first_name" + "</td>");
-			tr.append("<td>" + "last_name" + "</td>");
-			tr.append("<td>" + "age" + "</td>");
-			tr.append("<td>" + "address" + "</td>");
-			tr.append("<td>" + "mobile_phone" + "</td>");
-			tr.append("<td>" + "office_phone" + "</td>");
-			tr.append("<td>" + "home_phone" + "</td>");
-			tr.append("<td>" + "email" + "</td>");
-			tr.append("<td>" + "job_title" + "</td>");
-			tr.append("<td>" + "department_name" + "</td>");
-			tr.append("<td>" + "reports_to" + "</td>");
-			tr.append("<td>" + "create_date" + "</td>");
-			tr.append("<td>" + "created_by" + "</td>");
+                        tr.append("<td>" + "<a onclick=\"return edit_employee_link_click(this); href="+ "\"" +  value.employee_id +"\"" +">" + value.employee_id + "</a>"  + "</td>");
+			tr.append("<td>" + value.first_name + "</td>");
+			tr.append("<td>" + value.last_name + "</td>");
+			tr.append("<td>" + value.age + "</td>");
+			tr.append("<td>" + value.address + "</td>");
+			tr.append("<td>" + value.mobile_phone + "</td>");
+			tr.append("<td>" + value.office_phone + "</td>");
+			tr.append("<td>" + value.home_phone + "</td>");
+			tr.append("<td>" + value.email + "</td>");
+			tr.append("<td>" + value.job_title + "</td>");
+			tr.append("<td>" + value.department_name + "</td>");
+			tr.append("<td>" + value.reports_to + "</td>");
+			tr.append("<td>" + value.create_date + "</td>");
+			tr.append("<td>" + value.created_by + "</td>");
 			sourceTable.append(tr);
 		});
 
@@ -173,12 +152,8 @@ function listEmployees() {
 
 		var sourceTable= $( "#employee_table" );
 
-
-
-
 		tr = $('<tr/>');
 		tr.append("<th>" + "Click Edit..."  + "</th>");
-		tr.append("<th>" + "employee_id" + "</th>");
 		tr.append("<th>" + "first_name" + "</th>");
 		tr.append("<th>" + "last_name" + "</th>");
 		tr.append("<th>" + "age" + "</th>");
@@ -198,7 +173,6 @@ function listEmployees() {
 		var employee_id_value = $("#search_employee_id");
 		var first_name_value = $("#search_first_name");
 		var last_name_value = $("#search_last_name");
-		var address_value = $("#search_address");
 		var office_phone_value = $("#search_office_phone");
 		var email_value = $("#search_email");
 		var job_title_value = $("#search_job_title");
@@ -210,7 +184,6 @@ function listEmployees() {
 		employee_id_value.empty();
 		first_name_value.empty();
 		last_name_value.empty();
-		address_value.empty();
 		office_phone_value.empty();
 		email_value.empty();
 		job_title_value.empty();
@@ -222,7 +195,6 @@ function listEmployees() {
 		employee_id_value.append('<option value=' + '' + '>' + "" + '</option>');
 		first_name_value.append('<option value=' + '' + '>' + "" + '</option>');
 		last_name_value.append('<option value=' + '' + '>' + "" + '</option>');
-		address_value.append('<option value=' + '' + '>' + "" + '</option>');
 		office_phone_value.append('<option value=' + '' + '>' + "" + '</option>');
 		email_value.append('<option value=' + '' + '>' + "" + '</option>');
 		job_title_value.append('<option value=' + '' + '>' + "" + '</option>');
@@ -232,28 +204,26 @@ function listEmployees() {
 		created_by_value.append('<option value=' + '' + '>' + "" + '</option>');
 
 		$.each(jsonData.employee ,function(key, value) {
-			tr = $('<tr class="edit_customer_link" />');
-                        tr.append("<td>" + "<a href=\"/employee?action=edit&&employee_id=" + value.employee_id +"\"" +">Go...</a>"  + "</td>");
-			tr.append("<td>" + "employee_id" + "</td>");
-			tr.append("<td>" + "first_name" + "</td>");
-			tr.append("<td>" + "last_name" + "</td>");
-			tr.append("<td>" + "age" + "</td>");
-			tr.append("<td>" + "address" + "</td>");
-			tr.append("<td>" + "mobile_phone" + "</td>");
-			tr.append("<td>" + "office_phone" + "</td>");
-			tr.append("<td>" + "home_phone" + "</td>");
-			tr.append("<td>" + "email" + "</td>");
-			tr.append("<td>" + "job_title" + "</td>");
-			tr.append("<td>" + "department_name" + "</td>");
-			tr.append("<td>" + "reports_to" + "</td>");
-			tr.append("<td>" + "create_date" + "</td>");
-			tr.append("<td>" + "created_by" + "</td>");
+			tr = $('<tr />');
+                        tr.append("<td>" + "<a onclick=\"return edit_employee_link_click(this); href="+ "\"" +  value.employee_id +"\"" +">" + value.employee_id + "</a>"  + "</td>");
+			tr.append("<td>" + value.first_name + "</td>");
+			tr.append("<td>" + value.last_name + "</td>");
+			tr.append("<td>" + value.age + "</td>");
+			tr.append("<td>" + value.address + "</td>");
+			tr.append("<td>" + value.mobile_phone + "</td>");
+			tr.append("<td>" + value.office_phone + "</td>");
+			tr.append("<td>" + value.home_phone + "</td>");
+			tr.append("<td>" + value.email + "</td>");
+			tr.append("<td>" + value.job_title + "</td>");
+			tr.append("<td>" + value.department_name + "</td>");
+			tr.append("<td>" + value.reports_to + "</td>");
+			tr.append("<td>" + value.create_date + "</td>");
+			tr.append("<td>" + value.created_by + "</td>");
 			sourceTable.append(tr);
 
 			$('#employee_id_data_list').append("<option value='" + value.employee_id  + "'>");
 			$('#first_name_data_list').append("<option value='" + value.first_name  + "'>");
 			$('#last_name_data_list').append("<option value='" + value.last_name  + "'>");
-			$('#address_data_list').append("<option value='" + value.address  + "'>");
 			$('#office_phone_data_list').append("<option value='" + value.office_phone  + "'>");
 			$('#email_data_list').append("<option value='" + value.email  + "'>");
 			$('#job_title_data_list').append("<option value='" + value.job_title  + "'>");
@@ -267,7 +237,6 @@ function listEmployees() {
 		employee_id_value.trigger('change', true);
 		first_name_value.trigger('change', true);
 		last_name_value.trigger('change', true);
-		address_value.trigger('change', true);
 		office_phone_value.trigger('change', true);
 		email_value.trigger('change', true);
 		job_title_value.trigger('change', true);
@@ -484,9 +453,11 @@ function init_employee_page(){
 	listEmployees();
 };
 
+/*
 $(document).ready( function(){
 init_employee_page();
 });
+*/
 
 </script>
  

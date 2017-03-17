@@ -68,14 +68,32 @@ void AddCustomerInterface::ProcessGet(){
 			if( directory.compare("add_contact") == 0){
 			}
 			else if( directory.compare("customer_content") == 0){
+				string filter;
+				stringstream ss;
+				bool first = true;
+				for( const auto & v : m )
+				{
+					if(v.first.compare("action") == 0)
+						continue;
+					if(v.first.compare("directory") == 0)
+						continue;
+
+					if(first)
+						first = ! first;
+					else 
+						ss << " AND ";
+					ss << v.first <<  " = " << "'" << v.second << "'" ;
+	
+				}
+				filter = ss.str();
 				customer_table ct;
-				ct.get_customer_records("", jstr);
+				ct.get_customer_records(filter, jstr);
 			}
 			else if( directory.compare("last_name") == 0){
 				customer_table ct;
 				ct.get_last_names("", jstr);
 			}
-			else if(directory.compare("edit_customer") == 0){
+			else if(directory.compare("edit_customer") == 0 || directory.compare("edit_customer_desktop") == 0){
 				customer_table ct;
 				ct.set_customer_id(m["customer_id"]);
 				std::map<string, string> result;
@@ -83,9 +101,10 @@ void AddCustomerInterface::ProcessGet(){
 				utils::build_json(result, jstr); 
 			}
 
-
 			utils::build_raw_response( jstr);
 			rs_ << jstr;
+			LOG("response: ",  jstr);
+			rs_.flush();
 			return;
 		}
 		

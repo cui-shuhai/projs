@@ -14,6 +14,7 @@ public:
 	campaign_table(string id);
 	campaign_table( string campaign_id_, string campaign_name_, string assign_to_, string campaign_status_, string creator_id_, string start_date_, string close_date_, string description_);
 	~campaign_table();
+
 	
 	string get_campaign_id(){ return campaign_id; }
 	string get_campaign_name(){ return campaign_name; }
@@ -37,6 +38,7 @@ public:
 	void update_campaign_table();
 	void get_campaign_instance(std::map<string, string> &campaign);
 	void get_campaign_records( string source, string &result );
+	void get_campaign_statuss(std::vector<string> &m);
 
 private:
 	string campaign_id;

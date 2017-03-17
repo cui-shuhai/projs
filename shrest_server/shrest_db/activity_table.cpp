@@ -23,7 +23,7 @@ activity_table::activity_table():SqlAccessor()
 activity_table::activity_table( string activity_id_, string activity_name_, string activity_type_, string activity_status_, string activity_priority_, string who_preside_, string when_created_, string note_):
 	SqlAccessor(),
 	activity_id{ activity_id_ },
-	activity_name{ note_ },
+	activity_name{ activity_name_},
 	activity_type{ activity_type_ },
 	activity_status{ activity_status_ },
 	activity_priority{ activity_priority_ },
@@ -52,8 +52,7 @@ void activity_table::add_activity_table(){
 	ss << "'" <<  activity_priority << "'" << ",";
 	ss << "'" <<  who_preside << "'" << ",";
 	ss << "'" <<  when_created << "'" << ",";
-	ss << "'" <<  note << "'" << ",";
-	ss << "'" <<  activity_id << "'" << ")";
+	ss << "'" <<  note << "'" << ")";
 
 	sql = ss.str();
 	LOG("add activity: ", sql);
@@ -151,4 +150,39 @@ void activity_table::get_activity_instance(std::map<string, string> &activity){
 		activity["who_preside"] = res->get_string(5) ;
 		activity["when_created"] = res->get_string(6) ;
 		activity["note"] = res->get_string(7);
+}
+
+void activity_table::get_activity_status( vector<string> &m)
+
+{	
+	string sql = "SELECT activity_status FROM activity_status";
+	
+	query q(*conn, sql);
+	auto res = q.emit_result();
+
+	do{
+		m.push_back(res->get_string(0));
+	} while(res->next_row());
+}
+void activity_table::get_activity_priority( vector<string> &m)
+{	
+	string sql = "SELECT activity_priority FROM activity_priority";
+	
+	query q(*conn, sql);
+	auto res = q.emit_result();
+
+	do{
+		m.push_back(res->get_string(0));
+	} while(res->next_row());
+}
+void activity_table::get_activity_type( vector< string> &m)
+{	
+	string sql = "SELECT activity_type, description FROM activity_type";
+	
+	query q(*conn, sql);
+	auto res = q.emit_result();
+
+	do{
+		m.push_back(res->get_string(0));
+	} while(res->next_row());
 }

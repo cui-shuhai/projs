@@ -1,34 +1,38 @@
 <!-------------------------Search Header -------------------------//-->
 
-<fieldset>
  <form id="search_campaign" action="/campaign", method="post">
 
 <table id="campaign_search" >
+<datalist id="_data_list"> </datalist>
+<datalist id="_data_list"> </datalist>
+<datalist id="_data_list"> </datalist>
+<datalist id="_data_list"> </datalist>
+<datalist id="_data_list"> </datalist>
+<datalist id="_data_list"> </datalist>
+<datalist id="_data_list"> </datalist>
+<datalist id="_data_list"> </datalist>
 <tr>
 <td colspan="1" > <label for="campaign_id">Campaign_id:</lable</td>
-<td colspan="1" > <label for="campaign_name">Campaign_id:</lable</td>
-<td colspan="1" > <label for="assign_to">Campaign_id:</lable</td>
-<td colspan="1" > <label for="campaign_status">Campaign_id:</lable</td>
-<td colspan="1" > <label for="creator_id">Campaign_id:</lable</td>
-<td colspan="1" > <label for="start_date">Campaign_id:</lable</td>
-<td colspan="1" > <label for="close_date">Campaign_id:</lable</td>
-<td colspan="1" > <label for="description">Campaign_id:</lable</td>
+<td colspan="1" > <label for="campaign_name">Campaign_name:</lable</td>
+<td colspan="1" > <label for="assign_to">Owner</lable</td>
+<td colspan="1" > <label for="campaign_status">Campaign_status:</lable</td>
+<td colspan="1" > <label for="creator_id">Creator_id:</lable</td>
+<td colspan="1" > <label for="start_date">Start_date:</lable</td>
+<td colspan="1" > <label for="close_date">Close_date:</lable</td>
 <td colspan="1" ></td>
 </tr> <tr>
-<td><select id="search_campaign_id" value="" name="campaign_id" style="width: 120px;"> </select></td>
-<td><select id="search_campaign_name" value="" name="campaign_name" style="width: 120px;"> </select></td>
-<td><select id="search_assign_to" value="" name="assign_to" style="width: 120px;"> </select></td>
-<td><select id="search_campaign_status" value="" name="campaign_status" style="width: 120px;"> </select></td>
-<td><select id="search_creator_id" value="" name="creator_id" style="width: 120px;"> </select></td>
-<td><select id="search_start_date" value="" name="start_date" style="width: 120px;"> </select></td>
-<td><select id="search_close_date" value="" name="close_date" style="width: 120px;"> </select></td>
-<td><select id="search_description" value="" name="description" style="width: 120px;"> </select></td>
+<td><input type="text" name="" id="search_campaign_id" list="campaign_id_data_list" value=""></td>
+<td><input type="text" name="" id="search_campaign_name" list="campaign_name_data_list" value=""></td>
+<td><input type="text" name="" id="search_assign_to" list="assign_to_data_list" value=""></td>
+<td><input type="text" name="" id="search_campaign_status" list="campaign_status_data_list" value=""></td>
+<td><input type="text" name="" id="search_creator_id" list="creator_id_data_list" value=""></td>
+<td><input type="text" name="" id="search_start_date" list="start_date_data_list" value=""></td>
+<td><input type="text" name="" id="search_close_date" list="close_date_data_list" value=""></td>
 <td><input type="submit"   name="submit" value="Search"></td>
 </tr>
 </table>
 </form>
 
-</fieldset>
 
 <script>
 
@@ -41,7 +45,6 @@ $("#search_campaign").submit(function(e){
 	var creator_id_value = $("#search_creator_id");
 	var start_date_value = $("#search_start_date");
 	var close_date_value = $("#search_close_date");
-	var description_value = $("#search_description");
 
 	var query_filter = {};
 	query_filter["action"] = "list";
@@ -61,8 +64,6 @@ $("#search_campaign").submit(function(e){
 		query_filter["start_date"] = start_date_value.val();
 	if(typeof close_date_value.val() != "undefined" && close_date_value.val().length != 0)
 		query_filter["close_date"] = close_date_value.val();
-	if(typeof description_value.val() != "undefined" && description_value.val().length != 0)
-		query_filter["description"] = description_value.val();
 
   
 	//$('#campaign_table tbody > tr').remove();
@@ -87,7 +88,7 @@ $("#search_campaign").submit(function(e){
 
 		$.each(jsonData.customer ,function(key, value) {
 			tr = $('<tr class="edit_customer_link" />');
-                        tr.append("<td>" + "<a href=\"/campaign?action=edit&&campaign_id=" + value.campaign_id +"\"" +">Go...</a>"  + "</td>");
+                        tr.append("<td>" + "<a onclick=\"return edit_campaign_link_click(this); href="+ "\"" +  value.campaign_id +"\"" +">" + value.campaign_id + "</a>"  + "</td>");
 			tr.append("<td>" + "Campaign_id" + "</td>");
 			tr.append("<td>" + "Campaign_name" + "</td>");
 			tr.append("<td>" + "Assign_to" + "</td>");
@@ -115,7 +116,7 @@ $("#search_campaign").submit(function(e){
 <legend>List Campaign</legend>
 <table id="campaign_table" border="1">
 </table>
-<br><br>
+<button id="campaign_list_add_button" onclick="on_add_campaign();"  type="button">Add Campaign</button>
 </fieldset>
 
 <script>
@@ -130,8 +131,7 @@ function listCampaigns() {
 
 
 		tr = $('<tr/>');
-		tr.append("<th>" + "Click Edit..."  + "</th>");
-		tr.append("<th>" + "Campaign_id" + "</th>");
+		tr.append("<th>" + "ID... "  + "</th>");
 		tr.append("<th>" + "Campaign_name" + "</th>");
 		tr.append("<th>" + "Assign_to" + "</th>");
 		tr.append("<th>" + "Campaign_status" + "</th>");
@@ -141,14 +141,13 @@ function listCampaigns() {
 		tr.append("<th>" + "Description" + "</th>");
 		sourceTable.append(tr);
 
-		var campaign_id_value = $("#search_campaign_id");
-		var campaign_name_value = $("#search_campaign_name");
-		var assign_to_value = $("#search_assign_to");
-		var campaign_status_value = $("#search_campaign_status");
-		var creator_id_value = $("#search_creator_id");
-		var start_date_value = $("#search_start_date");
-		var close_date_value = $("#search_close_date");
-		var description_value = $("#search_description");
+		var campaign_id_value = $("#campaign_id_data_list");
+		var campaign_name_value = $("#campaign_name_data_list");
+		var assign_to_value = $("#assign_to_data_list");
+		var campaign_status_value = $("#campaign_status_data_list");
+		var creator_id_value = $("#creator_id_data_list");
+		var start_date_value = $("#start_date_data_list");
+		var close_date_value = $("#close_date_data_list");
 
 		campaign_id_value.empty();
 		campaign_name_value.empty();
@@ -157,21 +156,19 @@ function listCampaigns() {
 		creator_id_value.empty();
 		start_date_value.empty();
 		close_date_value.empty();
-		description_value.empty();
 
-		campaign_id_value.append('<option value=' + '' + '>' + "" + '</option>');
-		campaign_name_value.append('<option value=' + '' + '>' + "" + '</option>');
-		assign_to_value.append('<option value=' + '' + '>' + "" + '</option>');
-		campaign_status_value.append('<option value=' + '' + '>' + "" + '</option>');
-		creator_id_value.append('<option value=' + '' + '>' + "" + '</option>');
-		start_date_value.append('<option value=' + '' + '>' + "" + '</option>');
-		close_date_value.append('<option value=' + '' + '>' + "" + '</option>');
-		description_value.append('<option value=' + '' + '>' + "" + '</option>');
+		campaign_id_value.append('<option value=' + '' + '>');
+		campaign_name_value.append('<option value=' + '' + '>');
+		assign_to_value.append('<option value=' + '' + '>');
+		campaign_status_value.append('<option value=' + '' + '>');
+		creator_id_value.append('<option value=' + '' + '>');
+		start_date_value.append('<option value=' + '' + '>');
+		close_date_value.append('<option value=' + '' + '>');
 
 		$.each(jsonData.campaign ,function(key, value) {
 
 			tr = $('<tr class="edit_customer_link" />');
-                        tr.append("<td>" + "<a href=\"/campaign?action=edit&&campaign_id=" + value.campaign_id +"\"" +">Go...</a>"  + "</td>");
+                        tr.append("<td>" + "<a onclick=\"return edit_campaign_link_click(this); href="+ "\"" +  value.campaign_id +"\"" +">" + value.campaign_id + "</a>"  + "</td>");
 			tr.append("<td>" + "Campaign_id" + "</td>");
 			tr.append("<td>" + "Campaign_name" + "</td>");
 			tr.append("<td>" + "Assign_to" + "</td>");
@@ -182,14 +179,13 @@ function listCampaigns() {
 			tr.append("<td>" + "Description" + "</td>");
 			sourceTable.append(tr);
 
-			campaign_id_value.append('<option alue=' + value.campaign_id + '>' + value.campaign_id + '</option>');
-			campaign_name_value.append('<option alue=' + value.campaign_name + '>' + value.campaign_name + '</option>');
-			assign_to_value.append('<option alue=' + value.assign_to + '>' + value.assign_to + '</option>');
-			campaign_status_value.append('<option alue=' + value.campaign_status + '>' + value.campaign_status + '</option>');
-			creator_id_value.append('<option alue=' + value.creator_id + '>' + value.creator_id + '</option>');
-			start_date_value.append('<option alue=' + value.start_date + '>' + value.start_date + '</option>');
-			close_date_value.append('<option alue=' + value.close_date + '>' + value.close_date + '</option>');
-			description_value.append('<option alue=' + value.description + '>' + value.description + '</option>');
+			campaign_id_value.append('<option alue=' + value.campaign_id + '>');
+			campaign_name_value.append('<option alue=' + value.campaign_name + '>');
+			assign_to_value.append('<option alue=' + value.assign_to + '>');
+			campaign_status_value.append('<option alue=' + value.campaign_status + '>');
+			creator_id_value.append('<option alue=' + value.creator_id + '>');
+			start_date_value.append('<option alue=' + value.start_date + '>');
+			close_date_value.append('<option alue=' + value.close_date + '>');
 
 		});
 
@@ -200,7 +196,6 @@ function listCampaigns() {
 		creator_id_value.trigger('change', true);
 		start_date_value.trigger('change', true);
 		close_date_value.trigger('change', true);
-		description_value.trigger('change', true);
 
 	})
 	 .error(function (XMLHttpRequest, textStatus, errorThrown) {
@@ -208,10 +203,30 @@ function listCampaigns() {
 	});
 }
 
+function on_add_campaign()
+{
+/*
+//see lead to fill options
+	fillCampaignSource();
+	fillCampaignStatus();
+	fillCampaignRating();
+	var campaign_source_value = $("#campaign_source_id"); 
+	var campaign_status_value = $("#campaign_status_id"); 
+	var campaign_rating_value = $("#campaign_rating_id"); 
+	campaign_source_value.trigger('change', true);
+	campaign_status_value.trigger('change', true);
+	campaign_rating_value.trigger('change', true);
+	//$("#campaign_list_add_button").addClass('hide');
+	//$("#campaign_list_remove_button").addClass('active');
+*/
+	$("#campaign_list_add_button").hide();
+	$("#add_campaign_form").show();
+}
+
 function edit_campaign_link_click(l){
 	var url = $(l).attr('href');
 	$("#edit_campaign_form").show();
-	fill_edit_form(url);	
+	fill_edit_campaign_form(url);	
 	return false;
 }
 
@@ -224,7 +239,7 @@ function edit_campaign_link_click(l){
 
 <form action="campaign" id="edit_campaign_form" method="post">
 
-<legend>Edit Campaignto...</legend>
+<fieldset>
 <table>
 <td><label for="campaign_id"> Edit:</label></td>
 <td><input type="text" id="campaign_id"  name="campaign_id" value="" readonly="readonly" ></td>
@@ -248,6 +263,7 @@ function edit_campaign_link_click(l){
 	    <td><input type="submit"  name="submit" value="save"></td>
 </tr>
 </table>
+</fieldset>
 
 </form>
 
@@ -293,7 +309,7 @@ function addcampaign(){
 }
 
 
-function fill_edit_form( lid ) {
+function fill_edit_campaign_form( lid ) {
   
 	$("#edit_campaign_form input[name='campaign_id']").val(lid);
 	$("#edit_campaign_form input[name='campaign_id']").trigger('change', true);
@@ -358,9 +374,11 @@ function init_campaign_page(){
 	listCampaigns();
 };
 
+/*
 $(document).ready( function(){
 init_campaign_page();
 });
+*/
 
 </script>
  

@@ -6,9 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>iDRM management system</title>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
+<!--  <link rel="stylesheet" href="/resources/demos/style.css"> -->
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+
+{% include web/drmcss.css %}
 
 <script>
 /*
@@ -22,6 +24,7 @@ $(function () {
  });
 });
 */
+var  load_tabs = [0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0 ];
 $(function () {
 	$('#drmtabs').tabs({
 	activate: function (event, ui) {
@@ -33,7 +36,47 @@ $(function () {
 	ui.newPanel.show();
 	ui.newPanel.addClass('active');
 	ui.newPanel.addClass('current');
-
+	if( load_tabs[ $activeTab] == 0 )
+	{
+		switch( $activeTab )
+		{
+			case 0:
+			init_lead_page();
+			break;
+			case 1:
+			init_customer_page();
+			break;
+			case 2:
+			init_contact_page();
+			break;
+			case 3:
+			init_activity_page();
+			break;
+			case 4:
+			init_campaign_page();
+			break;
+			case 5:
+			init_opportunity_page();
+			break;
+			case 6:
+			init_supplier_page();
+			break;
+			case 7:
+			init_order_page();
+			break;
+			case 8:
+			init_product_page();
+			break;
+			case 9:
+			init_employee_page();
+			break;
+			case 10:
+			init_user_page();
+			break;
+			default:
+			break;
+		}
+	}
 	if ($activeTab == 1) {
 	//init_customer_page();
 	//alert( $activeTab) ; 

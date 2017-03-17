@@ -31,6 +31,10 @@ void IcrmIndex::Process(){
 		auto content=rq_->content.string();
 		auto cookies = rq_->cookies;
 		
+		stringstream content_stream;
+		LoaderFile loader; 
+		Template t( loader );
+
 		//check cookie to find name/pwd
 		if(!cookies.empty()){
 			LOG("key:" , cookies);
@@ -39,22 +43,22 @@ void IcrmIndex::Process(){
 				cookie_table ct{key};
 				ct.get_cookie_user();
 				string user = ct.get_user_name();
-				if(user != "NULL"){
+				if(!user.empty()){
 					string password = ct.get_pass_word();
-					CreateDashboard(user, password);
+					//CreateDashboard(user, password);
 					LOG("find key for user", user);
-					return;
+				    t.load( "web/desktop.html" );        
 				}
 			}
 			else{
 				LOG("cookie key empty (reset), redirect login\n");
+				t.load( "web/login.html" );        
 			}	   	
 		}
+		else{
+				t.load( "web/login.html" );        
+		}
 		
-		stringstream content_stream;
-		LoaderFile loader; 
-		Template t( loader );
-		t.load( "web/login.html" );        
 
 		t.render( content_stream ); 
  

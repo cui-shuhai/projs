@@ -15,6 +15,12 @@ public:
 		string activity_type, string activity_status, string activity_priority, 
 		string who_preside, string when_created, string note);
 	~activity_table();
+
+	void get_activity_priority( std::vector<string> &m);
+	void get_activity_status( std::vector<string> &m);
+	void get_activity_type( std::vector< string> &m);
+
+
 	void set_activity_id(string activity_id_){ activity_id = activity_id_; }
 	void set_activity_name(string activity_name_){ activity_name = activity_name_; }
 	void set_activity_type(string activity_type_){ activity_type = activity_type_; }

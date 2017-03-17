@@ -184,3 +184,61 @@ void contact_table::get_contact_list(std::map<string, string> &contacts){
 	} while(res->next_row());
 }
 
+void contact_table::get_contact_instance(std::map<string, string> &contact){
+		string sql = "SELECT "
+"  status, first_name, last_name, contact_from, address, primary_phone, alt_phone, mobile_phone, fax, email, twitter, linkedin, facebook, job_title, company_id, when_met, where_met, time_zone, main_contact, out_of_marketing, out_of_billing, extra_info "
+		"FROM contact  WHERE  contact_id = ";
+
+
+		sql.append("'").append(contact_id).append("'");
+		query q(*conn, sql);
+		LOG("sql", sql);
+		auto res = q.emit_result();
+		
+		contact["contact_id"] = contact_id;
+		contact["status"] = res->get_string(0);
+		contact["first_name"] = res->get_string(1);
+		contact["last_name"] = res->get_string(2);
+		contact["contact_from"] = res->get_string(3);
+		contact["address"] = res->get_string(4);
+		contact["primary_phone"] = res->get_string(5);
+		contact["alt_phone"] = res->get_string(6);
+		contact["mobile_phone"] = res->get_string(7);
+		contact["fax"] = res->get_string(8);
+		contact["email"] = res->get_string(9);
+		contact["twitter"] = res->get_string(10);
+		contact["linkedin"] = res->get_string(11);
+		contact["facebook"] = res->get_string(12);
+		contact["job_title"] = res->get_string(13);
+		contact["company_id"] = res->get_string(14);
+		contact["when_met"] = res->get_string(15);
+		contact["where_met"] = res->get_string(16);
+		contact["time_zone"] = res->get_string(17);
+		contact["main_contact"] = res->get_string(18);
+		contact["out_of_marketing"] = res->get_string(19);
+		contact["out_of_billing"] = res->get_string(20);
+		contact["extra_info"] = res->get_string(21);
+}
+
+void contact_table::get_contact_statuss(std::vector<string> &m)
+{
+	string sql = "SELECT status FROM contact_status";
+
+	query q(*conn, sql);
+	auto res = q.emit_result();
+
+	do{
+		m.push_back(res->get_string(0));
+	} while(res->next_row());
+}
+void contact_table::get_contact_froms(std::vector<string> &m)
+{
+	string sql = "SELECT contact_from FROM contact_from";
+
+	query q(*conn, sql);
+	auto res = q.emit_result();
+
+	do{
+		m.push_back(res->get_string(0));
+	} while(res->next_row());
+}

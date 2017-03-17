@@ -85,7 +85,7 @@ void lead_table::add_lead_table(){
 	ss << "'" << lead_rating << "'" << ") ";
 
 	sql = ss.str();
-	LOG( "add_lead sqql:", sql);
+	LOG( "add_lead sql:  ", sql);
 	command c(*conn, sql);
 
 	c.emit();

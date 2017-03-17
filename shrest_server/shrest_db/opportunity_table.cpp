@@ -136,3 +136,14 @@ void opportunity_table::get_opportunity_records( string source, string &result )
 		ss << " ] }";
 		result = ss.str();
 }
+void opportunity_table::get_opportunity_pipelines(std::vector<string> &m)
+{
+	string sql = "SELECT status_name FROM opportunity_pipeline";
+
+	query q(*conn, sql);
+	auto res = q.emit_result();
+
+	do{
+		m.push_back(res->get_string(0));
+	} while(res->next_row());
+}

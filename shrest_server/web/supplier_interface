@@ -1,37 +1,41 @@
 <!-------------------------Search Header -------------------------//-->
-<fieldset>
+
+<datalist id="supplier_id_data_list"> </datalist>
+<datalist id="account_num_data_list"> </datalist>
+<datalist id="contact_data_list"> </datalist>
+<datalist id="company_name_data_list"> </datalist>
+<datalist id="credit_rating_data_list"> </datalist>
+<datalist id="supplier_status_data_list"> </datalist>
+<datalist id="active_flag_data_list"> </datalist>
+<datalist id="last_update_data_list"> </datalist>
+
  <form id="search_supplier" action="/supplier", method="post">
 <table id="supplier_search" >
 <tr>
-<td colspan="1" > <label for="">:</lable</td>
-<td colspan="1" > <label for="supplier_id">Supplier_id:</lable</td>
-<td colspan="1" > <label for="account_num">Account_num:</lable</td>
-<td colspan="1" > <label for="contact">Contact:</lable</td>
-<td colspan="1" > <label for="company_name">Company_name:</lable</td>
-<td colspan="1" > <label for="credit_rating">Credit_rating:</lable</td>
-<td colspan="1" > <label for="supplier_status">Supplier_status:</lable</td>
-<td colspan="1" > <label for="active_flag">Active_flag:</lable</td>
-<td colspan="1" > <label for="web_service_url">Web_service_url:</lable</td>
-<td colspan="1" > <label for="last_update">Last_update:</lable</td>
+<td colspan="1" > <label for="">Supplier Name</lable</td>
+<td colspan="1" > <label for="account_num">Account_num</lable</td>
+<td colspan="1" > <label for="contact">Contact</lable</td>
+<td colspan="1" > <label for="company_name">Company_name</lable</td>
+<td colspan="1" > <label for="credit_rating">Credit_rating</lable</td>
+<td colspan="1" > <label for="supplier_status">Supplier_status</lable</td>
+<td colspan="1" > <label for="active_flag">Active_flag</lable</td>
+<td colspan="1" > <label for="last_update">Last_update</lable</td>
 <td colspan="1" ></td>
 </tr> <tr>
-<td><input type="text" name="supplier_id" id="txtsupplier_idAutoComplete" list="supplier_id_data_list" value="" > <datalist id="supplier_id_data_list"> </datalist></td>
-<td><input type="text" name="account_num" id="txtaccount_numAutoComplete" list="account_num_data_list" value="" > <datalist id="account_num_data_list"> </datalist></td>
-<td><input type="text" name="contact" id="txtcontactAutoComplete" list="contact_data_list" value="" > <datalist id="contact_data_list"> </datalist></td>
-<td><input type="text" name="company_name" id="txtcompany_nameAutoComplete" list="company_name_data_list" value="" > <datalist id="company_name_data_list"> </datalist></td>
-<td><input type="text" name="credit_rating" id="txtcredit_ratingAutoComplete" list="credit_rating_data_list" value="" > <datalist id="credit_rating_data_list"> </datalist></td>
-<td><input type="text" name="supplier_status" id="txtsupplier_statusAutoComplete" list="supplier_status_data_list" value="" > <datalist id="supplier_status_data_list"> </datalist></td>
-<td><input type="text" name="active_flag" id="txtactive_flagAutoComplete" list="active_flag_data_list" value="" > <datalist id="active_flag_data_list"> </datalist></td>
-<td><input type="text" name="web_service_url" id="txtweb_service_urlAutoComplete" list="web_service_url_data_list" value="" > <datalist id="web_service_url_data_list"> </datalist></td>
-<td><input type="text" name="last_update" id="txtlast_updateAutoComplete" list="last_update_data_list" value="" > <datalist id="last_update_data_list"> </datalist></td>
+<td><input type="text" name="" id="search_supplier_id" list="supplier_id_data_list" value=""></td>
+<td><input type="text" name="" id="search_account_num" list="account_num_data_list" value=""></td>
+<td><input type="text" name="" id="search_contact" list="contact_data_list" value=""></td>
+<td><input type="text" name="" id="search_company_name" list="company_name_data_list" value=""></td>
+<td><input type="text" name="" id="search_credit_rating" list="credit_rating_data_list" value=""></td>
+<td><input type="text" name="" id="search_supplier_status" list="supplier_status_data_list" value=""></td>
+<td><input type="text" name="" id="search_active_flag" list="active_flag_data_list" value=""></td>
+<td><input type="text" name="" id="search_last_update" list="last_update_data_list" value=""></td>
 <td><input type="submit"   name="submit" value="Search"></td>
 </tr>
 </table>
 </form>
-</fieldset>
 
-<script>
-
+<script type="text/javascript">
 
 $("#search_supplier").submit(function(e){
 	var supplier_id_value = $("#search_supplier_id");
@@ -41,7 +45,6 @@ $("#search_supplier").submit(function(e){
 	var credit_rating_value = $("#search_credit_rating");
 	var supplier_status_value = $("#search_supplier_status");
 	var active_flag_value = $("#search_active_flag");
-	var web_service_url_value = $("#search_web_service_url");
 	var last_update_value = $("#search_last_update");
 
 	var query_filter = {};
@@ -62,8 +65,6 @@ $("#search_supplier").submit(function(e){
 		query_filter["supplier_status"] = supplier_status_value.val();
 	if(typeof active_flag_value.val() != "undefined" &&  active_flag_value.val().length != 0)
 		query_filter["active_flag"] = active_flag_value.val();
-	if(typeof web_service_url_value.val() != "undefined" &&  web_service_url_value.val().length != 0)
-		query_filter["web_service_url"] = web_service_url_value.val();
 	if(typeof last_update_value.val() != "undefined" &&  last_update_value.val().length != 0)
 		query_filter["last_update"] = last_update_value.val();
 
@@ -73,30 +74,29 @@ $("#search_supplier").submit(function(e){
 	$.getJSON("/supplier", query_filter, function(jsonData) {
 		var sourceTable= $( "#supplier_table" );
 		tr = $('<tr/>');
-		tr.append("<th>" + "Click Edit..." + "</th>"); 
-		tr.append("<th>" + "supplier_ide" + "</th>");
-		tr.append("<th>" + "account_nume" + "</th>");
-		tr.append("<th>" + "contacte" + "</th>");
-		tr.append("<th>" + "company_namee" + "</th>");
-		tr.append("<th>" + "credit_ratinge" + "</th>");
-		tr.append("<th>" + "supplier_statuse" + "</th>");
-		tr.append("<th>" + "active_flage" + "</th>");
-		tr.append("<th>" + "web_service_urle" + "</th>");
-		tr.append("<th>" + "last_updatee" + "</th>");
+		tr.append("<th>" + "Supplier Name" + "</th>");
+		tr.append("<th>" + "account_num" + "</th>");
+		tr.append("<th>" + "contact" + "</th>");
+		tr.append("<th>" + "company_name" + "</th>");
+		tr.append("<th>" + "credit_rating" + "</th>");
+		tr.append("<th>" + "supplier_status" + "</th>");
+		tr.append("<th>" + "active_flag" + "</th>");
+		tr.append("<th>" + "web_service_url" + "</th>");
+		tr.append("<th>" + "last_update" + "</th>");
 		sourceTable.append(tr);
 
 		$.each(jsonData.customer ,function(key, value) {
 			tr = $('<tr class="edit_customer_link" />');
-                        tr.append("<td>" + "<a href=\"/supplier?action=edit&&supplier_id=" + value.supplier_id +"\"" +">Go...</a>"  + "</td>");
-			tr.append("<td>" + "supplier_ide" + "</td>");
-			tr.append("<td>" + "account_nume" + "</td>");
-			tr.append("<td>" + "contacte" + "</td>");
-			tr.append("<td>" + "company_namee" + "</td>");
-			tr.append("<td>" + "credit_ratinge" + "</td>");
-			tr.append("<td>" + "supplier_statuse" + "</td>");
-			tr.append("<td>" + "active_flage" + "</td>");
-			tr.append("<td>" + "web_service_urle" + "</td>");
-			tr.append("<td>" + "last_updatee" + "</td>");
+                        tr.append("<td>" + "<a onclick=\"return edit_supplier_link_click(this); href="+ "\"" +  value.supplier_id +"\"" +">" + value.supplier_id + "</a>"  + "</td>");
+			tr.append("<td>" + account_num + "</td>");
+			tr.append("<td>" + contact + "</td>");
+			tr.append("<td>" + company_name + "</td>");
+			tr.append("<td>" + credit_rating + "</td>");
+			tr.append("<td>" + supplier_status + "</td>");
+			tr.append("<td>" + active_flag + "</td>");
+			tr.append("<td>" + web_service_url + "</td>");
+			tr.append("<td>" + last_update + "</td>");
+
 			sourceTable.append(tr);
 		});
 
@@ -130,16 +130,15 @@ function listSuppliers() {
 		var sourceTable= $( "#supplier_table" );
 
 		tr = $('<tr/>');
-		tr.append("<th>" + "Click Edit..."  + "</th>");
-		tr.append("<th>" + "Supplier_id" + "</th>");
-		tr.append("<th>" + "Account_num" + "</th>");
-		tr.append("<th>" + "Contact" + "</th>");
-		tr.append("<th>" + "Company_name" + "</th>");
-		tr.append("<th>" + "Credit_rating" + "</th>");
-		tr.append("<th>" + "Supplier_status" + "</th>");
-		tr.append("<th>" + "Active_flag" + "</th>");
-		tr.append("<th>" + "Web_service_url" + "</th>");
-		tr.append("<th>" + "Last_update" + "</th>");
+		tr.append("<th>" + "Supplier Name" + "</th>");
+		tr.append("<th>" + "account_num" + "</th>");
+		tr.append("<th>" + "contact" + "</th>");
+		tr.append("<th>" + "company_name" + "</th>");
+		tr.append("<th>" + "credit_rating" + "</th>");
+		tr.append("<th>" + "supplier_status" + "</th>");
+		tr.append("<th>" + "active_flag" + "</th>");
+		tr.append("<th>" + "web_service_url" + "</th>");
+		tr.append("<th>" + "last_update" + "</th>");
 		sourceTable.append(tr);
 
 		var supplier_id_value = $("#search_supplier_id");
@@ -149,7 +148,6 @@ function listSuppliers() {
 		var credit_rating_value = $("#search_credit_rating");
 		var supplier_status_value = $("#search_supplier_status");
 		var active_flag_value = $("#search_active_flag");
-		var web_service_url_value = $("#search_web_service_url");
 		var last_update_value = $("#search_last_update");
 
 
@@ -160,7 +158,6 @@ function listSuppliers() {
 		credit_rating_value.empty();
 		supplier_status_value.empty();
 		active_flag_value.empty();
-		web_service_url_value.empty();
 		last_update_value.empty();
 
 		supplier_id_value.append('<option value=' + '' + '>' + "" + '</option>');
@@ -176,16 +173,16 @@ function listSuppliers() {
 		$.each(jsonData.supplier ,function(key, value) {
 
 			tr = $('<tr class="edit_customer_link" />');
-                        tr.append("<td>" + "<a href=\"/supplier?action=edit&&supplier_id=" + value.supplier_id +"\"" +">Go...</a>"  + "</td>");
-			tr.append("<td>" + "supplier_id" + "</td>");
-			tr.append("<td>" + "account_num" + "</td>");
-			tr.append("<td>" + "contact" + "</td>");
-			tr.append("<td>" + "company_name" + "</td>");
-			tr.append("<td>" + "credit_rating" + "</td>");
-			tr.append("<td>" + "supplier_status" + "</td>");
-			tr.append("<td>" + "active_flag" + "</td>");
-			tr.append("<td>" + "web_service_url" + "</td>");
-			tr.append("<td>" + "last_update" + "</td>");
+                          tr.append("<td>" + "<a onclick=\"return edit_supplier_link_click(this); href="+ "\"" +  value.supplier_id +"\"" +">" + value.supplier_id + "</a>"  + "</td>");
+			tr.append("<td>" + supplier_id + "</td>");
+			tr.append("<td>" + account_num + "</td>");
+			tr.append("<td>" + contact + "</td>");
+			tr.append("<td>" + company_name + "</td>");
+			tr.append("<td>" + credit_rating + "</td>");
+			tr.append("<td>" + supplier_status + "</td>");
+			tr.append("<td>" + active_flag + "</td>");
+			tr.append("<td>" + web_service_url + "</td>");
+			tr.append("<td>" + last_update + "</td>");
 			sourceTable.append(tr);
 
 			$('#supplier_id_data_list').append("<option value='" + value.supplier_id  + "'>");
@@ -195,7 +192,6 @@ function listSuppliers() {
 			$('#credit_rating_data_list').append("<option value='" + value.credit_rating  + "'>");
 			$('#supplier_status_data_list').append("<option value='" + value.supplier_status  + "'>");
 			$('#active_flag_data_list').append("<option value='" + value.active_flag  + "'>");
-			$('#web_service_url_data_list').append("<option value='" + value.web_service_url  + "'>");
 			$('#last_update_data_list').append("<option value='" + value.last_update  + "'>");
 
 		});
@@ -207,7 +203,6 @@ function listSuppliers() {
 		credit_rating_value.trigger('change', true);
 		supplier_status_value.trigger('change', true);
 		active_flag_value.trigger('change', true);
-		web_service_url_value.trigger('change', true);
 		last_update_value.trigger('change', true);
 
 	})
@@ -220,6 +215,7 @@ function edit_supplier_link_click(l){
 	var url = $(l).attr('href');
 	$("#edit_supplier_form").show();
 	fill_edit_form(url);	
+	$("#add_supplier_form").hide();
 	return false;
 }
 
@@ -371,10 +367,12 @@ function init_supplier_page(){
 	listSuppliers();
 };
 
+/*
 $(document).ready( function(){
 init_supplier_page();
 });
 
+*/
 </script>
  
 

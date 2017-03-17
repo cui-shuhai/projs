@@ -132,7 +132,7 @@ void customer_table::get_customer_records( string source, string &result ){
 				" phone, email, street_addr, city, state, country, bill_addr, ship_addr, personal_title , post_code   FROM customer";
 
 		if(!source.empty())
-		sql.append("WHERE customer.company_name = ").append(source);
+		sql.append("WHERE  ").append(source);
 
 		query q(*conn, sql);
 		LOG("sql", sql);

@@ -23,6 +23,7 @@ public:
 	int get_order_table_count();
 	void get_order_list(std::map<string, string> &orders);
 	void get_order_records( string source, string &result );
+	void get_order_statuss(std::vector<string> &m);
 
 	string get_order_id(){return order_id;}
 	string get_customer_id(){return customer_id;}
