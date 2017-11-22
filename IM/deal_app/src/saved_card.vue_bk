@@ -1,0 +1,208 @@
+<template>
+    <div class="wrapper">
+        <div class="top-nav" :style="{height: 0.117 * bodyWidth + 'px'}">
+            <div class="back-button"
+                 :style="{ backgroundImage: 'url(' + backImgUrl + ')', width: 0.024 * bodyWidth + 'px', height: 0.048 * bodyWidth  + 'px', marginLeft: 0.0453*bodyWidth  + 'px'}"
+                 @click="goBack"></div>
+            <div id="stripe-title">
+                Payment Information
+            </div>
+        </div>
+        <div  class="confirm-note">
+            By clicking "CONFIRM", you authorize FanDine to deduct payment after you enjoy your pre-order meal
+        </div>
+        <div id="cc-container" :style="{ backgroundImage: 'url(' + ccImg + ')'}">
+            <div id="remove-butt" @click="delCard()">
+                Remove
+            </div>
+            <div id="cc-num">
+                **** **** **** {{lastFour}}
+            </div>
+        </div>
+        <div id="please-note">
+            Please note that if you change accounts or devices, you may need to re-enter your payment information.
+        </div>
+        <bounce-loader :loading="isLoading" :color="spinnerColor"
+                       :style="{position: 'fixed', marginLeft: '42%', top: '40%'}"></bounce-loader>
+        <div class="bottom-bar" :style="{ height: 0.133 * bodyWidth + 'px', zIndex: 999}">
+            <div class="cart-sub">
+                <div>
+                    Total Due:
+                </div>
+                <div id="s-total">
+                    {{'$' + totalDue}}
+                </div>
+            </div>
+            <div class="pre-button" @click="submitOrder()" :style="{display:'flex', justifyContent: 'center'}">CONFIRM</div>
+        </div>
+    </div>
+</template>
+<style scoped>
+    #remove-butt{
+        color: #fff;
+        width: 21%;
+        height: 13%;
+        font-size: 4vw;
+        font-weight: 300;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #fff;
+        border-radius: 20px;
+        margin: 2.5vw 0 0 68%;
+    }
+    #please-note {
+        margin: 4vw 4vw 0 4vw;
+        color: #999;
+        font-weight: 400;
+        font-size: 4vw;
+        text-align: left;
+    }
+
+    #cc-num {
+        margin: 17vw 0 0 26%;
+        color: #333;
+        font-size: 7vw;
+        font-weight: 500;
+    }
+
+    #cc-container {
+        margin: 17vw 4vw 0 4vw;
+        width: 100%;
+        height: 48.127vw;
+        background-size: contain;
+        background-repeat: no-repeat;
+        display:flex;
+        flex-direction: column;
+    }
+
+    #stripe-title {
+        margin-right: 30%;
+    }
+
+    body {
+        background: #fafafa;
+    }
+
+    label {
+        position: relative;
+        color: #444;
+        font-weight: 400;
+        height: 60px;
+        line-height: 60px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 16px;
+        padding: 0 4.5%;
+        border-top: 1px solid #ececec;
+        border-bottom: 1px solid #ececec;
+    }
+
+    .confirm-note {
+        margin: 15vw 4vw 0 4vw;
+        color: #89511E;
+        background: #FEFCE3;
+        font-size: 4vw;
+    }
+</style>
+<script>
+    var windowHeight = window.innerHeight;
+    var bodyWidth = window.innerWidth;
+    import axios from 'axios';
+    import Vue from 'vue'
+    import VueAxios from 'vue-axios'
+
+    Vue.use(VueAxios, axios);
+    import config from './config.json'
+    import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+
+    export default {
+        name: 'Saved',
+        data() {
+            return {
+                windowHeight: windowHeight,
+                bodyWidth: bodyWidth,
+                complete: false,
+                backImgUrl: './assets/images/black_back@2x.png',
+                totalDue: null,
+                token: this.$route.query.token,
+                fdId: this.$route.query.fdId,
+                config: config,
+                isLoading: false,
+                spinnerColor: "##EF727F",
+                ccImg: './assets/images/creditcard@2x.png',
+                lastFour: this.$route.query.lastFour
+            }
+        },
+        created() {
+            this.totalDue = this.$route.query.totalDue;
+        },
+        methods: {
+            delCard(){
+                let that = this;
+                if(confirm('Delete this card?') === true){
+                    let header = {
+                        headers: {'Authorization': 'Bearer ' + this.token}
+                    };
+                    let userId = that.fdId;
+                    that.isLoading = true;
+                    axios.delete(that.config.paymentApi + '/v1/users/' + userId + '/stripe_customer', header)
+                        .then(function (response) {
+                            console.log(JSON.stringify(response));
+                            that.goBack();
+                        }).catch(function (error) {
+                        that.isLoading = false;
+                        console.log(error);
+                    });
+                }
+            },
+            submitOrder() {
+                let header = {
+                    headers: {'Authorization': 'Bearer ' + this.token}
+                };
+                let userId = this.fdId;
+                let that = this;
+                that.isLoading = true;
+                axios.post(that.config.paymentApi + '/v1/users/' + userId + '/accept_preauth_clauses', {
+                    "restaurant_id": that.$route.query.restId,
+                    "order_id": that.$route.query.orderId,
+                    "use_stripe_customer": true,
+                    "device_id": that.$route.query.facebookId,
+                    "mobile": that.$route.query.facebookId
+                }, header)
+                    .then(function (response) {
+                        that.clearCart();
+                        that.$router.push({
+                            path: '/receipt', query: {
+                                orderId: that.$route.query.orderId,
+                                fdId: that.fdId,
+                                token: that.token
+                            }
+                        });
+                        console.log(JSON.stringify(response));
+                    }).catch(function (error) {
+                    that.isLoading = false;
+                    console.log(error);
+                });
+            },
+            goBack: function () {
+                this.$router.go(-1);
+            },
+            clearCart() {
+                this.$store.replaceState(
+                    {
+                        cart: {
+                            total_quantity: 0,
+                        }
+                    }
+                );
+            },
+
+        },
+        components: {
+            PulseLoader
+        },
+    }
+</script>

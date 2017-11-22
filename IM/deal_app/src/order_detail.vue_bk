@@ -1,0 +1,525 @@
+<template>
+    <div class="wrapper">
+        <div class="top-nav" :style="{height: 0.117 * bodyWidth + 'px'}">
+            <div class="back-button"
+                 :style="{ backgroundImage: 'url(' + backImgUrl + ')', width: 0.024 * bodyWidth + 'px', height: 0.048 * bodyWidth  + 'px', marginLeft: 0.0453*bodyWidth  + 'px'}"
+                 @click="goBack"></div>
+            <div id="o-detail">
+                Order Details
+            </div>
+        </div>
+        <div class="blah"
+             :style="{height: 0.075 * bodyWidth + 'px', fontSize: 0.031 * bodyWidth + 'px',  marginTop: 0.117 * bodyWidth + 'px'}">
+            <p v-if="preOrderDaysLimit.min === 0">This Pre-Order can be made on the same day.</p>
+            <p v-if="preOrderDaysLimit.min === 1">This Pre-Order must be made 1 day in advance.</p>
+            <p v-if="preOrderDaysLimit.min > 1">This Pre-Order must be made {{preOrderDaysLimit.min}} days in advance.</p>
+            <div class="back-button"
+                 :style="{ backgroundImage: 'url(' + timeImgUrl + ')', width: 0.06 * bodyWidth + 'px', height: 0.12 * bodyWidth  + 'px', marginLeft: 'auto'}"
+                 @click="$modal.show('businessHoursModal')"></div>
+        </div>
+        <bounce-loader :loading="isLoading" :color="spinnerColor"
+                       :style="{position: 'fixed', marginLeft: '40%', top: '35%'}"></bounce-loader>
+        <div class="dmg">
+            <div class="dmg-li" :style="{height: 0.213 * bodyWidth + 'px'}">
+                <div class="dmg-name" :style="{fontSize: 0.048 * bodyWidth + 'px'}">
+                    Date & Time *
+                </div>
+                <date-picker :date="startTime" :option="option" :preOrderDaysLimit="preOrderDaysLimit"
+                             :style="{height: 0.213 * bodyWidth + 'px', marginTop: '10%',  outline:'none', border:'none'}"></date-picker>
+            </div>
+            <div class="dmg-li" :style="{height: 0.213 * bodyWidth + 'px'}">
+                <div class="dmg-name" :style="{fontSize: 0.048 * bodyWidth + 'px'}">
+                    Mobile *
+                </div>
+                <Cleave id='phoneNum' :options='cleaveOptions' v-model='formatedValue'
+                        :style="{height: 0.1 * bodyWidth + 'px', outline:'none', border:'none', color:'#CB212D',fontSize:'17px',textAlign: 'right'}"></Cleave>
+            </div>
+            <div class="dmg-li" :style="{height: 0.213 * bodyWidth + 'px'}">
+                <div class="dmg-name" :style="{fontSize: 0.048 * bodyWidth + 'px'}">
+                    Guest(s) *
+                </div>
+                <div class="cart-item-quan" :style="{fontSize: 0.0373*bodyWidth + 'px', width: '25%'}">
+                    <div class="cart-item-func"
+                         :style="{ backgroundImage: 'url(' + minusUrl + ')', height: 0.064 * bodyWidth  + 'px', width: 0.064 * bodyWidth  + 'px'}"
+                         @click="subG"></div>
+                    {{gNum}}
+                    <div class="cart-item-func"
+                         :style="{ backgroundImage: 'url(' + plusUrl + ')', height: 0.064 * bodyWidth  + 'px', width: 0.064 * bodyWidth  + 'px'}"
+                         @click="addG"></div>
+                </div>
+            </div>
+            <div class="dmg-li" :style="{height: 0.213 * bodyWidth + 'px'}">
+                <div class="dmg-name" :style="{fontSize: 0.048 * bodyWidth + 'px'}">
+                    Note:
+                </div>
+                <textarea maxlength="50" cols="40" rows="3" v-model="orderNote" id="enter-note"
+                          :style="{ outline:'none', border:'none', fontSize:'17px'}"></textarea>
+            </div>
+        </div>
+        <!--<div class="lil-grey" :style="{height: 0.048 * bodyWidth + 'px'}"></div>-->
+        <!--<div class="bottom-note">-->
+
+        <!--</div>-->
+        <div class="bottom-grey" :style="{ height: 0.2346 * bodyWidth + 'px'}">
+            <div class="bottom-logo"
+                 :style="{ backgroundImage: 'url(' + bottomUrl + ')', width: 0.253*bodyWidth  + 'px', height:0.0533 * bodyWidth + 'px' }"></div>
+        </div>
+        <div class="bottom-bar" :style="{ height: 0.133 * bodyWidth + 'px'}">
+            <div class="cart-sub">
+                <div>
+                    Subtotal:
+                </div>
+                <div id="s-total">
+                    {{'$' + $route.query.subTotal}}
+                </div>
+            </div>
+            <div class="pre-button" :style="{ fontSize: 0.04*bodyWidth + 'px'}" @click="goPayment()">
+                CONTINUE
+            </div>
+        </div>
+        <modal name="businessHoursModal" width="100%" height="auto" :scrollable="true" :pivotY="0">
+            <div class="top-nav" :style="{height: 0.117 * bodyWidth + 'px'}">
+                <div class="back-button"
+                     :style="{ backgroundImage: 'url(' + backImgUrl + ')', width: 0.024 * bodyWidth + 'px', height: 0.048 * bodyWidth  + 'px', marginLeft: 0.0453*bodyWidth  + 'px'}"
+                     @click="$modal.hide('businessHoursModal')"></div>
+                <div style="margin-right: 35%;">
+                    Hours of Operation
+                </div>
+            </div>
+            <div class="time-info">
+                <div class="sched-container" v-if="businessHours.length > 0" :style="{fontSize: 0.0426*bodyWidth }">
+                    <div class="each-day" v-for="aTime in businessHours" v-bind:key="aTime"
+                         :style="{ marginTop: 0.075*bodyWidth+ 'px'}">
+                        <div class="time-title" :style="{fontSize: 0.0373*bodyWidth}">
+                            {{'-' + ' ' + aTime.theDay + ' ' + '-'}}
+                        </div>
+                        <div class="time-time" :style="{fontSize: 0.0373*bodyWidth}">
+                            {{aTime.timeOne}}
+                        </div>
+                        <div v-if="aTime.timeTwo" class="time-time" :style="{fontSize: 0.0373*bodyWidth}">
+                            {{aTime.timeTwo}}
+                        </div>
+                    </div>
+                </div>
+                <div v-else-if="businessHours.length===0">
+                    No Schedule Available
+                </div>
+            </div>
+        </modal>
+    </div>
+</template>
+<style>
+    #enter-note {
+        padding: 6px;
+        line-height: 22px;
+        font-size: 12px;
+        border: 2px solid rgb(255, 255, 255);
+        box-shadow: rgba(0, 0, 0, 0.2) 0 1px 3px 0;
+        border-radius: 2px;
+        color: #444;
+        word-wrap: break-word;
+    }
+
+    .bottom-note {
+        width: 91%;
+        margin: 4.5%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        height: auto;
+    }
+
+    .lil-grey {
+        width: 100%;
+        background-color: #f6f6f6;
+    }
+
+    #phoneNum {
+        display: inline-block;
+        padding: 6px;
+        line-height: 22px;
+        font-size: 12px;
+        border: 2px solid rgb(255, 255, 255);
+        box-shadow: rgba(0, 0, 0, 0.2) 0 1px 3px 0;
+        border-radius: 2px;
+        color: #444;
+    }
+
+    .dmg-name {
+        color: #444;
+        font-weight: 400;
+    }
+
+    .dmg-li {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 91%;
+        margin-left: 4.5%;
+        margin-right: 4.5%;
+        border-bottom: 1px solid #f5f5f5;
+        align-items: center;
+    }
+
+    .dmg {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .blah {
+        width: 91%;
+        padding: 5% 4.5% 5% 4.5%;
+        background: #fefce3;
+        display: flex;
+        word-wrap: break-word;
+        font-weight: 200;
+        color: #89511E;
+    }
+
+    #o-detail {
+        margin-right: 35%;
+    }
+
+    .time-title {
+        font-weight: 600;
+        color: #333;
+    }
+
+    .time-time {
+        color: #555;
+        padding-top: 10px;
+        font-weight: 200;
+        word-spacing: 1px;
+    }
+
+    .each-day {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .sched-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: #333;
+        font-weight: 600;
+    }
+
+    .time-info {
+        width: 100%;
+        height: auto;
+        padding-top: 60px;
+        padding-bottom: 36px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #fafafa;
+    }
+
+
+</style>
+<script>
+    let windowHeight = window.innerHeight;
+    let bodyWidth = window.innerWidth;
+    import myDatepicker from './vue-datepicker.vue'
+    import Cleave from './Cleave.vue'
+    import axios from 'axios';
+    import Vue from 'vue';
+    import VueAxios from 'vue-axios';
+    import config from './config.json';
+    import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+    Vue.use(VueAxios, axios);
+    let _moment = require('moment');
+
+    function getBusinessHours(regHr) {
+        let businessHours = [];
+        regHr.forEach(function (dStr) {
+            let spaceNum = dStr.indexOf(" ");
+            if (spaceNum === -1) {
+                return businessHours.push({});
+            }
+
+            let timeObj = {};
+            timeObj.theDay = dStr.substr(0, spaceNum);
+            let restTime = dStr.substr(spaceNum + 1);
+            let twoSpace = restTime.indexOf(" ");
+            // dont complain, i aint writing a helper for this, perfect the back end data
+            if (twoSpace === -1) {
+                let dash = restTime.indexOf('-');
+                let hours = parseInt(restTime.substr(0, 2));
+                let minutes = parseInt(restTime.substr(3, 2));
+                let ampm = hours >= 12 ? 'PM' : 'AM';
+                let tempHour = hours % 12;
+                tempHour = tempHour ? tempHour : 12; // the hour '0' should be '12'
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                timeObj.timeOne = tempHour + ':' + minutes + ' ' + ampm;
+                hours = parseInt(restTime.substr(dash + 1, 2));
+                minutes = parseInt(restTime.substr(dash + 4, 2));
+                ampm = hours >= 12 ? 'PM' : 'AM';
+                tempHour = hours % 12;
+                tempHour = tempHour ? tempHour : 12;
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                timeObj.timeOne = timeObj.timeOne + ' - ' + tempHour + ':' + minutes + ' ' + ampm;
+            } else {
+                let oneTime = restTime.substr(0, twoSpace);
+                let dashOne = oneTime.indexOf('-');
+                let hours = parseInt(oneTime.substr(0, 2));
+                let minutes = parseInt(oneTime.substr(3, 2));
+                let ampm = hours >= 12 ? 'PM' : 'AM';
+                let tempHour = hours % 12;
+                tempHour = tempHour ? tempHour : 12; // the hour '0' should be '12'
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                timeObj.timeOne = tempHour + ':' + minutes + ' ' + ampm;
+                hours = parseInt(oneTime.substr(dashOne + 1, 2));
+                minutes = parseInt(oneTime.substr(dashOne + 4, 2));
+                ampm = hours >= 12 ? 'PM' : 'AM';
+                tempHour = hours % 12;
+                tempHour = tempHour ? tempHour : 12;
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                timeObj.timeOne = timeObj.timeOne + ' - ' + tempHour + ':' + minutes + ' ' + ampm;
+
+                let twoTime = restTime.substr(twoSpace + 1);
+                let dashTwo = twoTime.indexOf('-');
+                hours = parseInt(twoTime.substr(0, 2));
+                minutes = parseInt(twoTime.substr(3, 2));
+                ampm = hours >= 12 ? 'PM' : 'AM';
+                tempHour = hours % 12;
+                tempHour = tempHour ? tempHour : 12; // the hour '0' should be '12'
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                timeObj.timeTwo = tempHour + ':' + minutes + ' ' + ampm;
+                hours = parseInt(twoTime.substr(dashTwo + 1, 2));
+                minutes = parseInt(twoTime.substr(dashTwo + 4, 2));
+                ampm = hours >= 12 ? 'PM' : 'AM';
+                tempHour = hours % 12;
+                tempHour = tempHour ? tempHour : 12;
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                timeObj.timeTwo = timeObj.timeTwo + ' - ' + tempHour + ':' + minutes + ' ' + ampm;
+            }
+            businessHours.push(timeObj);
+        });
+        return businessHours;
+    }
+
+    export default {
+        name: 'OrderDetail',
+        components: {
+            'date-picker': myDatepicker,
+            Cleave,
+            PulseLoader
+        },
+        data() {
+            return {
+                number: "number",
+                orderNote: '',
+                gNum: 2,
+                formatedValue: '',
+                cleaveOptions: {
+                    phone: true,
+                    phoneRegionCode: 'CA'
+                },
+                minusUrl: './assets/images/icon_reduce@2x.png',
+                plusUrl: './assets/images/icon_plus@2x.png',
+                windowHeight: windowHeight,
+                bodyWidth: bodyWidth,
+                backImgUrl: './assets/images/black_back@2x.png',
+                timeImgUrl: './assets/images/time@2x.png',
+                testTime: '',
+                businessHours:[],
+                startTime: {
+                    time: ''
+                },
+                endtime: {
+                    time: ''
+                },
+                option: {
+                    type: 'min',
+                    week: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+                    month: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                    format: 'YYYY-MM-DD HH:mm',
+                    placeholder: 'Pick a time',
+                    inputStyle: {
+                        'display': 'inline-block',
+                        'padding': '6px',
+                        'line-height': '22px',
+                        'font-size': '17px',
+                        'border': 'none',
+                        'color': '#CB212D',
+                        'text-align':'right'
+                    },
+                    color: {
+                        header: '#ccc',
+                        headerText: '#333'
+                    },
+                    buttons: {
+                        ok: 'Ok',
+                        cancel: 'Cancel'
+                    },
+                    overlayOpacity: 0.5, // 0.5 as default
+                    dismissible: true // as true as default
+                },
+                preOrderDaysLimit:{
+                    regularHours:[],
+                    min:0,
+                    max:60
+                },
+                timeoption: {
+                    type: 'min',
+                    week: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+                    month: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                    format: 'YYYY-MM-DD HH:mm'
+                },
+                fdId: this.$route.query.fdId,
+                token: this.$route.query.token,
+                config: config,
+                isLoading: false,
+                spinnerColor: "#EF727F",
+                bottomUrl: './assets/images/blogo.png'
+            }
+        },
+        created(){
+
+            let header = {
+                headers: {'Authorization': 'Bearer ' + this.$route.query.token}
+            };
+            let self = this;
+            axios.get(this.config.restApi + "/v1/restaurants/" + this.$route.query.restId + "/common_attributes", header)
+                .then(function (response) {
+                    if (response.data.pre_order_days_max) {
+                        self.preOrderDaysLimit.max = response.data.pre_order_days_max;
+                    } else {
+                        self.preOrderDaysLimit.max = 60;
+                    }
+                    if(response.data.pre_order_days_interval){
+                        self.preOrderDaysLimit.min = response.data.pre_order_days_interval;
+                    } else {
+                        self.preOrderDaysLimit.min = 0;
+                    }
+                    self.preOrderDaysLimit.regularHours = response.data.regular_hours;
+                    self.businessHours = getBusinessHours(response.data.regular_hours);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
+
+        },
+        methods: {
+            getTimeDifference(selectedDate, limitDate){
+                let now = new Date(selectedDate);
+                let endDate = new Date(limitDate);
+                let diff = endDate - now;
+                return Math.floor(diff / 3.6e6);
+            },
+            getMinDifference(selectedDate, limitDate){
+                let now = new Date(selectedDate);
+                let endDate = new Date(limitDate);
+                let diff = endDate - now;
+                return Math.round(((diff % 86400000) % 3600000) / 60000); // mi;
+            },
+            goBack () {
+                let seft = this;
+                let header = {
+                    headers: {'Authorization': 'Bearer ' + this.token}
+                };
+                axios.put(seft.config.orderApi + '/v1/users/' + this.fdId + '/orders/' + this.$route.query.orderId + '/cancel_order', {}, header).then(function (response) {
+                    seft.$router.go(-1);
+                }).catch(function (error) {
+                    alert(error.response.status);
+                    console.log(error);
+                });
+            },
+            addG(){
+                if (this.gNum < 99) {
+                    this.gNum += 1;
+                }
+            },
+            subG(){
+                if (this.gNum > 1) {
+                    this.gNum -= 1;
+                }
+            },
+            goPayment(){
+                let that = this;
+                if (this.orderNote.length > 50) {
+                    alert('You can only have 50 characters in your note.');
+                    return;
+                }
+                if (this.startTime.time === '' || this.formatedValue === '' || this.formatedValue.length < 12) {
+                    alert('Please finish the required(*) fields before proceeding');
+                    that.isLoading = false;
+                    return;
+                }
+                this.updateNotes();
+
+            },
+            updateNotes(){
+                let cellNum;
+                let tempStr = this.startTime.time; //'2017-09-08 19:00';
+//                let tempYear = parseInt(tempStr.substr(0, 4));
+//                let tempMon = parseInt(tempStr.substr(5, 2));
+//                let tempDay = parseInt(tempStr.substr(8, 2));
+                let limitStr = _moment().add(this.preOrderDaysLimit.max,'days').format("YYYY-MM-DD");
+//                let limitYear = parseInt(limitStr.substr(0, 4));
+//                let limitMon = parseInt(limitStr.substr(5, 2));
+//                let limitDay = parseInt(limitStr.substr(8, 2));
+                let priorStr = new Date();
+//                let priorYear = parseInt(priorStr.substr(0, 4));
+//                let priorMon = parseInt(priorStr.substr(5, 2));
+//                let priorDay = parseInt(priorStr.substr(8, 2));
+                let floor = this.getMinDifference(priorStr, tempStr);
+                let ceil = this.getTimeDifference(tempStr, limitStr);
+                if (floor <= 0 || ceil <= 0) {
+                    alert('Your date should be between: ' + priorStr + ' and ' + limitStr);
+                    return;
+                }
+                else this.isLoading = true;
+                let utcTime = this.startTime.time.replace(/\s/g, 'T');
+                let header = {
+                    headers: {'Authorization': 'Bearer ' + this.token}
+                };
+                if (this.formatedValue.length === 12) {
+                    cellNum = '1' + this.formatedValue.replace(/\s/g, '');
+                }
+                else {
+                    cellNum = this.formatedValue.replace(/\s/g, '');
+                }
+                let that = this;
+                axios.put(that.config.orderApi + '/v2/orders/' + this.$route.query.orderId + '/notes', {
+                    "mobile": cellNum,
+                    "user_name": "",
+                    "effective_date": utcTime,
+                    "customer_number": this.gNum,
+                    "remark": this.orderNote,
+                    "is_now": false,
+                    "is_pack": false
+                }, header).then(function (response) {
+                    that.$router.push({
+                        path: '/payment', query: {
+                            subTotal: that.$route.query.subTotal,
+                            gNum: that.gNum,
+                            cNum: that.formatedValue,
+                            note: that.orderNote,
+                            time: that.startTime.time,
+                            restId: that.$route.query.restId,
+                            orderId: that.$route.query.orderId,
+                            fdId: that.fdId,
+                            token: that.token,
+                            facebookId: that.$route.query.facebookId
+                        }
+                    });
+                }).catch(function (error) {
+                    if (error.response.status === 400) {
+                        alert(error.response.data.messages.en);
+                        that.isLoading = false;
+                    }
+                    console.log(JSON.stringify(error));
+                });
+            }
+        }
+    }
+</script>

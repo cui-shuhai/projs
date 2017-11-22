@@ -1,0 +1,10 @@
+{
+  "restApi": "https://restaurant-qa-services.fandine.com",
+  "orderApi": "https://order-qa-services.fandine.com",
+  "paymentApi": "https://payment-qa-services.fandine.com",
+  "basic": "Basic dGVzdGNsaWVudDp0ZXN0dGVzdA==",
+  "ctype": "application/x-www-form-urlencoded",
+  "tokendetail": "https://oauth-qa-services.fandine.com/oauth/tokendetail?accessToken=",
+  "fbOauth": "https://oauth-qa-services.fandine.com/oauth/token",
+  "stripekey": "pk_test_8fuFnoghFJK7FESYwDe10vOg"
+}

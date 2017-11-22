@@ -1,0 +1,474 @@
+<template>
+    <div class="wrapper">
+        <div class="top-nav" :style="{height: 0.117 * bodyWidth + 'px'}">
+            <div class="back-button"
+                 :style="{ backgroundImage: 'url(' + backImgUrl + ')', width: 0.024 * bodyWidth + 'px', height: 0.048 * bodyWidth  + 'px', marginLeft: 0.0453*bodyWidth  + 'px'}"
+                 @click="goBack"></div>
+            <div id="r-order" @click="goBack">Orders</div>
+            <div id="r-title">
+                Receipt
+            </div>
+            <div class="clear" id="trans"
+                 :style="{ backgroundImage: 'url(' + transUrl + ')', width: 0.0453 * bodyWidth + 'px', height: 0.048 * bodyWidth  + 'px'}"
+                 @click="trans">
+            </div>
+        </div>
+        <div class="yellow-bar" :style="{height: 0.17 * bodyWidth + 'px', marginTop: 0.117 * bodyWidth + 'px'}">
+            <div class="yellow-top">
+                Enjoy Your Pre-Order On
+            </div>
+            <div class="yellow-bottom">
+                {{orderDate + ' '}} at {{orderTime}}
+            </div>
+        </div>
+        <div class="re-li" :style="{fontSize: 0.04 * bodyWidth + 'px', height: 0.149 * bodyWidth + 'px'}">
+            <div class="re-name">
+                Guest(s)
+            </div>
+            <div class="name-val">
+                {{gNum}}
+            </div>
+        </div>
+        <div class="re-li" :style="{fontSize: 0.04 * bodyWidth + 'px', height: 0.149 * bodyWidth + 'px'}">
+            <div class="re-name">
+                Contact Number:
+            </div>
+            <div class="name-val">
+                {{cell}}
+            </div>
+        </div>
+        <div class="re-note" :style="{fontSize: 0.04 * bodyWidth + 'px', height: 0.224 * bodyWidth + 'px'}">
+            <div class="re-name" :style="{ marginBottom: '5px' }">
+                Extra Note:
+            </div>
+            <div class="name-val" style="width:100%">
+                {{note}}
+            </div>
+        </div>
+        <div class="huge-banner"
+             :style="{ backgroundImage: 'url(' + hugeUrl + ')', width: '100%', height: 0.48 * bodyWidth  + 'px'}">
+            <div class="re-rest-name" :style="{fontSize: 0.048 * bodyWidth + 'px'}">
+                {{restName}}
+            </div>
+            <div class="re-rest-addr" :style="{fontSize: 0.0293 * bodyWidth + 'px'}">
+                {{restAddr}}
+            </div>
+            <div class="re-rest-onum"
+                 :style="{fontSize: 0.17 * bodyWidth + 'px', marginTop: 0.0667 * bodyWidth + 'px'}">
+                {{orderNum}}
+            </div>
+            <div class="re-rest-addr" :style="{fontSize: 0.0293 * bodyWidth + 'px'}">
+                Show the order ID to restaurant staff
+            </div>
+        </div>
+        <div class="re-li" :style="{fontSize: 0.04 * bodyWidth + 'px', height: 0.149 * bodyWidth + 'px'}">
+            <div class="re-li-container">
+                <div class="re-name">
+                    Date of Order:&nbsp;
+                </div>
+                <div class="name-val">
+                    {{createDate}}
+                </div>
+            </div>
+            <div class="re-li-container">
+                <div class="re-name">
+                    Time:&nbsp;
+                </div>
+                <div class="name-val">
+                    {{createTime}}
+                </div>
+            </div>
+        </div>
+        <div class="re-li" :style="{fontSize: 0.04 * bodyWidth + 'px', height: 0.149 * bodyWidth + 'px'}">
+            <div class="re-li-container">
+                <div class="re-name">
+                    Table ID:&nbsp;
+                </div>
+                <div class="name-val">
+                    {{tableId}}
+                </div>
+            </div>
+            <div class="re-li-container">
+                <div class="re-name">
+                    Order ID:&nbsp;
+                </div>
+                <div class="name-val">
+                    {{orderNum}}
+                </div>
+            </div>
+        </div>
+        <div class="re-items-container">
+            <div class="re-each-item" v-for="eachItem in orderItems" :key="eachItem"
+                 :style="{fontSize: 0.04 * bodyWidth + 'px', height: 0.149 * bodyWidth + 'px'}">
+                <div class="re-each-left" :style="{display: enUs}">
+                    {{eachItem.name}}
+                </div>
+                <div class="re-each-left" :style="{display: zhCh}">
+                    {{eachItem.chin}}
+                </div>
+                <div class="re-each-right">
+                    <div class="re-sub-left">
+                        X{{eachItem.quan}}
+                    </div>
+                    <div class="re-sub-right">
+                        ${{eachItem.price}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="re-li"
+             :style="{fontSize: 0.04 * bodyWidth + 'px', height: 0.149 * bodyWidth + 'px', borderTop: '1px solid #f4f4f4'}">
+            <div class="re-name">
+                Subtotal
+            </div>
+            <div class="name-val">
+                ${{subTotal}}
+            </div>
+        </div>
+        <div class="re-li" :style="{fontSize: 0.04 * bodyWidth + 'px', height: 0.149 * bodyWidth + 'px'}">
+            <div class="re-name">
+                GST
+            </div>
+            <div class="name-val">
+                ${{gst}}
+            </div>
+        </div>
+        <div class="re-li" :style="{fontSize: 0.04 * bodyWidth + 'px', height: 0.149 * bodyWidth + 'px'}">
+            <div class="re-name">
+                Additional Savings
+            </div>
+            <div class="name-val" :style="{color: '#CB212D'}">
+                -${{saving}}
+            </div>
+        </div>
+        <div class="re-li" :style="{fontSize: 0.04 * bodyWidth + 'px', height: 0.32 * bodyWidth + 'px'}" id="tip-li">
+            <div  style="display: flex; flex-direction: row; width: 100%; justify-content: space-between;">
+                <div class="re-name">
+                    Tips
+                </div>
+                <div class="name-val">
+                    ${{tip}}
+                </div>
+            </div>
+            <div class="tip-slider">
+                <vue-slider ref="slider" v-model="tipPerc" v-bind="sliderOpt.default"></vue-slider>
+            </div>
+            <div :style="{color: '#CB212D'}">
+                * You can modify tips after you check-in.
+            </div>
+        </div>
+        <div class="re-li" :style="{fontSize: 0.04 * bodyWidth + 'px', height: 0.149 * bodyWidth + 'px'}">
+            <div class="re-name">
+                Total to Pay
+            </div>
+            <div class="name-val" :style="{color: '#CB212D'}">
+                ${{totalDue}}
+            </div>
+        </div>
+        <div class="re-bottom-img"
+             :style="{ backgroundImage: 'url(' + stUrl + ')', width: 0.9226 * bodyWidth + 'px', height: 0.09067 * bodyWidth  + 'px'}">
+        </div>
+        <div class="stamp"
+             :style="{ backgroundImage: 'url(' + stampUrl + ')', width:0.213 * bodyWidth + 'px', height: 0.213 * bodyWidth  + 'px'}">
+        </div>
+
+    </div>
+</template>
+
+<style scoped>
+    .tip-slider{
+        margin-top: 4%;
+    }
+    #r-title{
+        margin-left: -15%;
+    }
+    #r-order{
+        margin-left: -30%;
+        font-weight: 200;
+    }
+    .stamp {
+        position: absolute;
+        background-repeat: no-repeat;
+        background-size: contain;
+        right: 37%;
+        top: 118%;
+    }
+
+    body {
+        background: #fafafa;
+    }
+    #tip-li{
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-top: 2%;
+    }
+    .re-bottom-img {
+        margin: 20px auto 0 auto;
+        background-repeat: no-repeat;
+        background-size: contain;
+        padding-bottom: 60px;
+
+    }
+
+    .re-each-right {
+        display: flex;
+        flex-direction: row;
+        width: 35%;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .re-each-item {
+        display: flex;
+        width: 91%;
+        margin: 0 4.5%;
+        font-weight: 200;
+        flex-direction: row;
+        color: #444;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .re-items-container {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .re-li-container {
+        display: flex;
+    }
+
+    .re-rest-addr {
+        font-weight: 200;
+    }
+
+    .re-rest-onum {
+        font-weight: 200;
+    }
+
+    .huge-banner {
+        display: flex;
+        flex-direction: column;
+        padding: 4.5% 0 0 4.5%;
+        background-repeat: no-repeat;
+        background-size: contain;
+        color: #444;
+    }
+
+    .re-note {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        width: 91%;
+        margin: 0 4.5%;
+    }
+
+    .name-val {
+        font-weight: 200;
+    }
+
+    .re-li {
+        display: flex;
+        width: 91%;
+        margin: 0 4.5%;
+        border-bottom: 1px solid #f4f4f4;
+        justify-content: space-between;
+        flex-direction: row;
+        color: #444;
+        align-items: center;
+    }
+
+    #trans {
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+    .yellow-bar {
+        background: #fefce3;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .yellow-top {
+        color: #89511E;
+        font-weight: 200;
+    }
+
+    .yellow-bottom {
+        color: #89511E;
+        font-weight: 400;
+    }
+</style>
+
+<script>
+    var windowHeight = window.innerHeight;
+    var bodyWidth = window.innerWidth;
+    import Vue from 'vue';
+    import axios from 'axios';
+    import VueAxios from 'vue-axios'
+    import config from './config.json';
+    import vueSlider from 'vue-slider-component';
+    Vue.use(VueAxios, axios);
+
+    export default {
+        name: 'Receipt',
+        data() {
+            return {
+                tipPerc: '18%',
+                sliderOpt: {
+                    default: {
+                        value: 0,
+                        width: '100%',
+                        height: 6,
+                        direction: 'horizontal',
+                        dotSize: 26,
+                        eventType: 'auto',
+                        min: 0,
+                        max: 25,
+                        interval: 1,
+                        disabled: true,
+                        show: true,
+                        realTime: false,
+                        tooltip: 'always',
+                        clickable: true,
+                        tooltipDir: 'top',
+                        piecewise: false,
+                        piecewiseLabel: false,
+                        lazy: false,
+                        reverse: false,
+                        speed: 0.5,
+                        formatter: null,
+                        bgStyle: null,
+                        data: [],
+                        sliderStyle: {
+                            background: '#E9E8E9'
+                        },
+                        tooltipStyle: null,
+                        processStyle: {
+                            background: '#9B9B9B'
+                        },
+                        piecewiseStyle: null,
+                    },
+                },
+                windowHeight: windowHeight,
+                bodyWidth: bodyWidth,
+                backImgUrl: './assets/images/black_back@2x.png',
+                transUrl: './assets/images/chin.png',
+                hugeUrl: './assets/images/bg_large@2x.png',
+                stUrl: './assets/images/stripe@3x.png',
+                stampUrl: './assets/images/stamp.png',
+                gNum: null,
+                cell: null,
+                note: null,
+                restName: null,
+                restAddr: null,
+                orderNum: null,
+                orderDate: null,
+                orderTime: null,
+                tableId: null,
+                subTotal: null,
+                gst: null,
+                tip: null,
+                totalDue: null,
+                saving: null,
+                createDate: null,
+                createTime: null,
+                orderItems: [],
+                eachItem: null,
+                enUs: 'flex',
+                zhCh: 'none',
+                fdId: this.$route.query.fdId,
+                token: this.$route.query.token,
+                config: config
+            }
+        },
+        created() {
+            for (let i = 0; i < 26; i++) {
+                this.sliderOpt.default.data.push(i + '%');
+            }
+            let header = {
+                headers: {'Authorization': 'Bearer ' + this.token}
+            };
+            let that = this;
+            axios.get(that.config.orderApi + '/v2/orders/' + this.$route.query.orderId + '/simple_bill?locale=zh_CN', header).then(function (response) {
+                console.log(response);
+                that.subTotal = response.data.sub_total_before_first_visit_savings;
+                that.gst = response.data.total_tax;
+                that.tip = response.data.tip;
+                that.tipPerc = response.data.default_tip_rate.toString() + '%';
+                that.totalDue = parseFloat(response.data.total_amount_to_pay_with_bd_and_gd);
+                that.saving = (parseFloat(response.data.blue_dollar_savings) + parseFloat(response.data.blue_dollar_amount_paid)).toFixed(2);
+                that.restName = response.data.restaurant_name;
+                that.restAddr = response.data.restaurant_addresses.address1;
+                if (response.data.note.remark) {
+                    that.note = response.data.note.remark;
+                }
+                that.tableId = response.data.table_no;
+                that.orderNum = response.data.order_no;
+                let effDate = new Date(response.data.note.effective_date);
+                effDate = effDate.toString();
+               // that.orderTime = effDate.substr(16, 5) + ' ' + effDate.substr(34, 5);
+                let hours = parseInt(effDate.substr(16, 2));
+                let minutes = parseInt(effDate.substr(19, 2));
+                let ampm = hours >= 12 ? 'PM' : 'AM';
+                //console.log('ampm: ' + ampm);
+                let tempHour = hours % 12;
+                tempHour = tempHour ? tempHour : 12; // the hour '0' should be '12'
+                minutes = minutes < 10 ? '0'+ minutes : minutes;
+                that.orderTime = tempHour + ':' + minutes + ' ' + ampm;
+                that.orderDate = effDate.substr(4, 11);
+                that.gNum = response.data.note.customer_number;
+                that.cell = response.data.note.mobile;
+                let create = new Date(response.data.update_time);
+                create = create.toString();
+                that.createTime = create.substr(16, 5);
+                that.createDate = create.substr(4, 11);
+                let oItems = response.data.order_items;
+                for (let i = 0; i < oItems.length; i++) {
+                    let oneItem = oItems[i];
+                    let totalPrice = (parseFloat(oneItem.quantity) * parseFloat(oneItem.price.amount));
+                    let itemObj = {
+                        name: oneItem.item_name,
+                        quan: oneItem.quantity,
+                        price: totalPrice,
+                        chin: oneItem.item_name_locale
+                    };
+                    that.orderItems.push(itemObj);
+                    console.log(itemObj);
+                }
+            }).catch(function (error) {
+                alert(error);
+                console.log(error);
+            });
+
+        },
+        methods: {
+            goBack: function () {
+                this.$router.push({
+                    path: '/order', query: {
+                        fdId: this.fdId,
+                        token: this.token
+                    }
+                });
+            },
+            trans(){
+                if (this.enUs === 'flex') {
+                    this.zhCh = 'flex';
+                    this.enUs = 'none';
+                }
+                else {
+                    this.zhCh = 'none';
+                    this.enUs = 'flex';
+                }
+            }
+        },
+        components: {
+            vueSlider
+        }
+    }
+</script>
