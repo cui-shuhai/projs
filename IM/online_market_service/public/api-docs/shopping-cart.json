@@ -1,0 +1,1583 @@
+{
+    "apiVersion": "1.0.0", "swaggerVersion": "1.2", "basePath": "/",
+    "resourcePath": "/shopping_cart",
+    "produces": ["application/json", "application/xml"],
+    "consumes": ["application/json", "application/xml"],
+    "apis": [
+
+        {
+            "path": "/v1/shopping_carts",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "create shopping cart",
+                    "notes": "create shopping cart",
+                    "type": "void",
+                    "nickname": "createShoppingCart",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "body",
+                            "description": "shopping cart create request",
+                            "required": true,
+                            "type": "ShoppingCartCreateSchema",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 201,
+                            "message": "create success",
+                            "responseModel":"ShoppingCartSchema"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/restaurants/{restaurant_id}/shopping_carts",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "get shopping cart list under one restaurant",
+                    "notes": "get shopping cart list",
+                    "type": "void",
+                    "nickname": "getShoppingCartList",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "restaurant_id",
+                            "description": "The restaurant's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "table_id",
+                            "description": "The table's ID",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "seat_name",
+                            "description": "The seat's name",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "status",
+                            "description": "order status",
+                            "required": false,
+                            "type": "string",
+                            "enum":["INPROCESS", "SUBMITTED", "PAID"],
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "current_period",
+                            "description": "return carts within current period",
+                            "required": false,
+                            "type": "boolean",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Get shopping carts successful",
+                            "responseModel": "ShoppingCartSchema"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/restaurants/{restaurant_id}/current_shopping_carts",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "get shopping carts of current pos peroid",
+                    "notes": "get shopping carts of current pos peroid",
+                    "type": "void",
+                    "nickname": "getCurrentShoppingCartList",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "restaurant_id",
+                            "description": "The restaurant's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "date_from",
+                            "description": "date_from",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "date_to",
+                            "description": "date_to",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Get shopping carts successful",
+                            "responseModel": "ShoppingCartSchema"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/restaurants/{restaurant_id}/shopping_carts_by_tables",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "get shopping cart list by table list",
+                    "notes": "get shopping cart list by table list",
+                    "type": "void",
+                    "nickname": "getShoppingCartListByTables",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "restaurant_id",
+                            "description": "The restaurant's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "table_no",
+                            "description": "The table's No.",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": true
+
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Get shopping carts successful",
+                            "responseModel": "ShoppingCartSchema"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/restaurants/{restaurant_id}/past_shopping_carts",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "get past shopping carts",
+                    "notes": "get past shopping carts",
+                    "type": "void",
+                    "nickname": "getPastShoppingCart",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "restaurant_id",
+                            "description": "The restaurant's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "from",
+                            "description": "The starting index of the record to be retrieved. For example, if you specify 10, this means the MongoDB will skip index numbers 0 to 9, returning only the records that start from 10th index. ",
+                            "required": false,
+                            "type": "integer",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "page_size",
+                            "description": "The maximum number of records that should be included in the response. If you leave this blank, the default value is 10",
+                            "required": false,
+                            "type": "integer",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "include_canceled",
+                            "description": "Includes canceled shopping carts",
+                            "required": false,
+                            "type": "boolean",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "date_from",
+                            "description": "A YYYY-MM-DD hh:mm:ss-formatted time that will determine the create time interval of the result",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "date_to",
+                            "description": "A YYYY-MM-DD hh:mm:ss-formatted time that will determine the create time interval of the result",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Get shopping carts successful",
+                            "responseModel": "ShoppingCartSchema"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/shopping_carts/{shopping_cart_id}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "get details of shopping cart",
+                    "notes": "get details of shopping cart",
+                    "type": "void",
+                    "nickname": "getShoppingCartById",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "shopping_cart_id",
+                            "description": "The shopping cart's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Get shopping carts successful",
+                            "responseModel": "ShoppingCartSchema"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/shopping_carts/{shopping_cart_id}/discount",
+            "operations": [
+                {
+                    "method": "PUT",
+                    "summary": "Set Shopping Cart Discount",
+                    "notes": "Set Shopping Cart Discount",
+                    "type": "void",
+                    "nickname": "setShoppingCartDiscount",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "shopping_cart_id",
+                            "description": "The shopping cart's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "body",
+                            "description": "body",
+                            "required": true,
+                            "type": "add_discount",
+                            "paramType": "body"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Get shopping carts successful",
+                            "responseModel": "ShoppingCartSchema"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                },
+                {
+                    "method": "DELETE",
+                    "summary": "Remove Shopping Cart Discount",
+                    "notes": "Remove Shopping Cart Discount",
+                    "type": "void",
+                    "nickname": "RemoveShoppingCartDiscount",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "shopping_cart_id",
+                            "description": "The shopping cart's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "table_id",
+                            "description": "table_id",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "seat_id",
+                            "description": "seat_id",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "order_item_id",
+                            "description": "order_item_id",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Get shopping carts successful",
+                            "responseModel": "ShoppingCartSchema"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+
+        {
+            "path": "/v1/shopping_carts/{shopping_cart_id}/tables/{table_id}/move",
+            "operations": [
+                {
+                    "method": "PUT",
+                    "summary": "Move Shopping Cart Table",
+                    "notes": "Move Shopping Cart Table",
+                    "type": "void",
+                    "nickname": "moveShoppingCartTable",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "shopping_cart_id",
+                            "description": "The shopping cart",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "table_id",
+                            "description": "The table to be moved",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "body",
+                            "description": "The new table",
+                            "required": true,
+                            "type": "table_id",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "successful"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/shopping_carts/{shopping_cart_id}/tables/{table_id}/seats/{seat_id}/order_items/{order_item_id}/move",
+            "operations": [
+                {
+                    "method": "PUT",
+                    "summary": "Move Order Item to Other Seat",
+                    "notes": "Move Order Item to Other Sea",
+                    "type": "void",
+                    "nickname": "moveItemBetweenSeat",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "shopping_cart_id",
+                            "description": "The shopping cart",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "table_id",
+                            "description": "The table to be moved",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "seat_id",
+                            "description": "The seat to be moved",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "order_item_id",
+                            "description": "The order item to be moved",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "body",
+                            "description": "The new seat",
+                            "required": true,
+                            "type": "move_item_to_seat",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "successful"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/shopping_carts/{shopping_cart_id}/merge",
+            "operations": [
+                {
+                    "method": "PUT",
+                    "summary": "Merge Shopping Cart",
+                    "notes": "Merge Shopping Cart",
+                    "type": "void",
+                    "nickname": "mergeShoppingCart",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "shopping_cart_id",
+                            "description": "The target shopping cart",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "body",
+                            "description": "The source shopping cart",
+                            "required": true,
+                            "type": "shopping_cart_id",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "successful",
+                            "responseModel": "shopping_cart_id"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/shopping_carts/{shopping_cart_id}/tables/{table_id}/seats/{seat_id}",
+            "operations": [
+                {
+                    "method": "PUT",
+                    "summary": "V1 Update Shopping Cart Seat",
+                    "notes": "V1 Update Shopping Cart Seat",
+                    "type": "void",
+                    "nickname": "updateShoppingCartSeat",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "shopping_cart_id",
+                            "description": "The shopping cart",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "table_id",
+                            "description": "The source table",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "seat_id",
+                            "description": "The source seat",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "body",
+                            "description": "body",
+                            "required": true,
+                            "type": "update_seat",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "change successful"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/shopping_carts/{shopping_cart_id}/tables/{table_id}/seats/{seat_id}/move",
+            "operations": [
+                {
+                    "method": "PUT",
+                    "summary": "V1 Move Shopping Cart Seat",
+                    "notes": "V1 Move Shopping Cart Seat",
+                    "type": "void",
+                    "nickname": "moveShoppingCartSeat",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "shopping_cart_id",
+                            "description": "The shopping cart",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "table_id",
+                            "description": "The source table",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "seat_id",
+                            "description": "The source seat",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "body",
+                            "description": "The target table",
+                            "required": true,
+                            "type": "table_id",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "successful"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/shopping_carts/{shopping_cart_id}/tables",
+            "operations": [
+                {
+                    "method": "PUT",
+                    "summary": "Add Table To Shopping Cart",
+                    "notes": "Add Table To Shopping Cart",
+                    "type": "void",
+                    "nickname": "addShoppingCartTable",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "shopping_cart_id",
+                            "description": "The shopping cart's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "body",
+                            "description": "body",
+                            "required": true,
+                            "type": "table_id",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "successful"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/shopping_carts/{shopping_cart_id}/tables/{table_id}",
+            "operations": [
+                {
+                    "method": "DELETE",
+                    "summary": "Remove Table from Shopping Cart",
+                    "notes": "Remove Table from Shopping Cart",
+                    "type": "void",
+                    "nickname": "removeShoppingCartTable",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "shopping_cart_id",
+                            "description": "The shopping cart's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "table_id",
+                            "description": "The table to be deleted",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "successful"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/shopping_carts/{shopping_cart_id}/order_type",
+            "operations": [
+                {
+                    "method": "PUT",
+                    "summary": "Change Shopping Cart Order Type",
+                    "notes": "Change Shopping Cart Order Type",
+                    "type": "void",
+                    "nickname": "changeOrderType",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "shopping_cart_id",
+                            "description": "The shopping cart's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "body",
+                            "description": "body",
+                            "required": true,
+                            "type": "order_type",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "successful"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/shopping_carts/{shopping_cart_id}/employee",
+            "operations": [
+                {
+                    "method": "PUT",
+                    "summary": "Change Shopping Cart Employee",
+                    "notes": "Change Shopping Cart Employee",
+                    "type": "void",
+                    "nickname": "changeEmployeeId",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "shopping_cart_id",
+                            "description": "The shopping cart's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "body",
+                            "description": "body",
+                            "required": true,
+                            "type": "employee_id",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "successful"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/shopping_carts/{shopping_cart_id}/tables/{table_id}/seats",
+            "operations": [
+                {
+                    "method": "PUT",
+                    "summary": "Add Seat To Table In Shopping Cart",
+                    "notes": "Add Seat To Table In Shopping Cart",
+                    "type": "void",
+                    "nickname": "addShoppingCartSeat",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "shopping_cart_id",
+                            "description": "The shopping cart's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "table_id",
+                            "description": "The shopping cart table's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "body",
+                            "description": "body",
+                            "required": true,
+                            "type": "AddSeatSchema",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "successful"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/shopping_carts/{shopping_cart_id}/tables/{table_id}/seats/{seat_id}",
+            "operations": [
+                {
+                    "method": "DELETE",
+                    "summary": "Remove Seat from Shopping Cart",
+                    "notes": "Remove Seat from Shopping Cart",
+                    "type": "void",
+                    "nickname": "removeShoppingCartSeat",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "shopping_cart_id",
+                            "description": "The shopping cart's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "table_id",
+                            "description": "The shopping cart table's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "seat_id",
+                            "description": "The seat to be deleted",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "successful"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/shopping_carts/{shopping_cart_id}/tables/{table_id}/seats/{seat_id}/shared_seats",
+            "operations": [
+                {
+                    "method": "PUT",
+                    "summary": "Update Shared Seats of Shopping Cart",
+                    "notes": "Update List of Seats To Be Shared for a Given Shared Seat",
+                    "type": "void",
+                    "nickname": "updateSharedSeats",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "shopping_cart_id",
+                            "description": "The shopping cart's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "table_id",
+                            "description": "The shopping cart table's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "seat_id",
+                            "description": "The _id of the shared seat (shared_seat property must be true)",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "body",
+                            "description": "_ids of the seats to be shared",
+                            "required": true,
+                            "type": "add_shared_seats",
+                            "paramType": "body"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "successful"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/shopping_carts/{shopping_cart_id}/tables/{table_id}/seats/{seat_id}/items",
+            "operations": [
+                {
+                    "method": "PUT",
+                    "summary": "Add Order Items To Seat For Shopping Cart",
+                    "notes": "Add Order Items To Seat For Shopping Cart",
+                    "type": "void",
+                    "nickname": "AddOrderItemsToSeat",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "shopping_cart_id",
+                            "description": "The shopping cart's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "table_id",
+                            "description": "The shopping cart table's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "seat_id",
+                            "description": "The shopping cart table seat's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "body",
+                            "description": "body",
+                            "required": true,
+                            "type": "ShoppingCartAddItemSchema",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "successful",
+                            "responseModel":"ShoppingCartSchema"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+
+        },
+        {
+            "path": "/v1/shopping_carts/{shopping_cart_id}/tables/{table_id}/seats/{seat_id}/items/{order_item_id}",
+            "operations": [
+                {
+                    "method": "DELETE",
+                    "summary": "Remove Items from Shopping Cart",
+                    "notes": "Remove Items from Shopping Cart",
+                    "type": "void",
+                    "nickname": "DelOrderItemsToSeat",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "shopping_cart_id",
+                            "description": "The shopping cart's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "table_id",
+                            "description": "The shopping cart table's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "seat_id",
+                            "description": "The shopping cart table seat's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "order_item_id",
+                            "description": "The unique id of the seat order item",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "quantity",
+                            "description": "The quantity of the item to be deleted. leave empty if completely delete the item",
+                            "required": false,
+                            "type": "number",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "successful",
+                            "responseModel":"ShoppingCartSchema"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+
+        },
+        {
+            "path": "/v1/shopping_carts/{shopping_cart_id}/tables/{table_id}/seats/{seat_id}/items/{order_item_id}/notes",
+            "operations": [
+                {
+                    "method": "PUT",
+                    "summary": "Update POS Order Item notes",
+                    "notes": "Update POS Order Item notes",
+                    "type": "void",
+                    "nickname": "UpdateItemNotes",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "shopping_cart_id",
+                            "description": "The shopping cart's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "table_id",
+                            "description": "The shopping cart table's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "seat_id",
+                            "description": "The shopping cart table seat's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "order_item_id",
+                            "description": "The unique id of the seat order item",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "body",
+                            "description": "body",
+                            "required": true,
+                            "type": "order_item_notes",
+                            "paramType": "body"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "successful"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+
+        },
+        {
+            "path": "/v1/shopping_carts/{shopping_cart_id}/reopen",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Reopen shopping cart",
+                    "notes": "Reopen shopping cart",
+                    "type": "void",
+                    "nickname": "ReopenShoppingCart",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "shopping_cart_id",
+                            "description": "The shopping cart's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "successful"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+
+        },
+        {
+
+            "path": "/v1/shopping_carts/{shopping_cart_id}/update",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Update shopping cart",
+                    "notes": "Update shopping cart",
+                    "type": "void",
+                    "nickname": "UpdateShoppingCart",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "shopping_cart_id",
+                            "description": "The shopping cart's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "body",
+                            "description": "body",
+                            "required": true,
+                            "type": "shopping cart",
+                            "paramType": "body"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "successful"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+
+        },
+
+        {
+            "path": "/v1/users/{user_id}/shopping_carts/{shopping_cart_id}/close",
+            "operations": [
+                {
+                    "method": "PUT",
+                    "summary": "Close Shopping Cart",
+                    "notes": "Close Shopping Cart",
+                    "type": "void",
+                    "nickname": "closeShoppingCart",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "shopping_cart_id",
+                            "description": "The shopping cart's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "user_id",
+                            "description": "The user who closes the shopping cart",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Close successful"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/users/{user_id}/shopping_carts/{shopping_cart_id}/cancel",
+            "operations": [
+                {
+                    "method": "PUT",
+                    "summary": "Cancel Shopping Cart",
+                    "notes": "Cancel Shopping Cart",
+                    "type": "void",
+                    "nickname": "cancelShoppingCart",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "shopping_cart_id",
+                            "description": "The shopping cart's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "user_id",
+                            "description": "The user who cancels the shopping cart",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "body",
+                            "description": "body",
+                            "required": true,
+                            "type": "reason",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Close successful"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+
+    "models": {
+        "shopping_cart_id": {
+            "id": "shopping_cart_id",
+            "properties": {
+                "shopping_cart_id": {
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
+        "update_seat": {
+            "id": "update_seat",
+            "properties": {
+                "seat_name": {
+                    "type": "string",
+                    "required": false
+                },
+                "shared_seat": {
+                    "type": "boolean",
+                    "required": false
+                }
+            }
+        },
+        "table_id": {
+            "id": "table_id",
+            "properties": {
+                "table_id": {
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
+        "reason":{
+            "id": "reason",
+            "properties": {
+                "reason": {
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
+        "order_type":{
+            "id": "order_type",
+            "properties": {
+                "order_type": {
+                    "type": "string",
+                    "enum":["DINE_IN", "TO_GO", "DELIVERY", "DRIVE_THROUGH"],
+                    "required": true
+                }
+            }
+        },
+        "employee_id":{
+            "id": "employee_id",
+            "properties": {
+                "employee_id": {
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
+        "add_discount":{
+            "id": "add_discount",
+            "properties":{
+                "discount_id":{
+                  "type":"string",
+                  "required":true
+                },
+                "discount_value":{
+                    "type":"string",
+                    "required":false
+                },
+                "table_id":{
+                  "type":"string",
+                  "required":false
+                },
+                "seat_id":{
+                  "type":"string",
+                  "required":false
+                },
+                "order_item_id":{
+                  "type":"string",
+                  "required":false
+                },
+                "reason":{
+                    "type":"string",
+                    "required":false
+                }
+            }
+        },
+        "add_shared_seats":{
+            "id": "add_shared_seats",
+            "properties":{
+                "seats":{
+                    "type":"array",
+                    "required":true
+                }
+            }
+        },
+        "order_item_notes":{
+            "id": "order_item_notes",
+            "properties": {
+                "notes": {
+                    "type": "string"
+                }
+            }
+        },
+        "move_item_to_seat":{
+            "id": "move_item_to_seat",
+                "properties": {
+                    "seat_id": {
+                        "type": "string",
+                        "required":true
+                    }
+                }
+        },
+        "ErrorMessage": {
+            "id": "ErrorMessage",
+            "properties": {
+                "errorCode": {
+                    "type": "string"
+                },
+                "fieldName": {
+                    "type": "string"
+                },
+                "fieldValue": {
+                    "type": "string"
+                },
+                "messages": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

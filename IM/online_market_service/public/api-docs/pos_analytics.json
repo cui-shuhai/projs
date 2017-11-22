@@ -1,0 +1,398 @@
+{
+    "apiVersion": "1.0.0", "swaggerVersion": "1.2", "basePath": "/",
+    "resourcePath": "/shopping_cart",
+    "produces": ["application/json", "application/xml"],
+    "consumes": ["application/json", "application/xml"],
+    "apis": [
+        {
+            "path": "/v1/restaurants/{restaurant_id}/print_pos_daily_report",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "print daily sales report of current period",
+                    "notes": "print daily sales report of current period",
+                    "type": "void",
+                    "nickname": "prindDailyReport",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "restaurant_id",
+                            "description": "The restaurant's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "close_period",
+                            "description": "true if the current period should be closed once the report gets printed out",
+                            "required": false,
+                            "type": "boolean",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "successful"
+                        },
+                        {
+                            "code": 401,
+                            "message": "INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/restaurants/{restaurant_id}/hourly_sales_report",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": " Get POS Hourly Sales Report",
+                    "notes": " Get POS Hourly Sales Report",
+                    "type": "void",
+                    "nickname": "getPOSHourlySalesReport",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "restaurant_id",
+                            "description": "The restaurant's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "start_time",
+                            "description": "start time",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "end_time",
+                            "description": "end time",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "successful",
+                            "responseModel": "HourlySalesReport"
+                        },
+                        {
+                            "code": 401,
+                            "message": "INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/restaurants/{restaurant_id}/item_sales_report",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Get POS Items Sales Report",
+                    "notes": "Get POS Items Sales Report",
+                    "type": "void",
+                    "nickname": "getPOSItemSalesReport",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "restaurant_id",
+                            "description": "The restaurant's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "start_time",
+                            "description": "start time",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "end_time",
+                            "description": "end time",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "successful"
+                        },
+                        {
+                            "code": 401,
+                            "message": "INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/restaurants/{restaurant_id}/cashier_close_report",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Get POS Cashier Close Report",
+                    "notes": "Get POS Cashier Close Report",
+                    "type": "void",
+                    "nickname": "getPOSCashierCloseReport",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "restaurant_id",
+                            "description": "The restaurant's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "start_time",
+                            "description": "start time",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "end_time",
+                            "description": "end time",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "successful"
+                        },
+                        {
+                            "code": 401,
+                            "message": "INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/restaurants/{restaurant_id}/sales_summary_report",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Get POS Sales Summary Report",
+                    "notes": "Get POS Sales Summary Report",
+                    "type": "void",
+                    "nickname": "getPOSSalesSummaryReport",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "restaurant_id",
+                            "description": "The restaurant's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "start_time",
+                            "description": "start time",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "end_time",
+                            "description": "end time",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "successful"
+                        },
+                        {
+                            "code": 401,
+                            "message": "INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/restaurants/{restaurant_id}/employee_report",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Get POS Employee Report",
+                    "notes": "Get POS Employee Report",
+                    "type": "void",
+                    "nickname": "getPOSEmployeeReport",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "restaurant_id",
+                            "description": "The restaurant's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "passcode",
+                            "description": "passcode of the employee",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "successful"
+                        },
+                        {
+                            "code": 401,
+                            "message": "INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/restaurants/{restaurant_id}/passcodes/{passcode}/print_employee_report",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Print POS Employee Report",
+                    "notes": "Print POS Employee Report",
+                    "type": "void",
+                    "nickname": "getPOSEmployeeReport",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "restaurant_id",
+                            "description": "The restaurant's ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "passcode",
+                            "description": "passcode of the employee",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "successful"
+                        },
+                        {
+                            "code": 401,
+                            "message": "INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+
+    "models": {
+        "ErrorMessage": {
+            "id": "ErrorMessage",
+            "properties": {
+                "errorCode": {
+                    "type": "string"
+                },
+                "fieldName": {
+                    "type": "string"
+                },
+                "fieldValue": {
+                    "type": "string"
+                },
+                "messages": {
+                    "type": "string"
+                }
+            }
+        },
+        "HourlySalesReport": {
+            "id": "HourlySalesReport",
+            "properties": {
+                "time": {
+                    "type": "string"
+                },
+                "liquor_total": {
+                    "type": "string"
+                },
+                "liquor_quantity": {
+                    "type": "string"
+                },
+                "food_total": {
+                    "type": "string"
+                },
+                "food_quantity": {
+                    "type": "string"
+                },
+                "total": {
+                    "type": "string"
+                },
+                "quantity": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

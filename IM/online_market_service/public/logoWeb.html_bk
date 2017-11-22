@@ -1,0 +1,8 @@
+<html>
+<head></head>
+
+<body>
+xxxxxxx
+ <input id="upload-input" type="file" name="uploads[]" multiple="multiple"></br>
+</body>
+</html>

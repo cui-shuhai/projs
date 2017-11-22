@@ -1,0 +1,545 @@
+{
+    "apiVersion": "1.0.0",
+    "swaggerVersion": "1.2",
+    "basePath": "/",
+    "resourcePath": "/pos_payment",
+    "produces": [
+        "application/json",
+        "application/xml"
+    ],
+    "consumes": [
+        "application/json",
+        "application/xml"
+    ],
+    "apis": [
+        {
+            "path": "/v1/pos_payments",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Create POS Payment",
+                    "notes": "Create POS Payment",
+                    "type": "void",
+                    "nickname": "createPosPayment",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "body",
+                            "description": "request body",
+                            "required": true,
+                            "type": "PosPaymentCreateSchema",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 201,
+                            "message": "successfully created"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/pos_payments/{payment_id}/continue_pay",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Continue add POS Payment",
+                    "notes": "Continue add POS Payment",
+                    "type": "void",
+                    "nickname": "continuePay",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "payment_id",
+                            "description": "payment id",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "body",
+                            "description": "request body",
+                            "required": true,
+                            "type": "ContinuePaySchema",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 201,
+                            "message": "successfully created"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/shopping_cart/{shopping_cart_id}/bill",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Get POS Bill",
+                    "notes": "Get POS Bill",
+                    "type": "void",
+                    "nickname": "posBill",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "shopping_cart_id",
+                            "description": "shopping cart id",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "split_type",
+                            "description": "bill split type",
+                            "required": false,
+                            "type": "string",
+                            "enum":["ALL_IN_ONE","BY_SEAT","EVENLY"],
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "num_person",
+                            "description": "number of person to split the bill. mandatory if split evenly",
+                            "required": false,
+                            "type": "number",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 201,
+                            "message": "successfully created",
+                            "responseModel":"PosBillSchema"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/orders/{order_id}/print_receipt",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Print Fandine App's Dining Order Bill",
+                    "notes": "Print Fandine App's Dining Order Bill",
+                    "type": "void",
+                    "nickname": "printDiningOrderBill",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "order_id",
+                            "description": "dining order id",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 201,
+                            "message": "successfully printed"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/orders/{order_id}/print_order_slip",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Print Fandine App's Dining Order Kitchen/Pass Slips",
+                    "notes": "Print Fandine App's Dining Order Kitchen/Pass Slips",
+                    "type": "void",
+                    "nickname": "printDiningOrderSlip",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "order_id",
+                            "description": "dining order id",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 201,
+                            "message": "successfully printed"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/pos_payments/print_bill",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Print POS Bill",
+                    "notes": "Print POS Bill",
+                    "type": "void",
+                    "nickname": "createPosBill",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "include_customer_copy",
+                            "description": "print customer copy",
+                            "required": false,
+                            "type": "boolean",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "include_merchant_copy",
+                            "description": "print merchant copy",
+                            "required": false,
+                            "type": "boolean",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "body",
+                            "description": "request body",
+                            "required": true,
+                            "type": "PosBillSchema",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 201,
+                            "message": "successfully printed"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/restaurants/{restaurant_id}/open_cash_drawer",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Open POS Cash Drawer",
+                    "notes": "Open POS Cash Drawer",
+                    "type": "void",
+                    "nickname": "openCashDrawer",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "restaurant_id",
+                            "description": "restaurant id",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 201,
+                            "message": "successfully"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/shopping_carts/{shopping_cart_id}/pos_payments",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Get All Payments",
+                    "notes": "Get All Payments",
+                    "type": "void",
+                    "nickname": "getPaymentsByCart",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "shopping_cart_id",
+                            "description": "shopping cart id",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 201,
+                            "message": "successfully"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/pos_payments/{payment_id}",
+            "operations": [
+                {
+                    "method": "PUT",
+                    "summary": "Update Payment",
+                    "notes": "Update Payment",
+                    "type": "void",
+                    "nickname": "updatePayment",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "payment_id",
+                            "description": "payment id",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "body",
+                            "description": "request body",
+                            "required": true,
+                            "type": "PaymentUpdateSchema",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 201,
+                            "message": "successfully"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+
+        },
+        {
+            "path": "/v1/pos_payments/{shopping_cart_id}/update_payment",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Update all payment of shopping cart",
+                    "notes": "Update payments",
+                    "type": "void",
+                    "nickname": "updatePayments",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "body",
+                            "description": "request body",
+                            "required": true,
+                            "type":"array of payments",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 201,
+                            "message": "successfully created"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        }
+
+    ],
+    "models": {
+        "discount_id": {
+            "id": "discount_id",
+            "properties": {
+                "discount_id": {
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
+        "PosBillSchema" : {
+            "id": "/PosBillSchema",
+            "type": "object",
+            "properties": {
+                "order_id":         {"type": "string", "required": true},
+                "payment_no":       {"type": "string", "required": true},
+                "restaurant_id":    {"type": "string","required": true},
+                "applicable_taxes": {"type": "array", "items":{"$ref":"ApplicableTaxesSchema"}},
+                "taxes":            {"type": "array", "items":{"$ref":"TaxesSchema"}},
+                "order_detail":     {"$ref": "PosBillOrderDetailSchema"},
+                "subtotal":              {"type": "number", "required": true},
+
+                "alcohol_total":              {"type": "number", "required": true},
+                "discount_total":              {"type": "number", "required": true},
+
+                "total_taxes":              {"type": "number", "required": true},
+
+                "tip":              {"type": "number", "required": false},
+                "total":              {"type": "number", "required": true},
+
+                "notes":            {"type": "string", "required": false},
+                "payment_method":   {"type": "string", "required": false}
+            }
+        },
+
+        "PosBillOrderDetailSchema":{
+            "id": "/PosBillOrderDetailSchema",
+            "type": "object",
+            "properties": {
+                "discount":{"$ref":"PaymentDiscountSchema"},
+                "order_no":{"type":"number"},
+                "tables":           {"type": "array",  "items":{"$ref":"PosBillTablesSchema"}}
+            }
+        },
+        "PosBillTablesSchema":{
+            "id": "/PosBillTablesSchema",
+            "type": "object",
+            "properties": {
+                "table_id":         {"type": "string", "required": true},
+                "table_no":         {"type": "string", "required": true},
+                "seats":            {"type": "array",  "items":{"$ref":"PosBillSeatsSchema"}}
+            }
+        },
+
+        "PosBillSeatsSchema":{
+            "id": "/PosBillSeatsSchema",
+            "type": "object",
+            "properties": {
+                "seat_id":          {"type": "string", "required": true},
+                "seat_no":          {"type": "string", "required": true},
+                "discount":{"$ref":"PaymentDiscountSchema"},
+                "order_items":      {"type": "array",  "items":{"$ref":"PosBillItemsSchema"}}
+            }
+        },
+
+        "PosBillItemsSchema":{
+            "id": "/PosBillItemsSchema",
+            "type": "object",
+            "properties": {
+                "order_item_id":    {"type": "string", "required": true},
+                "item_id":    {"type": "string", "required": true},
+                "category":    {"type": "string", "required": true},
+                "discount":{"$ref":"PaymentDiscountSchema"},
+                "price":         {"type": "number", "required": true},
+                "quantity":         {"type": "number", "required": true},
+                "subtotl":         {"type": "number", "required": true}
+
+            }
+        },
+
+        "ApplicableTaxesSchema":{
+            "id": "/ApplicableTaxesSchema",
+            "type": "object",
+            "properties": {
+                "name":    {"type": "string", "required": true},
+                "rate":         {"type": "number", "required": true}
+            }
+        },
+        "TaxesSchema":{
+            "id": "/TaxesSchema",
+            "type": "object",
+            "properties": {
+                "name":     {"type": "string", "required": true},
+                "amount":         {"type": "number", "required": true}
+            }
+        },
+        "PaymentDiscountSchema":{
+            "id": "/PaymentDiscountSchema",
+            "type": "object",
+            "properties": {
+                "discount_id":     {"type": "string", "required": true},
+                "discount_type":         {"type": "string", "required": true},
+                "discount_value":         {"type": "string", "required": true}
+
+            }
+        },
+        "PaymentUpdateSchema":{
+            "id": "/PaymentUpdateSchema",
+            "type": "object",
+            "properties": {
+                "payment_method":        {"type": "string", "required": true, "enum":["VISA","MASTERCARD","CASH","AMEX","VIP_CARD","DEBIT","UNION"]},
+                "paid_amount":         {"type": "number", "required": true},
+                "total":         {"type": "number", "required": true}
+            }
+        },
+        "ContinuePaySchema":{
+            "id": "/ContinuePaySchema",
+            "type": "object",
+            "properties": {
+                "payment_method":        {"type": "string", "required": true, "enum":["VISA","MASTERCARD","CASH","AMEX","VIP_CARD","DEBIT","UNION"]},
+                "tip":                 {"type": "number", "required": true},
+                "paid_amount":         {"type": "number", "required": true}
+            }
+        },
+        "ErrorResponse": {
+            "id": "ErrorResponse",
+            "properties": {
+                "errorCode": {
+                    "type": "string"
+                },
+                "errorField": {
+                    "type": "string"
+                },
+                "fieldValue": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

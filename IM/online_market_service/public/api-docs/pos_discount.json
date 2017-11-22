@@ -1,0 +1,214 @@
+{
+    "apiVersion": "1.0.0",
+    "swaggerVersion": "1.2",
+    "basePath": "/",
+    "resourcePath": "/pos_discount",
+    "produces": [
+        "application/json",
+        "application/xml"
+    ],
+    "consumes": [
+        "application/json",
+        "application/xml"
+    ],
+    "apis": [
+        {
+            "path": "/v1/pos_discounts",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Create POS Discount",
+                    "notes": "Create POS Discount",
+                    "type": "void",
+                    "nickname": "createPosDiscount",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "body",
+                            "description": "request body",
+                            "required": true,
+                            "type": "PosDiscountSchema",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 201,
+                            "message": "successfully created"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                },
+                {
+                    "method": "GET",
+                    "summary": "Get POS Discounts",
+                    "notes": "Get POS Discounts",
+                    "type": "void",
+                    "nickname": "getPosDiscountList",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "restaurant_id",
+                            "description": "restaurant_id",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "discount_level",
+                            "description": "discount_level",
+                            "required": false,
+                            "type": "string",
+                            "enum": ["ITEM","ORDER","SEAT"],
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "discount_item",
+                            "description": "discount_item",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 201,
+                            "message": "successful"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/pos_discounts/{discount_id}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Get POS Discount By Id",
+                    "notes": "Get POS Discount By Id",
+                    "type": "void",
+                    "nickname": "getPosDiscountById",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "discount_id",
+                            "description": "discount_id",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 201
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                },
+                {
+                    "method": "PUT",
+                    "summary": "Update POS Discount By Id",
+                    "notes": "Update POS Discount By Id",
+                    "type": "void",
+                    "nickname": "updatePosDiscountById",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "discount_id",
+                            "description": "discount_id",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "body",
+                            "description": "request body",
+                            "required": true,
+                            "type": "PosDiscountUpdateSchema",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 204,
+                            "message":"Remove Successfully"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                },
+                {
+                    "method": "DELETE",
+                    "summary": "Remove POS Discount By Id",
+                    "notes": "Remove POS Discount By Id",
+                    "type": "void",
+                    "nickname": "delPosDiscountById",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "discount_id",
+                            "description": "discount_id",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 204,
+                            "message":"Remove Successfully"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models": {
+        "discount_id": {
+            "id": "discount_id",
+            "properties": {
+                "discount_id": {
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
+        "ErrorResponse": {
+            "id": "ErrorResponse",
+            "properties": {
+                "errorCode": {
+                    "type": "string"
+                },
+                "errorField": {
+                    "type": "string"
+                },
+                "fieldValue": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

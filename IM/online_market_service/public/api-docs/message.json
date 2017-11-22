@@ -1,0 +1,526 @@
+{
+    "apiVersion": "1.0.0", "swaggerVersion": "1.2", "basePath": "/",
+    "resourcePath": "/message",
+    "produces": ["application/json", "application/xml"],
+    "consumes": ["application/json", "application/xml"],
+    "apis": [
+
+        {
+            "path": "/v1/messages",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "create one system message for notification",
+                    "notes": "create one system message for notification",
+                    "type": "void",
+                    "nickname": "createMessage",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "body",
+                            "description": "order create request",
+                            "required": true,
+                            "type": "MessageSaveSchema",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 201,
+                            "message": "create message success.",
+                            "responseModel": "messageId"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                },
+                {
+                    "method": "GET",
+                    "summary": "Fetch system messages",
+                    "notes": "get system messages",
+                    "type": "void",
+                    "nickname": "getMessages",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "user_id",
+                            "description": "user id",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "isIncludeAll",
+                            "description": "include all or not, default false",
+                            "required": false,
+                            "type": "boolean",
+                            "paramType": "query",
+                            "enum":[true,false],
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "from",
+                            "description": "the from page, default is 1",
+                            "required": false,
+                            "type": "integer",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "page_size",
+                            "description": "the page size, default is 50",
+                            "required": false,
+                            "type": "integer",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "fetch messages success.",
+                            "responseModel": "MessageSchema"
+                        },
+                        {
+                            "code": 400,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v2/messages",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Fetch system messages",
+                    "notes": "get system messages",
+                    "type": "void",
+                    "nickname": "getMessagesV2",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "user_id",
+                            "description": "user id",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "isIncludeAll",
+                            "description": "include all or not, default false",
+                            "required": false,
+                            "type": "boolean",
+                            "paramType": "query",
+                            "enum":[true,false],
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "from",
+                            "description": "the from page, default is 1",
+                            "required": false,
+                            "type": "integer",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "page_size",
+                            "description": "the page size, default is 50",
+                            "required": false,
+                            "type": "integer",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "fetch messages success.",
+                            "responseModel": "MessageSchema"
+                        },
+                        {
+                            "code": 400,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/users/{user_id}/has_new_messages",
+            "operations": [
+
+                {
+                    "method": "GET",
+                    "summary": "check whether the user has new messages",
+                    "notes": "check whether the user has new messages",
+                    "type": "void",
+                    "nickname": "checkNewMessages",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "user_id",
+                            "description": "user id",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "date_from",
+                            "description": "Get messages by dateTime range(date_time_from format:2015-05-03 23:00:00)",
+                            "required": false,
+                            "type": "integer",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "fetch messages success.",
+                            "responseModel": "HasMessageSchema"
+                        },
+                        {
+                            "code": 400,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/v1/users/{user_id}/messages_marked",
+            "operations": [
+                {
+                    "method": "PUT",
+                    "summary": "mark messages read",
+                    "notes": "mark messages read",
+                    "type": "void",
+                    "nickname": "markMessageRead",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "user_id",
+                            "description": "user_id",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 204,
+                            "message": "marked message read."
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+
+        {
+            "path": "/v1/promotions",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "create one promotion",
+                    "notes": "create one promotion",
+                    "type": "void",
+                    "nickname": "createPromotion",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "body",
+                            "description": "promotion create request",
+                            "required": true,
+                            "type": "PromotionSaveSchema",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 201,
+                            "message": "create promotion success.",
+                            "responseModel": "promotionId"
+                        },
+                        {
+                            "code": 401,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                },
+                {
+                    "method": "GET",
+                    "summary": "Fetch promotions",
+                    "notes": "get promotions",
+                    "type": "void",
+                    "nickname": "getPromotions",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "category",
+                            "description": "promotion category",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "enum": ["ORDER", "COMMENT"],
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "isIncludeAll",
+                            "description": "include all or not, default false",
+                            "required": false,
+                            "type": "boolean",
+                            "paramType": "query",
+                            "enum":[true,false],
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "from",
+                            "description": "the from page, default is 1",
+                            "required": false,
+                            "type": "integer",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "page_size",
+                            "description": "the page size, default is 50",
+                            "required": false,
+                            "type": "integer",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "fetch promotions success.",
+                            "responseModel": "PromotionSchema"
+                        },
+                        {
+                            "code": 400,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+
+        {
+            "path": "/v1/users/{user_id}/promotion_result",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "get promotion result",
+                    "notes": "get promotion result",
+                    "type": "void",
+                    "nickname": "getPromotionResult",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "user_id",
+                            "description": "user_id",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "order_id",
+                            "description": "order_id",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "get promotion result success.",
+                            "responseModel": "PromotionResultSchema"
+                        },
+                        {
+                            "code": 400,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        },
+
+        {
+            "path": "/v1/promotions/{promotion_id}/winners",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "get promotion winners",
+                    "notes": "get promotion winners",
+                    "type": "void",
+                    "nickname": "getPromotionWinners",
+                    "authorizations": {},
+                    "parameters": [
+                        {
+                            "name": "promotion_id",
+                            "description": "promotion_id",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "city",
+                            "description": "city: 上海",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "start_date",
+                            "description": "start_date: 2016-07-10",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "end_date",
+                            "description": "end_date: 2016-07-11",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "get promotion winner success.",
+                            "responseModel": "PromotionWinnerSchema"
+                        },
+                        {
+                            "code": 400,
+                            "message":"INVALID_PARAMETER.<p><p>{\"errorCode\":\"DATA_NOT_PRESENT\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"DATA_INVALID\", \"errorField\":\"xxxxxxx\", \"fieldValue\":\"xxxxxxx\"}<p>{\"errorCode\":\"REQUEST_MALFORMATED\"}",
+                            "responseModel": "ErrorResponse"
+                        },
+                        {
+                            "code": 500,
+                            "message": "SERVER_ERROR<p>{\"errorCode\":\"SERVER_ERROR\", \"errorField\":\"keyword\", \"fieldValue\":\"xxxxxxx\"}",
+                            "responseModel": "ErrorResponse"
+                        }
+                    ]
+                }
+            ]
+        }
+
+    ],
+
+    "models": {
+        "messageId": {
+            "id": "messageId",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
+        "HasMessageSchema": {
+            "id": "HasMessageSchema",
+            "properties": {
+                "has_new_messages": {
+                    "type": "boolean",
+                    "required": true
+                }
+            }
+        },
+        "promotionId": {
+            "id": "promotionId",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
+        "ErrorMessage": {
+            "id": "ErrorMessage",
+            "properties": {
+                "errorCode": {
+                    "type": "string"
+                },
+                "fieldName": {
+                    "type": "string"
+                },
+                "fieldValue": {
+                    "type": "string"
+                },
+                "messages": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

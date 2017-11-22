@@ -1,0 +1,77 @@
+{
+    "appenders": [
+        {
+            "type": "console",
+            "layout": {
+                "type": "pattern",
+                "pattern": "%[[%d%d{O}] Severity=\"%p\"%] %m"
+            }
+        },
+        {
+            "type": "file",
+            "absolute": true,
+            "filename": "../../log/order/app.log",
+            "maxLogSize": 10485760,
+            "backups": 10,
+            "category": "app",
+            "layout": {
+                "type": "pattern",
+                "pattern": "[%d%d{O}] Severity=\"%p\" %m"
+            }
+        },
+        {
+            "type": "file",
+            "absolute": true,
+            "filename": "../../log/order/metrics.log",
+            "maxLogSize": 10485760,
+            "backups": 10,
+            "category": "metrics",
+            "layout": {
+                "type": "pattern",
+                "pattern": "[%d%d{O}] Severity=\"%p\" %m"
+            }
+        },
+        {
+            "type": "file",
+            "absolute": true,
+            "filename": "../../log/order/orders.log",
+            "maxLogSize": 10485760,
+            "backups": 10,
+            "category": "orders",
+            "layout": {
+                "type": "pattern",
+                "pattern": "[%d%d{O}] Severity=\"%p\" %m"
+            }
+        },
+        {
+            "type": "file",
+            "absolute": true,
+            "filename": "../../log/order/unhandled-exceptions.log",
+            "maxLogSize": 10485760,
+            "backups": 10,
+            "category": "unhandled-exceptions",
+            "layout": {
+                "type": "pattern",
+                "pattern": "[%d%d{O}] Severity=\"%p\" %m"
+            }
+        },
+        {
+            "type": "file",
+            "absolute": true,
+            "filename": "../../log/order/json.log",
+            "maxLogSize": 10485760,
+            "backups": 10,
+            "category": "json",
+            "layout": {
+                "type": "messagePassThrough"
+            }
+        }
+    ],
+    "levels": {
+        "console": "INFO",
+        "metrics": "INFO",
+        "app": "INFO",
+        "orders": "INFO",
+        "unhandled-exceptions": "ERROR"
+    }
+}

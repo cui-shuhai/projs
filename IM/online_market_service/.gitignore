@@ -1,0 +1,17 @@
+# OSX
+.DS_Store
+
+# WebStorm
+.idea/*
+
+# NPM
+node_modules/*
+
+# LOGS
+logs/*.log
+
+# COVERAGE
+test/coverage/*
+
+#JSHINT
+.jshintrc
