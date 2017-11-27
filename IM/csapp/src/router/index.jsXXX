@@ -1,0 +1,44 @@
+import Vue from 'vue'
+import Router from 'vue-router'
+import HelloWorld from '@/components/HelloWorld'
+import Lead from '@/components/lead.vue'
+import MainItem from '@/components/main_item.vue'
+import Root from '@/components/root.vue'
+import Order from '@/components/order.vue'
+import MerchantInfo from '@/components/merchant_info.vue'
+
+Vue.use(Router)
+
+export default new Router({
+  routes: [
+    {
+      path: '/',
+      name: 'Lead',
+      component: Lead
+    },
+    {
+      path: '/main_item',
+      name: 'MainItem',
+      component: MainItem
+    },
+    {
+      path: '/Root',
+      name: 'Root',
+      component: Root
+    },
+    {
+      path: '/merchant_info',
+      name: 'MerchantInfo',
+      component: MerchantInfo
+    },
+    {
+      path: '/order',
+      component: Order
+    },
+    {
+      path: '/helloWorld',
+      name: 'HelloWorld',
+      component: HelloWorld
+    }
+  ]
+})

@@ -1,0 +1,12 @@
+lead:
+
+Entrance module - shows shop items, provide searching function, and links to other shops, special offers, merchant registration, and order seach link
+
+
+Promotions modules:  alias special offers, list promotions of main shop and friend shops, provides search for specific items
+
+
+Merchant registration module: provide merchant registration interface ...
+
+
+Orders moudle: - provide order trace and search function

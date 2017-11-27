@@ -1,0 +1,9 @@
+{
+  "orderApi": "https://online-shop.mycom.com",
+  "paymentApi": "https://payment.mycom.com",
+  "basic": "Basic dGVzdGNsaWVudDp0ZXN0dGVzdA==",
+  "ctype": "application/x-www-form-urlencoded",
+  "tokendetail": "https://oauth-qa-services.fandine.com/oauth/tokendetail?accessToken=",
+  "fbOauth": "https://oauth-qa-services.fandine.com/oauth/token",
+  "stripekey": "pk_test_8fuFnoghFJK7FESYwDe10vOg"
+}
