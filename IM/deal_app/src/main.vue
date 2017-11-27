@@ -1,6 +1,6 @@
 /* eslint-disable */
 <template>
-  <div class="wrapper">
+  <div id="main" class="wrapper">
     <div class="header">
       <div id="search-container" @click="showSearch()">
         <img id='search-img' :src="searchUrl"/>
@@ -276,7 +276,7 @@
     viewport.setAttribute('content', 'width=414, height=736, initial-scale=1.0, maximum-scale=1.0, user-scalable=0')
   }
   export default {
-    name: 'Main',
+    name: 'main',
     data () {
       return {
         wineImg: './assets/images/wine-large.png',
