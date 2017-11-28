@@ -2,4 +2,11 @@ each_item not doen
 
 1. edit lead.vue -- introduction for root,  displays logo, promotions, recommends merchants, merchant register, merchang list, and orders
 
-
+item:{
+    item_id: "ksdjfdkkskkasd",
+    name: "IPhoneX",    
+    alias: "IPhone 10",
+    normal_price: 998.00
+    sell_price: 988.00,
+    img: "items/iphonex.img
+}

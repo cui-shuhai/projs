@@ -100,13 +100,12 @@
         this.$router.go(-1)
       },
       logCart () {
-        // console.log(this.$store.state.cart)
+        console.log(this.$store.state.cart)
       },
       goCart () {
         this.$router.push({path: '/cart'})
       },
       toCart () {
-        /*
         let item = this.$route.query.itemObj
         let itemId = item._id
         let picUrl, itemName
@@ -163,7 +162,6 @@
           // console.log('>: ' + ( restId in this.$store.state.cart ) && ( cartLength > 1))
           alert('Your cart has items from a different restaurant, clear the cart to continue.')
         }
-*/
       }
     }
   }

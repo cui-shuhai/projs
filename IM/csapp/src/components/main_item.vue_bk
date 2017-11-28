@@ -63,31 +63,35 @@
   }
   export default {
     name: 'MainItem',
-    data: {
-      bottomUrl: './assets/images/blogo.png',
-      windowHeight: windowHeight,
-      bodyWidth: bodyWidth,
-      itemId: '',
-      itemName: '',
-      itemDesc: '',
-      itemPrice: '',
-      itemPic: '',
-      cartUrl: './assets/images/cart@2x.png',
-      overUrl: './assets/images/Rectangle.png',
-      backImgUrl: './assets/images/back@2x.png',
-      descWord: 'Description',
-      // cartNum: this.$store.state.cart.total_quantity,
-      locale: 'en_US'
+    data () {
+      return {
+        bottomUrl: './assets/images/blogo.png',
+        windowHeight: windowHeight,
+        bodyWidth: bodyWidth,
+        itemId: '',
+        itemName: '',
+        itemDesc: '',
+        itemPrice: '',
+        itemPic: '',
+        cartUrl: './assets/images/cart@2x.png',
+        overUrl: './assets/images/Rectangle.png',
+        backImgUrl: './assets/images/back@2x.png',
+        descWord: 'Description',
+        cartNum: this.$store.state.cart.total_quantity,
+        locale: 'en_US'
+      }
     },
     created () {
       this.itemId = this.$route.query.itemId
       this.itemName = this.$route.query.itemName
       this.itemPrice = this.$route.query.itemPrice
-      if (this.$route.query.itemPic === 'npic') {
-        this.itemPic = './assets/images/Fill.png'
-      } else if (this.$route.query.itemPic.substr(0, 5) === 'http:') {
-        this.itemPic = 'https' + this.$route.query.itemPic.substr(4)
-      } else this.itemPic = this.$route.query.itemPic
+      if (this.$route.query.itemPic !== undefined) {
+        if (this.$route.query.itemPic === 'npic') {
+          this.itemPic = './assets/images/Fill.png'
+        } else if (this.$route.query.itemPic.substr(0, 5) === 'http:') {
+          this.itemPic = 'https' + this.$route.query.itemPic.substr(4)
+        } else this.itemPic = this.$route.query.itemPic
+      }
       this.itemDesc = this.$route.query.itemDesc
       console.log('desc: ' + this.itemDesc)
     },
@@ -102,7 +106,6 @@
         this.$router.push({path: '/cart'})
       },
       toCart () {
-        /*
         let item = this.$route.query.itemObj
         let itemId = item._id
         let picUrl, itemName
@@ -159,7 +162,6 @@
           // console.log('>: ' + ( restId in this.$store.state.cart ) && ( cartLength > 1))
           alert('Your cart has items from a different restaurant, clear the cart to continue.')
         }
-*/
       }
     }
   }

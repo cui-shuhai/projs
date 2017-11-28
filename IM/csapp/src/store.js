@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     cart: {
-      total_quantity: 0
+      total_quantity: 2
     }
   }
 })

@@ -54,7 +54,7 @@ function swaggerRoutes(controllers){
 function webRoutes(controllers) {
     controllers = controllers || {};
     var _this = exports;
-    _this.webController = controllers.webController || require(controllersPath + '/web-controller')(_this.app);
+    _this.webController = controllers.webController || require(controllersPath + '/csh-web-controller')(_this.app);
     _this.app.get('/',
         _this.allowAnyOriginJSON,
         _this.userAuthentication.requireAuthentication,
@@ -75,6 +75,16 @@ function webRoutes(controllers) {
         _this.allowAnyOriginJSON,
         _this.userAuthentication.requireAuthentication,
         _this.webController.downloadSpa);
+}
+
+function cshItemsRoutes(controllers) {
+    controllers = controllers || {};
+    var _this = exports;
+    _this.cshItemsController = controllers.cshItemsController || require(controllersPath + '/csh-items-controller')(_this.app);
+    _this.app.get('/v1/listitems',
+        _this.allowAnyOriginJSON,
+        _this.userAuthentication.requireAuthentication,
+        _this.cshItemsController.listItems);
 }
 
 function orderRoutes(controllers) {
@@ -805,6 +815,7 @@ var AllowAnyOriginJSON = function (req, res, next) {
 
 var InitializeRoutes = function (controllers) {
     webRoutes(controllers);
+    cshItemsRoutes(controllers);
     orderRoutes(controllers);
     swaggerRoutes(controllers);
     messgeRoutes(controllers);

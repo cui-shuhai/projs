@@ -1,4 +1,5 @@
 {
+  "restApi": "http://localhost:8080",
   "orderApi": "https://online-shop.mycom.com",
   "paymentApi": "https://payment.mycom.com",
   "basic": "Basic dGVzdGNsaWVudDp0ZXN0dGVzdA==",

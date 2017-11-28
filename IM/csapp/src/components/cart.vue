@@ -63,179 +63,25 @@
             {{'$' + subTotal}}
           </div>
         </div>
-        <div class="pre-button" :style="{ fontSize: 0.04*bodyWidth + 'px'}" @click="fbLogin()">
-          CONTINUE
+        <div class="pre-button" :style="{ fontSize: 0.04*bodyWidth + 'px'}" @click="toPayment()">
+          Place Order
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<style>
-  input{
-    box-shadow: none
-  }
-  #s-total {
-    color: #CB202D
-  }
-
-  .cart-sub {
-    width: 40%
-    height: 100%
-    display: flex
-    flex-direction: row
-    justify-content: space-between
-    align-items: center
-    padding-left: 5%
-    padding-right: 5%
-  }
-
-  .cart-item-func {
-    background-size: contain
-    background-repeat: no-repeat
-  }
-
-  .cart-item-quan {
-    display: flex
-    flex-direction: row
-    justify-content: space-between
-    color: #333
-    width: 55%
-    align-items: center
-  }
-
-  .cart-item-name {
-    color: #333
-    font-weight: 200
-  }
-
-  .cart-item-price {
-    color: #CB202D
-    font-weight: 200
-  }
-
-  .cart-item-bottom {
-    display: flex
-    flex-direction: row
-    justify-content: space-between
-    width: 90.6%
-    position: absolute
-    bottom: 0
-
-  }
-
-  .cart-item-img {
-    width: 47%
-    height: 100%
-    background-size: cover
-    background-repeat: no-repeat
-    background-position: center
-  }
-
-  .cart-item-detail {
-    width: 48.47%
-    padding-left: 4.53%
-    height: 100%
-    display: flex
-    flex-direction: column
-    position: relative
-  }
-
-  .cart-each-item {
-    width: 100%
-    display: flex
-    flex-direction: row
-    border-bottom: 1px solid #ececec
-    align-items: stretch
-  }
-
-  .cart-item-list {
-    width: 91%
-    padding-left: 4.5%
-    padding-right: 4.5%
-    padding-bottom: 10%
-  }
-
-  .cart-rest-name {
-    padding-left: 4.5%
-    color: #fff
-    font-weight: 200
-    width: 95.5%
-  }
-
-  .banner {
-    width: 100%
-    background-size: contain
-    display: flex
-    flex-direction: row
-    justify-content: flex-start
-    align-items: center
-  }
-
-  .item-container {
-    width: 100%
-    display: flex
-    flex-direction: column
-  }
-
-  .empty-msg {
-    width: 100%
-    text-align: left
-    margin-top: 6%
-    margin-left: 4.5%
-  }
-
-  .empty-cart {
-    width: 100%
-    display: flex
-    justify-content: center
-    align-items: center
-  }
-
-  .empty-container {
-    width: 100%
-    display: flex
-    flex-direction: column
-    justify-content: center
-    align-items: center
-
-  }
-
-  #c-title {
-    margin-left: 12%
-    font-weight: 600
-  }
-
-  .clear {
-    color: #333
-    margin-right: 4.5%
-  }
-
-  .back-button {
-    background-size: contain
-    background-repeat: no-repeat
-  }
-
-  .top-nav {
-    width: 100%
-    display: flex
-    flex-direction: row
-    justify-content: space-between
-    align-items: center
-  }
-</style>
-
 <script>
-  var windowHeight = window.innerHeight
-  var bodyWidth = window.innerWidth
   import axios from 'axios'
   import Vue from 'vue'
   import VueAxios from 'vue-axios'
   import config from './config.json'
-  import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+  import BounceLoader from 'vue-spinner/src/BounceLoader.vue'
+  var windowHeight = window.innerHeight
+  var bodyWidth = window.innerWidth
   Vue.use(VueAxios, axios)
-  window.fbAsyncInit = function () {
-    FB.init({
+  /* window.fbAsyncInit = function () {
+     FB.init({
       appId: '1892641684310260',
       cookie: true, // enable cookies to allow the server to access
               // the session
@@ -245,22 +91,21 @@
     FB.getLoginStatus(function (response) {
       checkLoginState(response)
     })
-
-  }
+  } */
   // Load the SDK asynchronously
-  (function (d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0]
+  /* (function (d, s, id) {
+    var js
+    var fjs = d.getElementsByTagName(s)[0]
     if (d.getElementById(id)) return
     js = d.createElement(s)
     js.id = id
-    js.src = "//connect.facebook.net/en_US/sdk.js"
+    js.src = '//connect.facebook.net/en_US/sdk.js'
     fjs.parentNode.insertBefore(js, fjs)
-  }(document, 'script', 'facebook-jssdk'))
-
+  }(document, 'script', 'facebook-jssdk')) */
 
   export default {
     name: 'Cart',
-    data() {
+    data () {
       return {
         windowHeight: windowHeight,
         bodyWidth: bodyWidth,
@@ -280,84 +125,20 @@
         token: null,
         config: config,
         isLoading: false,
-        spinnerColor: "#EF727F",
+        spinnerColor: '#EF727F'
       }
     },
-    created() {
+    created () {
       this.reCalc()
     },
     components: {
-      PulseLoader
+      BounceLoader
     },
     methods: {
-      fbLogin(){
-        let that = this
-        this.isLoading = true
-        let header = {
-          headers: {
-            'Authorization': this.config.basic,
-            'Content-Type': this.config.ctype
-          },
-        }
-        function getId(){
-          let userUrl = that.config.tokendetail + that.token
-          axios.get(userUrl, header).then(function (response) {
-            that.fandineId = response.data.user.id
-            console.log(that.fandineId)
-            that.goDetail()
-          }).catch(function (error) {
-            alert(JSON.stringify(error))
-            console.log(JSON.stringify(error))
-          })
-        }
-
-        function do_fb_login() {
-          FB.login(function (response) {
-            if (response.authResponse) {
-              console.log('Welcome! Fetching your information.... ')
-              that.uid = response.authResponse.userID
-              console.log('Facebook id is ' + that.uid)
-              that.accessToken = response.authResponse.accessToken
-              let form = 'grant_type=password&username=FACEBOOK&password=' + that.accessToken
-              axios.post(that.config.fbOauth,
-                form, header)
-                .then(function (response) {
-                  that.token = response.data.access_token
-                  console.log(that.token)
-                  getId()
-                }).catch(function (error) {
-                alert(JSON.stringify(error))
-                console.log(JSON.stringify(error))
-              })
-            } else {
-              alert('You need to login before continuing')
-              that.isLoading = false
-            }
-          })
-        }
-
-        FB.getLoginStatus(function (response) {
-          if (response.status === 'connected') {
-            that.uid = response.authResponse.userID
-            that.accessToken = response.authResponse.accessToken
-            let form = 'grant_type=password&username=FACEBOOK&password=' + that.accessToken
-            axios.post(that.config.fbOauth,
-              form, header)
-              .then(function (response) {
-                that.token = response.data.access_token
-                console.log(that.token)
-                getId()
-              }).catch(function (error) {
-              alert(JSON.stringify(error))
-              console.log(JSON.stringify(error))
-            })
-          }
-          else {
-            do_fb_login()
-          }
-        })
+      toPayment () {
+        this.$router.push({path: '/payment'})
       },
-      reCalc(){
+      reCalc () {
         let cObj = this.$store.state.cart
         let cKeys = Object.keys(cObj)
         let sTotal = 0
@@ -388,7 +169,7 @@
           this.postItems.push(itemObj)
         }
       },
-      goDetail(){
+      goDetail () {
         let id = this.fandineId
         let token = this.token
         let that = this
@@ -396,12 +177,12 @@
           headers: {'Authorization': 'Bearer ' + token}
         }
         this.reCalc()
-        axios.get(that.config.orderApi + "/v2/users/" + id + "/current_orders", header)
+        axios.get(that.config.orderApi + '/v2/users/' + id + '/current_orders', header)
           .then(function (response) {
             console.log(JSON.stringify(response))
             if (Object.keys(response.data).length !== 0) {
               let orderId = response.data.order_id
-              axios.put(that.config.orderApi + '/v1/users/'+ id +'/orders/' + orderId + '/cancel_order', {}, header).then(function (response) {
+              axios.put(that.config.orderApi + '/v1/users/' + id + '/orders/' + orderId + '/cancel_order', {}, header).then(function (response) {
                 console.log(JSON.stringify(response))
                 axios.post(that.config.orderApi + '/v2/users/' + id + '/simple_orders?is_takeout=false&order_type=PREORDER', {
                   restaurant_id: that.restId,
@@ -410,7 +191,8 @@
                   console.log(JSON.stringify(response))
                   let orderId = response.data.id
                   that.$router.push({
-                    path: '/order_detail', query: {
+                    path: '/order_detail',
+                    query: {
                       subTotal: that.subTotal,
                       restId: that.restId,
                       orderId: orderId,
@@ -423,8 +205,7 @@
                   console.log(error)
                 })
               })
-            }
-            else {
+            } else {
               axios.post(that.config.orderApi + '/v2/users/' + id + '/simple_orders?is_takeout=false&order_type=PREORDER', {
                 restaurant_id: that.restId,
                 order_items: that.postItems
@@ -432,7 +213,8 @@
                 console.log(JSON.stringify(response))
                 let orderId = response.data.id
                 that.$router.push({
-                  path: '/order_detail', query: {
+                  path: '/order_detail',
+                  query: {
                     subTotal: that.subTotal,
                     restId: that.restId,
                     orderId: orderId,
@@ -446,33 +228,32 @@
               })
             }
           }).catch(function (error) {
-          console.log(error)
-        })
-
+            console.log(error)
+          })
       },
       goBack: function () {
         this.$router.go(-1)
       },
-      clearCart(){
-        if(this.$store.state.cart.total_quantity !== 0){
+      clearCart () {
+        if (this.$store.state.cart.total_quantity !== 0) {
           if (confirm('Are you sure you want to clear the cart?') === true) {
             this.$store.replaceState(
               {
                 cart: {
-                  total_quantity: 0,
+                  total_quantity: 0
                 }
               }
             )
           }
         }
       },
-      addOne(item){
+      addOne (item) {
         this.$store.state.cart[this.restId][item.itemId].quantity += 1
         this.$store.state.cart.total_quantity += 1
         this.subTotal = parseFloat(this.subTotal) + item.price
         this.subTotal = this.subTotal.toFixed(2)
       },
-      subOne(item){
+      subOne (item) {
         let itemNum = this.$store.state.cart[this.restId][item.itemId].quantity
         if (itemNum === 1) {
           document.getElementById(item.itemId).setAttribute('style', 'display:none')
@@ -482,13 +263,12 @@
             this.$store.replaceState(
               {
                 cart: {
-                  total_quantity: 0,
+                  total_quantity: 0
                 }
               }
             )
           }
-        }
-        else {
+        } else {
           this.$store.state.cart[this.restId][item.itemId].quantity -= 1
           this.$store.state.cart.total_quantity -= 1
         }
@@ -498,3 +278,158 @@
     }
   }
 </script>
+
+<style>
+  input{
+    box-shadow: none;
+  }
+  #s-total {
+    color: #CB202D;
+  }
+
+  .cart-sub {
+    width: 40%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  .cart-item-func {
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .cart-item-quan {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: #333;
+    width: 55%;
+    align-items: center;
+  }
+
+  .cart-item-name {
+    color: #333;
+    font-weight: 200;
+  }
+
+  .cart-item-price {
+    color: #CB202D;
+    font-weight: 200;
+  }
+
+  .cart-item-bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90.6%;
+    position: absolute;
+    bottom: 0;
+
+  }
+
+  .cart-item-img {
+    width: 47%;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .cart-item-detail {
+    width: 48.47%;
+    padding-left: 4.53%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .cart-each-item {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #ececec;
+    align-items: stretch;
+  }
+
+  .cart-item-list {
+    width: 91%;
+    padding-left: 4.5%;
+    padding-right: 4.5%;
+    padding-bottom: 10%;
+  }
+
+  .cart-rest-name {
+    padding-left: 4.5%;
+    color: #fff;
+    font-weight: 200;
+    width: 95.5%;
+  }
+
+  .banner {
+    width: 100%;
+    background-size: contain;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .item-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .empty-msg {
+    width: 100%;
+    text-align: left;
+    margin-top: 6%;
+    margin-left: 4.5%;
+  }
+
+  .empty-cart {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .empty-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+  #c-title {
+    margin-left: 12%;
+    font-weight: 600;
+  }
+
+  .clear {
+    color: #333;
+    margin-right: 4.5%;
+  }
+
+  .back-button {
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .top-nav {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+</style>
+

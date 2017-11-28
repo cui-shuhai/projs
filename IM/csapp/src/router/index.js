@@ -2,7 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Lead from '@/components/lead.vue'
 import MainItem from '@/components/main_item.vue'
-import HelloWorld from '@/components/HelloWorld'
+import Cart from '@/components/cart.vue'
+import Payment from '@/components/payment.vue'
+import Stripe from '@/components/stripe.vue'
 
 Vue.use(Router)
 
@@ -19,9 +21,19 @@ export default new Router({
       component: MainItem
     },
     {
-      path: '/helloWorld',
-      name: 'HelloWorld',
-      component: HelloWorld
+      path: '/cart',
+      name: 'Cart',
+      component: Cart
+    },
+    {
+      path: '/payment',
+      name: 'Payment',
+      component: Payment
+    },
+    {
+      path: '/stripe',
+      name: 'Stripe',
+      component: Stripe
     }
   ]
 })

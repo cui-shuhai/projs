@@ -16,17 +16,17 @@
 
           </div>
           <div class="merchant-detail" :style="{height:windowHeight * 0.4047976 + 'px'}"
-             @click="jump('/main_item', post._id)">
+             @click="jump('/main_item', post._id, post.name, post.price, post.picPath)">
             <div class="main_item-img-container" :style="{height:windowHeight * 0.3148 + 'px'}"
-               v-if="post.photos && post.photos.length > 0">
-              <img class="main_item-img" :src="post.photos[0].path"/>
+               v-if="post.picPath !== 'undefined'">
+              <img class="main_item-img" :src="post.picPath"/>
             </div>
             <div class="main_item-img-container" :style="{height:windowHeight * 0.3148 + 'px'}"
                v-else>
               <img class="main_item-img" :src="nullUrl"/>
             </div>
             <div class="more-detail" :style="{height:windowHeight * 0.089 + 'px'}">
-              <p class="res-name">{{post.longNames[0].name}}</p>
+              <p class="res-name">{{post.name}}</p>
             </div>
             <div class="gray-bar" :style="{height:windowHeight * 0.016 + 'px'}">
             </div>
@@ -52,7 +52,7 @@
         <p style="margin:0" :style="{color: orderText}">Orders</p>
       </div>
     </div>
-    <modal name="searchModal" width="100%" height="100%">
+    <modal name="searchModal" v-if="false" width="100%" height="100%">
       <div id="searchModal">
         <div class="header">
           <input autofocus type="search"
@@ -73,6 +73,7 @@
   </div>
 </template>
 <script>
+/* eslint-disable */
   import Vue from 'vue'
   import VModal from 'vue-js-modal'
   import axios from 'axios'
@@ -81,7 +82,6 @@
   let windowHeight = window.innerHeight
   let titleFontSize = 0.0426 * window.innerWidth
   let bodyWidth = window.innerWidth
-  Vue.use(VModal)
   Vue.use(VueAxios, axios)
   if (bodyWidth > 800) {
     let viewport = document.querySelector('meta[name=viewport]')
@@ -98,7 +98,8 @@
         pivotY: 1,
         downLoadUrl: null,
         searchUrl: './assets/images/shape@3x.png',
-        logoUrl: './assets/images/logo@3x.png',
+        // logoUrl: './assets/images/logo@3x.png',
+        logoUrl: './assets/images/csh_logo.png',
         cartUrl: './assets/images/nav_icon_cart_black@2x.png',
         nullUrl: './assets/images/Fill.png',
         postData: [],
@@ -184,8 +185,9 @@
       jumpTwo (p) {
         this.$router.push({path: p, query: {}})
       },
-      jump (e, id, dist) {
-        this.$router.push({path: '/main_item', query: {itemId: id}})
+
+      jump (e, id) {
+        this.$router.push({path: '/main_item', query: {itemId: id, itemPrice: itemPrice, itemPic: itemPic}})
         this.selectedPath = e
         console.log(id)
       },
@@ -196,9 +198,8 @@
         return this.$route.params
       },
       getSearchItems (keyword) {
-        /*
-        let urlParams = new URLSearchParams('page_size=100&order_type=PREORDER&item_type=all')
-        let restUrl = this.config.restApi + '/v1/man_items?' + urlParams.toString()
+        // let urlParams = new URLSearchParams('page_size=100&order_type=PREORDER&item_type=all')
+        let restUrl = this.config.restApi + '/v1/listitems' // ?' + urlParams.toString()
         axios.get(restUrl)
           .then((response) => {
             this.posts = response.data
@@ -219,34 +220,6 @@
             // this.errors.push(e)
             console.log(e)
           })
-          */
-
-        this.posts = [
-          {
-            photos: [
-              {path: 'xxxx'}
-            ],
-            longNames: [
-              {name: 'item1' + this.$store.state.cart.total_quantity}
-            ]
-          },
-          {
-            photos: [
-              {path: 'xxxx'}
-            ],
-            longNames: [
-              {name: 'item2' + this.$store.state.cart.total_quantity}
-            ]
-          },
-          {
-            photos: [
-              {path: 'xxxx'}
-            ],
-            longNames: [
-              {name: 'item3'}
-            ]
-          }
-        ]
         this.$modal.hide('searchModal')
       },
       logCart () {
